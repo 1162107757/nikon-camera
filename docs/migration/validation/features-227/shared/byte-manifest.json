@@ -1,0 +1,745 @@
+{
+  "schemaVersion": 1,
+  "sourceCommitAtArchive": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "qualification": "Byte-exact copied Windows originals plus explicitly marked generated archive metadata; no runtime rerun.",
+  "copiedOriginals": 100,
+  "files": [
+    {
+      "path": "shared/local-regression-results.json",
+      "sourcePath": ".tooling/next227/local-regression-results.json",
+      "bytes": 305,
+      "sha256": "9435fef849a9d7125686d1ba01bb49268eb77b207d5dc5b0541dfb81ab9e5fe4",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/ui-regression-results.json",
+      "sourcePath": ".tooling/next227/ui-regression-results.json",
+      "bytes": 816,
+      "sha256": "0e0102e0d5419c75165f4e499096686d5b5de3f417055dd7ef90d61bc7d22db7",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/verified-regressions.json",
+      "sourcePath": ".tooling/next227/verified-regressions.json",
+      "bytes": 540,
+      "sha256": "950e61994e90f995b009553dcb3b42e53434e5eaf3c6c3cae37eee1c2dca06fb",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/final-quality.json",
+      "sourcePath": ".tooling/next227/final-quality.json",
+      "bytes": 116,
+      "sha256": "7b7c260e54632f4ced70525d8ef68e8ca49d1035aacbb015f5fd5b4674ce09f6",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/completion-regressions.json",
+      "sourcePath": ".tooling/next227/completion-regressions.json",
+      "bytes": 532,
+      "sha256": "638dff66c7873e99b29c58754f9776b9cff6ba3eef2c9c371dd4af59f51997d7",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/controllers-frozen.json",
+      "sourcePath": ".tooling/next227/controllers-frozen.json",
+      "bytes": 160,
+      "sha256": "f55b13a662e6a7006b60d5e474456519579c94c0cada05ebb7d8bd1fc013a6cd",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/stop-independent-review.json",
+      "sourcePath": ".tooling/next227/stop-independent-review.json",
+      "bytes": 9719,
+      "sha256": "bf2a4304cf7b7d52011e4fa4f75f6692d207d293675bf592aaa8dddb8eeb489f",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/local_regressions.py",
+      "sourcePath": ".tooling/next227/local_regressions.py",
+      "bytes": 2214,
+      "sha256": "b88b9f35eb058ec361b56f06b853e0b649fabb8ce3c7fb906d11ab7d275c9b3e",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/continue_regressions.py",
+      "sourcePath": ".tooling/next227/continue_regressions.py",
+      "bytes": 1660,
+      "sha256": "4ef8b8d82fc0a20aad86312c715ba7c15107d09aeb728b524b9b67bb9dfb0d7d",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/completion_regressions.py",
+      "sourcePath": ".tooling/next227/completion_regressions.py",
+      "bytes": 1912,
+      "sha256": "3257f1f9effcd10e90d0ad9ace681088e1385eebf9e41fc3ed269d3b1d10250b",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/verified_regressions.py",
+      "sourcePath": ".tooling/next227/verified_regressions.py",
+      "bytes": 1965,
+      "sha256": "e9413a58c7893131bcb0457bde4898a955ea5c4d9be1f0783aaff7765b68efcf",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_live_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_live_test.dart.log",
+      "bytes": 44865,
+      "sha256": "728f62d28a1cc1827d8e486b7b465c9985b6779e40d44b81c0a620f8fdcc9242",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_downloads_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_downloads_test.dart.log",
+      "bytes": 40571,
+      "sha256": "b487eca05b8a418d79cd0d6f9a5d08f5364a9c90f301c8a81e2f7b6365f47739",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_selection_download_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_selection_download_test.dart.log",
+      "bytes": 39204,
+      "sha256": "5dc06aedcfb30a8416ad090b6d2a03f9d8310700543b4b3aa70eb04e004ab1e1",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/capsule_switch_test.dart.log",
+      "sourcePath": ".tooling/next227/capsule_switch_test.dart.log",
+      "bytes": 39207,
+      "sha256": "e667b1cf15cf627880c983dffa654413358d92147dac934dcaf56bde10c12c08",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_live_panel_226_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_live_panel_226_test.dart.log",
+      "bytes": 39581,
+      "sha256": "da3b5df8d3455a8779fbc81d63df9a5215b42a432463536087d9f14b9167d574",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_transfer_retirement_226_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_transfer_retirement_226_test.dart.log",
+      "bytes": 39672,
+      "sha256": "82126a3298058e6bf5c8b1396c30e15cc413b1513abc0c436d3dd04469a20289",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_sync_autoload_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_sync_autoload_test.dart.log",
+      "bytes": 39623,
+      "sha256": "a2aa600b81865ceb487795283d3a535f8652b0097e0c5b56e0b97811aa0f9885",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_download_soft_stop_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_download_soft_stop_test.dart.log",
+      "bytes": 39759,
+      "sha256": "d3aec673cdee2ba3fc72bba155302a5d7e13517b5c91621f46794d9c42f54909",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_live_start_connection_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_live_start_connection_test.dart.log",
+      "bytes": 42405,
+      "sha256": "b4c386bef9cc5da5102d435c116dd7dfa296f2167b57df78fa4f91c692bb5712",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_live_panel_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_live_panel_test.dart.log",
+      "bytes": 41217,
+      "sha256": "4ab17cda8234d7ee775b95fac98cbed71560f016b0be86a2d282da045d6e6ebc",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_reconnect_226_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_reconnect_226_test.dart.log",
+      "bytes": 41981,
+      "sha256": "007bc86d1947f0bf71d0070afe29ddc3bdd01c9fbb31c099461fc041bbfe38dd",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_intent_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_intent_test.dart.log",
+      "bytes": 42718,
+      "sha256": "daee0b1e3a893084c75032b1f7d061fc4ac53c091772ab4bb599ad18a44e516b",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_design_ui_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_design_ui_test.dart.log",
+      "bytes": 45362,
+      "sha256": "a42e652a360a4a83dcfc2389633dfd6e9adb4998dedd06f09fa0e8e0be692fd9",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/camera_transfer_test.dart.log",
+      "sourcePath": ".tooling/next227/camera_transfer_test.dart.log",
+      "bytes": 42999,
+      "sha256": "9d97d7d4bfbf5e2b9cdd7fc39571d3838e82c642e77be36e7a78238d2a6e0dff",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/manual-final.log",
+      "sourcePath": ".tooling/next227/manual-final.log",
+      "bytes": 38047,
+      "sha256": "203c2244ed616da6825dca0536ad06a121e3d8c8f31959db6e3de3ff81680abe",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/manual-verified.log",
+      "sourcePath": ".tooling/next227/manual-verified.log",
+      "bytes": 39366,
+      "sha256": "35614b29fa95577a8c755eb836e25047a40816e522f486124cebc992a3f543a2",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/manual-final-format.log",
+      "sourcePath": ".tooling/next227/manual-final-format.log",
+      "bytes": 46,
+      "sha256": "1685974b88bd671112e17334bdc2abb8ef350e01ae026547459ec7a8307375ec",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/manual-verified-format.log",
+      "sourcePath": ".tooling/next227/manual-verified-format.log",
+      "bytes": 47,
+      "sha256": "43a0060b01f8d00290502db016cbde393b149f5a0971989771a4fe3fddc181e7",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/format.log",
+      "sourcePath": ".tooling/next227/format.log",
+      "bytes": 48,
+      "sha256": "0a175cb79dd12bdc147c5ebda93b2a725c84283a779dfbd6a1647b0c0f178b2a",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/analyze.log",
+      "sourcePath": ".tooling/next227/analyze.log",
+      "bytes": 96,
+      "sha256": "16dd816316ca7082547dfd208a4067ab2eef119dc76bb4c73bf6a456a2cb7457",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/analyze-final.log",
+      "sourcePath": ".tooling/next227/analyze-final.log",
+      "bytes": 96,
+      "sha256": "f85fff84ff0f993dfb0c21783960781d7ce1fa73f9d729e0869a99a64a8e8536",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/analyze-verified.log",
+      "sourcePath": ".tooling/next227/analyze-verified.log",
+      "bytes": 96,
+      "sha256": "60c7c170fd8357d5de277734fd862d2e1c54321edea7d4fc19ac2f23a401c1eb",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/final-format.log",
+      "sourcePath": ".tooling/next227/final-format.log",
+      "bytes": 46,
+      "sha256": "ebf8691cd9669b02dd9d748aaf543551b337b2beb44f2d128dc7ffbfa0318f03",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/final-analyze.log",
+      "sourcePath": ".tooling/next227/final-analyze.log",
+      "bytes": 96,
+      "sha256": "c7204f248efb5e81623cb608c170fba8eed12bdc9e2d5bb064d42f00a8e3cc76",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-isolated-1.log",
+      "sourcePath": ".tooling/next227/start-isolated-1.log",
+      "bytes": 43168,
+      "sha256": "618c5855d379b81b8b0af4f399ed07184db60da8d8e8f34a9c31cf1524964231",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-isolated-2.log",
+      "sourcePath": ".tooling/next227/start-isolated-2.log",
+      "bytes": 43160,
+      "sha256": "c86d77c2ac8bdfb14ba1ec2b5778559dd7701c6769717644dd508f7dbe58f70c",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-isolated-3.log",
+      "sourcePath": ".tooling/next227/start-isolated-3.log",
+      "bytes": 39215,
+      "sha256": "d824063dc0cc3078a62d4b69d05aa66ca373d468ba31c96054a19aebd8c5a586",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-isolated-4.log",
+      "sourcePath": ".tooling/next227/start-isolated-4.log",
+      "bytes": 43034,
+      "sha256": "d0237eb6d506e7186fc11c12d5aad60cf88f5fad228db5b4a3d18d6dd6eeac40",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-isolated-5.log",
+      "sourcePath": ".tooling/next227/start-isolated-5.log",
+      "bytes": 39179,
+      "sha256": "39e0792e4ab81c5e07a9c1a1db26de5905fa35c6d04cb0da5d1676cbacd4325f",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-isolated-6.log",
+      "sourcePath": ".tooling/next227/start-isolated-6.log",
+      "bytes": 39217,
+      "sha256": "9969589de744695eba1d47b7ea2929913c0ac9bafbd8e1310c8f858bed8f2195",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-verified-1.log",
+      "sourcePath": ".tooling/next227/start-verified-1.log",
+      "bytes": 39226,
+      "sha256": "55e5157a90a14b166715bea806960371fd4623387bb5b1e6b01326b6d98dbecb",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-verified-2.log",
+      "sourcePath": ".tooling/next227/start-verified-2.log",
+      "bytes": 39233,
+      "sha256": "a0e7b4b01df02415e11b4a6615a08e9af01c2fe0f5246e7fe2c5b56b5de40c90",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-verified-3.log",
+      "sourcePath": ".tooling/next227/start-verified-3.log",
+      "bytes": 41376,
+      "sha256": "bf7a2b62c08e767c8aa691fa0060f477de87d864ea069df2392fae8afd9cb603",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-verified-4.log",
+      "sourcePath": ".tooling/next227/start-verified-4.log",
+      "bytes": 39196,
+      "sha256": "fa78c3b0bfe077d7f3ec1d06bd5cec23faee755de73eb4da26547fed8e715f07",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-verified-5.log",
+      "sourcePath": ".tooling/next227/start-verified-5.log",
+      "bytes": 39175,
+      "sha256": "2b0bb30422a1efbc889bc51459cb38bd45758f815732eedf1248aee1da2b2ea9",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/start-verified-6.log",
+      "sourcePath": ".tooling/next227/start-verified-6.log",
+      "bytes": 39217,
+      "sha256": "24b0d5923dafbc6e681c40568eeeb14ea129f94f273dd1718925a2f1f78346d8",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-initial-analyze/analyze.log",
+      "sourcePath": ".tooling/next227/attempts/initial-analyze/analyze.log",
+      "bytes": 1152,
+      "sha256": "94541f0867a446edd0d6bda11a56b8ba6111b07545215d9b24d06d0473cff9a8",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-initial-analyze/format.log",
+      "sourcePath": ".tooling/next227/attempts/initial-analyze/format.log",
+      "bytes": 509,
+      "sha256": "2aa1a6a73653b2b03c98967533338dcd4522a757d544aae26155c20087666a04",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-initial-analyze/local-regression-results.json",
+      "sourcePath": ".tooling/next227/attempts/initial-analyze/local-regression-results.json",
+      "bytes": 102,
+      "sha256": "51bb2a7d1306d9540770a1351436e3653c03b57dfa8ac2d0a71f570ba253d95c",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-initial-analyze/local_regressions.py",
+      "sourcePath": ".tooling/next227/attempts/initial-analyze/local_regressions.py",
+      "bytes": 2214,
+      "sha256": "b88b9f35eb058ec361b56f06b853e0b649fabb8ce3c7fb906d11ab7d275c9b3e",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-initial-analyze/qualification.json",
+      "sourcePath": ".tooling/next227/attempts/initial-analyze/qualification.json",
+      "bytes": 212,
+      "sha256": "d9865ca4d1f6b61b9272f539fd57141283d5bb39a9430d4ce0a53aa797c94a85",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-widget-wait/analyze.log",
+      "sourcePath": ".tooling/next227/attempts/manual-widget-wait/analyze.log",
+      "bytes": 96,
+      "sha256": "16dd816316ca7082547dfd208a4067ab2eef119dc76bb4c73bf6a456a2cb7457",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-widget-wait/camera_transfer_test.dart",
+      "sourcePath": ".tooling/next227/attempts/manual-widget-wait/camera_transfer_test.dart",
+      "bytes": 6739,
+      "sha256": "66b5f1bcb54af7a6b84f8b7b931e100143b52c67009ef1e2c7fd940855fb5554",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-widget-wait/camera_transfer_test.dart.log",
+      "sourcePath": ".tooling/next227/attempts/manual-widget-wait/camera_transfer_test.dart.log",
+      "bytes": 39078,
+      "sha256": "9381a9499048ee6f82967eeb3e86b299b2ef2c1eebccc1a83c33da88a890ce7f",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-widget-wait/format.log",
+      "sourcePath": ".tooling/next227/attempts/manual-widget-wait/format.log",
+      "bytes": 48,
+      "sha256": "0a175cb79dd12bdc147c5ebda93b2a725c84283a779dfbd6a1647b0c0f178b2a",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-widget-wait/local-regression-results.json",
+      "sourcePath": ".tooling/next227/attempts/manual-widget-wait/local-regression-results.json",
+      "bytes": 305,
+      "sha256": "9435fef849a9d7125686d1ba01bb49268eb77b207d5dc5b0541dfb81ab9e5fe4",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-widget-wait/local_regressions.py",
+      "sourcePath": ".tooling/next227/attempts/manual-widget-wait/local_regressions.py",
+      "bytes": 2214,
+      "sha256": "b88b9f35eb058ec361b56f06b853e0b649fabb8ce3c7fb906d11ab7d275c9b3e",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-widget-wait/qualification.json",
+      "sourcePath": ".tooling/next227/attempts/manual-widget-wait/qualification.json",
+      "bytes": 327,
+      "sha256": "5f898d3de3edd39614f32cbf528662fc749f2f54b07fe51d30fc1700681943d1",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-analyze/analyze-final.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-analyze/analyze-final.log",
+      "bytes": 227,
+      "sha256": "c49733f4c77f76fd819038277bce0dfae1179216f99d3ada2a9b8bca8c3c4cb5",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-analyze/completion-regressions.json",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-analyze/completion-regressions.json",
+      "bytes": 121,
+      "sha256": "811c7ed29405085e3d8150e051731b81493b4645da5c3f843fb9d3ca6e36f365",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-analyze/completion_regressions.py",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-analyze/completion_regressions.py",
+      "bytes": 1912,
+      "sha256": "3257f1f9effcd10e90d0ad9ace681088e1385eebf9e41fc3ed269d3b1d10250b",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-analyze/manual-final-format.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-analyze/manual-final-format.log",
+      "bytes": 46,
+      "sha256": "1685974b88bd671112e17334bdc2abb8ef350e01ae026547459ec7a8307375ec",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-analyze/qualification.json",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-analyze/qualification.json",
+      "bytes": 142,
+      "sha256": "0ca232a06f2e3979ef7adb6247354e3097e27e8006db9786ffd3afb1c411298f",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/analyze-final.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/analyze-final.log",
+      "bytes": 96,
+      "sha256": "f85fff84ff0f993dfb0c21783960781d7ce1fa73f9d729e0869a99a64a8e8536",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/completion-regressions.json",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/completion-regressions.json",
+      "bytes": 532,
+      "sha256": "638dff66c7873e99b29c58754f9776b9cff6ba3eef2c9c371dd4af59f51997d7",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/completion_regressions.py",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/completion_regressions.py",
+      "bytes": 1912,
+      "sha256": "3257f1f9effcd10e90d0ad9ace681088e1385eebf9e41fc3ed269d3b1d10250b",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/manual-diagnostic-v2-source.dart",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/manual-diagnostic-v2-source.dart",
+      "bytes": 8541,
+      "sha256": "356ea4a8507f375458156670e1b7aaac4a3375b6ff8b42a8d9980cfd7bdd06f0",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/manual-diagnostic-v2.exit",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/manual-diagnostic-v2.exit",
+      "bytes": 3,
+      "sha256": "6affdae3b3c1aa6aa7689e9b6a7b3225a636aa1ac0025f490cca1285ceaf1487",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/manual-diagnostic-v2.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/manual-diagnostic-v2.log",
+      "bytes": 38183,
+      "sha256": "99d98136c7dec3ddbadb924e8ea531e2e02ce241bb37aad31c3f04631cf51a6b",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/manual-final-format.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/manual-final-format.log",
+      "bytes": 46,
+      "sha256": "1685974b88bd671112e17334bdc2abb8ef350e01ae026547459ec7a8307375ec",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/manual-final.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/manual-final.log",
+      "bytes": 38047,
+      "sha256": "203c2244ed616da6825dca0536ad06a121e3d8c8f31959db6e3de3ff81680abe",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/qualification.json",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/qualification.json",
+      "bytes": 591,
+      "sha256": "c14344e804ea7d8cf3f1beec40fd3bb854189b1e0f992c94ccc2248b158071c5",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/start-isolated-1.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/start-isolated-1.log",
+      "bytes": 43168,
+      "sha256": "618c5855d379b81b8b0af4f399ed07184db60da8d8e8f34a9c31cf1524964231",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/start-isolated-2.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/start-isolated-2.log",
+      "bytes": 43160,
+      "sha256": "c86d77c2ac8bdfb14ba1ec2b5778559dd7701c6769717644dd508f7dbe58f70c",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/start-isolated-3.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/start-isolated-3.log",
+      "bytes": 39215,
+      "sha256": "d824063dc0cc3078a62d4b69d05aa66ca373d468ba31c96054a19aebd8c5a586",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/start-isolated-4.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/start-isolated-4.log",
+      "bytes": 43034,
+      "sha256": "d0237eb6d506e7186fc11c12d5aad60cf88f5fad228db5b4a3d18d6dd6eeac40",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/start-isolated-5.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/start-isolated-5.log",
+      "bytes": 39179,
+      "sha256": "39e0792e4ab81c5e07a9c1a1db26de5905fa35c6d04cb0da5d1676cbacd4325f",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-completion-and-start-fixtures/start-isolated-6.log",
+      "sourcePath": ".tooling/next227/attempts/manual-completion-and-start-fixtures/start-isolated-6.log",
+      "bytes": 39217,
+      "sha256": "9969589de744695eba1d47b7ea2929913c0ac9bafbd8e1310c8f858bed8f2195",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-diagnostic-compile/manual-diagnostic.log",
+      "sourcePath": ".tooling/next227/manual-diagnostic.log",
+      "bytes": 37749,
+      "sha256": "756a13e5ad6661f9cc36a80f54720db9425d98b2ee7c5af5e11bbd9762578eec",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-diagnostic-compile/manual-diagnostic.exit",
+      "sourcePath": ".tooling/next227/manual-diagnostic.exit",
+      "bytes": 1,
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-diagnostic-timeout/manual-diagnostic-v2.log",
+      "sourcePath": ".tooling/next227/manual-diagnostic-v2.log",
+      "bytes": 38183,
+      "sha256": "99d98136c7dec3ddbadb924e8ea531e2e02ce241bb37aad31c3f04631cf51a6b",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "attempts/windows-manual-diagnostic-timeout/manual-diagnostic-v2.exit",
+      "sourcePath": ".tooling/next227/manual-diagnostic-v2.exit",
+      "bytes": 3,
+      "sha256": "6affdae3b3c1aa6aa7689e9b6a7b3225a636aa1ac0025f490cca1285ceaf1487",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "shared/local-test-matrix.json",
+      "bytes": 14463,
+      "sha256": "84ec566ab1747dc19cea4d14af94859cd5e85745262cd9cc6df3af7fb4d036ac",
+      "kind": "archive-metadata"
+    },
+    {
+      "path": "attempts/windows-manual-diagnostic-compile/qualification.json",
+      "bytes": 212,
+      "sha256": "47429415650bcde1c4946249e9da7f1b99e7de355d9ecf7570a2714926832b62",
+      "kind": "archive-metadata"
+    },
+    {
+      "path": "attempts/windows-manual-diagnostic-timeout/qualification.json",
+      "bytes": 207,
+      "sha256": "7c0da6bfa49ce4ff5b08ca3d1c9244f204ade8555446cad375730d62ad323ed3",
+      "kind": "archive-metadata"
+    },
+    {
+      "path": "shared/README.md",
+      "bytes": 2458,
+      "sha256": "101a051422dffc8f0688aded78185f2443655974b477cc78dfd3bb707c79c67b",
+      "kind": "archive-metadata"
+    },
+    {
+      "path": "shared/privacy-final-results.json",
+      "bytes": 192,
+      "sha256": "46dd83f00fa4a0f1707d551cba433f48663c803a96404ad2bdc229f9eafb4235",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/privacy-final-results.json"
+    },
+    {
+      "path": "shared/privacy-final-tests.log",
+      "bytes": 39180,
+      "sha256": "78d0b6cbee3311f50f1c224607f0f4b60725e66530fe7a38a28b755cd9d2a487",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/privacy-final-tests.log"
+    },
+    {
+      "path": "shared/privacy-final-format.log",
+      "bytes": 46,
+      "sha256": "1685974b88bd671112e17334bdc2abb8ef350e01ae026547459ec7a8307375ec",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/privacy-final-format.log"
+    },
+    {
+      "path": "shared/privacy-final-analyze.log",
+      "bytes": 96,
+      "sha256": "a74f2ea4c7e2272242f1cb1633f25d50d77ae72601bc3fca2ca7f0ef80cb60be",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/privacy-final-analyze.log"
+    },
+    {
+      "path": "shared/privacy-final-launcher.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/privacy-final-launcher.log"
+    },
+    {
+      "path": "shared/privacy_final.py",
+      "bytes": 1162,
+      "sha256": "fd5821e8d174c074cfc8e07cd7a0f336c5099b94e9dd011cc415cefe893a4f44",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/privacy_final.py"
+    },
+    {
+      "path": "shared/privacy-test-only-source-proof.json",
+      "bytes": 444,
+      "sha256": "4b95fd777255a9717c3b954248fa28e0a688c251604d3772576b62b0e5ea66be",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/privacy-test-only-source-proof.json"
+    },
+    {
+      "path": "attempts/windows-privacy-precache-fake-cache/camera_live_panel_test.dart",
+      "bytes": 7139,
+      "sha256": "842a04f23a186707a11f755fb968da05a8c7634dec938c6b002af968d5f30697",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/attempts/privacy-precache-fake-cache/camera_live_panel_test.dart"
+    },
+    {
+      "path": "attempts/windows-privacy-precache-fake-cache/privacy-final-analyze.log",
+      "bytes": 96,
+      "sha256": "8cc411f4b10414a3a9ea0a7b94b5f958acf0edabc1a16a3073de66cef8e9a5cf",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/attempts/privacy-precache-fake-cache/privacy-final-analyze.log"
+    },
+    {
+      "path": "attempts/windows-privacy-precache-fake-cache/privacy-final-format.log",
+      "bytes": 89,
+      "sha256": "9b3797d6b119580f0c44635929f3f2fdcafb179b6ea5ae9041b4f953c11daf20",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/attempts/privacy-precache-fake-cache/privacy-final-format.log"
+    },
+    {
+      "path": "attempts/windows-privacy-precache-fake-cache/privacy-final-results.json",
+      "bytes": 192,
+      "sha256": "04e10cc6ca8887561b0714f5503f32af6f2b08c2db42bafc8526fbf85eda42a8",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/attempts/privacy-precache-fake-cache/privacy-final-results.json"
+    },
+    {
+      "path": "attempts/windows-privacy-precache-fake-cache/privacy-final-tests.log",
+      "bytes": 43140,
+      "sha256": "ef9afb3ba9f240c8b46a7c99a50d3762057721f6cd95e0ccc6520410619ccb01",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/attempts/privacy-precache-fake-cache/privacy-final-tests.log"
+    },
+    {
+      "path": "attempts/windows-privacy-precache-fake-cache/privacy_final.py",
+      "bytes": 1162,
+      "sha256": "fd5821e8d174c074cfc8e07cd7a0f336c5099b94e9dd011cc415cefe893a4f44",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/attempts/privacy-precache-fake-cache/privacy_final.py"
+    },
+    {
+      "path": "attempts/windows-privacy-precache-fake-cache/qualification.json",
+      "bytes": 399,
+      "sha256": "6feb4e0c59723dea12082fd21856bd544c928e9fd15d11c2a2add7e9f655cc01",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/attempts/privacy-precache-fake-cache/qualification.json"
+    },
+    {
+      "path": "attempts/windows-panel-owner-diagnostic/panel-diagnostic-source.dart",
+      "bytes": 5089,
+      "sha256": "03a0047cb8fe77557566079480d90c5fcfb74f53de8d873befefb56c944e8d7a",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/panel-diagnostic-source.dart"
+    },
+    {
+      "path": "attempts/windows-panel-owner-diagnostic/panel-diagnostic.log",
+      "bytes": 38064,
+      "sha256": "af70e5e4dbd8ee3986ca96c297d1294e7b89ca87a85ec03a0b2aa1f26b7e6762",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/panel-diagnostic.log"
+    },
+    {
+      "path": "attempts/windows-panel-owner-diagnostic/panel-diagnostic.exit",
+      "bytes": 3,
+      "sha256": "6affdae3b3c1aa6aa7689e9b6a7b3225a636aa1ac0025f490cca1285ceaf1487",
+      "kind": "byte-exact-original",
+      "sourcePath": ".tooling/next227/panel-diagnostic.exit"
+    },
+    {
+      "path": "shared/privacy-final-qualification.json",
+      "bytes": 1603,
+      "sha256": "a3d1acdaec073b78146e5f2eaa1abbadbc72fa45a86787b63f97969a5a023787",
+      "kind": "archive-metadata"
+    },
+    {
+      "path": "attempts/windows-panel-owner-diagnostic/qualification.json",
+      "bytes": 272,
+      "sha256": "a553e4a26fba8b1b2596e8b60c218d78519e7f76a56ced6f8a1564c744805a39",
+      "kind": "archive-metadata"
+    }
+  ],
+  "privacySupplementSource": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f"
+}

@@ -1,0 +1,8 @@
+{
+  "actualCompletedPassed": 5,
+  "actualAssertionFailed": 1,
+  "wholeFileExit": null,
+  "interruptedByRoot": true,
+  "reason": "Busyfalse expected after40 fake pumps but remains true; cleanup await receiving selfblocked. Root killed verified owned test process tree. No nativeAV.",
+  "countedAsWholeFilePass": false
+}

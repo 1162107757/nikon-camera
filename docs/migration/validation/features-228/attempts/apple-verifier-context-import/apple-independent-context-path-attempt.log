@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\11621\AppData\Local\Temp\.ctx-mode-7HeUdK\script.py", line 6, in <module>
+    try:runpy.run_path(str(p/'verify_apple.py'),run_name='__main__');code=0
+        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\dev\ai-project\nikon-camera\.tooling\next228\verify_apple.py", line 55, in <module>
+    from apple_full_source_evidence228 import verify_full_mac_run
+ModuleNotFoundError: No module named 'apple_full_source_evidence228'

@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "runId": 43696814968,
+  "jobId": 132759091924,
+  "jobName": "apple-app",
+  "runnerLabels": [
+    "macos-26"
+  ],
+  "workflowPath": ".github/workflows/cross-platform-mobile.yml",
+  "fullPreparationAndBuildStepsSucceeded": true,
+  "artifactId": 14155377455,
+  "published": false
+}

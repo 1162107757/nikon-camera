@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "newFeaturesPresentInRealReleaseDartAot": true,
+  "artifacts": [
+    {
+      "version": 226,
+      "apk": "dist/migration226/huevia-0.31.0-dev-226-android-arm64.apk",
+      "apkSha256": "d865892f649d1e505678ec71cfdcf485adad95c8823823951e2d060694d10301",
+      "dartAotBytes": 9634696,
+      "dartAotSha256": "289cbb397302460c08c8751f108a72ebac0657ffc720be5150defbc0eca810d8",
+      "markers": {
+        "camera-selection-download": false,
+        "capsule-switch-indicator": false,
+        "完成当前传输后停止": false,
+        "完成当前传输后暂停": false
+      }
+    },
+    {
+      "version": 227,
+      "apk": "dist/migration227/huevia-0.31.0-dev-227-android-arm64.apk",
+      "apkSha256": "1a1dcf36cf2668a88a3ff13678ad8ab0e6b392b03d51f67032b547592880a66e",
+      "dartAotBytes": 9634696,
+      "dartAotSha256": "f353abbb010cc7848bba54505979cb4df34f299af625603f0e5674ac7c0e7995",
+      "markers": {
+        "camera-selection-download": true,
+        "capsule-switch-indicator": true,
+        "完成当前传输后停止": true,
+        "完成当前传输后暂停": true
+      }
+    }
+  ]
+}

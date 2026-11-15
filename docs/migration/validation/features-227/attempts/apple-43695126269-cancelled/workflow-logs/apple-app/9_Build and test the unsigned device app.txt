@@ -1,0 +1,9 @@
+﻿2026-11-15T08:41:34.4244590Z ##[group]Run bash cross-platform/tool/mobile_apple.sh build
+2026-11-15T08:41:34.4246010Z [36;1mbash cross-platform/tool/mobile_apple.sh build[0m
+2026-11-15T08:41:34.5822320Z shell: /bin/bash -e {0}
+2026-11-15T08:41:34.5822690Z ##[endgroup]
+2026-11-15T08:41:35.5747300Z Valid UTF-8 text and platform configuration: 1771 files
+2026-11-15T08:41:35.5751850Z Read-only detail render source boundary: 43 checks passed
+2026-11-15T08:41:35.5752700Z Readonly HueviaTask cancellation API: 60 Apple sources checked; 1 independently typed fixture setter retained
+2026-11-15T08:52:07.0032650Z {"developmentBuild": true, "fullParityComplete": false, "bundleIdentifier": "cc.huevia.next", "version": "0.31.0", "build": "227", "platform": "iPhoneOS", "architecture": "arm64", "minimumOS": "16.0", "sha256": "a3c833ee9da850cc8800437fa8f9036d47b367f44364e01e6ca9240762cf8465", "bytes": 65178892, "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f", "flutterRevision": "c197ca5199e9ee5661e865596c9c07294dfab51c"}
+2026-11-15T08:54:58.0467050Z ##[error]The operation was canceled.

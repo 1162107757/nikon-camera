@@ -1,0 +1,15 @@
+{
+  "syntheticVerifierOnly": true,
+  "actualAppleBuildExecuted": false,
+  "previousDiscoveryInvocation": "unittest reported0 tests/exit5; these are standalone assert scripts, prior raw retained",
+  "results": [
+    {
+      "script": "test_apple_full_source_evidence228",
+      "exit": 0
+    },
+    {
+      "script": "test_public_internet_evidence228",
+      "exit": 0
+    }
+  ]
+}

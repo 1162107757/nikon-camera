@@ -1,0 +1,1 @@
+{"sdk": "TencentOpenAPI 3.6.22.459", "sha256": "38a2fb7f26d8de683b942e16c5c1e46aeb054810d193bab0292686f8e5c74ae1", "slices": [{"slice": "ios-arm64", "platform": 2, "architectures": ["arm64"], "objects": 49, "minimumIOS": "15.0"}, {"slice": "ios-arm64_x86_64-simulator", "platform": 7, "architectures": ["arm64", "x86_64"], "objects": 98, "minimumIOS": "15.0"}]}

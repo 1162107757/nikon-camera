@@ -1,0 +1,4 @@
+﻿2026-11-15T08:34:33.4142240Z ##[group]Run echo "xcode=$(xcodebuild -version | tr '\n ' '--')" >> "$GITHUB_OUTPUT"
+2026-11-15T08:34:33.4142890Z [36;1mecho "xcode=$(xcodebuild -version | tr '\n ' '--')" >> "$GITHUB_OUTPUT"[0m
+2026-11-15T08:34:33.4200810Z shell: /bin/bash -e {0}
+2026-11-15T08:34:33.4202050Z ##[endgroup]

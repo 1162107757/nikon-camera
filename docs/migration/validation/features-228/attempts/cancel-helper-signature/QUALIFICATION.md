@@ -1,0 +1,1 @@
+An initial local cancellation helper invocation used unsupported keyword arguments and raised TypeError before any HTTP request. The actual helper signature was inspected, then one correct cancel POST was acknowledged. The obsolete227 CI was cancelled because228 superseded it; no application publication was performed.

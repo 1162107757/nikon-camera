@@ -1,0 +1,14 @@
+[
+  {
+    "step": "privacy-final-format",
+    "exit": 0
+  },
+  {
+    "step": "privacy-final-analyze",
+    "exit": 0
+  },
+  {
+    "step": "privacy-final-tests",
+    "exit": 0
+  }
+]

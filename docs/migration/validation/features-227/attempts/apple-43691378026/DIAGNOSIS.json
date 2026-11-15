@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "build": 227,
+  "runId": 43691378026,
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "observedAtUtc": "2026-11-15T08:20:56.926301+00:00",
+  "runConclusion": "failure",
+  "fullAcceptancePassed": false,
+  "ipaAccepted": false,
+  "published": false,
+  "flutter": {
+    "passed": 720,
+    "failed": 1,
+    "timeoutMinutes": 10,
+    "failedFile": "cross-platform/app/test/camera_live_panel_test.dart",
+    "failedCase": "Expanded committed live photo hides pixels and filename immediately when owner changes",
+    "rawLog": "artifact/mobile-apple/flutter-tests.log",
+    "errorLines": [
+      17,
+      18,
+      19
+    ],
+    "finalCountLine": 970,
+    "errorKind": "timeout-without-specific-await-stack"
+  },
+  "successfulStepsDoNotEstablishFullAcceptance": [
+    "Verify core parity and prepare native runtimes step6 success",
+    "device-build.log reports Xcode build success after107.3s",
+    "core-ios parity and public-internet Foundation compile/runtime receipts retained in full artifact"
+  ],
+  "notReachedOrNotAccepted": [
+    "No successful full Flutter gate",
+    "No simulator5UIKit/real native1/foreground receipt in this artifact",
+    "No IPA verification or promotion performed"
+  ],
+  "diagnosticBoundary": "The raw timeout does not identify which await blocked. Root is investigating the old widget FakeAsync setup/teardown as a fixture candidate; this archive makes no unsupported product-or-fixture-only conclusion.",
+  "sourceLocationsForReadOnlyInvestigation": [
+    {
+      "file": "cross-platform/app/test/camera_live_panel_test.dart",
+      "lines": [
+        72,
+        73,
+        75
+      ],
+      "detail": "teardown directly awaits controller.stop then event-stream close"
+    },
+    {
+      "file": "cross-platform/app/test/camera_live_panel_test.dart",
+      "lines": [
+        84,
+        86,
+        113
+      ],
+      "detail": "widget directly awaits start/poll in fake zone; owner change triggers unawaited stop"
+    }
+  ],
+  "archives": [
+    {
+      "file": "workflow-logs.zip",
+      "bytes": 27512,
+      "sha256": "e3d26b8092e2215fd6e727ab204f66f232b4eb9eed76d67cae98a36d10cd8d19",
+      "githubDigest": null,
+      "entries": [
+        {
+          "name": "0_apple-app.txt",
+          "bytes": 42586,
+          "sha256": "5ab61f214a6d286f6c224f7b1f46421e83db0e4769f1d6b37b6f1871e1cc7204"
+        },
+        {
+          "name": "apple-app/system.txt",
+          "bytes": 819,
+          "sha256": "e22997db4154de479f2033353c1af1ea8715782883c6198d3ea69ddf49b943db"
+        },
+        {
+          "name": "apple-app/1_Set up job.txt",
+          "bytes": 2287,
+          "sha256": "fb92b317203bf01a7a6e5580150cfe75495a9b327a72f4bb60c41e249d700b60"
+        },
+        {
+          "name": "apple-app/2_Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+          "bytes": 13011,
+          "sha256": "4000134ec2f61ce5582ab40143fc42397ef6bf9a378aacffbb98750a005bcc7d"
+        },
+        {
+          "name": "apple-app/3_Identify the exact Apple compiler.txt",
+          "bytes": 324,
+          "sha256": "1b1f99f2b75f69047d562859f0e8289c72d465331813fe58cef434133748858c"
+        },
+        {
+          "name": "apple-app/4_Restore pinned native runtime outputs.txt",
+          "bytes": 2086,
+          "sha256": "a10948bd0e813a1b8647b6f45fc16210731fc17a646bc0c21dece17eb755f430"
+        },
+        {
+          "name": "apple-app/5_Restore pinned official Apple SDK and model downloads.txt",
+          "bytes": 1824,
+          "sha256": "1d77744aba84eeba8cc9a2b0bc22e5d87b9b22a95c4ac129e42571af4641f150"
+        },
+        {
+          "name": "apple-app/6_Verify core parity and prepare native runtimes.txt",
+          "bytes": 2224,
+          "sha256": "03f48167a07747835466cbd44bdd6c5a89e67b08cdb7b3d8fc91fd977b1707c7"
+        },
+        {
+          "name": "apple-app/9_Build and test the unsigned device app.txt",
+          "bytes": 732,
+          "sha256": "c86c207561e79f5ad302894dec04ade1c0f81034177835ed134e992d46c4a218"
+        },
+        {
+          "name": "apple-app/11_Show actionable build errors.txt",
+          "bytes": 14872,
+          "sha256": "192bfc060247e25a7873e1a882738e32aae0be32a963c69e78c0a8da82344014"
+        },
+        {
+          "name": "apple-app/12_Preserve development IPA and exact build evidence.txt",
+          "bytes": 2565,
+          "sha256": "8b369c917eb02a364691e06778dd443035c60eedded8e9532593658daa86d2da"
+        },
+        {
+          "name": "apple-app/24_Post Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+          "bytes": 1944,
+          "sha256": "2fef1b382f0fb853805bf1db87c5c2d6684ad9f38e7e2eb4264b235a7d965dfd"
+        },
+        {
+          "name": "apple-app/25_Complete job.txt",
+          "bytes": 747,
+          "sha256": "abb7f994515840ee4893ec065bf072a165450baddd5a343d808fd5e6353f9830"
+        }
+      ]
+    },
+    {
+      "file": "artifact.zip",
+      "bytes": 37492,
+      "sha256": "b6b416feb696a5188e74b1b2e7afd1e62287d9a0bc67dd87d7090677df197830",
+      "githubDigest": "sha256:b6b416feb696a5188e74b1b2e7afd1e62287d9a0bc67dd87d7090677df197830",
+      "entries": [
+        {
+          "name": "mobile-apple/analyze.log",
+          "bytes": 97,
+          "sha256": "66414793f9ea48494c64647f4850e37c8350d5d8eab7db20b8a87e44ed22826c"
+        },
+        {
+          "name": "mobile-apple/device-build.log",
+          "bytes": 894,
+          "sha256": "c9dbd7eb320f3dfce17544e9fb912a49d9319698494cbcf567e67e1b2a9a9f93"
+        },
+        {
+          "name": "mobile-apple/flutter-bootstrap.log",
+          "bytes": 319,
+          "sha256": "5b3efc8f23261efe12efa048ae701d57d0299246c86afb604f48f73edbd92af7"
+        },
+        {
+          "name": "mobile-apple/flutter-tests.log",
+          "bytes": 166578,
+          "sha256": "13b4a533cbd00bf32a421d952c2efcfdb85aed486ecc86940432b09c080f406e"
+        },
+        {
+          "name": "mobile-apple/flutter-version.json",
+          "bytes": 664,
+          "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+        },
+        {
+          "name": "mobile-apple/native-runtime.json",
+          "bytes": 884,
+          "sha256": "3c4d87c2454860918f07b6230c482b53015aec7163852f082deae799e7e51d8d"
+        },
+        {
+          "name": "mobile-apple/portrait-models.log",
+          "bytes": 424,
+          "sha256": "2ced8d43108e1c408ffa94ff5020c6c36e3f7c68eb3999290cc84f1ed9132e68"
+        },
+        {
+          "name": "mobile-apple/pub-get.log",
+          "bytes": 1748,
+          "sha256": "5a466b07a5273b76e499cff3081cfd2cadbdb73b6e9b5d00e6a97f286d18e7a3"
+        },
+        {
+          "name": "mobile-apple/public-internet/build.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "mobile-apple/public-internet/compiler.log",
+          "bytes": 207,
+          "sha256": "6c263f4a0b378193483e8853193204a89db0eacf407199d789fb7e3125b8148b"
+        },
+        {
+          "name": "mobile-apple/public-internet/result.json",
+          "bytes": 1415,
+          "sha256": "455775381023df56d1940224f9056beae149491a56c7b349f712fa6b2f5c38ee"
+        },
+        {
+          "name": "mobile-apple/public-internet/source-check.log",
+          "bytes": 143,
+          "sha256": "abe0003008041566715c8b92697936631cf52cd2cda9e566c9a7926c3de75ff7"
+        },
+        {
+          "name": "mobile-apple/public-internet/stdout.log",
+          "bytes": 123,
+          "sha256": "6227a5f208fe0a9342af3ee3738afcd08b5fc29b6137527d3d9c6454f04d357f"
+        },
+        {
+          "name": "mobile-apple/qq-sdk.log",
+          "bytes": 362,
+          "sha256": "26f0089e9c64eef1157e735644cbdee892402b92f296df7a8029f30c03faa3d4"
+        },
+        {
+          "name": "mobile-apple/raw-build.log",
+          "bytes": 886,
+          "sha256": "c27296de7136f0effac26561bf421eb89e81120155e7b80bf9e1e6f6b73eac49"
+        },
+        {
+          "name": "core-ios/avatar-build.log",
+          "bytes": 51,
+          "sha256": "ea4090f75f622fb03e64dffcdf8ee0ea79fdd5f11d3163ab1ca96a582531a60b"
+        },
+        {
+          "name": "core-ios/avatar.log",
+          "bytes": 133,
+          "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4"
+        },
+        {
+          "name": "core-ios/parity.json",
+          "bytes": 885,
+          "sha256": "de702d285ecb2e88bb98103b9f13a024edf431318548d4830f9bbe7ca64b3204"
+        },
+        {
+          "name": "core-ios/translation.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "qualification": "Historical failed bf29 Mac attempt only. Already accepted Android evidence is unchanged. No independent successful package acceptance is inherited from partial native/device/Foundation successes."
+}

@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "build": 227,
+  "published": false,
+  "scope": "Fresh Android sourceac5a7ef build/gate/runtime/UI receipts; no package promotion or physical-camera transport acceptance.",
+  "gateSummary": {
+    "androidBuildExit": 0,
+    "verifyAndroidExit": 0,
+    "presetPhotoExit": 0,
+    "r8Checks": 123,
+    "rootBackCases": 4,
+    "childBackCases": 2,
+    "guiCases": 5,
+    "guiExit": 0
+  },
+  "initialInfrastructureAttempt": {
+    "count": 0,
+    "paths": [],
+    "countedAsPass": false,
+    "reason": "No previous-source infrastructure attempts or their payloads are included in this fresh source archive."
+  },
+  "qaRetry": {
+    "maxFreshDumps": 3,
+    "validatesDumpSuccessMarker": true,
+    "validatesHierarchyXml": true,
+    "sameQaHelperAsPreviousVerifiedArchive": true,
+    "functionalLabelAssertionsChanged": false,
+    "qualification": "Current QA helper SHA matches the previously verified helper; fresh dump success and hierarchy checks remain bounded to three attempts. No prior failure attempt is read or copied by this archive."
+  },
+  "backFinalScreen": {
+    "raw": "预设",
+    "rawModified": false,
+    "observedHeader": "预设",
+    "snapshot": "ui/back227-resumed-presets.xml",
+    "note": "Current report and header use 预设. Four root same-process/activity cases plus two child-return assertions pass after the infrastructure retry."
+  },
+  "screenshots": {
+    "container": "ui-screenshots.tar.xz",
+    "originalPngMembers": 15,
+    "prefixes": [
+      "back227-",
+      "gui227-"
+    ],
+    "verification": "Every decompressed PNG member is byte-compared to its source; corresponding XML is copied byte-for-byte."
+  },
+  "mappings": {
+    "container": "r8-mappings.tar.xz",
+    "members": 2,
+    "verification": "Both original mappings decompressed and byte-compared; original bytes/SHA are separately listed per member in archive-manifest.json."
+  },
+  "widgetEvidence": {
+    "selectionCircleAndLongPress": {
+      "path": "receipts/camera_selection_download_test.dart.log",
+      "cases": 2,
+      "exit": 0
+    },
+    "capsuleAnimation": {
+      "path": "receipts/capsule_switch_test.dart.log",
+      "cases": 3,
+      "exit": 0
+    },
+    "qualification": "These supporting widget success logs were retained from the previous frozen source. The current privacy-test-only proof confirms all product inputs unchanged; they are not claimed as freshly rerun AC device tests. Existing aggregate local evidence remains in ../shared."
+  },
+  "physicalCameraTested": false,
+  "connectedThenDisconnectedTransportProvenByThisGui": false,
+  "stopTransportQualification": "Ordinary-stop transport behavior is covered by held-transaction Dart regressions and SharedCore same-session JPEG/NEF tests in the shared/core archives; no physical burst/stop claim is made for this disconnected emulator GUI.",
+  "privacyTestOnlyProof": {
+    "path": "receipts/privacy-test-only-source-proof.json",
+    "qualification": "Only the privacy widget fixture changed from BF to AC; source hash and its actual whole-file 2/0 result are verified. Raw result JSON is also copied."
+  },
+  "stopReview": {
+    "path": "receipts/stop-independent-review.json",
+    "qualification": "Original static review preserved unchanged; its earlier pre-SDK state is not a runtime pass receipt."
+  },
+  "sourceSnapshot": {
+    "path": "receipts/source.json",
+    "qualification": "Unmodified source-frozen, before-promotion metadata snapshot. acceptedfalse/pending flags are retained; parent later promotion metadata does not rewrite this raw original."
+  },
+  "excluded": [
+    "APK payloads",
+    "classes trees",
+    "uncompressed mapping files",
+    "private HANDOFF.json",
+    "226 evidence",
+    "other WIP/old UI snapshots",
+    "prior-source infrastructure attempts"
+  ],
+  "packages": [
+    {
+      "path": ".tooling/next227/package-candidates/huevia-0.31.0-dev-227-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "1a1dcf36cf2668a88a3ff13678ad8ab0e6b392b03d51f67032b547592880a66e",
+      "copied": false
+    },
+    {
+      "path": ".tooling/next227/package-candidates/huevia-0.31.0-dev-227-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "e9798a9f85afb80d177565a6f8e1ecd3c5d84e3766d3be22a9744cca16114b74",
+      "copied": false
+    }
+  ],
+  "sdkAdbGitExecutedByArchiver": false
+}

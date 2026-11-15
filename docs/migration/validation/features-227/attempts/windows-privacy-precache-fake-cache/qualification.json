@@ -1,0 +1,8 @@
+{
+  "passed": 1,
+  "failed": 1,
+  "stage": "precache real JPEG timed out8s",
+  "cause": "Image widget already created FileImage stream in fake zone; awaiting same stream inside runAsync prevents fake zone advancement. Remove separate precache wait, retain actual non-null decoded RawImage predicate with interleaved real/fake pumping.",
+  "productChanged": false,
+  "countedAsPass": false
+}

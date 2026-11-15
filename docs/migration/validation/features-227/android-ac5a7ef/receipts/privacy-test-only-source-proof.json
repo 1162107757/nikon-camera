@@ -1,0 +1,13 @@
+{
+  "previousSource": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "changedPaths": [
+    "cross-platform/app/test/camera_live_panel_test.dart"
+  ],
+  "allProductInputsUnchanged": true,
+  "privacyTestFileSha256": "a543118eadfbdf0f6155a30a6adf315c951dbf86580a4f8653268523ea798119",
+  "wholePrivacyFilePassed": 2,
+  "formatExit": 0,
+  "analyzeExit": 0,
+  "testExit": 0
+}

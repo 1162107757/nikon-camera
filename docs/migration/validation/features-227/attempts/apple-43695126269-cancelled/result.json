@@ -1,0 +1,11 @@
+{
+  "runId": 43695126269,
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "observedAtUtc": "2026-11-15T08:56:57.692982+00:00",
+  "status": "completed",
+  "conclusion": "cancelled",
+  "polls": 22,
+  "getOnly": true,
+  "accepted": false,
+  "qualification": "Observed workflow outcome only; independent package verification remains required."
+}

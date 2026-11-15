@@ -1,0 +1,4 @@
+{
+  "directory": "attempts/windows-manual-diagnostic-timeout",
+  "qualification": "Diagnostic exit124; temporary source retained in windows-manual-completion-and-start-fixtures, not in product test tree."
+}

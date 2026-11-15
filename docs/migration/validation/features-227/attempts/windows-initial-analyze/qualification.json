@@ -1,0 +1,6 @@
+{
+  "analyzeExit": 1,
+  "testsStarted": false,
+  "issues": "3 explicit mounted guard lints,1 curly braces lint,1 old test override missing new named preserveConnection argument",
+  "countedAsPass": false
+}

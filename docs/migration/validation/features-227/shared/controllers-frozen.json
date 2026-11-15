@@ -1,0 +1,7 @@
+{
+  "additionalTestTargets": [
+    "camera_download_soft_stop_test.dart"
+  ],
+  "state": "allProductControllersFrozenForRootSdk",
+  "sdkOwner": "root"
+}

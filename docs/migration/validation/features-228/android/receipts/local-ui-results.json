@@ -1,0 +1,18 @@
+[
+  {
+    "step": "format",
+    "exit": 0
+  },
+  {
+    "step": "analyze",
+    "exit": 0
+  },
+  {
+    "step": "sync-layout",
+    "exit": 0
+  },
+  {
+    "step": "download-circle",
+    "exit": 0
+  }
+]

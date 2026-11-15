@@ -1,0 +1,9 @@
+Analyzing app...                                                
+
+   info - Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check - lib\camera_live_card.dart:136:20 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check - lib\camera_live_card.dart:153:18 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check - lib\camera_live_card.dart:177:29 - use_build_context_synchronously
+   info - Statements in an if should be enclosed in a block. Try wrapping the statement in a block - test\camera_download_soft_stop_test.dart:80:9 - curly_braces_in_flow_control_structures
+  error - 'HeldStopLive.stop' ('Future<void> Function()') isn't a valid override of 'CameraLive.stop' ('Future<void> Function({bool preserveConnection})') - test\camera_intent_test.dart:150:16 - invalid_override
+
+5 issues found. (ran in 9.2s)

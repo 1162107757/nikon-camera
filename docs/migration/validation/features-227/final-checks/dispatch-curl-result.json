@@ -1,0 +1,6 @@
+{
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "curlExit": 35,
+  "httpStatus": "000",
+  "stderr": "curl: (35) schannel: failed to receive handshake, SSL/TLS connection failed\r\n"
+}

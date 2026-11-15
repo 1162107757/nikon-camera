@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "build": 227,
+  "runId": 43695126269,
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "conclusion": "cancelled",
+  "runFailed": false,
+  "fullAcceptancePassed": false,
+  "ipaAccepted": false,
+  "published": false,
+  "reason": "Root deliberately cancelled this superseded 227 run to use build resources for the new 228 layout/download-circle product fixes.",
+  "observedFlutterPassedCountInWorkflowLog": null,
+  "qualification": "Any completed component shown in these original logs remains an observation for ac5a/227 only. Cancellation is neither a full-run failure nor successful acceptance, and is not evidence for source734/228.",
+  "artifactApiOnly": "The API lists a nonaccepted artifact including a large IPA. Its original metadata is preserved; this archive does not download, promote or accept that IPA.",
+  "workflowLogZipSha256": "f24cc8e2ca9ab61ad2bfd9944a6bb640633c93fde2ad50e6eb2f49deca46f67a"
+}

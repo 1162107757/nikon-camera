@@ -1,0 +1,8 @@
+{
+  "qualification": "Duration context only, not current-run acceptance or failure. One prior accepted226 full run stage9 duration1404seconds;228 continues under its strict original gates.",
+  "previousAcceptedRun": 43663233293,
+  "previousAcceptedSource": "ed48347f1b3e6c92492207259cf24d1613ea12e3",
+  "previousStep9Seconds": 1404,
+  "currentRun": 43696814968,
+  "currentSource": "734aa3b0f6687dda815af9e13070f0f3c463873c"
+}

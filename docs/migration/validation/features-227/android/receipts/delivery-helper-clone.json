@@ -1,0 +1,114 @@
+{
+  "sourceBuild": 226,
+  "build": 227,
+  "files": [
+    {
+      "source": ".tooling/next226/build_releases.py",
+      "path": "build_releases.py",
+      "sourceSha256": "ba5d0dd202fc31cef3bba1d349ac812a2e88851c9b0705c911084833472f401e",
+      "targetSha256": "0c17b38c93411c26c6afa29bb0cefa5b038b859994906604d9d92385927449e3",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/verify_android.py",
+      "path": "verify_android.py",
+      "sourceSha256": "44f9477c425d2c080b18b8c6973f71c33fb756d306bcb59d6eed041954739ed4",
+      "targetSha256": "086d7aed0a7ef375c415cdffda3e0fedfcc455b52c339e6a158a7eb1896c0997",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/verify_photos.py",
+      "path": "verify_photos.py",
+      "sourceSha256": "c29da640f92ee9417fbff60c90da2a26f1b3c0035ec623ab75c07589efdd5886",
+      "targetSha256": "9a4cdba01ef0c21a0b7862e147e47a5210bfbd29175a69cec09402fa20c2aa1e",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/run_release_runtime.py",
+      "path": "run_release_runtime.py",
+      "sourceSha256": "faeb0319aa530cea1c9a07c4b59ea2ddd907de588e2d4b82c7d171899121f98b",
+      "targetSha256": "977c5902efcb54c9c45380f3186527ab340c727d08dad52c0a639e98992ffb6d",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/check_back_navigation.py",
+      "path": "check_back_navigation.py",
+      "sourceSha256": "65f78399e15451b67925d64a31969697284c5537b11b03500fcfbe8a0bc66153",
+      "targetSha256": "13ac830fad288b5f4bde8ff85d3d28f7bc2af2f85c064232169d9ab1c29efd10",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/android_acceptance_pipeline.py",
+      "path": "android_acceptance_pipeline.py",
+      "sourceSha256": "1132bcc7d31b01c30d3b0aec5d5667588ca385a261d18af929b982070a710f6f",
+      "targetSha256": "1132bcc7d31b01c30d3b0aec5d5667588ca385a261d18af929b982070a710f6f",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/qa_ui.py",
+      "path": "qa_ui.py",
+      "sourceSha256": "34d35e793b207063fcd0b50c54aa7e668e82947afab884ed51b49589277fcb32",
+      "targetSha256": "9a23da211b48a55a32a424c8c897f082358027832c48cc8666a8b81041d244bf",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/release-runtime.init.gradle",
+      "path": "release-runtime.init.gradle",
+      "sourceSha256": "53fab9c417f8a767acf7c709e27daa6a7124ad98e4039137f00c4a8dc77962c1",
+      "targetSha256": "53fab9c417f8a767acf7c709e27daa6a7124ad98e4039137f00c4a8dc77962c1",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/verify_apple.py",
+      "path": "verify_apple.py",
+      "sourceSha256": "f124dbce5b88016e438895232682560645ae8eb6aff480fa76f7251b4e9c7930",
+      "targetSha256": "0812fa58d20b6f496a375fa0a7e8a91a4810f6a610ca50a97a3e723fec6f2fbd",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/apple_full_source_evidence226.py",
+      "path": "apple_full_source_evidence227.py",
+      "sourceSha256": "7ca3ed92c42a44836c7ccc603daec71fbc50c86d061dbcdf40af8b9ce528ed03",
+      "targetSha256": "bc0e5aa91f8459e7660023632a93d6fe848cfd056cb827f376cb3038a081a07a",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/public_internet_evidence226.py",
+      "path": "public_internet_evidence227.py",
+      "sourceSha256": "eaed2622b0a8ffd032767f19ac230576556a4814fbc76a57365140c31ace8ebc",
+      "targetSha256": "e87cc9829d3d1f602ea1aeed062b086d73f0ee637ac95652fd1acf840601af72",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/foreground_evidence226.py",
+      "path": "foreground_evidence227.py",
+      "sourceSha256": "631e11fe6a7ac22d4a99a9a3e94bb321237f47f5a2a3dd9a6fe3fa396e29e121",
+      "targetSha256": "a1f68d89432af91726d03ce91cbab0fe3ed2dc5833b2df38c55e835e8fd8df31",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/test_apple_full_source_evidence226.py",
+      "path": "test_apple_full_source_evidence227.py",
+      "sourceSha256": "c5e448fce497131d8dcb27203d9dbb7886b594af03a5cbfd22b751648eb5b27b",
+      "targetSha256": "48c40a55119f4ee4540d160216fb99d63780c3ea873793b4ef8bd9be464694b3",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/test_public_internet_evidence226.py",
+      "path": "test_public_internet_evidence227.py",
+      "sourceSha256": "da1717d764e6dc45f2175e956bdb229aedbb33edc1d7f356b9a814c996282ff8",
+      "targetSha256": "12a92416658260eab9b1a45810d87740a45f35466591c27044ad11146aa34972",
+      "allFixed40And64HexPinsUnchanged": true
+    },
+    {
+      "source": ".tooling/next226/dispatch_apple.py",
+      "path": "dispatch_apple.py",
+      "sourceSha256": "8990fca13afdb3116b48ca079f714a6d76eb5f141248c29fc5cc578aaa6adb70",
+      "targetSha256": "8990fca13afdb3116b48ca079f714a6d76eb5f141248c29fc5cc578aaa6adb70",
+      "allFixed40And64HexPinsUnchanged": true
+    }
+  ],
+  "allFixedPinsPreserved": true,
+  "published": false,
+  "sdkOrBuildExecuted": false
+}

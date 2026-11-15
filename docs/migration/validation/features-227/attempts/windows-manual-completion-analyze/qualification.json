@@ -1,0 +1,5 @@
+{
+  "analyzeExit": 1,
+  "testExecutionStarted": false,
+  "issue": "one unnecessary_underscores lint in new widget completion listener"
+}

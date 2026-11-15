@@ -1,0 +1,11 @@
+D:\dev\ai-project\nikon-camera\.tooling\next227\package-candidates\huevia-0.31.0-dev-227-android-x64.apk: 1 file pushed, 0 skipped. 61.5 MB/s (56766674 bytes in 0.881s)
+Performing Push Install
+Success
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\androidTest\debug\app-debug-androidTest.apk: 1 file pushed, 0 skipped. 102.6 MB/s (79104 bytes in 0.001s)
+Performing Push Install
+Success
+INSTRUMENTATION_RESULT: checks=123
+INSTRUMENTATION_RESULT: evidence={"requestCandidates":["public final java.lang.String cc.huevia.sharedapp.a.g(java.lang.String,java.lang.String,mp,ep)"],"cancelType":"mp","progressType":"ep","taskFlagClass":"or","taskFlagConstructor":"public or()","cancelAdapter":"verified-production-task-flag-capture","cancelClassId":0,"cancelConstructor":"public mp(int,java.lang.Object)","progressAdapter":"activity-progress-capture","progressConstructor":"public ep(cc.huevia.sharedapp.MainActivity,double[],long[],java.lang.String)","mediaField":"s","mediaMethod":"g","workerField":"g","mediaRuntimeClass":"cc.huevia.sharedapp.a","portraitSha256":"a92ca5bfb3de012aa63afbfa6413453bf27cbc54c273f3f9b81af676f9934231","faceCount":1,"skinPixels":1643,"changedPixelSamples":243,"detailInputExifOrientation":0,"detailTileWidth":400,"detailTileHeight":300,"detailTileDecodedBytes":480000,"detailTileMeanChannelError":0.9577777777777777,"detailTileReadOnly":true,"detailSourceSha256":"1828619529af2778341c7244a82e6293317c0f69e8edb05f160dad9a3082886c","detailWidth":1600,"detailHeight":1200,"detailPersistentStateUnchanged":true,"rawRecipeDetailVerified":true,"rawRecipeLocalProfileVerified":true,"rawRecipeSourceSha256":"2a7a6572bed9ffd8cb7f9ebb4f3c9adf3152c64b05297e576703368e0648fb53","rawDetailWidth":256,"rawDetailHeight":192,"rawDetailReadOnly":true,"rawDetailStagedExposureVerified":true,"rawSha256":"2a7a6572bed9ffd8cb7f9ebb4f3c9adf3152c64b05297e576703368e0648fb53","rawBytes":98904,"rawWidth":128,"rawHeight":96,"rawEmbedded":false}
+INSTRUMENTATION_RESULT: stream=PASS 123 R8 release runtime checks; real mesh, semantic skin, renderer, read-only full details, patch, cancellation and RAW JNI callbacks
+
+INSTRUMENTATION_CODE: -1

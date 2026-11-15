@@ -1,0 +1,147 @@
+{
+  "build": 228,
+  "versionCode": 228,
+  "versionName": "0.31.0-dev",
+  "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "sourceFrozen": true,
+  "published": false,
+  "acceptedForLocalTesting": true,
+  "acceptedForDelivery": false,
+  "androidAcceptedForLocalTesting": true,
+  "iosAcceptedForLocalTesting": true,
+  "status": "accepted-for-local-testing-only",
+  "packageStage": ".tooling/next228/package-candidates",
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-228-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "50759de4f4525d0053f5f4d93ff2763512b5509e31e248e6132643453bd17b63",
+      "platform": "Android",
+      "abi": "arm64",
+      "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-228-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "5e48ebda1b4cb3a620c66c74e8e17f9f8c8913ecbb87d8554fb6cca92910f23d",
+      "platform": "Android",
+      "abi": "x64",
+      "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-228-ios-unsigned.ipa",
+      "bytes": 65179274,
+      "sha256": "874e5a5f60c8651c7bf0da18b89ea677963657f27bce6d5df07db31e8bdb3591",
+      "platform": "iOS",
+      "abi": "arm64",
+      "unsigned": true,
+      "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+      "acceptedForLocalTesting": true,
+      "published": false
+    }
+  ],
+  "scope": [
+    "Keep fixed16dp spacing between all Sync tabs and scrolling contents;12dp top fade does not intercept gestures or remount content.",
+    "Render explicit #242420 solid56dp circular download background and white icon in light/dark/enabled/disabled states; retain count badge and original real download action.",
+    "Retain all227 soft-stop, disconnected-live connection, queue spacing and long-press fixes."
+  ],
+  "jvm": {
+    "totalChecks": 1891,
+    "boundaryChecks": 1885,
+    "atmosphereChecks": 6,
+    "compiledInputCount": 261,
+    "distinctInputCount": 246,
+    "reusedUnchanged227Execution": true,
+    "bindingIsNotRerun": true,
+    "sourceBindingPending": false,
+    "immutableBindingSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c"
+  },
+  "knownLimitations": [
+    "iOS QQ Universal Link/AASA remains unconfigured.",
+    "Physical Z6II Wi-Fi/cellular, USB, native QQ, 16KiB hardware and user-signed iPhone still require real-device testing."
+  ],
+  "appleFullRun": 43696814968,
+  "appleFullRunSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "appleFullRunAccepted": true,
+  "finalSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "platformAcceptance": {
+    "android": "accepted-for-local-testing",
+    "ios": "accepted-for-local-testing"
+  },
+  "androidReceipt": "android/",
+  "androidGuiReceipt": "android/receipts/live-panel-gui-result.json",
+  "appleVerification": {
+    "run": 43696814968,
+    "url": "https://github.com/1162107757/nikon-camera/actions/runs/43696814968",
+    "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+    "conclusion": "success",
+    "flutterTestsPassed": 724,
+    "photoKitXCTestPassed": true,
+    "nativeScenariosPassed": 1,
+    "uiKitTestsPassed": 5,
+    "cameraPresentationUIKitTestsPassed": 3,
+    "nativeTaskCancellationUIKitTestsPassed": 1,
+    "nativeForegroundSnapshotFixturePassed": true,
+    "nativeForegroundSnapshot": null,
+    "nativeForegroundSnapshotEvidence": "machine-test",
+    "nativeForegroundSourceProof": [
+      {
+        "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+        "gitBlobSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543"
+      },
+      {
+        "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+        "gitBlobSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e"
+      }
+    ],
+    "androidSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+    "publicInternetAppleIsolationPassed": true,
+    "publicInternetAppleSourceProof": [
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.h",
+        "gitBlobSha256": "7fdddfb2d8f10a187808d878ce870ef7c41df911cf44224c1f954bb323dd977e"
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.m",
+        "gitBlobSha256": "b87ed7603f70d966e99b799d30f5e7a27791c7653b519f9c506451f35e1a0b8e"
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+        "gitBlobSha256": "af8b855533a73e1a925d6435913d546df3f309cf933c0e47219630c623b68d92"
+      },
+      {
+        "path": "cross-platform/native/tests/public_internet_queue_apple.m",
+        "gitBlobSha256": "3c046c5885426fe1f8a87d9d7464d2ca39a31efe705806988508e1e0b25b557a"
+      },
+      {
+        "path": "cross-platform/tool/public_internet_queue_source_check.py",
+        "gitBlobSha256": "92606b3b2e6982418f846017fd3d7d0954c1d72e44212957518ddfa3a4d1d9da"
+      },
+      {
+        "path": "cross-platform/tool/public_internet_apple.sh",
+        "gitBlobSha256": "e480b75f03673802f83d4b487df457c20b11d79e6964079027353db2c6376a3a"
+      }
+    ],
+    "publicInternetAppleCompileExitCode": 0,
+    "publicInternetAppleExecutionExitCode": 0,
+    "fullMacSourceProof": {
+      "passed": true,
+      "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+      "runId": 43696814968,
+      "jobId": 132759091924,
+      "jobName": "apple-app",
+      "runnerLabels": [
+        "macos-26"
+      ],
+      "workflowPath": ".github/workflows/cross-platform-mobile.yml",
+      "fullPreparationAndBuildStepsSucceeded": true,
+      "artifactId": 14155377455,
+      "published": false
+    },
+    "changesFromAndroidSource": []
+  }
+}

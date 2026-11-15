@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "build": 227,
+  "archivedAtUtc": "2026-11-15T07:55:55.128472+00:00",
+  "sourceCommitAtArchive": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "qualification": "Existing Windows-host executions only; no tests were run during archiving. Logs predate the frozen commit and are not retroactively presented as a new full-suite or platform run.",
+  "sourceBindingQualification": "Frozen source at archive is context, not a replacement for the execution-time receipts. Mac full same-source validation remains separate.",
+  "wholeFileExit0": [
+    {
+      "file": "camera_live_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/camera_live_test.dart.log",
+      "allTestsPassedCount": 33,
+      "lastCompletedPassed": 33,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_downloads_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/camera_downloads_test.dart.log",
+      "allTestsPassedCount": 19,
+      "lastCompletedPassed": 19,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_selection_download_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/camera_selection_download_test.dart.log",
+      "allTestsPassedCount": 2,
+      "lastCompletedPassed": 2,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "capsule_switch_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/capsule_switch_test.dart.log",
+      "allTestsPassedCount": 3,
+      "lastCompletedPassed": 3,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_live_panel_226_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/camera_live_panel_226_test.dart.log",
+      "allTestsPassedCount": 6,
+      "lastCompletedPassed": 6,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_transfer_retirement_226_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/camera_transfer_retirement_226_test.dart.log",
+      "allTestsPassedCount": 7,
+      "lastCompletedPassed": 7,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/camera_sync_autoload_test.dart.log",
+      "allTestsPassedCount": 6,
+      "lastCompletedPassed": 6,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_download_soft_stop_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0",
+      "log": "shared/camera_download_soft_stop_test.dart.log",
+      "allTestsPassedCount": 8,
+      "lastCompletedPassed": 8,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_transfer_test.dart",
+      "runnerExit": 0,
+      "qualification": "complete-file-exit0-after-fixture-only-completion-fix",
+      "log": "shared/manual-verified.log",
+      "allTestsPassedCount": 6,
+      "lastCompletedPassed": 6,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": false,
+      "rawPackageExit": 0
+    },
+    {
+      "file": "camera_live_panel_test.dart",
+      "runnerExit": 0,
+      "allTestsPassedCount": 2,
+      "rawPackageExit": 0,
+      "nativeAccessViolationObserved": false,
+      "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+      "log": "shared/privacy-final-tests.log",
+      "qualification": "complete-file-exit0-after-test-only-fake-zone-repair; older AV and Mac timeout attempts remain preserved"
+    }
+  ],
+  "mixedNativeAVAttempts": [
+    {
+      "file": "camera_live_start_connection_test.dart",
+      "runnerExit": 79,
+      "qualification": "native-AV-incomplete-not-a-whole-file-pass",
+      "log": "shared/camera_live_start_connection_test.dart.log",
+      "allTestsPassedCount": null,
+      "lastCompletedPassed": 0,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": true,
+      "rawPackageExit": 79
+    },
+    {
+      "file": "camera_live_panel_test.dart",
+      "runnerExit": 1,
+      "qualification": "native-AV-incomplete-not-a-whole-file-pass",
+      "log": "shared/camera_live_panel_test.dart.log",
+      "allTestsPassedCount": null,
+      "lastCompletedPassed": 1,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": true,
+      "rawPackageExit": 1
+    },
+    {
+      "file": "camera_reconnect_226_test.dart",
+      "runnerExit": 1,
+      "qualification": "native-AV-incomplete-not-a-whole-file-pass",
+      "log": "shared/camera_reconnect_226_test.dart.log",
+      "allTestsPassedCount": null,
+      "lastCompletedPassed": 2,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": true,
+      "rawPackageExit": 1
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "runnerExit": 1,
+      "qualification": "native-AV-incomplete-not-a-whole-file-pass",
+      "log": "shared/camera_intent_test.dart.log",
+      "allTestsPassedCount": null,
+      "lastCompletedPassed": 12,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": true,
+      "rawPackageExit": 1
+    },
+    {
+      "file": "camera_design_ui_test.dart",
+      "runnerExit": 1,
+      "qualification": "native-AV-incomplete-not-a-whole-file-pass",
+      "log": "shared/camera_design_ui_test.dart.log",
+      "allTestsPassedCount": null,
+      "lastCompletedPassed": 3,
+      "lastReportedFailures": 0,
+      "nativeAccessViolationObserved": true,
+      "rawPackageExit": 1
+    }
+  ],
+  "disconnectedStartIndividualAttempts": [
+    {
+      "case": 1,
+      "earlierAttempt": {
+        "log": "shared/start-isolated-1.log",
+        "allTestsPassedCount": null,
+        "lastCompletedPassed": 0,
+        "lastReportedFailures": 1,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 1
+      },
+      "latestAttempt": {
+        "log": "shared/start-verified-1.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "qualification": "latest-isolated-exit0",
+      "earlierFixtureFailure": true,
+      "bodyUnchangedForCase3": null
+    },
+    {
+      "case": 2,
+      "earlierAttempt": {
+        "log": "shared/start-isolated-2.log",
+        "allTestsPassedCount": null,
+        "lastCompletedPassed": 0,
+        "lastReportedFailures": 1,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 1
+      },
+      "latestAttempt": {
+        "log": "shared/start-verified-2.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "qualification": "latest-isolated-exit0",
+      "earlierFixtureFailure": true,
+      "bodyUnchangedForCase3": null
+    },
+    {
+      "case": 3,
+      "earlierAttempt": {
+        "log": "shared/start-isolated-3.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "latestAttempt": {
+        "log": "shared/start-verified-3.log",
+        "allTestsPassedCount": null,
+        "lastCompletedPassed": 0,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": true,
+        "rawPackageExit": 79
+      },
+      "qualification": "earlier-isolated-exit0-latest-nativeAV-incomplete",
+      "earlierFixtureFailure": false,
+      "bodyUnchangedForCase3": true
+    },
+    {
+      "case": 4,
+      "earlierAttempt": {
+        "log": "shared/start-isolated-4.log",
+        "allTestsPassedCount": null,
+        "lastCompletedPassed": 0,
+        "lastReportedFailures": 1,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 1
+      },
+      "latestAttempt": {
+        "log": "shared/start-verified-4.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "qualification": "latest-isolated-exit0",
+      "earlierFixtureFailure": true,
+      "bodyUnchangedForCase3": null
+    },
+    {
+      "case": 5,
+      "earlierAttempt": {
+        "log": "shared/start-isolated-5.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "latestAttempt": {
+        "log": "shared/start-verified-5.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "qualification": "latest-isolated-exit0",
+      "earlierFixtureFailure": false,
+      "bodyUnchangedForCase3": null
+    },
+    {
+      "case": 6,
+      "earlierAttempt": {
+        "log": "shared/start-isolated-6.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "latestAttempt": {
+        "log": "shared/start-verified-6.log",
+        "allTestsPassedCount": 1,
+        "lastCompletedPassed": 1,
+        "lastReportedFailures": 0,
+        "nativeAccessViolationObserved": false,
+        "rawPackageExit": 0
+      },
+      "qualification": "latest-isolated-exit0",
+      "earlierFixtureFailure": false,
+      "bodyUnchangedForCase3": null
+    }
+  ],
+  "finalStatic": {
+    "format": {
+      "exit": 0,
+      "log": "shared/final-format.log"
+    },
+    "wholeAppAnalyze": {
+      "exit": 0,
+      "log": "shared/final-analyze.log"
+    },
+    "receipt": "shared/final-quality.json"
+  },
+  "manualHistoricalAttempts": [
+    {
+      "directory": "attempts/windows-manual-widget-wait",
+      "topLevelRawLog": "shared/camera_transfer_test.dart.log",
+      "runnerReceipt": "shared/local-regression-results.json",
+      "runnerExit": 124,
+      "laterRawPackageExit": 1,
+      "qualification": "5 completed pass,1 real busyfalse assertion failure, then teardown hung; root interruption/outer timeout124. The top-level verbose log additionally contains the later framework ten-minute timeout and package-exit1; neither result is a whole-file pass."
+    },
+    {
+      "directory": "attempts/windows-manual-completion-and-start-fixtures",
+      "qualification": "Manual outer timeout124 with5 earlier completed cases; instrumented body proved settled=true/busy=false, then second await of the already-completed fake-zone Future hung in teardown. Final fix uses completion/error flags and preserves original assertions."
+    },
+    {
+      "directory": "attempts/windows-manual-diagnostic-compile",
+      "qualification": "Temporary diagnostic fixture failed compilation (undefined i), exit1;0 runtime tests executed, not a product failure or pass."
+    },
+    {
+      "directory": "attempts/windows-manual-diagnostic-timeout",
+      "qualification": "Diagnostic exit124; temporary source retained in windows-manual-completion-and-start-fixtures, not in product test tree."
+    }
+  ],
+  "startFixtureFixes": {
+    "cases1and2": "Wait route pop animation until CameraConnectionView is removed, retaining the no-view/one-confirmation/session/zero-photo-I/O assertions.",
+    "case4": "Use actual primary camera-connect for connected snapshot with invalid empty session; CameraConnectionView correctly treats it as disconnected.",
+    "productChangedForTheseFixes": false,
+    "case3Qualification": "Root confirms body unchanged. Prior isolated exit0 is historical coverage; later native AV is not counted as another pass or current whole-file completion."
+  },
+  "aggregateUniqueTestCount": null,
+  "aggregationNote": "Do not sum repeated attempts or treat mixed/AV groups as complete files. Individual file/case qualifications above are authoritative.",
+  "physicalCameraExercised": false,
+  "platformAcceptedByThisArchive": false,
+  "published": false,
+  "privacyFinalSupplement": {
+    "schemaVersion": 1,
+    "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+    "previousSource": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+    "archivedAtUtc": "2026-11-15T08:39:59.929835+00:00",
+    "file": "cross-platform/app/test/camera_live_panel_test.dart",
+    "completeFilePassed": 2,
+    "testExit": 0,
+    "formatExit": 0,
+    "wholeAppAnalyzeExit": 0,
+    "log": "shared/privacy-final-tests.log",
+    "sourceProof": "shared/privacy-test-only-source-proof.json",
+    "qualification": "Existing actual complete-file2/0 execution after a test-fixture-only change. Privacy image/name/owner assertions remain. No SDK rerun occurred during archiving.",
+    "changes": "Setup/owner/stop cleanup run in the appropriate real zone; real decoded RawImage readiness is observed by alternating real and fake pumping. A fake-zone-created FileImage stream is not awaited exclusively inside runAsync precache.",
+    "failedAttempts": [
+      {
+        "directory": "attempts/windows-privacy-precache-fake-cache",
+        "passed": 1,
+        "failed": 1,
+        "exit": 1,
+        "qualification": "Real8s timeout awaiting precache of a stream first created in fake zone; not a completed pass."
+      },
+      {
+        "directory": "attempts/windows-panel-owner-diagnostic",
+        "exit": 124,
+        "qualification": "Instrumented original body reached privacy checks and unmount; teardown stopped at controller.stop while phaseStopping/active/working. Timeout124, not a completed test pass."
+      }
+    ],
+    "newMacFullStillRequiresIndependentAcceptance": true,
+    "coreOrAndroidEvidenceChangedByThisAppend": false,
+    "published": false
+  }
+}

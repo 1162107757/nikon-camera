@@ -1,0 +1,19 @@
+﻿2026-11-15T08:34:37.7153120Z ##[group]Run actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684
+2026-11-15T08:34:37.7153580Z with:
+2026-11-15T08:34:37.7153830Z   path: cross-platform/.build/qq-ios/sdk.zip
+.tooling/portrait-models
+
+2026-11-15T08:34:37.7154360Z   key: huevia-apple-assets-v1-ARM64-8b555464f18177a8c902cbf6e24c5d3813a3e0386f9dd79124d1e95268214b5f
+2026-11-15T08:34:37.7154810Z   enableCrossOsArchive: false
+2026-11-15T08:34:37.7155030Z   fail-on-cache-miss: false
+2026-11-15T08:34:37.7155220Z   lookup-only: false
+2026-11-15T08:34:37.7155390Z ##[endgroup]
+2026-11-15T08:34:37.8564750Z (node:1856) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T08:34:37.8565600Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T08:34:37.9381430Z Cache hit for: huevia-apple-assets-v1-ARM64-8b555464f18177a8c902cbf6e24c5d3813a3e0386f9dd79124d1e95268214b5f
+2026-11-15T08:34:37.9468090Z (node:1856) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-15T08:34:38.3785770Z Received 56302595 of 56302595 (100.0%), 137.3 MBs/sec
+2026-11-15T08:34:38.3891090Z Cache Size: ~54 MB (56302595 B)
+2026-11-15T08:34:38.3993240Z [command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/a01bc922-3f11-42cb-9c54-05767e349886/cache.tzst -P -C /Users/runner/work/nikon-camera/nikon-camera --delay-directory-restore --use-compress-program unzstd
+2026-11-15T08:34:38.6115430Z Cache restored successfully
+2026-11-15T08:34:38.6277360Z Cache restored from key: huevia-apple-assets-v1-ARM64-8b555464f18177a8c902cbf6e24c5d3813a3e0386f9dd79124d1e95268214b5f

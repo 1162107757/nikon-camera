@@ -1,0 +1,53 @@
+{
+  "allEightByteExact": true,
+  "files": [
+    {
+      "source": ".tooling/next227/core-jvm-fresh/compile.log",
+      "path": "compile.log",
+      "bytes": 189,
+      "sha256": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6"
+    },
+    {
+      "source": ".tooling/next227/core-jvm-fresh/run.log",
+      "path": "run.log",
+      "bytes": 4293,
+      "sha256": "d7d31e0497e4230fd186be3d5e5cd8d4ce7147570a34728aa2abfb24520b0652"
+    },
+    {
+      "source": ".tooling/next227/core-jvm-fresh/sources.json",
+      "path": "sources.json",
+      "bytes": 17561,
+      "sha256": "b644740c3a06a72a5cc7a02bf01b096da41b8c7b5b0523f51c2a0e17fe36d65a"
+    },
+    {
+      "source": ".tooling/next227/core-jvm-fresh/golden.json",
+      "path": "golden.json",
+      "bytes": 760,
+      "sha256": "4541a9eea79e9ce9d2f60d22f9f05973246d7ebbc3b38f8522fba67cc74fbbbf"
+    },
+    {
+      "source": ".tooling/next227/core-jvm-fresh/javac.args",
+      "path": "javac.args",
+      "bytes": 24983,
+      "sha256": "c0718f27a6b3d1995e6d8ee54b5af265551aae63b3e83a2f8022b6af5e4a361a"
+    },
+    {
+      "source": ".tooling/next227/core_check_fresh.py",
+      "path": "invocation.py",
+      "bytes": 2453,
+      "sha256": "d42e5444e079f946f8c72c7d1bdcbf852a8ac07f464c7ecdf20f908720bf03d7"
+    },
+    {
+      "source": ".tooling/next227/core-check-fresh.log",
+      "path": "invocation.log",
+      "bytes": 3687,
+      "sha256": "a4a37f11e9c1efd9ba266a34ca3e7e95df01dc88a7d780064e0ef19b9c8a0662"
+    },
+    {
+      "source": ".tooling/next227/core-check-fresh.exit",
+      "path": "invocation.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    }
+  ]
+}

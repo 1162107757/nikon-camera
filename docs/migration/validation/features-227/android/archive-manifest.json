@@ -1,0 +1,1347 @@
+{
+  "schema": 1,
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "createdAt": "2026-11-15T08:02:52.046245+00:00",
+  "archiveRoot": "docs/migration/validation/features-227/android",
+  "allSourceDestinationBytesAndShaVerified": true,
+  "originalFileCount": 93,
+  "directOriginalCopies": 76,
+  "compressedOriginalMembers": 17,
+  "destinationFileCountIncludingManifest": 81,
+  "destinationBytesExcludingManifest": 5752912,
+  "originalBytes": 30205518,
+  "entries": [
+    {
+      "source": ".tooling/next227/source.json",
+      "destination": "receipts/source.json",
+      "member": null,
+      "sourceBytes": 2992,
+      "destinationBytes": 2992,
+      "sourceSha256": "8804fa2dfdc28f3c8761ede633e50f730de6debabc1f8c52d11d5ea9f8eabc4e",
+      "destinationSha256": "8804fa2dfdc28f3c8761ede633e50f730de6debabc1f8c52d11d5ea9f8eabc4e",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/android-release-result.json",
+      "destination": "receipts/android-release-result.json",
+      "member": null,
+      "sourceBytes": 113,
+      "destinationBytes": 113,
+      "sourceSha256": "84eb7908a644b2362f7e7c76aa90993adfaf44907239f08a761d8ffa2ebab8e1",
+      "destinationSha256": "84eb7908a644b2362f7e7c76aa90993adfaf44907239f08a761d8ffa2ebab8e1",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/android-arm64-release.log",
+      "destination": "receipts/android-arm64-release.log",
+      "member": null,
+      "sourceBytes": 298,
+      "destinationBytes": 298,
+      "sourceSha256": "985ac780917be320c7e77e4c7f9d29f5cc374b97714e3dd32e5a9fad9c8218ba",
+      "destinationSha256": "985ac780917be320c7e77e4c7f9d29f5cc374b97714e3dd32e5a9fad9c8218ba",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/android-x64-release.log",
+      "destination": "receipts/android-x64-release.log",
+      "member": null,
+      "sourceBytes": 295,
+      "destinationBytes": 295,
+      "sourceSha256": "2f47f82a20f2001111029fd98616e7b8bf9c5c3bef5ae1aad0af051fdd6a5406",
+      "destinationSha256": "2f47f82a20f2001111029fd98616e7b8bf9c5c3bef5ae1aad0af051fdd6a5406",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/arm64-gradle.log",
+      "destination": "receipts/arm64-gradle.log",
+      "member": null,
+      "sourceBytes": 28740,
+      "destinationBytes": 28740,
+      "sourceSha256": "aa902b56a377048e504d36f86e7686762550bf23ce8e31d3d80b27e7f01c8315",
+      "destinationSha256": "aa902b56a377048e504d36f86e7686762550bf23ce8e31d3d80b27e7f01c8315",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/x64-gradle.log",
+      "destination": "receipts/x64-gradle.log",
+      "member": null,
+      "sourceBytes": 28852,
+      "destinationBytes": 28852,
+      "sourceSha256": "8b8885ab1e8e55773d8f932cc829449c9d03527f1686c5b93d5435c58f9166cb",
+      "destinationSha256": "8b8885ab1e8e55773d8f932cc829449c9d03527f1686c5b93d5435c58f9166cb",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/instrumentation-build.log",
+      "destination": "receipts/instrumentation-build.log",
+      "member": null,
+      "sourceBytes": 228,
+      "destinationBytes": 228,
+      "sourceSha256": "d8b8c2d719f112ef931dce69ba14c02fa7bc9bcaf817b18986039c7d9ed8516c",
+      "destinationSha256": "d8b8c2d719f112ef931dce69ba14c02fa7bc9bcaf817b18986039c7d9ed8516c",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/instrumentation-runner-build.log",
+      "destination": "receipts/instrumentation-runner-build.log",
+      "member": null,
+      "sourceBytes": 21844,
+      "destinationBytes": 21844,
+      "sourceSha256": "a83c9df2a8ec6de5c6aa0df79dfc3ee125ed7035147162ef1565606ed34660c6",
+      "destinationSha256": "a83c9df2a8ec6de5c6aa0df79dfc3ee125ed7035147162ef1565606ed34660c6",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/instrumentation-runner-build.exit",
+      "destination": "receipts/instrumentation-runner-build.exit",
+      "member": null,
+      "sourceBytes": 1,
+      "destinationBytes": 1,
+      "sourceSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "destinationSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/arm64-apksigner.bat-final.log",
+      "destination": "receipts/arm64-apksigner.bat-final.log",
+      "member": null,
+      "sourceBytes": 972,
+      "destinationBytes": 972,
+      "sourceSha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "destinationSha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/x64-apksigner.bat-final.log",
+      "destination": "receipts/x64-apksigner.bat-final.log",
+      "member": null,
+      "sourceBytes": 972,
+      "destinationBytes": 972,
+      "sourceSha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "destinationSha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/arm64-zipalign.exe-final.log",
+      "destination": "receipts/arm64-zipalign.exe-final.log",
+      "member": null,
+      "sourceBytes": 0,
+      "destinationBytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/x64-zipalign.exe-final.log",
+      "destination": "receipts/x64-zipalign.exe-final.log",
+      "member": null,
+      "sourceBytes": 0,
+      "destinationBytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/verify_android-pipeline.log",
+      "destination": "receipts/verify_android-pipeline.log",
+      "member": null,
+      "sourceBytes": 104,
+      "destinationBytes": 104,
+      "sourceSha256": "762b8301092cea378c60c07c3fb0dc7671b31f8750b732821870c65efe01dcc3",
+      "destinationSha256": "762b8301092cea378c60c07c3fb0dc7671b31f8750b732821870c65efe01dcc3",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/verify_photos-pipeline.log",
+      "destination": "receipts/verify_photos-pipeline.log",
+      "member": null,
+      "sourceBytes": 77,
+      "destinationBytes": 77,
+      "sourceSha256": "1ddabf01661d657e8585b30c13746c17421fea513ea0d0e04c56f74162883f98",
+      "destinationSha256": "1ddabf01661d657e8585b30c13746c17421fea513ea0d0e04c56f74162883f98",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/release-runtime.log",
+      "destination": "receipts/release-runtime.log",
+      "member": null,
+      "sourceBytes": 2174,
+      "destinationBytes": 2174,
+      "sourceSha256": "df19c03631cb526e756d7d02b5fea15ee77a080576543e5493f1e534198d64b9",
+      "destinationSha256": "df19c03631cb526e756d7d02b5fea15ee77a080576543e5493f1e534198d64b9",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/release-runtime-result.json",
+      "destination": "receipts/release-runtime-result.json",
+      "member": null,
+      "sourceBytes": 511,
+      "destinationBytes": 511,
+      "sourceSha256": "55a79c95fe168c6161fd6aa1781ad5be0e572290b13ccce8edc31aed4d247c7c",
+      "destinationSha256": "55a79c95fe168c6161fd6aa1781ad5be0e572290b13ccce8edc31aed4d247c7c",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/release-runtime-mapping.json",
+      "destination": "receipts/release-runtime-mapping.json",
+      "member": null,
+      "sourceBytes": 181,
+      "destinationBytes": 181,
+      "sourceSha256": "84ef46844ee21e2b4dfa32148a1ad16ceb4a9cf5af65ec7991ee3115e4e37a6c",
+      "destinationSha256": "84ef46844ee21e2b4dfa32148a1ad16ceb4a9cf5af65ec7991ee3115e4e37a6c",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/run_release_runtime-pipeline.log",
+      "destination": "receipts/run_release_runtime-pipeline.log",
+      "member": null,
+      "sourceBytes": 0,
+      "destinationBytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/check_back_navigation-pipeline.log",
+      "destination": "receipts/check_back_navigation-pipeline.log",
+      "member": null,
+      "sourceBytes": 6597,
+      "destinationBytes": 6597,
+      "sourceSha256": "65fdcaf251cd6cf98d87059937fc88c751c4262c5f9aa8b6aaeffc78811e0189",
+      "destinationSha256": "65fdcaf251cd6cf98d87059937fc88c751c4262c5f9aa8b6aaeffc78811e0189",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/back-navigation-result.json",
+      "destination": "receipts/back-navigation-result.json",
+      "member": null,
+      "sourceBytes": 4340,
+      "destinationBytes": 4340,
+      "sourceSha256": "d630c8b1f7b3278487909a19e5bbd2cab2c4a51aecf9d076851bf0bd614add1f",
+      "destinationSha256": "d630c8b1f7b3278487909a19e5bbd2cab2c4a51aecf9d076851bf0bd614add1f",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/live-panel-gui.log",
+      "destination": "receipts/live-panel-gui.log",
+      "member": null,
+      "sourceBytes": 6222,
+      "destinationBytes": 6222,
+      "sourceSha256": "6fc97780e9aded7dbc88a44e0b63513cbbf588a403e8c467556fe8bf8ac919d0",
+      "destinationSha256": "6fc97780e9aded7dbc88a44e0b63513cbbf588a403e8c467556fe8bf8ac919d0",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/live-panel-gui-result.json",
+      "destination": "receipts/live-panel-gui-result.json",
+      "member": null,
+      "sourceBytes": 1194,
+      "destinationBytes": 1194,
+      "sourceSha256": "1f5159649b603800eb771c00d78ed548b8ebeb41ddc00e4c014e56e2043b0662",
+      "destinationSha256": "1f5159649b603800eb771c00d78ed548b8ebeb41ddc00e4c014e56e2043b0662",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/android-acceptance-pipeline.json",
+      "destination": "receipts/android-acceptance-pipeline.json",
+      "member": null,
+      "sourceBytes": 110,
+      "destinationBytes": 110,
+      "sourceSha256": "6b92f10014c911d1e1f33b9f3ce0a36eadf5758635a83a8e3e9145d5843f51a9",
+      "destinationSha256": "6b92f10014c911d1e1f33b9f3ce0a36eadf5758635a83a8e3e9145d5843f51a9",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/android-acceptance-launcher.log",
+      "destination": "receipts/android-acceptance-launcher.log",
+      "member": null,
+      "sourceBytes": 0,
+      "destinationBytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/build-launcher.log",
+      "destination": "receipts/build-launcher.log",
+      "member": null,
+      "sourceBytes": 0,
+      "destinationBytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/preservation.log",
+      "destination": "receipts/preservation.log",
+      "member": null,
+      "sourceBytes": 123,
+      "destinationBytes": 123,
+      "sourceSha256": "4c870c04c85f1ae1d02524c3d00a5ea0090bd60c36e557f24c7019864f605fb0",
+      "destinationSha256": "4c870c04c85f1ae1d02524c3d00a5ea0090bd60c36e557f24c7019864f605fb0",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/stop-independent-review.json",
+      "destination": "receipts/stop-independent-review.json",
+      "member": null,
+      "sourceBytes": 9719,
+      "destinationBytes": 9719,
+      "sourceSha256": "bf2a4304cf7b7d52011e4fa4f75f6692d207d293675bf592aaa8dddb8eeb489f",
+      "destinationSha256": "bf2a4304cf7b7d52011e4fa4f75f6692d207d293675bf592aaa8dddb8eeb489f",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/helper-review.json",
+      "destination": "receipts/helper-review.json",
+      "member": null,
+      "sourceBytes": 9658,
+      "destinationBytes": 9658,
+      "sourceSha256": "2fc0191efab5181ae3b83de17646257615f4140fc591eb6242269029ef2619cc",
+      "destinationSha256": "2fc0191efab5181ae3b83de17646257615f4140fc591eb6242269029ef2619cc",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/delivery-helper-clone.json",
+      "destination": "receipts/delivery-helper-clone.json",
+      "member": null,
+      "sourceBytes": 5372,
+      "destinationBytes": 5372,
+      "sourceSha256": "5bc32894dd51fb2d2ed6e0f079ea3d6bdfa968c4fea601c4e6d74e58c0c72352",
+      "destinationSha256": "5bc32894dd51fb2d2ed6e0f079ea3d6bdfa968c4fea601c4e6d74e58c0c72352",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/back-final.exit",
+      "destination": "receipts/back-final.exit",
+      "member": null,
+      "sourceBytes": 1,
+      "destinationBytes": 1,
+      "sourceSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "destinationSha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/back-final-launcher.log",
+      "destination": "receipts/back-final-launcher.log",
+      "member": null,
+      "sourceBytes": 0,
+      "destinationBytes": 0,
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/camera_selection_download_test.dart.log",
+      "destination": "receipts/camera_selection_download_test.dart.log",
+      "member": null,
+      "sourceBytes": 39204,
+      "destinationBytes": 39204,
+      "sourceSha256": "5dc06aedcfb30a8416ad090b6d2a03f9d8310700543b4b3aa70eb04e004ab1e1",
+      "destinationSha256": "5dc06aedcfb30a8416ad090b6d2a03f9d8310700543b4b3aa70eb04e004ab1e1",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/capsule_switch_test.dart.log",
+      "destination": "receipts/capsule_switch_test.dart.log",
+      "member": null,
+      "sourceBytes": 39207,
+      "destinationBytes": 39207,
+      "sourceSha256": "e667b1cf15cf627880c983dffa654413358d92147dac934dcaf56bde10c12c08",
+      "destinationSha256": "e667b1cf15cf627880c983dffa654413358d92147dac934dcaf56bde10c12c08",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "docs/migration/validation/features-227/android-signing-alignment.json",
+      "destination": "receipts/android-signing-alignment.json",
+      "member": null,
+      "sourceBytes": 4495,
+      "destinationBytes": 4495,
+      "sourceSha256": "7d9091850bce628960e61517bc9b7dc5e5a41fc106842beb3b5fffd162297945",
+      "destinationSha256": "7d9091850bce628960e61517bc9b7dc5e5a41fc106842beb3b5fffd162297945",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "docs/migration/validation/features-227/preset-preview-assets.json",
+      "destination": "receipts/preset-preview-assets.json",
+      "member": null,
+      "sourceBytes": 4559,
+      "destinationBytes": 4559,
+      "sourceSha256": "f515f89fcebcda84c45ddf2622a4d93f8d7b68bfde2ca01c4668425ded776580",
+      "destinationSha256": "f515f89fcebcda84c45ddf2622a4d93f8d7b68bfde2ca01c4668425ded776580",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/build_releases.py",
+      "destination": "helpers/next226/build_releases.py",
+      "member": null,
+      "sourceBytes": 3458,
+      "destinationBytes": 3458,
+      "sourceSha256": "0c17b38c93411c26c6afa29bb0cefa5b038b859994906604d9d92385927449e3",
+      "destinationSha256": "0c17b38c93411c26c6afa29bb0cefa5b038b859994906604d9d92385927449e3",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/verify_android.py",
+      "destination": "helpers/next226/verify_android.py",
+      "member": null,
+      "sourceBytes": 3913,
+      "destinationBytes": 3913,
+      "sourceSha256": "086d7aed0a7ef375c415cdffda3e0fedfcc455b52c339e6a158a7eb1896c0997",
+      "destinationSha256": "086d7aed0a7ef375c415cdffda3e0fedfcc455b52c339e6a158a7eb1896c0997",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/verify_photos.py",
+      "destination": "helpers/next226/verify_photos.py",
+      "member": null,
+      "sourceBytes": 1330,
+      "destinationBytes": 1330,
+      "sourceSha256": "9a4cdba01ef0c21a0b7862e147e47a5210bfbd29175a69cec09402fa20c2aa1e",
+      "destinationSha256": "9a4cdba01ef0c21a0b7862e147e47a5210bfbd29175a69cec09402fa20c2aa1e",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/run_release_runtime.py",
+      "destination": "helpers/next226/run_release_runtime.py",
+      "member": null,
+      "sourceBytes": 3101,
+      "destinationBytes": 3101,
+      "sourceSha256": "977c5902efcb54c9c45380f3186527ab340c727d08dad52c0a639e98992ffb6d",
+      "destinationSha256": "977c5902efcb54c9c45380f3186527ab340c727d08dad52c0a639e98992ffb6d",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/check_back_navigation.py",
+      "destination": "helpers/next226/check_back_navigation.py",
+      "member": null,
+      "sourceBytes": 3817,
+      "destinationBytes": 3817,
+      "sourceSha256": "13ac830fad288b5f4bde8ff85d3d28f7bc2af2f85c064232169d9ab1c29efd10",
+      "destinationSha256": "13ac830fad288b5f4bde8ff85d3d28f7bc2af2f85c064232169d9ab1c29efd10",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/check_live_panel_gui.py",
+      "destination": "helpers/next226/check_live_panel_gui.py",
+      "member": null,
+      "sourceBytes": 3324,
+      "destinationBytes": 3324,
+      "sourceSha256": "1110304774950a978c4b0292e194fa398bfdcdef29db7975b063221cfcabe7cd",
+      "destinationSha256": "1110304774950a978c4b0292e194fa398bfdcdef29db7975b063221cfcabe7cd",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/qa_ui.py",
+      "destination": "helpers/next226/qa_ui.py",
+      "member": null,
+      "sourceBytes": 1757,
+      "destinationBytes": 1757,
+      "sourceSha256": "f08c230135199edfc191e1dbcd39998c5b72fa92c12b82a2a5c03467b4cecf98",
+      "destinationSha256": "f08c230135199edfc191e1dbcd39998c5b72fa92c12b82a2a5c03467b4cecf98",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/android_acceptance_pipeline.py",
+      "destination": "helpers/next226/android_acceptance_pipeline.py",
+      "member": null,
+      "sourceBytes": 741,
+      "destinationBytes": 741,
+      "sourceSha256": "1132bcc7d31b01c30d3b0aec5d5667588ca385a261d18af929b982070a710f6f",
+      "destinationSha256": "1132bcc7d31b01c30d3b0aec5d5667588ca385a261d18af929b982070a710f6f",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/run_back_final.py",
+      "destination": "helpers/next226/run_back_final.py",
+      "member": null,
+      "sourceBytes": 527,
+      "destinationBytes": 527,
+      "sourceSha256": "c08e218c098a89e104752822f2f91b741df968ca171b82ec95da4e04bc273a23",
+      "destinationSha256": "c08e218c098a89e104752822f2f91b741df968ca171b82ec95da4e04bc273a23",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/tool/android_build.py",
+      "destination": "helpers/cross-platform/tool/android_build.py",
+      "member": null,
+      "sourceBytes": 4796,
+      "destinationBytes": 4796,
+      "sourceSha256": "da78a682fb96ae1b062767e4a40301e97da42e5403468f8fe09a0d96c2c98df5",
+      "destinationSha256": "da78a682fb96ae1b062767e4a40301e97da42e5403468f8fe09a0d96c2c98df5",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/tool/verify_android_apk.py",
+      "destination": "helpers/cross-platform/tool/verify_android_apk.py",
+      "member": null,
+      "sourceBytes": 4173,
+      "destinationBytes": 4173,
+      "sourceSha256": "b4c24e59868ff2ea30bbbe2e642fe288e2dcc01425e37f35d7cd755134b4ac6d",
+      "destinationSha256": "b4c24e59868ff2ea30bbbe2e642fe288e2dcc01425e37f35d7cd755134b4ac6d",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/tool/raw_android.py",
+      "destination": "helpers/cross-platform/tool/raw_android.py",
+      "member": null,
+      "sourceBytes": 5651,
+      "destinationBytes": 5651,
+      "sourceSha256": "73605cf23efeb0e015a891ea8e77cfbe6e2c853cea5a2352b3810586ea3a43d5",
+      "destinationSha256": "73605cf23efeb0e015a891ea8e77cfbe6e2c853cea5a2352b3810586ea3a43d5",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/release-runtime.init.gradle",
+      "destination": "runtime/release-runtime.init.gradle",
+      "member": null,
+      "sourceBytes": 310,
+      "destinationBytes": 310,
+      "sourceSha256": "53fab9c417f8a767acf7c709e27daa6a7124ad98e4039137f00c4a8dc77962c1",
+      "destinationSha256": "53fab9c417f8a767acf7c709e27daa6a7124ad98e4039137f00c4a8dc77962c1",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/cross-platform187/maven-proxy.init.gradle",
+      "destination": "runtime/maven-proxy.init.gradle",
+      "member": null,
+      "sourceBytes": 8084,
+      "destinationBytes": 8084,
+      "sourceSha256": "700d10e2827e0a0e3bda56b3aeb011042180467ed0d71288c0aafee2ebba668f",
+      "destinationSha256": "700d10e2827e0a0e3bda56b3aeb011042180467ed0d71288c0aafee2ebba668f",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/app/android/app/src/androidTest/java/cc/huevia/sharedapp/ReleaseRuntimeInstrumentation.java",
+      "destination": "runtime/ReleaseRuntimeInstrumentation.java",
+      "member": null,
+      "sourceBytes": 50707,
+      "destinationBytes": 50707,
+      "sourceSha256": "de7613458eec51696eafc1306c9be21b650b99bba6078b84474ca41721bbb510",
+      "destinationSha256": "de7613458eec51696eafc1306c9be21b650b99bba6078b84474ca41721bbb510",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/app/android/app/build.gradle.kts",
+      "destination": "runtime/app-build.gradle.kts",
+      "member": null,
+      "sourceBytes": 5027,
+      "destinationBytes": 5027,
+      "sourceSha256": "28c4efea480be2e011f68fafe18c5da0e2a74313c0742c57ebf4fbe46ec273e0",
+      "destinationSha256": "28c4efea480be2e011f68fafe18c5da0e2a74313c0742c57ebf4fbe46ec273e0",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/app/android/build.gradle.kts",
+      "destination": "runtime/root-build.gradle.kts",
+      "member": null,
+      "sourceBytes": 805,
+      "destinationBytes": 805,
+      "sourceSha256": "1658fbc09ea8cac5105eccf0cfa3c8f4543cbd9f0b758bac06ed1191d59bcfcb",
+      "destinationSha256": "1658fbc09ea8cac5105eccf0cfa3c8f4543cbd9f0b758bac06ed1191d59bcfcb",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/app/android/settings.gradle.kts",
+      "destination": "runtime/settings.gradle.kts",
+      "member": null,
+      "sourceBytes": 796,
+      "destinationBytes": 796,
+      "sourceSha256": "092ba880c8d4a07591aafc082f45deedc9afcf60c113a4bb3d13cbe1a1fce9de",
+      "destinationSha256": "092ba880c8d4a07591aafc082f45deedc9afcf60c113a4bb3d13cbe1a1fce9de",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/app/android/gradle.properties",
+      "destination": "runtime/gradle.properties",
+      "member": null,
+      "sourceBytes": 461,
+      "destinationBytes": 461,
+      "sourceSha256": "738209bd19d198e9acaf987a5b4ab9a4d4da56d2288255fcc4e9a5e61bf588a6",
+      "destinationSha256": "738209bd19d198e9acaf987a5b4ab9a4d4da56d2288255fcc4e9a5e61bf588a6",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/app/android/gradlew.bat",
+      "destination": "runtime/gradlew.bat",
+      "member": null,
+      "sourceBytes": 2404,
+      "destinationBytes": 2404,
+      "sourceSha256": "c13c6e91b9a517783976de213d46398c661ea9e17651376d7301e839eaedcc62",
+      "destinationSha256": "c13c6e91b9a517783976de213d46398c661ea9e17651376d7301e839eaedcc62",
+      "byteForByteEqual": true
+    },
+    {
+      "source": "cross-platform/app/android/gradle/wrapper/gradle-wrapper.properties",
+      "destination": "runtime/gradle-wrapper.properties",
+      "member": null,
+      "sourceBytes": 207,
+      "destinationBytes": 207,
+      "sourceSha256": "594a00250ef7a36609a01f3263bf5ed63963afaf9ca9f82f2cd1de0f6f056383",
+      "destinationSha256": "594a00250ef7a36609a01f3263bf5ed63963afaf9ca9f82f2cd1de0f6f056383",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-connection-returned-sync.xml",
+      "destination": "ui/back227-connection-returned-sync.xml",
+      "member": null,
+      "sourceBytes": 8599,
+      "destinationBytes": 8599,
+      "sourceSha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b",
+      "destinationSha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-queue-returned-sync.xml",
+      "destination": "ui/back227-queue-returned-sync.xml",
+      "member": null,
+      "sourceBytes": 8599,
+      "destinationBytes": 8599,
+      "sourceSha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b",
+      "destinationSha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-restored-home.xml",
+      "destination": "ui/back227-restored-home.xml",
+      "member": null,
+      "sourceBytes": 13900,
+      "destinationBytes": 13900,
+      "sourceSha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f",
+      "destinationSha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-album.xml",
+      "destination": "ui/back227-resumed-album.xml",
+      "member": null,
+      "sourceBytes": 11255,
+      "destinationBytes": 11255,
+      "sourceSha256": "03ed3f32f7f7f986361adb0fb4648cb65eca42c6351eb2b37cb827f2aa4c1268",
+      "destinationSha256": "03ed3f32f7f7f986361adb0fb4648cb65eca42c6351eb2b37cb827f2aa4c1268",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-presets.xml",
+      "destination": "ui/back227-resumed-presets.xml",
+      "member": null,
+      "sourceBytes": 13900,
+      "destinationBytes": 13900,
+      "sourceSha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f",
+      "destinationSha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-settings.xml",
+      "destination": "ui/back227-resumed-settings.xml",
+      "member": null,
+      "sourceBytes": 10656,
+      "destinationBytes": 10656,
+      "sourceSha256": "223b23d4a8cf5fae34028f7bff8abe94a1bb180f70eb92e496f7624e27f8e459",
+      "destinationSha256": "223b23d4a8cf5fae34028f7bff8abe94a1bb180f70eb92e496f7624e27f8e459",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-sync.xml",
+      "destination": "ui/back227-resumed-sync.xml",
+      "member": null,
+      "sourceBytes": 8599,
+      "destinationBytes": 8599,
+      "sourceSha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b",
+      "destinationSha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-a-jpeg.xml",
+      "destination": "ui/gui227-a-jpeg.xml",
+      "member": null,
+      "sourceBytes": 11788,
+      "destinationBytes": 11788,
+      "sourceSha256": "bc650acbfcbdebf219434d530e4f030a03ac8f46f82c558c9d41fcbe10d379bf",
+      "destinationSha256": "bc650acbfcbdebf219434d530e4f030a03ac8f46f82c558c9d41fcbe10d379bf",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-a-raw.xml",
+      "destination": "ui/gui227-a-raw.xml",
+      "member": null,
+      "sourceBytes": 11806,
+      "destinationBytes": 11806,
+      "sourceSha256": "d9ac65f2c66780a7ee77e25363ba6b6b5aa1c58b5ca06a3a4bf8cb29b36583e2",
+      "destinationSha256": "d9ac65f2c66780a7ee77e25363ba6b6b5aa1c58b5ca06a3a4bf8cb29b36583e2",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-disconnected-live-tab-connects.xml",
+      "destination": "ui/gui227-disconnected-live-tab-connects.xml",
+      "member": null,
+      "sourceBytes": 11671,
+      "destinationBytes": 11671,
+      "sourceSha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5",
+      "destinationSha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-disconnected-start-connects.xml",
+      "destination": "ui/gui227-disconnected-start-connects.xml",
+      "member": null,
+      "sourceBytes": 11671,
+      "destinationBytes": 11671,
+      "sourceSha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5",
+      "destinationSha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-explicit-connect-entry.xml",
+      "destination": "ui/gui227-explicit-connect-entry.xml",
+      "member": null,
+      "sourceBytes": 11671,
+      "destinationBytes": 11671,
+      "sourceSha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5",
+      "destinationSha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-record-photo-expanded.xml",
+      "destination": "ui/gui227-record-photo-expanded.xml",
+      "member": null,
+      "sourceBytes": 4967,
+      "destinationBytes": 4967,
+      "sourceSha256": "4c7775020a2ca2b8c7a4e0442ed4b38e102bccff99c86729e76c0bae7ce18316",
+      "destinationSha256": "4c7775020a2ca2b8c7a4e0442ed4b38e102bccff99c86729e76c0bae7ce18316",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-records-over-tabs.xml",
+      "destination": "ui/gui227-records-over-tabs.xml",
+      "member": null,
+      "sourceBytes": 6995,
+      "destinationBytes": 6995,
+      "sourceSha256": "26b74d58639cd439085e28f5306d7e25c9b9f845505589c87342d2c3e47345b5",
+      "destinationSha256": "26b74d58639cd439085e28f5306d7e25c9b9f845505589c87342d2c3e47345b5",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-spaced-sync-tabs.xml",
+      "destination": "ui/gui227-spaced-sync-tabs.xml",
+      "member": null,
+      "sourceBytes": 10505,
+      "destinationBytes": 10505,
+      "sourceSha256": "4b670e1dfa2b857f5a1edc0ec2b300c710c51583ace865828bcc002e4a6c6f9c",
+      "destinationSha256": "4b670e1dfa2b857f5a1edc0ec2b300c710c51583ace865828bcc002e4a6c6f9c",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/attempts/android-initial-uiautomator/android-acceptance-pipeline.json",
+      "destination": "../attempts/android-initial-uiautomator/android-acceptance-pipeline.json",
+      "member": null,
+      "sourceBytes": 110,
+      "destinationBytes": 110,
+      "sourceSha256": "b518abcbb2f81c71f0b55234e000ac754a326712d4e80d6fd1c868c73c0b62d3",
+      "destinationSha256": "b518abcbb2f81c71f0b55234e000ac754a326712d4e80d6fd1c868c73c0b62d3",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/attempts/android-initial-uiautomator/check_back_navigation-pipeline.log",
+      "destination": "../attempts/android-initial-uiautomator/check_back_navigation-pipeline.log",
+      "member": null,
+      "sourceBytes": 5506,
+      "destinationBytes": 5506,
+      "sourceSha256": "c904e8324b1ad419bbc6fc0e144adc775cb1f725a9922278ce298997e051f519",
+      "destinationSha256": "c904e8324b1ad419bbc6fc0e144adc775cb1f725a9922278ce298997e051f519",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/attempts/android-initial-uiautomator/qa_ui.py",
+      "destination": "../attempts/android-initial-uiautomator/qa_ui.py",
+      "member": null,
+      "sourceBytes": 1169,
+      "destinationBytes": 1169,
+      "sourceSha256": "9a23da211b48a55a32a424c8c897f082358027832c48cc8666a8b81041d244bf",
+      "destinationSha256": "9a23da211b48a55a32a424c8c897f082358027832c48cc8666a8b81041d244bf",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/attempts/android-initial-uiautomator/qualification.json",
+      "destination": "../attempts/android-initial-uiautomator/qualification.json",
+      "member": null,
+      "sourceBytes": 276,
+      "destinationBytes": 276,
+      "sourceSha256": "85cf3c21ff9b84f180f9b99d38c25e69ff9dd7e9d287262b30ccfc63cbc1fd79",
+      "destinationSha256": "85cf3c21ff9b84f180f9b99d38c25e69ff9dd7e9d287262b30ccfc63cbc1fd79",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-connection-returned-sync.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/back227-connection-returned-sync.png",
+      "sourceBytes": 127107,
+      "destinationBytes": 127107,
+      "sourceSha256": "3d904d68146478950dc6e6b1b33de720c581589aab59bbdeb44fb44e4c9f209b",
+      "destinationSha256": "3d904d68146478950dc6e6b1b33de720c581589aab59bbdeb44fb44e4c9f209b",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-queue-returned-sync.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/back227-queue-returned-sync.png",
+      "sourceBytes": 127107,
+      "destinationBytes": 127107,
+      "sourceSha256": "3d904d68146478950dc6e6b1b33de720c581589aab59bbdeb44fb44e4c9f209b",
+      "destinationSha256": "3d904d68146478950dc6e6b1b33de720c581589aab59bbdeb44fb44e4c9f209b",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-restored-home.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/back227-restored-home.png",
+      "sourceBytes": 1415256,
+      "destinationBytes": 1415256,
+      "sourceSha256": "53e041214a26ca83376f3b16318a6b98f991d77b6c4961266d0d2d1a97f0d6a3",
+      "destinationSha256": "53e041214a26ca83376f3b16318a6b98f991d77b6c4961266d0d2d1a97f0d6a3",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-album.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/back227-resumed-album.png",
+      "sourceBytes": 573391,
+      "destinationBytes": 573391,
+      "sourceSha256": "a592f078fee3a3c3292e6a4683ce82b7405e21bb241515da2313d84e574b17b4",
+      "destinationSha256": "a592f078fee3a3c3292e6a4683ce82b7405e21bb241515da2313d84e574b17b4",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-presets.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/back227-resumed-presets.png",
+      "sourceBytes": 1415256,
+      "destinationBytes": 1415256,
+      "sourceSha256": "53e041214a26ca83376f3b16318a6b98f991d77b6c4961266d0d2d1a97f0d6a3",
+      "destinationSha256": "53e041214a26ca83376f3b16318a6b98f991d77b6c4961266d0d2d1a97f0d6a3",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-settings.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/back227-resumed-settings.png",
+      "sourceBytes": 187400,
+      "destinationBytes": 187400,
+      "sourceSha256": "8c85e5577f461a9eae9c502cd5fc29d968851be44223cb76aedf728954d614ab",
+      "destinationSha256": "8c85e5577f461a9eae9c502cd5fc29d968851be44223cb76aedf728954d614ab",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/back227-resumed-sync.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/back227-resumed-sync.png",
+      "sourceBytes": 127155,
+      "destinationBytes": 127155,
+      "sourceSha256": "64332a34dc73ac4ffddef0bb7d3afd897f1889b674f4a93e2588f60f1ee0b46b",
+      "destinationSha256": "64332a34dc73ac4ffddef0bb7d3afd897f1889b674f4a93e2588f60f1ee0b46b",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-a-jpeg.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-a-jpeg.png",
+      "sourceBytes": 199780,
+      "destinationBytes": 199780,
+      "sourceSha256": "388e52d0e6dccbb1325407459002bca6e6267b48f317873cfe13777b7ebac5ce",
+      "destinationSha256": "388e52d0e6dccbb1325407459002bca6e6267b48f317873cfe13777b7ebac5ce",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-a-raw.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-a-raw.png",
+      "sourceBytes": 201668,
+      "destinationBytes": 201668,
+      "sourceSha256": "213a51afed367bc6c982836e05f8281e62cf60ecd3debe9dd18eda1209209767",
+      "destinationSha256": "213a51afed367bc6c982836e05f8281e62cf60ecd3debe9dd18eda1209209767",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-disconnected-live-tab-connects.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-disconnected-live-tab-connects.png",
+      "sourceBytes": 159069,
+      "destinationBytes": 159069,
+      "sourceSha256": "651590f74ac2a2e1b3afb9bd41a8bc2ae5170ed5da94f22564ea6342548f71b7",
+      "destinationSha256": "651590f74ac2a2e1b3afb9bd41a8bc2ae5170ed5da94f22564ea6342548f71b7",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-disconnected-start-connects.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-disconnected-start-connects.png",
+      "sourceBytes": 159007,
+      "destinationBytes": 159007,
+      "sourceSha256": "186467483384570161a3bbc9a7b5b5a8b7dc71636f55bfb359a15488e7ccd79c",
+      "destinationSha256": "186467483384570161a3bbc9a7b5b5a8b7dc71636f55bfb359a15488e7ccd79c",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-explicit-connect-entry.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-explicit-connect-entry.png",
+      "sourceBytes": 158491,
+      "destinationBytes": 158491,
+      "sourceSha256": "b37f9ba63918aa3c136ded7a46ba35bbf7308260faf24e6f01b8c58118474140",
+      "destinationSha256": "b37f9ba63918aa3c136ded7a46ba35bbf7308260faf24e6f01b8c58118474140",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-record-photo-expanded.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-record-photo-expanded.png",
+      "sourceBytes": 121985,
+      "destinationBytes": 121985,
+      "sourceSha256": "286766dd1263d55cc2dc0ea04df77c84a18f63d3f4eda95a6914951207759065",
+      "destinationSha256": "286766dd1263d55cc2dc0ea04df77c84a18f63d3f4eda95a6914951207759065",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-records-over-tabs.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-records-over-tabs.png",
+      "sourceBytes": 185012,
+      "destinationBytes": 185012,
+      "sourceSha256": "8363b85e27fb981c9d6603d2e677d733f7c3bc95eaa6195d115861386c0730ed",
+      "destinationSha256": "8363b85e27fb981c9d6603d2e677d733f7c3bc95eaa6195d115861386c0730ed",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/ui/gui227-spaced-sync-tabs.png",
+      "destination": "ui-screenshots.tar.xz",
+      "member": "ui/gui227-spaced-sync-tabs.png",
+      "sourceBytes": 511839,
+      "destinationBytes": 511839,
+      "sourceSha256": "2fc46706838577077fe885687122d98dfb59d5562cf2e1a50af3da59177a6a66",
+      "destinationSha256": "2fc46706838577077fe885687122d98dfb59d5562cf2e1a50af3da59177a6a66",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/arm64-mapping.txt",
+      "destination": "r8-mappings.tar.xz",
+      "member": "mappings/arm64-mapping.txt",
+      "sourceBytes": 12023904,
+      "destinationBytes": 12023904,
+      "sourceSha256": "6541913571de66ef120ee561771be2382f01d2f535a749ae45815909f08b51eb",
+      "destinationSha256": "6541913571de66ef120ee561771be2382f01d2f535a749ae45815909f08b51eb",
+      "byteForByteEqual": true
+    },
+    {
+      "source": ".tooling/next227/x64-mapping.txt",
+      "destination": "r8-mappings.tar.xz",
+      "member": "mappings/x64-mapping.txt",
+      "sourceBytes": 12023904,
+      "destinationBytes": 12023904,
+      "sourceSha256": "6541913571de66ef120ee561771be2382f01d2f535a749ae45815909f08b51eb",
+      "destinationSha256": "6541913571de66ef120ee561771be2382f01d2f535a749ae45815909f08b51eb",
+      "byteForByteEqual": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "archive_originals.py",
+      "bytes": 11739,
+      "sha256": "8945ba6a73e7646ccdfeabf44da131e97c75de7faeee917da3bfbdd8ca8b91c8"
+    },
+    {
+      "path": "helpers/cross-platform/tool/android_build.py",
+      "bytes": 4796,
+      "sha256": "da78a682fb96ae1b062767e4a40301e97da42e5403468f8fe09a0d96c2c98df5"
+    },
+    {
+      "path": "helpers/cross-platform/tool/raw_android.py",
+      "bytes": 5651,
+      "sha256": "73605cf23efeb0e015a891ea8e77cfbe6e2c853cea5a2352b3810586ea3a43d5"
+    },
+    {
+      "path": "helpers/cross-platform/tool/verify_android_apk.py",
+      "bytes": 4173,
+      "sha256": "b4c24e59868ff2ea30bbbe2e642fe288e2dcc01425e37f35d7cd755134b4ac6d"
+    },
+    {
+      "path": "helpers/next226/android_acceptance_pipeline.py",
+      "bytes": 741,
+      "sha256": "1132bcc7d31b01c30d3b0aec5d5667588ca385a261d18af929b982070a710f6f"
+    },
+    {
+      "path": "helpers/next226/build_releases.py",
+      "bytes": 3458,
+      "sha256": "0c17b38c93411c26c6afa29bb0cefa5b038b859994906604d9d92385927449e3"
+    },
+    {
+      "path": "helpers/next226/check_back_navigation.py",
+      "bytes": 3817,
+      "sha256": "13ac830fad288b5f4bde8ff85d3d28f7bc2af2f85c064232169d9ab1c29efd10"
+    },
+    {
+      "path": "helpers/next226/check_live_panel_gui.py",
+      "bytes": 3324,
+      "sha256": "1110304774950a978c4b0292e194fa398bfdcdef29db7975b063221cfcabe7cd"
+    },
+    {
+      "path": "helpers/next226/qa_ui.py",
+      "bytes": 1757,
+      "sha256": "f08c230135199edfc191e1dbcd39998c5b72fa92c12b82a2a5c03467b4cecf98"
+    },
+    {
+      "path": "helpers/next226/run_back_final.py",
+      "bytes": 527,
+      "sha256": "c08e218c098a89e104752822f2f91b741df968ca171b82ec95da4e04bc273a23"
+    },
+    {
+      "path": "helpers/next226/run_release_runtime.py",
+      "bytes": 3101,
+      "sha256": "977c5902efcb54c9c45380f3186527ab340c727d08dad52c0a639e98992ffb6d"
+    },
+    {
+      "path": "helpers/next226/verify_android.py",
+      "bytes": 3913,
+      "sha256": "086d7aed0a7ef375c415cdffda3e0fedfcc455b52c339e6a158a7eb1896c0997"
+    },
+    {
+      "path": "helpers/next226/verify_photos.py",
+      "bytes": 1330,
+      "sha256": "9a4cdba01ef0c21a0b7862e147e47a5210bfbd29175a69cec09402fa20c2aa1e"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 4158,
+      "sha256": "80f934004b2d58c039c8dde9a9507c80949d8dbef4a4026d87a70b2cca99aa5b"
+    },
+    {
+      "path": "r8-mappings.tar.xz",
+      "bytes": 1476088,
+      "sha256": "016a62737a4567486c39b2f82f48f182cc096b571608af9eacce5bafcca0951b"
+    },
+    {
+      "path": "receipts/android-acceptance-launcher.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipts/android-acceptance-pipeline.json",
+      "bytes": 110,
+      "sha256": "6b92f10014c911d1e1f33b9f3ce0a36eadf5758635a83a8e3e9145d5843f51a9"
+    },
+    {
+      "path": "receipts/android-arm64-release.log",
+      "bytes": 298,
+      "sha256": "985ac780917be320c7e77e4c7f9d29f5cc374b97714e3dd32e5a9fad9c8218ba"
+    },
+    {
+      "path": "receipts/android-release-result.json",
+      "bytes": 113,
+      "sha256": "84eb7908a644b2362f7e7c76aa90993adfaf44907239f08a761d8ffa2ebab8e1"
+    },
+    {
+      "path": "receipts/android-signing-alignment.json",
+      "bytes": 4495,
+      "sha256": "7d9091850bce628960e61517bc9b7dc5e5a41fc106842beb3b5fffd162297945"
+    },
+    {
+      "path": "receipts/android-x64-release.log",
+      "bytes": 295,
+      "sha256": "2f47f82a20f2001111029fd98616e7b8bf9c5c3bef5ae1aad0af051fdd6a5406"
+    },
+    {
+      "path": "receipts/arm64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "receipts/arm64-gradle.log",
+      "bytes": 28740,
+      "sha256": "aa902b56a377048e504d36f86e7686762550bf23ce8e31d3d80b27e7f01c8315"
+    },
+    {
+      "path": "receipts/arm64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipts/back-final-launcher.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipts/back-final.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "receipts/back-navigation-result.json",
+      "bytes": 4340,
+      "sha256": "d630c8b1f7b3278487909a19e5bbd2cab2c4a51aecf9d076851bf0bd614add1f"
+    },
+    {
+      "path": "receipts/build-launcher.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipts/camera_selection_download_test.dart.log",
+      "bytes": 39204,
+      "sha256": "5dc06aedcfb30a8416ad090b6d2a03f9d8310700543b4b3aa70eb04e004ab1e1"
+    },
+    {
+      "path": "receipts/capsule_switch_test.dart.log",
+      "bytes": 39207,
+      "sha256": "e667b1cf15cf627880c983dffa654413358d92147dac934dcaf56bde10c12c08"
+    },
+    {
+      "path": "receipts/check_back_navigation-pipeline.log",
+      "bytes": 6597,
+      "sha256": "65fdcaf251cd6cf98d87059937fc88c751c4262c5f9aa8b6aaeffc78811e0189"
+    },
+    {
+      "path": "receipts/delivery-helper-clone.json",
+      "bytes": 5372,
+      "sha256": "5bc32894dd51fb2d2ed6e0f079ea3d6bdfa968c4fea601c4e6d74e58c0c72352"
+    },
+    {
+      "path": "receipts/helper-review.json",
+      "bytes": 9658,
+      "sha256": "2fc0191efab5181ae3b83de17646257615f4140fc591eb6242269029ef2619cc"
+    },
+    {
+      "path": "receipts/instrumentation-build.log",
+      "bytes": 228,
+      "sha256": "d8b8c2d719f112ef931dce69ba14c02fa7bc9bcaf817b18986039c7d9ed8516c"
+    },
+    {
+      "path": "receipts/instrumentation-runner-build.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "path": "receipts/instrumentation-runner-build.log",
+      "bytes": 21844,
+      "sha256": "a83c9df2a8ec6de5c6aa0df79dfc3ee125ed7035147162ef1565606ed34660c6"
+    },
+    {
+      "path": "receipts/live-panel-gui-result.json",
+      "bytes": 1194,
+      "sha256": "1f5159649b603800eb771c00d78ed548b8ebeb41ddc00e4c014e56e2043b0662"
+    },
+    {
+      "path": "receipts/live-panel-gui.log",
+      "bytes": 6222,
+      "sha256": "6fc97780e9aded7dbc88a44e0b63513cbbf588a403e8c467556fe8bf8ac919d0"
+    },
+    {
+      "path": "receipts/preservation.log",
+      "bytes": 123,
+      "sha256": "4c870c04c85f1ae1d02524c3d00a5ea0090bd60c36e557f24c7019864f605fb0"
+    },
+    {
+      "path": "receipts/preset-preview-assets.json",
+      "bytes": 4559,
+      "sha256": "f515f89fcebcda84c45ddf2622a4d93f8d7b68bfde2ca01c4668425ded776580"
+    },
+    {
+      "path": "receipts/release-runtime-mapping.json",
+      "bytes": 181,
+      "sha256": "84ef46844ee21e2b4dfa32148a1ad16ceb4a9cf5af65ec7991ee3115e4e37a6c"
+    },
+    {
+      "path": "receipts/release-runtime-result.json",
+      "bytes": 511,
+      "sha256": "55a79c95fe168c6161fd6aa1781ad5be0e572290b13ccce8edc31aed4d247c7c"
+    },
+    {
+      "path": "receipts/release-runtime.log",
+      "bytes": 2174,
+      "sha256": "df19c03631cb526e756d7d02b5fea15ee77a080576543e5493f1e534198d64b9"
+    },
+    {
+      "path": "receipts/run_release_runtime-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "receipts/source.json",
+      "bytes": 2992,
+      "sha256": "8804fa2dfdc28f3c8761ede633e50f730de6debabc1f8c52d11d5ea9f8eabc4e"
+    },
+    {
+      "path": "receipts/stop-independent-review.json",
+      "bytes": 9719,
+      "sha256": "bf2a4304cf7b7d52011e4fa4f75f6692d207d293675bf592aaa8dddb8eeb489f"
+    },
+    {
+      "path": "receipts/verify_android-pipeline.log",
+      "bytes": 104,
+      "sha256": "762b8301092cea378c60c07c3fb0dc7671b31f8750b732821870c65efe01dcc3"
+    },
+    {
+      "path": "receipts/verify_photos-pipeline.log",
+      "bytes": 77,
+      "sha256": "1ddabf01661d657e8585b30c13746c17421fea513ea0d0e04c56f74162883f98"
+    },
+    {
+      "path": "receipts/x64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "receipts/x64-gradle.log",
+      "bytes": 28852,
+      "sha256": "8b8885ab1e8e55773d8f932cc829449c9d03527f1686c5b93d5435c58f9166cb"
+    },
+    {
+      "path": "receipts/x64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "runtime/app-build.gradle.kts",
+      "bytes": 5027,
+      "sha256": "28c4efea480be2e011f68fafe18c5da0e2a74313c0742c57ebf4fbe46ec273e0"
+    },
+    {
+      "path": "runtime/gradle-wrapper.properties",
+      "bytes": 207,
+      "sha256": "594a00250ef7a36609a01f3263bf5ed63963afaf9ca9f82f2cd1de0f6f056383"
+    },
+    {
+      "path": "runtime/gradle.properties",
+      "bytes": 461,
+      "sha256": "738209bd19d198e9acaf987a5b4ab9a4d4da56d2288255fcc4e9a5e61bf588a6"
+    },
+    {
+      "path": "runtime/gradlew.bat",
+      "bytes": 2404,
+      "sha256": "c13c6e91b9a517783976de213d46398c661ea9e17651376d7301e839eaedcc62"
+    },
+    {
+      "path": "runtime/maven-proxy.init.gradle",
+      "bytes": 8084,
+      "sha256": "700d10e2827e0a0e3bda56b3aeb011042180467ed0d71288c0aafee2ebba668f"
+    },
+    {
+      "path": "runtime/release-runtime.init.gradle",
+      "bytes": 310,
+      "sha256": "53fab9c417f8a767acf7c709e27daa6a7124ad98e4039137f00c4a8dc77962c1"
+    },
+    {
+      "path": "runtime/ReleaseRuntimeInstrumentation.java",
+      "bytes": 50707,
+      "sha256": "de7613458eec51696eafc1306c9be21b650b99bba6078b84474ca41721bbb510"
+    },
+    {
+      "path": "runtime/root-build.gradle.kts",
+      "bytes": 805,
+      "sha256": "1658fbc09ea8cac5105eccf0cfa3c8f4543cbd9f0b758bac06ed1191d59bcfcb"
+    },
+    {
+      "path": "runtime/settings.gradle.kts",
+      "bytes": 796,
+      "sha256": "092ba880c8d4a07591aafc082f45deedc9afcf60c113a4bb3d13cbe1a1fce9de"
+    },
+    {
+      "path": "ui/back227-connection-returned-sync.xml",
+      "bytes": 8599,
+      "sha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b"
+    },
+    {
+      "path": "ui/back227-queue-returned-sync.xml",
+      "bytes": 8599,
+      "sha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b"
+    },
+    {
+      "path": "ui/back227-restored-home.xml",
+      "bytes": 13900,
+      "sha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f"
+    },
+    {
+      "path": "ui/back227-resumed-album.xml",
+      "bytes": 11255,
+      "sha256": "03ed3f32f7f7f986361adb0fb4648cb65eca42c6351eb2b37cb827f2aa4c1268"
+    },
+    {
+      "path": "ui/back227-resumed-presets.xml",
+      "bytes": 13900,
+      "sha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f"
+    },
+    {
+      "path": "ui/back227-resumed-settings.xml",
+      "bytes": 10656,
+      "sha256": "223b23d4a8cf5fae34028f7bff8abe94a1bb180f70eb92e496f7624e27f8e459"
+    },
+    {
+      "path": "ui/back227-resumed-sync.xml",
+      "bytes": 8599,
+      "sha256": "cca549339ff20e404d68f9d93065aae07381ead60e2cba5dc4801baba1eabe9b"
+    },
+    {
+      "path": "ui/gui227-a-jpeg.xml",
+      "bytes": 11788,
+      "sha256": "bc650acbfcbdebf219434d530e4f030a03ac8f46f82c558c9d41fcbe10d379bf"
+    },
+    {
+      "path": "ui/gui227-a-raw.xml",
+      "bytes": 11806,
+      "sha256": "d9ac65f2c66780a7ee77e25363ba6b6b5aa1c58b5ca06a3a4bf8cb29b36583e2"
+    },
+    {
+      "path": "ui/gui227-disconnected-live-tab-connects.xml",
+      "bytes": 11671,
+      "sha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5"
+    },
+    {
+      "path": "ui/gui227-disconnected-start-connects.xml",
+      "bytes": 11671,
+      "sha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5"
+    },
+    {
+      "path": "ui/gui227-explicit-connect-entry.xml",
+      "bytes": 11671,
+      "sha256": "2397dd46ba3b43d3f85219b45b87bde518beaa856ac47dfe0c116030652449d5"
+    },
+    {
+      "path": "ui/gui227-record-photo-expanded.xml",
+      "bytes": 4967,
+      "sha256": "4c7775020a2ca2b8c7a4e0442ed4b38e102bccff99c86729e76c0bae7ce18316"
+    },
+    {
+      "path": "ui/gui227-records-over-tabs.xml",
+      "bytes": 6995,
+      "sha256": "26b74d58639cd439085e28f5306d7e25c9b9f845505589c87342d2c3e47345b5"
+    },
+    {
+      "path": "ui/gui227-spaced-sync-tabs.xml",
+      "bytes": 10505,
+      "sha256": "4b670e1dfa2b857f5a1edc0ec2b300c710c51583ace865828bcc002e4a6c6f9c"
+    },
+    {
+      "path": "ui-screenshots.tar.xz",
+      "bytes": 3772740,
+      "sha256": "30aee2d4394e81bbe88532110d5aadd66bc1f75d328aad60107b4f2de789b5fa"
+    },
+    {
+      "path": "../attempts/android-initial-uiautomator/android-acceptance-pipeline.json",
+      "bytes": 110,
+      "sha256": "b518abcbb2f81c71f0b55234e000ac754a326712d4e80d6fd1c868c73c0b62d3"
+    },
+    {
+      "path": "../attempts/android-initial-uiautomator/check_back_navigation-pipeline.log",
+      "bytes": 5506,
+      "sha256": "c904e8324b1ad419bbc6fc0e144adc775cb1f725a9922278ce298997e051f519"
+    },
+    {
+      "path": "../attempts/android-initial-uiautomator/qa_ui.py",
+      "bytes": 1169,
+      "sha256": "9a23da211b48a55a32a424c8c897f082358027832c48cc8666a8b81041d244bf"
+    },
+    {
+      "path": "../attempts/android-initial-uiautomator/qualification.json",
+      "bytes": 276,
+      "sha256": "85cf3c21ff9b84f180f9b99d38c25e69ff9dd7e9d287262b30ccfc63cbc1fd79"
+    }
+  ]
+}

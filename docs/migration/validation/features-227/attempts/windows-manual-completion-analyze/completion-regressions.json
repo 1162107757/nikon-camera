@@ -1,0 +1,10 @@
+[
+  {
+    "step": "manual-final-format",
+    "exit": 0
+  },
+  {
+    "step": "analyze-final",
+    "exit": 1
+  }
+]

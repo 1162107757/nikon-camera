@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "workflow": "cross-platform-mobile.yml",
+  "ref": "codex/features215",
+  "inputs": {
+    "verification": "full",
+    "apple_runner": "macos-26"
+  }
+}

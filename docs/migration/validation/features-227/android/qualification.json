@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "build": 227,
+  "published": false,
+  "scope": "Original Android sourcebf29 build/gate/runtime/UI receipts; no package promotion or physical-camera transport acceptance.",
+  "gateSummary": {
+    "androidBuildExit": 0,
+    "verifyAndroidExit": 0,
+    "presetPhotoExit": 0,
+    "r8Checks": 123,
+    "rootBackCases": 4,
+    "childBackCases": 2,
+    "guiCases": 5,
+    "guiExit": 0
+  },
+  "initialInfrastructureAttempt": {
+    "count": 1,
+    "path": "../attempts/android-initial-uiautomator",
+    "exit": 1,
+    "countedAsPass": false,
+    "productFailureEstablished": false,
+    "reason": "uiautomator completed without a fresh diagnostic XML; the following cat failed. Original failing pipeline/log/helper/qualification are preserved."
+  },
+  "qaRetry": {
+    "maxFreshDumps": 3,
+    "validatesDumpSuccessMarker": true,
+    "validatesHierarchyXml": true,
+    "helperOutsideTreeByteEquivalent": true,
+    "functionalLabelAssertionsChanged": false,
+    "qualification": "Only tree() gained bounded fresh-dump validation/retry. Old/current tap/snap and helper label logic compare equal after tree normalization; current test scripts are preserved unchanged."
+  },
+  "backFinalScreen": {
+    "raw": "预设",
+    "rawModified": false,
+    "observedHeader": "预设",
+    "snapshot": "ui/back227-resumed-presets.xml",
+    "note": "Current report and header use 预设. Four root same-process/activity cases plus two child-return assertions pass after the infrastructure retry."
+  },
+  "screenshots": {
+    "container": "ui-screenshots.tar.xz",
+    "originalPngMembers": 15,
+    "prefixes": [
+      "back227-",
+      "gui227-"
+    ],
+    "verification": "Every decompressed PNG member is byte-compared to its source; corresponding XML is copied byte-for-byte."
+  },
+  "mappings": {
+    "container": "r8-mappings.tar.xz",
+    "members": 2,
+    "verification": "Both original mappings decompressed and byte-compared; original bytes/SHA are separately listed per member in archive-manifest.json."
+  },
+  "widgetEvidence": {
+    "selectionCircleAndLongPress": {
+      "path": "receipts/camera_selection_download_test.dart.log",
+      "cases": 2,
+      "exit": 0
+    },
+    "capsuleAnimation": {
+      "path": "receipts/capsule_switch_test.dart.log",
+      "cases": 3,
+      "exit": 0
+    },
+    "qualification": "These are real widget tests, not device camera-grid or physical-camera transport tests. Existing aggregate local evidence remains in ../shared."
+  },
+  "physicalCameraTested": false,
+  "connectedThenDisconnectedTransportProvenByThisGui": false,
+  "stopTransportQualification": "Ordinary-stop transport behavior is covered by held-transaction Dart regressions and SharedCore same-session JPEG/NEF tests in the shared/core archives; no physical burst/stop claim is made for this disconnected emulator GUI.",
+  "stopReview": {
+    "path": "receipts/stop-independent-review.json",
+    "qualification": "Original static review preserved unchanged; its earlier pre-SDK state is not a runtime pass receipt."
+  },
+  "sourceSnapshot": {
+    "path": "receipts/source.json",
+    "qualification": "Unmodified source-frozen, before-promotion metadata snapshot. acceptedfalse/pending flags are retained; parent later promotion metadata does not rewrite this raw original."
+  },
+  "excluded": [
+    "APK payloads",
+    "classes trees",
+    "uncompressed mapping files",
+    "private HANDOFF.json",
+    "226 evidence",
+    "other WIP/old UI snapshots"
+  ],
+  "packages": [
+    {
+      "path": ".tooling/next227/package-candidates/huevia-0.31.0-dev-227-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "55342ac68c0c9a3f77af736a4c8ca750b566ec618fe160256def0b4cb65bd0ec",
+      "copied": false
+    },
+    {
+      "path": ".tooling/next227/package-candidates/huevia-0.31.0-dev-227-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "ad7039702651c33fd401e3e0b83749b99c109e173009cfdc06beee2619e581f4",
+      "copied": false
+    }
+  ],
+  "sdkAdbGitExecutedByArchiver": false
+}

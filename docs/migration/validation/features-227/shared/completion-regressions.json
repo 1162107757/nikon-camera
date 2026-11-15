@@ -1,0 +1,38 @@
+[
+  {
+    "step": "manual-final-format",
+    "exit": 0
+  },
+  {
+    "step": "analyze-final",
+    "exit": 0
+  },
+  {
+    "step": "manual-final",
+    "exit": 124
+  },
+  {
+    "step": "start-isolated-1",
+    "exit": 1
+  },
+  {
+    "step": "start-isolated-2",
+    "exit": 1
+  },
+  {
+    "step": "start-isolated-3",
+    "exit": 0
+  },
+  {
+    "step": "start-isolated-4",
+    "exit": 1
+  },
+  {
+    "step": "start-isolated-5",
+    "exit": 0
+  },
+  {
+    "step": "start-isolated-6",
+    "exit": 0
+  }
+]

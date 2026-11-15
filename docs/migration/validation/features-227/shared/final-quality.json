@@ -1,0 +1,10 @@
+[
+  {
+    "step": "final-format",
+    "exit": 0
+  },
+  {
+    "step": "final-analyze",
+    "exit": 0
+  }
+]

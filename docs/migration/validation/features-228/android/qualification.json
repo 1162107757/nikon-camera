@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "build": 228,
+  "published": false,
+  "scope": "Fresh Android source734aa3b build/gate/runtime/UI receipts; no previous-build attempt payloads or physical-camera transport acceptance.",
+  "gateSummary": {
+    "androidBuildExit": 0,
+    "verifyAndroidExit": 0,
+    "presetPhotoExit": 0,
+    "r8Checks": 123,
+    "rootBackCases": 4,
+    "childBackCases": 2,
+    "guiCases": 5,
+    "guiExit": 0
+  },
+  "localUi": {
+    "result": "receipts/local-ui-results.json",
+    "format": {
+      "log": "receipts/format.log",
+      "exit": "receipts/format.exit",
+      "actualExit": 0
+    },
+    "analyze": {
+      "log": "receipts/analyze.log",
+      "exit": "receipts/analyze.exit",
+      "actualExit": 0
+    },
+    "layout": {
+      "log": "receipts/sync-layout.log",
+      "exit": "receipts/sync-layout.exit",
+      "actualCases": 7,
+      "actualExit": 0
+    },
+    "downloadButton": {
+      "log": "receipts/download-circle.log",
+      "exit": "receipts/download-circle.exit",
+      "actualCases": 4,
+      "actualExit": 0
+    },
+    "qualification": "These are actual 228 whole-file runs. Layout includes the real CameraPage with 30 mocked camera photos and scroll geometry; download button tests include explicit dark/white paint under conflicting themes and enabled/disabled states. They are widget evidence, not a connected physical camera GUI."
+  },
+  "infrastructureAttempts": {
+    "count": 0,
+    "countedAsPass": false,
+    "qualification": "No 227 or earlier infrastructure/test attempts are included in this 228 archive."
+  },
+  "qaRetry": {
+    "maxFreshDumps": 3,
+    "validatesDumpSuccessMarker": true,
+    "validatesHierarchyXml": true,
+    "functionalLabelAssertionsChangedByArchiver": false
+  },
+  "screenshots": {
+    "container": "ui-screenshots.tar.xz",
+    "originalPngMembers": 15,
+    "prefixes": [
+      "back227-",
+      "gui227-"
+    ],
+    "sourceDirectory": ".tooling/next228/ui",
+    "qualification": "The 228 helper intentionally retained old filename stems. These originals come only from next228 and are bound to source734aa3b/228 APK by fresh gate reports; no next227 file is included.",
+    "verification": "Every decompressed PNG member is byte-compared to source; corresponding XML is copied byte-for-byte."
+  },
+  "mappings": {
+    "container": "r8-mappings.tar.xz",
+    "members": 2,
+    "verification": "Both original mappings decompressed and byte-compared; original bytes/SHA listed separately per member in archive-manifest.json."
+  },
+  "rawHelperLiterals": {
+    "guiStdout": "GUI227",
+    "selectionProofCaseLiteral": 2,
+    "qualification": "Raw helper/log/JSON labels are retained unchanged. Source/APK gate identity is 228; actual current selection/button whole-file count is 4 per local log+exit, rather than the inherited proof text 2."
+  },
+  "physicalCameraTested": false,
+  "connectedThenDisconnectedTransportProvenByThisGui": false,
+  "stopTransportQualification": "This GUI archive does not claim physical burst/stop or a connected physical camera grid; unchanged Core/transport validation is bound elsewhere by the parent.",
+  "sourceSnapshot": {
+    "path": "receipts/source.json",
+    "statusAtCapture": "android-accepted-ios-full-validation-running",
+    "androidAcceptedAtCapture": true,
+    "qualification": "Unmodified source-frozen metadata captured before this archive run. Flags are preserved from that snapshot; later parent promotion may change the mutable source metadata and must not rewrite this raw original. Snapshot bytes, rather than later promoted bytes, are compared throughout archival."
+  },
+  "excluded": [
+    "APK payloads",
+    "classes trees",
+    "uncompressed mapping files",
+    "private HANDOFF",
+    "227 and earlier evidence/attempts",
+    "non-current UI snapshots"
+  ],
+  "packages": [
+    {
+      "path": ".tooling/next228/package-candidates/huevia-0.31.0-dev-228-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "50759de4f4525d0053f5f4d93ff2763512b5509e31e248e6132643453bd17b63",
+      "copied": false
+    },
+    {
+      "path": ".tooling/next228/package-candidates/huevia-0.31.0-dev-228-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "5e48ebda1b4cb3a620c66c74e8e17f9f8c8913ecbb87d8554fb6cca92910f23d",
+      "copied": false
+    }
+  ],
+  "sdkAdbGitExecutedByArchiver": false
+}

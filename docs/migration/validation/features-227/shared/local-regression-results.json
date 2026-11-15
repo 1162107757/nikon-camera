@@ -1,0 +1,22 @@
+[
+  {
+    "step": "format",
+    "exit": 0
+  },
+  {
+    "step": "analyze",
+    "exit": 0
+  },
+  {
+    "file": "camera_live_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_downloads_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_transfer_test.dart",
+    "exit": 124
+  }
+]

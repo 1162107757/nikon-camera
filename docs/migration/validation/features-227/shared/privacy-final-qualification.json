@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "previousSource": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "archivedAtUtc": "2026-11-15T08:39:59.929835+00:00",
+  "file": "cross-platform/app/test/camera_live_panel_test.dart",
+  "completeFilePassed": 2,
+  "testExit": 0,
+  "formatExit": 0,
+  "wholeAppAnalyzeExit": 0,
+  "log": "shared/privacy-final-tests.log",
+  "sourceProof": "shared/privacy-test-only-source-proof.json",
+  "qualification": "Existing actual complete-file2/0 execution after a test-fixture-only change. Privacy image/name/owner assertions remain. No SDK rerun occurred during archiving.",
+  "changes": "Setup/owner/stop cleanup run in the appropriate real zone; real decoded RawImage readiness is observed by alternating real and fake pumping. A fake-zone-created FileImage stream is not awaited exclusively inside runAsync precache.",
+  "failedAttempts": [
+    {
+      "directory": "attempts/windows-privacy-precache-fake-cache",
+      "passed": 1,
+      "failed": 1,
+      "exit": 1,
+      "qualification": "Real8s timeout awaiting precache of a stream first created in fake zone; not a completed pass."
+    },
+    {
+      "directory": "attempts/windows-panel-owner-diagnostic",
+      "exit": 124,
+      "qualification": "Instrumented original body reached privacy checks and unmount; teardown stopped at controller.stop while phaseStopping/active/working. Timeout124, not a completed test pass."
+    }
+  ],
+  "newMacFullStillRequiresIndependentAcceptance": true,
+  "coreOrAndroidEvidenceChangedByThisAppend": false,
+  "published": false
+}

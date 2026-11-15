@@ -1,0 +1,34 @@
+{
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "apkSha256": "e9798a9f85afb80d177565a6f8e1ecd3c5d84e3766d3be22a9744cca16114b74",
+  "device": "emulator-5584",
+  "api": 31,
+  "abi": "x86_64",
+  "cases": [
+    {
+      "case": "disconnected-live-tab-opens-connection-and-cancel-returns-live",
+      "exit": 0
+    },
+    {
+      "case": "disconnected-central-start-connects-and-cancel-retains-RAW-choice",
+      "exit": 0
+    },
+    {
+      "case": "records-root-modal-keeps-tabs-out-and-opens-existing-photo",
+      "exit": 0
+    },
+    {
+      "case": "explicit-connect-entry-opens-and-Back-returns-to-sync",
+      "exit": 0
+    },
+    {
+      "case": "three-spaced-tabs-remain-accessible-after-connection-cancel",
+      "exit": 0
+    }
+  ],
+  "physicalCameraTested": false,
+  "connectedThenDisconnectedTransportProvenByThisGui": false,
+  "selectionCircleAndLongPressProof": "Real widget test camera_selection_download_test.dart,2 cases; this emulator GUI does not fake a connected camera grid",
+  "actualStopTransportProof": "Dart held-transaction regressions and SharedCore same-session JPEG/NEF tests; physical camera pending",
+  "exit": 0
+}

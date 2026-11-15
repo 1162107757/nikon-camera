@@ -1,0 +1,38 @@
+[
+  {
+    "step": "manual-verified-format",
+    "exit": 0
+  },
+  {
+    "step": "analyze-verified",
+    "exit": 0
+  },
+  {
+    "step": "manual-verified",
+    "exit": 0
+  },
+  {
+    "step": "start-verified-1",
+    "exit": 0
+  },
+  {
+    "step": "start-verified-2",
+    "exit": 0
+  },
+  {
+    "step": "start-verified-3",
+    "exit": 79
+  },
+  {
+    "step": "start-verified-4",
+    "exit": 0
+  },
+  {
+    "step": "start-verified-5",
+    "exit": 0
+  },
+  {
+    "step": "start-verified-6",
+    "exit": 0
+  }
+]

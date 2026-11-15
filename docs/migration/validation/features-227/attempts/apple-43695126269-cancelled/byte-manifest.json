@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "ac5a7ef4ceca2d1b180d6321f683f90241f1234f",
+  "runId": 43695126269,
+  "conclusion": "cancelled",
+  "files": [
+    {
+      "path": "latest-run.json",
+      "sourcePath": ".tooling/next227/apple-watch-43695126269/latest-run.json",
+      "bytes": 14076,
+      "sha256": "df1af4b8e242eac4e126b4013c743c26756558663b915b3980a06c77fd07f828",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "latest-jobs.json",
+      "sourcePath": ".tooling/next227/apple-watch-43695126269/latest-jobs.json",
+      "bytes": 7462,
+      "sha256": "35ade39e577e5003f4d14b8359d1d6dad3de552b7b43362bcc62ab3bd180b9fd",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "artifacts-api.json",
+      "sourcePath": ".tooling/next227/apple-watch-43695126269/artifacts-api.json",
+      "bytes": 959,
+      "sha256": "5b6b3cd3e7336aad0b48a93803ae28a046c6026c7580b9d6dbccc86dd41b6197",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "events.jsonl",
+      "sourcePath": ".tooling/next227/apple-watch-43695126269/events.jsonl",
+      "bytes": 9024,
+      "sha256": "db8bccfc34c0f3b95bd6c1acb6bb43998e6b18c844787fdf6d4bea06baf59717",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "result.json",
+      "sourcePath": ".tooling/next227/apple-watch-43695126269/result.json",
+      "bytes": 369,
+      "sha256": "9087290ff7aa860edc0070bfd1aaee2ef5b5cda58d9064afe75017f1504f450e",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs.zip",
+      "sourcePath": ".tooling/next227/apple-watch-43695126269/workflow-logs.zip",
+      "bytes": 19962,
+      "sha256": "f24cc8e2ca9ab61ad2bfd9944a6bb640633c93fde2ad50e6eb2f49deca46f67a",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "discovery-api.json",
+      "sourcePath": ".tooling/next227/apple-discovery-ac5a7ef4ceca/query-1.json",
+      "bytes": 15021,
+      "sha256": "a9cf2383bfa61cd77b31bbbb1b4b6f1ef47eb0fab8d07974c3cebd256d41f2ea",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/0_apple-app.txt",
+      "sourcePath": "workflow-logs.zip:0_apple-app.txt",
+      "bytes": 28307,
+      "sha256": "660780f6defc1f64393fc3029529a05d859abfd24cd4579c512fa7752b513633",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/system.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/system.txt",
+      "bytes": 819,
+      "sha256": "84d53f9f9e8303c9c7693fa097a56086be757710081d5fad61a3ad43dda49a6a",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/1_Set up job.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/1_Set up job.txt",
+      "bytes": 2287,
+      "sha256": "768f8e3c1d66c1784ca6846a53a5d290013c43e976f0b0e09e4be6bd29b821cd",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/2_Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/2_Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "bytes": 13011,
+      "sha256": "6ea334a97896f18940e99bd4811d3e247dbc20a9c54c76d77184cca543303c45",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/3_Identify the exact Apple compiler.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/3_Identify the exact Apple compiler.txt",
+      "bytes": 324,
+      "sha256": "4f0cfa11856526f4257fe63a280a4d801db2ff5482fc8f5a706b0e35018bfbf0",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/4_Restore pinned native runtime outputs.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/4_Restore pinned native runtime outputs.txt",
+      "bytes": 2084,
+      "sha256": "4318a839a7396f050b29f7981c16b32aca1f9eef0d8f541d77f1670936629f01",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/5_Restore pinned official Apple SDK and model downloads.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/5_Restore pinned official Apple SDK and model downloads.txt",
+      "bytes": 1822,
+      "sha256": "5040a76ed140d58c36425ceb8bfa1cd560d7b4daadb6bdf9f1db37b806ece06f",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/6_Verify core parity and prepare native runtimes.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/6_Verify core parity and prepare native runtimes.txt",
+      "bytes": 2224,
+      "sha256": "1feba2b4a4ea2e274a46742166022146059e57baf25331ef233838d1e7bb5bd4",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/9_Build and test the unsigned device app.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/9_Build and test the unsigned device app.txt",
+      "bytes": 1101,
+      "sha256": "0c59744217dab4e4895b219314da32aecb28f45cdd37b3e6c130f7030c5bc7af",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/12_Preserve development IPA and exact build evidence.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/12_Preserve development IPA and exact build evidence.txt",
+      "bytes": 2941,
+      "sha256": "fc11581861f89b6af6dea7afc9c30888a475c1e9a0bc29344c77a396b988ddba",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/24_Post Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/24_Post Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "bytes": 1944,
+      "sha256": "77a8b6881722007eb73da85af9c6966072b5fecfcab0ee13c03158a782c170c6",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "workflow-logs/apple-app/25_Complete job.txt",
+      "sourcePath": "workflow-logs.zip:apple-app/25_Complete job.txt",
+      "bytes": 596,
+      "sha256": "0e1a7cd4815f30714c5a45f557acdc1f92b7ce872509537fc42bb893b1c8b8d3",
+      "kind": "byte-exact-original"
+    },
+    {
+      "path": "DIAGNOSIS.json",
+      "bytes": 952,
+      "sha256": "652e48d2f22e79981a14e8a13be06b88a87c4c838a0179cd189bd28ad29c37b5",
+      "kind": "archive-metadata"
+    }
+  ]
+}

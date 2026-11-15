@@ -1,0 +1,24 @@
+﻿2026-11-15T08:34:38.6403460Z ##[group]Run bash cross-platform/tool/mobile_apple.sh prepare
+2026-11-15T08:34:38.6403910Z [36;1mbash cross-platform/tool/mobile_apple.sh prepare[0m
+2026-11-15T08:34:38.6455300Z shell: /bin/bash -e {0}
+2026-11-15T08:34:38.6455610Z ##[endgroup]
+2026-11-15T08:34:39.8362020Z Valid UTF-8 text and platform configuration: 1771 files
+2026-11-15T08:34:39.8363380Z Read-only detail render source boundary: 43 checks passed
+2026-11-15T08:34:39.8364900Z Readonly HueviaTask cancellation API: 60 Apple sources checked; 1 independently typed fixture setter retained
+2026-11-15T08:34:46.3345330Z From https://github.com/flutter/flutter
+2026-11-15T08:34:46.3443310Z  * branch              c197ca5199e9ee5661e865596c9c07294dfab51c -> FETCH_HEAD
+2026-11-15T08:34:53.8844300Z From https://github.com/flutter/flutter
+2026-11-15T08:34:53.8846660Z  * [new tag]           3.47.9     -> 3.47.9
+2026-11-15T08:35:39.0341910Z Frozen original Git reference preserved: 420; approved original repairs verified: 13; other original files unchanged: 407
+2026-11-15T08:38:54.3024740Z PASS original JVM tests translated to Objective-C and matching image fingerprints
+2026-11-15T08:38:59.5774120Z PASS Apple public I/O queue isolation: account/public waits preserve serial camera heartbeat; no physical camera exercised
+2026-11-15T08:39:05.0462110Z PASS 38 Apple native avatar checks; eight EXIF transforms, dimensions, metadata, unchanged source, cancellation and white background
+2026-11-15T08:41:02.5223950Z WIFI_STAGE cancellable-authorization-wait
+2026-11-15T08:41:02.5250070Z WIFI_STAGE cancelled-before-connect
+2026-11-15T08:41:02.5262270Z WIFI_STAGE echo-connect
+2026-11-15T08:41:02.5322480Z PASS 34 Apple Wi-Fi stream checks; exact bytes, offsets, segmented reads, timeout, refusal and concurrent close
+2026-11-15T08:41:06.6849140Z Staged verified generated core and pinned JRE runtime for the Apple host
+2026-11-15T08:41:18.7209040Z Setting "enable-swift-package-manager" value to "false".
+2026-11-15T08:41:18.7325380Z 
+2026-11-15T08:41:18.7429460Z You may need to restart any open editors for them to read new settings.
+2026-11-15T08:41:34.3619600Z Verified project-level CocoaPods-only native plugin resolution

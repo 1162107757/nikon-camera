@@ -1,0 +1,12 @@
+{
+  "requestedAtUtc": "2026-11-15T09:20:45.505496+00:00",
+  "method": "GET",
+  "endpoint": "/actions/jobs/132759091924/logs",
+  "jobId": 132759091924,
+  "runId": 43696814968,
+  "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "jobStatusBeforeRequest": "in_progress",
+  "readable": true,
+  "bytes": 28805,
+  "sha256": "1f2bb12934d93c683e600849704462aed3c404fc5734ed5d7f9bef41435506cc"
+}

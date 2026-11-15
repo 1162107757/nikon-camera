@@ -1,0 +1,199 @@
+{
+  "total_count": 3,
+  "jobs": [
+    {
+      "id": 132742566271,
+      "run_id": 43691378026,
+      "workflow_name": "Cross-platform mobile development build",
+      "head_branch": "codex/features215",
+      "run_url": "https://api.github.com/repos/1162107757/nikon-camera/actions/runs/43691378026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVZ116c8AAAAe6BLRfw",
+      "head_sha": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+      "url": "https://api.github.com/repos/1162107757/nikon-camera/actions/jobs/132742566271",
+      "html_url": "https://github.com/1162107757/nikon-camera/actions/runs/43691378026/job/132742566271",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-15T07:45:46Z",
+      "started_at": "2026-11-15T07:45:48Z",
+      "completed_at": "2026-11-15T08:12:47Z",
+      "name": "apple-app",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-15T07:45:48Z",
+          "completed_at": "2026-11-15T07:45:50Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-15T07:45:50Z",
+          "completed_at": "2026-11-15T07:46:18Z"
+        },
+        {
+          "name": "Identify the exact Apple compiler",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-15T07:46:18Z",
+          "completed_at": "2026-11-15T07:46:19Z"
+        },
+        {
+          "name": "Restore pinned native runtime outputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-15T07:46:19Z",
+          "completed_at": "2026-11-15T07:46:24Z"
+        },
+        {
+          "name": "Restore pinned official Apple SDK and model downloads",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-15T07:46:24Z",
+          "completed_at": "2026-11-15T07:46:25Z"
+        },
+        {
+          "name": "Verify core parity and prepare native runtimes",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-15T07:46:25Z",
+          "completed_at": "2026-11-15T07:52:49Z"
+        },
+        {
+          "name": "Preserve verified native runtime outputs",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-11-15T07:52:49Z",
+          "completed_at": "2026-11-15T07:52:49Z"
+        },
+        {
+          "name": "Preserve pinned official Apple SDK and model downloads",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8,
+          "started_at": "2026-11-15T07:52:49Z",
+          "completed_at": "2026-11-15T07:52:49Z"
+        },
+        {
+          "name": "Build and test the unsigned device app",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 9,
+          "started_at": "2026-11-15T07:52:49Z",
+          "completed_at": "2026-11-15T08:12:43Z"
+        },
+        {
+          "name": "Diagnose the native simulator pipeline without accepting an IPA",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2026-11-15T08:12:43Z",
+          "completed_at": "2026-11-15T08:12:43Z"
+        },
+        {
+          "name": "Show actionable build errors",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-15T08:12:43Z",
+          "completed_at": "2026-11-15T08:12:43Z"
+        },
+        {
+          "name": "Preserve development IPA and exact build evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-15T08:12:43Z",
+          "completed_at": "2026-11-15T08:12:44Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-11-15T08:12:44Z",
+          "completed_at": "2026-11-15T08:12:45Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-11-15T08:12:45Z",
+          "completed_at": "2026-11-15T08:12:46Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/1162107757/nikon-camera/check-runs/132742566271",
+      "labels": [
+        "macos-26"
+      ],
+      "runner_id": 1000000185,
+      "runner_name": "GitHub Actions 1000000185",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 132742567316,
+      "run_id": 43691378026,
+      "workflow_name": "Cross-platform mobile development build",
+      "head_branch": "codex/features215",
+      "run_url": "https://api.github.com/repos/1162107757/nikon-camera/actions/runs/43691378026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVZ116c8AAAAe6BLVlA",
+      "head_sha": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+      "url": "https://api.github.com/repos/1162107757/nikon-camera/actions/jobs/132742567316",
+      "html_url": "https://github.com/1162107757/nikon-camera/actions/runs/43691378026/job/132742567316",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-15T07:45:46Z",
+      "started_at": "2026-11-15T07:45:46Z",
+      "completed_at": "2026-11-15T07:45:45Z",
+      "name": "portrait-pixels",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/1162107757/nikon-camera/check-runs/132742567316",
+      "labels": [
+        "macos-26"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 132742567390,
+      "run_id": 43691378026,
+      "workflow_name": "Cross-platform mobile development build",
+      "head_branch": "codex/features215",
+      "run_url": "https://api.github.com/repos/1162107757/nikon-camera/actions/runs/43691378026",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVZ116c8AAAAe6BLV3g",
+      "head_sha": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+      "url": "https://api.github.com/repos/1162107757/nikon-camera/actions/jobs/132742567390",
+      "html_url": "https://github.com/1162107757/nikon-camera/actions/runs/43691378026/job/132742567390",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-15T07:45:46Z",
+      "started_at": "2026-11-15T07:45:46Z",
+      "completed_at": "2026-11-15T07:45:45Z",
+      "name": "portrait-geometry",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/1162107757/nikon-camera/check-runs/132742567390",
+      "labels": [
+        "macos-26"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}

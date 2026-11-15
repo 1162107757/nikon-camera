@@ -1,0 +1,6 @@
+{
+  "verify_android": 0,
+  "verify_photos": 0,
+  "run_release_runtime": 0,
+  "check_back_navigation": 1
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "file": "camera_live_start_connection_test.dart",
+    "exit": 79
+  },
+  {
+    "file": "camera_selection_download_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "capsule_switch_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_live_panel_226_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_live_panel_test.dart",
+    "exit": 1
+  },
+  {
+    "file": "camera_transfer_retirement_226_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_reconnect_226_test.dart",
+    "exit": 1
+  },
+  {
+    "file": "camera_intent_test.dart",
+    "exit": 1
+  },
+  {
+    "file": "camera_sync_autoload_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_design_ui_test.dart",
+    "exit": 1
+  },
+  {
+    "file": "camera_download_soft_stop_test.dart",
+    "exit": 0
+  }
+]

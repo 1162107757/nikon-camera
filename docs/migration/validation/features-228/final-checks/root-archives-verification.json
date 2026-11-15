@@ -1,0 +1,14 @@
+{
+  "227": {
+    "manifestEntriesVerified": 510,
+    "compressedMembersVerified": 34,
+    "everyJsonParsed": true,
+    "allBytesAndSha256Match": true
+  },
+  "228": {
+    "manifestEntriesVerified": 176,
+    "compressedMembersVerified": 17,
+    "everyJsonParsed": true,
+    "allBytesAndSha256Match": true
+  }
+}

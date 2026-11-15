@@ -1,0 +1,19 @@
+{
+  "manualFullFileExit": 124,
+  "manualPriorCasesPassed": 5,
+  "manualLastCaseWholePass": false,
+  "diagnosticShowsBodySettledBusyFalse": true,
+  "reason": "second teardown await of already-completed fake-zone receiving Future blocks; completion/error flag used instead",
+  "startInitialIsolatedPassed": [
+    3,
+    5,
+    6
+  ],
+  "startInitialRealFixtureFailed": [
+    1,
+    2,
+    4
+  ],
+  "startFix": "wait pop animation View removal before original noView assertion; invalid empty session uses actual primary connect key",
+  "productChangedForTheseFixes": false
+}

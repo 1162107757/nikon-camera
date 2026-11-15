@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtUtc": "2026-11-15T07:11:38.064306+00:00",
+  "build": 227,
+  "qualification": "Static source review and Python syntax compilation only; no helper executed, no package accepted, no API GET/POST, SDK, Git command or build run.",
+  "sourceCommitAtReview": null,
+  "sourceFrozenAtReview": false,
+  "passedStaticReview": true,
+  "helpersChanged": false,
+  "publicDocsOrCoreMetadataChanged": false,
+  "files": [
+    {
+      "path": ".tooling/next227/build_releases.py",
+      "sha256": "0c17b38c93411c26c6afa29bb0cefa5b038b859994906604d9d92385927449e3",
+      "bytes": 3458,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/verify_android.py",
+      "sha256": "086d7aed0a7ef375c415cdffda3e0fedfcc455b52c339e6a158a7eb1896c0997",
+      "bytes": 3913,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [
+        "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75"
+      ],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/verify_photos.py",
+      "sha256": "9a4cdba01ef0c21a0b7862e147e47a5210bfbd29175a69cec09402fa20c2aa1e",
+      "bytes": 1330,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/run_release_runtime.py",
+      "sha256": "977c5902efcb54c9c45380f3186527ab340c727d08dad52c0a639e98992ffb6d",
+      "bytes": 3101,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/check_back_navigation.py",
+      "sha256": "13ac830fad288b5f4bde8ff85d3d28f7bc2af2f85c064232169d9ab1c29efd10",
+      "bytes": 3817,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/android_acceptance_pipeline.py",
+      "sha256": "1132bcc7d31b01c30d3b0aec5d5667588ca385a261d18af929b982070a710f6f",
+      "bytes": 741,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/qa_ui.py",
+      "sha256": "9a23da211b48a55a32a424c8c897f082358027832c48cc8666a8b81041d244bf",
+      "bytes": 1169,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/release-runtime.init.gradle",
+      "sha256": "53fab9c417f8a767acf7c709e27daa6a7124ad98e4039137f00c4a8dc77962c1",
+      "bytes": 310,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": false
+    },
+    {
+      "path": ".tooling/next227/verify_apple.py",
+      "sha256": "0812fa58d20b6f496a375fa0a7e8a91a4810f6a610ca50a97a3e723fec6f2fbd",
+      "bytes": 12840,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [
+        "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+        "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5"
+      ],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/apple_full_source_evidence227.py",
+      "sha256": "bc0e5aa91f8459e7660023632a93d6fe848cfd056cb827f376cb3038a081a07a",
+      "bytes": 2457,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/public_internet_evidence227.py",
+      "sha256": "e87cc9829d3d1f602ea1aeed062b086d73f0ee637ac95652fd1acf840601af72",
+      "bytes": 3475,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/foreground_evidence227.py",
+      "sha256": "a1f68d89432af91726d03ce91cbab0fe3ed2dc5833b2df38c55e835e8fd8df31",
+      "bytes": 5275,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [
+        "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543",
+        "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e"
+      ],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/test_apple_full_source_evidence227.py",
+      "sha256": "48c40a55119f4ee4540d160216fb99d63780c3ea873793b4ef8bd9be464694b3",
+      "bytes": 2839,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/test_public_internet_evidence227.py",
+      "sha256": "12a92416658260eab9b1a45810d87740a45f35466591c27044ad11146aa34972",
+      "bytes": 2875,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    },
+    {
+      "path": ".tooling/next227/dispatch_apple.py",
+      "sha256": "8990fca13afdb3116b48ca079f714a6d76eb5f141248c29fc5cc578aaa6adb70",
+      "bytes": 983,
+      "hexPinsUnchangedFrom226": true,
+      "hexPins": [],
+      "pythonSyntaxCompiledOnly": true
+    }
+  ],
+  "gateFindings": [
+    {
+      "gate": "Apple full-source provenance",
+      "path": ".tooling/next227/apple_full_source_evidence227.py",
+      "lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        19,
+        21,
+        22,
+        23,
+        25,
+        26,
+        29,
+        32,
+        35
+      ],
+      "retained": true,
+      "detail": "Requires frozen build227 source, published false, matching workflow_dispatch source/run/artifact, one successful apple-app job on macos-26, preparation and unsigned-device full build steps successful, diagnostics skipped."
+    },
+    {
+      "gate": "Apple packaged application",
+      "path": ".tooling/next227/verify_apple.py",
+      "lines": [
+        69,
+        70,
+        73,
+        74,
+        88,
+        89,
+        90,
+        91,
+        92,
+        95,
+        104,
+        105,
+        114
+      ],
+      "retained": true,
+      "detail": "Shared verify_ipa validates digest/source, bundle version/build, arm64 iPhoneOS architectures and minimum OS. Extra gate checks build227 version0.31.0, actual plist Huevia, unsigned executable/no provision/no CodeResources, native classes/frameworks, pinned2portrait models and all10 byte-identical photos."
+    },
+    {
+      "gate": "Apple complete Flutter/UIKit/native/foreground/core",
+      "path": ".tooling/next227/verify_apple.py",
+      "lines": [
+        143,
+        144,
+        146,
+        147,
+        157,
+        160,
+        168,
+        170,
+        175,
+        176,
+        178
+      ],
+      "retained": true,
+      "detail": "Requires complete successful Flutter log >=697 (not weakened below prior661), named5UIKit including3camera presentation+1native cancellation, successful real native fixture, strict foreground proofs and2unchanged pinned Git blobs, complete parity equal current227 JVM golden and same frozen source."
+    },
+    {
+      "gate": "Apple public-internet schema2 six inputs",
+      "path": ".tooling/next227/public_internet_evidence227.py",
+      "lines": [
+        6,
+        13,
+        26,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        43,
+        48,
+        49,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "retained": true,
+      "detail": "Exactly one schema2 result, exact source, compile/execution/exit all integer0, exact concurrency2/3 and16camera heartbeat contract, all6compiled input SHA values match frozen Git; real compiler/architecture/isolation PASS logs required, explicitly no physical camera exercise."
+    },
+    {
+      "gate": "Android packaged application/signing/alignment",
+      "path": ".tooling/next227/verify_android.py",
+      "lines": [
+        9,
+        10,
+        13,
+        16,
+        18,
+        20,
+        21,
+        22,
+        39,
+        44,
+        46
+      ],
+      "retained": true,
+      "detail": "Requires two candidate ABI APKs build227 version0.31.0-dev/packagecc.huevia.next, actual aapt Huevia, pinned certificate SHA, apksigner, zipalign-P16, exactly8expectedABI ELF libraries with all PT_LOAD p_align>=16384/congruence and uncompressed ZIP16KiB offsets."
+    },
+    {
+      "gate": "Android runtime/back/photo and private staging",
+      "path": ".tooling/next227/android_acceptance_pipeline.py",
+      "retained": true,
+      "detail": "Build waits on successful receipt, runs verify_android/photos/runtime/back in order and stops on nonzero. Runtime retains minimum123 R8 native checks bound APK/testAPK/source; candidate outputs remain private package-candidates, not dist."
+    }
+  ],
+  "observedNonGateVersionCloneDifferences": [
+    {
+      "path": ".tooling/next227/check_back_navigation.py",
+      "detail": "Final-screen receipt is now Pre-set tab title 预设 instead of 我的预设; actual tap(预设,last=True) and all process/activity/Back assertions retained."
+    },
+    {
+      "path": ".tooling/next227/qa_ui.py",
+      "detail": "Temporary uiautomator XML filename is huevia227-ui.xml rather than huevia226-ui.xml."
+    }
+  ],
+  "acceptance": {
+    "runtimeExecutedByThisReview": false,
+    "androidAccepted": false,
+    "iosAccepted": false,
+    "published": false
+  },
+  "nextAction": "Root final source freeze and one full/macOS26 dispatch, then independent real-package verification; this static report cannot establish platform acceptance."
+}

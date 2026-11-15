@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "transport": "context-mode host urllib HTTPS",
+  "preflightExactMatches": 0,
+  "previousCurlFailureBeforeHttpHandshake": true,
+  "inputs": {
+    "verification": "full",
+    "apple_runner": "macos-26"
+  }
+}

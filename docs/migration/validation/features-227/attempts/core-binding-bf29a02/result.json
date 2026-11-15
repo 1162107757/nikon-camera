@@ -1,0 +1,17 @@
+{
+  "versionCode": 227,
+  "actualFreshExecution": true,
+  "compileExit": 0,
+  "executionExit": 0,
+  "inputCount": 261,
+  "distinctInputCount": 246,
+  "sharedBoundaryChecks": 1885,
+  "sharedAtmosphereChecks": 6,
+  "totalSharedChecks": 1891,
+  "finalSourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "finalSourceBindingPending": false,
+  "inputFingerprintsPending": false,
+  "testRerunForBinding": false,
+  "rawExecutionReceiptsByteExact": true,
+  "finalSourceBinding": "source-binding.json"
+}

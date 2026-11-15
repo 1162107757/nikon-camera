@@ -1,0 +1,23 @@
+{
+  "helpers": [
+    "build_releases.py",
+    "android_acceptance_pipeline.py",
+    "verify_android.py",
+    "verify_photos.py",
+    "run_release_runtime.py",
+    "check_back_navigation.py",
+    "run_back_final.py",
+    "qa_ui.py",
+    "check_live_panel_gui.py",
+    "dispatch_apple.py",
+    "verify_apple.py",
+    "foreground_evidence228.py",
+    "public_internet_evidence228.py",
+    "apple_full_source_evidence228.py",
+    "test_apple_full_source_evidence228.py",
+    "test_public_internet_evidence228.py"
+  ],
+  "allExisting40And64HexPinsPreserved": true,
+  "baseline": "next227",
+  "scope": "228 local UI repair; strict gates retained"
+}

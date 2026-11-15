@@ -1,0 +1,73 @@
+{
+  "build": 228,
+  "versionCode": 228,
+  "versionName": "0.31.0-dev",
+  "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "sourceFrozen": true,
+  "published": false,
+  "acceptedForLocalTesting": false,
+  "acceptedForDelivery": false,
+  "androidAcceptedForLocalTesting": true,
+  "iosAcceptedForLocalTesting": false,
+  "status": "android-accepted-ios-full-validation-running",
+  "packageStage": ".tooling/next228/package-candidates",
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-228-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "50759de4f4525d0053f5f4d93ff2763512b5509e31e248e6132643453bd17b63",
+      "platform": "Android",
+      "abi": "arm64",
+      "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-228-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "5e48ebda1b4cb3a620c66c74e8e17f9f8c8913ecbb87d8554fb6cca92910f23d",
+      "platform": "Android",
+      "abi": "x64",
+      "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+      "acceptedForLocalTesting": true,
+      "published": false
+    }
+  ],
+  "scope": [
+    "Keep fixed16dp spacing between all Sync tabs and scrolling contents;12dp top fade does not intercept gestures or remount content.",
+    "Render explicit #242420 solid56dp circular download background and white icon in light/dark/enabled/disabled states; retain count badge and original real download action.",
+    "Retain all227 soft-stop, disconnected-live connection, queue spacing and long-press fixes."
+  ],
+  "jvm": {
+    "totalChecks": 1891,
+    "boundaryChecks": 1885,
+    "atmosphereChecks": 6,
+    "compiledInputCount": 261,
+    "distinctInputCount": 246,
+    "reusedUnchanged227Execution": true,
+    "bindingIsNotRerun": true,
+    "sourceBindingPending": false,
+    "immutableBindingSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c"
+  },
+  "knownLimitations": [
+    "iOS full/macOS26 run43696814968 is still validating; no final IPA accepted.",
+    "iOS QQ Universal Link/AASA remains unconfigured.",
+    "Physical Z6II Wi-Fi/cellular, USB, native QQ, 16KiB hardware and user-signed iPhone still require real-device testing."
+  ],
+  "appleFullRun": 43696814968,
+  "appleFullRunSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "appleFullRunAccepted": false,
+  "finalSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "platformAcceptance": {
+    "android": "accepted-for-local-testing",
+    "ios": "full-run-in-progress"
+  },
+  "androidReceipt": "android/",
+  "androidGuiReceipt": "android/receipts/live-panel-gui-result.json",
+  "appleVerification": {
+    "run": 43696814968,
+    "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+    "conclusion": null,
+    "status": "in_progress"
+  }
+}

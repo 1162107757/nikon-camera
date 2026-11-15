@@ -1,0 +1,5 @@
+{
+  "directory": "attempts/windows-panel-owner-diagnostic",
+  "exit": 124,
+  "qualification": "Instrumented original body reached privacy checks and unmount; teardown stopped at controller.stop while phaseStopping/active/working. Timeout124, not a completed test pass."
+}

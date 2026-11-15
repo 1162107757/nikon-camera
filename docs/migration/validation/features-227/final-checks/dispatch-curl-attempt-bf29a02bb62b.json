@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "transport": "Windows curl HTTPS HTTP1.1, certificate verification enabled",
+  "reason": "Two urllib SSL EOF requests, each followed by3 successful no-run GET proofs",
+  "inputs": {
+    "verification": "full",
+    "apple_runner": "macos-26"
+  }
+}

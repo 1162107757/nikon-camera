@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "passed": true,
+  "exitCode": 0,
+  "phase": "complete",
+  "sourceCommit": "bf29a02bb62babda3caa9ae2a84c5d9454aa3da2",
+  "compileExitCode": 0,
+  "executionExitCode": 0,
+  "verifiedAt": "2026-11-15T07:50:32.114008+00:00",
+  "platform": "macOS Foundation production I/O queues",
+  "sourceSha256": {
+    "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.h": "7fdddfb2d8f10a187808d878ce870ef7c41df911cf44224c1f954bb323dd977e",
+    "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.m": "b87ed7603f70d966e99b799d30f5e7a27791c7653b519f9c506451f35e1a0b8e",
+    "cross-platform/native/ios/Classes/HueviaCorePlugin.m": "af8b855533a73e1a925d6435913d546df3f309cf933c0e47219630c623b68d92",
+    "cross-platform/native/tests/public_internet_queue_apple.m": "3c046c5885426fe1f8a87d9d7464d2ca39a31efe705806988508e1e0b25b557a",
+    "cross-platform/tool/public_internet_queue_source_check.py": "92606b3b2e6982418f846017fd3d7d0954c1d72e44212957518ddfa3a4d1d9da",
+    "cross-platform/tool/public_internet_apple.sh": "e480b75f03673802f83d4b487df457c20b11d79e6964079027353db2c6376a3a"
+  },
+  "contract": {
+    "accountConcurrency": 2,
+    "publicConcurrency": 3,
+    "serialCameraHeartbeatCommands": 16,
+    "physicalCameraExercised": false
+  },
+  "logs": {
+    "compiler": "compiler.log",
+    "build": "build.log",
+    "stdout": "stdout.log",
+    "architecture": "source-check.log"
+  }
+}

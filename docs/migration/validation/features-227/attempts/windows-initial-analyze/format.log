@@ -1,0 +1,13 @@
+Formatted lib/camera.dart
+Formatted lib/camera_downloads.dart
+Formatted lib/camera_grid.dart
+Formatted lib/camera_live.dart
+Formatted lib/camera_live_card.dart
+Formatted lib/camera_transfer.dart
+Formatted lib/legacy_theme.dart
+Formatted test/camera_download_soft_stop_test.dart
+Formatted test/camera_live_start_connection_test.dart
+Formatted test/camera_live_test.dart
+Formatted test/camera_selection_download_test.dart
+Formatted test/capsule_switch_test.dart
+Formatted 19 files (12 changed) in 0.21 seconds.

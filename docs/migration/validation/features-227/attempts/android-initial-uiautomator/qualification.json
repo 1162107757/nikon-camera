@@ -1,0 +1,7 @@
+{
+  "exit": 1,
+  "failure": "uiautomator returned without creating the requested diagnostic XML; next cat exited1",
+  "productFailureEstablished": false,
+  "retry": "bounded validated new dump, same APK/source, original assertions unchanged",
+  "shellUidProbe": 2000
+}

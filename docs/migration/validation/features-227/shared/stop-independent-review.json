@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "review": "227 independent soft-stop ownership review",
+  "createdAt": "2026-11-15T06:54:33.125Z",
+  "workspace": "D:/dev/ai-project/nikon-camera",
+  "stage": "Product review performed after color_controls explicit freeze, before parent-owned SDK formatting and validation.",
+  "scope": [
+    {
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "sha256": "66ccfcee481da5675f1ff01737e9cbea71f6e09583fddb468295a1af020c28a0"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "sha256": "cbfe2730b25f1fba772a295f209cab6d9e88e93362526c7380ebc16f28072a20"
+    },
+    {
+      "path": "cross-platform/app/lib/camera.dart",
+      "sha256": "29b9155939035a30a2a94bb0a5f7b0f9d48570fcc6d07186f41cc9a45f95fd00"
+    },
+    {
+      "path": "cross-platform/app/lib/domain.dart",
+      "sha256": "7ebedf8e4c6566ad723b52c14f784b7ced3777a90f4da279e331d29fcac0ff56"
+    }
+  ],
+  "reviewedControllerFreeze": {
+    "cameraDownloadsSha256": "d3966cf4191acd3f95e3750120756c5eb0977fee36851f87d909be6f857a5ed8",
+    "cameraTransferSha256": "5f06681620d86f3f2a44bcefd80b27da548c3b92a27af25d0561472544b73330",
+    "matchedWhenReviewStarted": true
+  },
+  "execution": {
+    "readOnlyProductAndTests": true,
+    "sdkExecuted": false,
+    "buildExecuted": false,
+    "testsExecuted": false,
+    "gitInvoked": false,
+    "deviceVerificationClaimed": false
+  },
+  "summary": {
+    "newConfirmedQueueManualDefects": 0,
+    "confirmedRootGlueDefectsFoundAndFixed": 1,
+    "unresolvedConfirmedDefects": 0,
+    "result": "No additional reproducible source defect found in the frozen queue/manual soft-stop implementations or their owner/generation/job/actor cleanup. Parent owns runtime validation."
+  },
+  "findings": [
+    {
+      "id": "R227-STOP-MANUAL-DISCONNECT-01",
+      "severity": "P2",
+      "path": "cross-platform/app/lib/camera.dart",
+      "status": "fixed-by-parent-and-read-back-confirmed",
+      "originalTrigger": [
+        "A manual camera.download is still held when its original tool is closed; dispose now requests ordinary soft-stop and the global manual lease remains until drain.",
+        "The user opens another connection page and explicitly chooses Disconnect.",
+        "The former disconnect implementation stopped queue/live only and then queued Native camera.disconnect behind the held camera transaction. It did not invoke the old manual lease hard-stop callback."
+      ],
+      "originalImpact": "An explicit disconnect could wait behind old camera I/O rather than cancelling its exact job. This was distinct from an ordinary soft-stop.",
+      "currentEvidence": {
+        "lines": [
+          824,
+          845
+        ],
+        "manualStop": "await state.stopCameraManualTransfer(expectedSession: expectedSession)",
+        "guards": "Mounted/epoch checked immediately after manual stop, after queue hard-stop, and after Live hard-stop.",
+        "queueAndLive": "Both receive preserveConnection:false.",
+        "nativeDisconnect": "Retains captured expectedSession in camera.disconnect payload."
+      },
+      "nativeOrRouteChange": false
+    }
+  ],
+  "checks": [
+    {
+      "id": "queue-raw-run-and-stop-cycle",
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "lines": [
+        128,
+        162
+      ],
+      "conclusion": "resume assigns the raw run Future before changed(). Only its returned _settledRun wrapper waits for that run epoch StopC; stop awaits raw running, so there is no run-waits-stop/stop-waits-wrapper cycle."
+    },
+    {
+      "id": "queue-stop-and-actor-ownership",
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "lines": [
+        473,
+        545
+      ],
+      "conclusion": "Soft-stop increments generation and retains busy until raw drain, scoped pause and actor release finish. Every awaited boundary rechecks generation plus StopC identity. Final completion clears only its own StopC. A newly admitted resume cannot be overwritten by the old stop after changed()."
+    },
+    {
+      "id": "queue-old-run-and-session-retirement",
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "lines": [
+        372,
+        415
+      ],
+      "conclusion": "Retired old run finally always cancels its own event subscription; shared busy/job/actor changes remain epoch guarded. connectionLost clears busy and its StopC pointer locally, allowing a replacement run while old closures retain their own completion handles."
+    },
+    {
+      "id": "queue-hard-upgrade-and-owner",
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "lines": [
+        447,
+        499
+      ],
+      "conclusion": "Hard-upgrade targets the precise current job and deduplicates cancellation per stop. A late cancellation failure can update error only with alive/owner/generation/StopC identity still matching. Account change uses explicit hard stop then local retirement and clears old display state."
+    },
+    {
+      "id": "manual-raw-completion-and-stop-cycle",
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "lines": [
+        169,
+        244
+      ],
+      "conclusion": "start always completes its private run completion in finally before joining its matching StopC at the tail; stop waits that private completion rather than the public start Future. This breaks circular waiting even if stop starts during a held RPC."
+    },
+    {
+      "id": "manual-global-lease-and-stale-finally",
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "lines": [
+        229,
+        320
+      ],
+      "conclusion": "Old-generation run finally does not clear busy/job or release the global lease. The owning StopC releases that lease once after drain. Normal completion releases before any reentrant new admission, and subsequent old cleanup uses completion identity/epoch checks."
+    },
+    {
+      "id": "manual-hard-upgrade-and-local-publication",
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "lines": [
+        131,
+        138
+      ],
+      "conclusion": "The global onStop callback accepts hard upgrade during an existing soft stop even though canStop is false after _stopped. A normal local importing/publication phase with no StopC retains its original completion boundary. Camera job is cleared only by matching RPC finally."
+    },
+    {
+      "id": "manual-account-and-import-install",
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "lines": [
+        62,
+        86,
+        214,
+        216,
+        247,
+        320
+      ],
+      "conclusion": "Owner changes invalidate visible data and request exact hard cancellation. Saved Photo is installed only after _check(epoch) succeeds; stale owner/run results cannot repopulate importedPhoto. Hard ACK error handling is owner/epoch/StopC guarded."
+    },
+    {
+      "id": "root-bool-live-connect-glue",
+      "path": "cross-platform/app/lib/camera.dart",
+      "lines": [
+        29,
+        44,
+        306,
+        337,
+        1092,
+        1095
+      ],
+      "conclusion": "connectCamera/openConnection return bool. Closing/cancelling the route returns false; Live host requests loadPhotos:false and waitForStatus:false, so it does not wait on parent photo/status loading before acting on a confirmed connection result."
+    },
+    {
+      "id": "root-manual-disconnect-session-boundary",
+      "path": "cross-platform/app/lib/domain.dart",
+      "lines": [
+        342,
+        365
+      ],
+      "conclusion": "stopCameraManualTransfer compares expectedSession before invoking the captured stop callback, and waits for that unique lease to change. Root disconnect passes the captured session, preserving the old/new lease boundary."
+    }
+  ],
+  "optionalUiRegression": {
+    "implemented": false,
+    "reason": "Parent began exclusive SDK validation and explicitly froze all tests before this optional new fixture was written. No test file was created by this reviewer.",
+    "suggestedReusableFixtures": [
+      "camera_reconnect_226_test.dart: ReconnectCore226, ReconnectState226, mountCamera226, tapReconnectUi, untilReconnect",
+      "camera_transfer_test.dart: TransferCore and its held download/info receipt futures",
+      "camera_transfer_retirement_226_test.dart: existing cross-page manual lease/late ACK cases"
+    ],
+    "necessaryAssertions": [
+      "Hold an actual CameraTransfer camera.download, close its originating tool into soft-stop, open a connected configuration CameraPage, then choose Disconnect.",
+      "Assert cancel targets exactly the held old manual job and is invoked before Native camera.disconnect; assert the Native payload contains the captured old session.",
+      "Assert old receipt cannot republish/import or reactivate the stopped transfer, and the original bytes remain preserved.",
+      "Replace the lease/session while old cancellation acknowledgement is held; assert old expectedSession does not invoke the new lease stop callback, and old final cleanup cannot release or clear the new lease/job."
+    ]
+  },
+  "routing": {
+    "modifiedByReviewer": false,
+    "sourceConclusion": "This review writes only its report. Queue/manual changes use existing exact-id cancellation only for explicit hard-stop and preserve default ordinary drain; root Native disconnect retains strict session payload. No Android Wi-Fi socket routing or public-network selection was changed by this review."
+  },
+  "limitations": [
+    "Source review is not a runtime, device, or passing-test claim.",
+    "Absence of physical-camera verification is not classified as a code defect.",
+    "Line references describe the reviewed pre-parent-format snapshot; hashes above identify the report-time files."
+  ]
+}

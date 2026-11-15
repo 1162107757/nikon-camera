@@ -1,0 +1,25 @@
+{
+  "syntheticVerifierOnly": true,
+  "actualAppleBuildExecuted": false,
+  "passed": true,
+  "checks": 11,
+  "cases": [
+    "valid synthetic full-run provenance accepted",
+    "unfrozen source rejected",
+    "other source rejected",
+    "wrong workflow rejected",
+    "wrong event rejected",
+    "wrong runner rejected",
+    "skipped prepare rejected",
+    "diagnostic-only job rejected",
+    "different job source rejected",
+    "different artifact source rejected",
+    "publishing state rejected"
+  ]
+}
+PASS verifier self-test: 9 synthetic cases; not an Apple runtime execution
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.000s
+
+NO TESTS RAN

@@ -1,0 +1,4 @@
+{
+  "directory": "attempts/windows-manual-diagnostic-compile",
+  "qualification": "Temporary diagnostic fixture failed compilation (undefined i), exit1;0 runtime tests executed, not a product failure or pass."
+}
