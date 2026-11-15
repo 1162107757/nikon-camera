@@ -1,0 +1,44 @@
+{
+  "build": 228,
+  "sourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "published": true,
+  "channel": "beta",
+  "artifacts": [
+    {
+      "platform": "android",
+      "versionCode": 228,
+      "channel": "beta",
+      "id": "c2f18a1b-0fa3-4087-aae3-38e1c28a9c03",
+      "file": "huevia-0.31.0-dev-228-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "50759de4f4525d0053f5f4d93ff2763512b5509e31e248e6132643453bd17b63",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/c2f18a1b-0fa3-4087-aae3-38e1c28a9c03/file",
+      "publishedAt": "2026-11-15T17:55:53.750051+08:00",
+      "publicBytesVerified": true,
+      "unsigned": false
+    },
+    {
+      "platform": "ios",
+      "versionCode": 228,
+      "channel": "beta",
+      "id": "54b37e71-d58d-4fc5-b2d0-7096197e1f73",
+      "file": "huevia-0.31.0-dev-228-ios-unsigned.ipa",
+      "bytes": 65179274,
+      "sha256": "874e5a5f60c8651c7bf0da18b89ea677963657f27bce6d5df07db31e8bdb3591",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/54b37e71-d58d-4fc5-b2d0-7096197e1f73/file",
+      "publishedAt": "2026-11-15T17:56:19.49998+08:00",
+      "publicBytesVerified": true,
+      "unsigned": true
+    }
+  ],
+  "withdrawnPublishedOldVersions": 23,
+  "oldAddressesChecked": 66,
+  "oldAddressesAll404": true,
+  "downloadPagesUpdated": true,
+  "mainHomepageUpdated": false,
+  "complete": false,
+  "downloadPage": "https://huevia.cc/preset-library/download/?channel=beta",
+  "homepage": "https://huevia.cc/",
+  "sourceValidation": "docs/migration/validation/features-228/",
+  "qualification": "ARTIFACTS.json and the frozen validation directory retain the original pre-publication local acceptance snapshot. This separate record reports the later user-authorized publication."
+}

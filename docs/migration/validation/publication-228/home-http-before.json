@@ -1,0 +1,23 @@
+{
+  "origin": "https://huevia.cc",
+  "files": [
+    {
+      "name": "index.html",
+      "url": "https://huevia.cc/",
+      "bytes": 9788,
+      "sha256": "08388555e610e764fb7af4eb8369c7498adc8846551336cc499515574fd7d303"
+    },
+    {
+      "name": "home.js",
+      "url": "https://huevia.cc/home.js",
+      "bytes": 8914,
+      "sha256": "0f90758d671fdff8c88762b2bcdda9fcb196c39996416cdb1a712ce17ea702c4"
+    },
+    {
+      "name": "home.css",
+      "url": "https://huevia.cc/home.css",
+      "bytes": 15156,
+      "sha256": "a8c4cfdf5fdc13ba2bb26a6e58653e1614e92205c328d9f39a234b226d0a8b47"
+    }
+  ]
+}

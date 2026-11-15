@@ -1,0 +1,167 @@
+TAP version 13
+# (node:40804) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com: download page defaults to current Android and renders a current-origin APK link
+ok 1 - https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com: download page defaults to current Android and renders a current-origin APK link
+  ---
+  duration_ms: 20.9384
+  ...
+# Subtest: https://custom.example.test: download page defaults to current Android and renders a current-origin APK link
+ok 2 - https://custom.example.test: download page defaults to current Android and renders a current-origin APK link
+  ---
+  duration_ms: 2.1057
+  ...
+# Subtest: download routes support root deployment and canonical URLs already using the custom domain
+ok 3 - download routes support root deployment and canonical URLs already using the custom domain
+  ---
+  duration_ms: 3.019
+  ...
+# Subtest: iOS renders a direct current-site IPA file link, metadata and self-signing notice
+ok 4 - iOS renders a direct current-site IPA file link, metadata and self-signing notice
+  ---
+  duration_ms: 3.7721
+  ...
+# Subtest: current Android uses its own package, signer and 128MiB boundary and rejects a legacy response
+ok 5 - current Android uses its own package, signer and 128MiB boundary and rejects a legacy response
+  ---
+  duration_ms: 3.6979
+  ...
+# Subtest: legacy bookmarks resolve to current Android and the old edition selector is absent
+ok 6 - legacy bookmarks resolve to current Android and the old edition selector is absent
+  ---
+  duration_ms: 4.2604
+  ...
+# Subtest: iPhone starts on iOS, beta fallback stays on the selected platform and withdrawal never falls back
+ok 7 - iPhone starts on iOS, beta fallback stays on the selected platform and withdrawal never falls back
+  ---
+  duration_ms: 10.4642
+  ...
+# Subtest: a late Android response cannot overwrite the iOS selection or its download link
+ok 8 - a late Android response cannot overwrite the iOS selection or its download link
+  ---
+  duration_ms: 11.1744
+  ...
+# Subtest: https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com: large APKs render through the server capacity boundary
+ok 9 - https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com: large APKs render through the server capacity boundary
+  ---
+  duration_ms: 11.9278
+  ...
+# Subtest: https://huevia.cc: large APKs render through the server capacity boundary
+ok 10 - https://huevia.cc: large APKs render through the server capacity boundary
+  ---
+  duration_ms: 9.28
+  ...
+# Subtest: download page rejects arbitrary external links, mismatched paths, credentials and invalid release IDs
+ok 11 - download page rejects arbitrary external links, mismatched paths, credentials and invalid release IDs
+  ---
+  duration_ms: 6.7229
+  ...
+# Subtest: download page retains bounded byte lengths, versions and SHA checks and hides failed releases
+ok 12 - download page retains bounded byte lengths, versions and SHA checks and hides failed releases
+  ---
+  duration_ms: 9.5173
+  ...
+# Subtest: homepage keeps the current validated same-origin route, including APKs above32MiB
+ok 13 - homepage keeps the current validated same-origin route, including APKs above32MiB
+  ---
+  duration_ms: 1.1863
+  ...
+# Subtest: the root beta homepage downloads current Android without navigating to another page
+ok 14 - the root beta homepage downloads current Android without navigating to another page
+  ---
+  duration_ms: 15.0231
+  ...
+# Subtest: root iOS selection renders the IPA file and self-signing copy in the existing download section
+ok 15 - root iOS selection renders the IPA file and self-signing copy in the existing download section
+  ---
+  duration_ms: 0.6813
+  ...
+# Subtest: homepage hero iOS action switches the same root panel and preserves beta in the root URL
+ok 16 - homepage hero iOS action switches the same root panel and preserves beta in the root URL
+  ---
+  duration_ms: 5.7903
+  ...
+# Subtest: root homepage new Android selection uses its separate package and rejects a mismatched platform
+ok 17 - root homepage new Android selection uses its separate package and rejects a mismatched platform
+  ---
+  duration_ms: 1.0707
+  ...
+# Subtest: root homepage removes legacy controls and ignores the old edition bookmark
+ok 18 - root homepage removes legacy controls and ignores the old edition bookmark
+  ---
+  duration_ms: 2.5521
+  ...
+# Subtest: a late original Android response cannot overwrite the root iOS panel
+ok 19 - a late original Android response cannot overwrite the root iOS panel
+  ---
+  duration_ms: 1.0934
+  ...
+# Subtest: root iOS beta fallback stays on iOS, while a withdrawn release does not fall back
+ok 20 - root iOS beta fallback stays on iOS, while a withdrawn release does not fall back
+  ---
+  duration_ms: 0.7559
+  ...
+# Subtest: root iPhone detection and IPA identity and size boundaries remain explicit
+ok 21 - root iPhone detection and IPA identity and size boundaries remain explicit
+  ---
+  duration_ms: 1.0631
+  ...
+# Subtest: homepage rejects untrusted download locations and malformed release identity
+ok 22 - homepage rejects untrusted download locations and malformed release identity
+  ---
+  duration_ms: 0.4285
+  ...
+# Subtest: IPA parser accepts bounded unsigned device identity and rejects wrong platforms, signatures and paths
+ok 23 - IPA parser accepts bounded unsigned device identity and rejects wrong platforms, signatures and paths
+  ---
+  duration_ms: 10.3403
+  ...
+# Subtest: actual 212 APK has its own pinned signer; old and new package signers cannot cross
+ok 24 - actual 212 APK has its own pinned signer; old and new package signers cannot cross
+  ---
+  duration_ms: 479.2448
+  ...
+# Subtest: real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-domain manifest, integrity and withdrawal
+ok 25 - real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-domain manifest, integrity and withdrawal
+  ---
+  duration_ms: 2770.242
+  ...
+# Subtest: bundled signed APKs retain publication, integrity, budgets and withdrawal checks; other files use private storage
+ok 26 - bundled signed APKs retain publication, integrity, budgets and withdrawal checks; other files use private storage # SKIP
+  ---
+  duration_ms: 1.5936
+  ...
+# Subtest: update contract never downgrades or silently chooses an older version after withdrawal
+ok 27 - update contract never downgrades or silently chooses an older version after withdrawal
+  ---
+  duration_ms: 1.2417
+  ...
+# Subtest: mandatory update contract applies only to a newer compatible published release and defaults old rows to optional
+ok 28 - mandatory update contract applies only to a newer compatible published release and defaults old rows to optional
+  ---
+  duration_ms: 0.546
+  ...
+# Subtest: update policy HTTP enforces administrator, CSRF, booleans, revisions, artifact confirmation and withdrawal
+ok 29 - update policy HTTP enforces administrator, CSRF, booleans, revisions, artifact confirmation and withdrawal
+  ---
+  duration_ms: 265.2311
+  ...
+# Subtest: release HTTP: active administrators/CSRF, bounded durable chunks, actual metadata, immutable versions, public integrity and withdrawal
+ok 30 - release HTTP: active administrators/CSRF, bounded durable chunks, actual metadata, immutable versions, public integrity and withdrawal # SKIP
+  ---
+  duration_ms: 0.1416
+  ...
+# Subtest: upload conflict and zero-byte requests are bounded before storage; reservations preserve task ownership and readiness
+ok 31 - upload conflict and zero-byte requests are bounded before storage; reservations preserve task ownership and readiness
+  ---
+  duration_ms: 5.4
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 3595.9221

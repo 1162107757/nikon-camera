@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "function": "nikon-preset-library",
+  "changedFiles": [
+    "download/download.js",
+    "download/index.html"
+  ],
+  "candidateSha256": "a00b49f61f9c83125e954de1252e4eec8b5a351725f7b5a86dfbef774fd5fa91",
+  "configurationUnchanged": true,
+  "modTime": "2026-11-15 17:58:25"
+}

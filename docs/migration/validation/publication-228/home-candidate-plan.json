@@ -1,0 +1,35 @@
+{
+  "before": [
+    {
+      "name": "index.html",
+      "url": "https://huevia.cc/",
+      "bytes": 9788,
+      "sha256": "08388555e610e764fb7af4eb8369c7498adc8846551336cc499515574fd7d303"
+    },
+    {
+      "name": "home.js",
+      "url": "https://huevia.cc/home.js",
+      "bytes": 8914,
+      "sha256": "0f90758d671fdff8c88762b2bcdda9fcb196c39996416cdb1a712ce17ea702c4"
+    },
+    {
+      "name": "home.css",
+      "url": "https://huevia.cc/home.css",
+      "bytes": 15156,
+      "sha256": "a8c4cfdf5fdc13ba2bb26a6e58653e1614e92205c328d9f39a234b226d0a8b47"
+    }
+  ],
+  "after": [
+    {
+      "name": "index.html",
+      "bytes": 9525,
+      "sha256": "3c8eef60e665a7869cb928e7861f9568783c3be3085445abb034593e1c6f5e88"
+    },
+    {
+      "name": "home.js",
+      "bytes": 8432,
+      "sha256": "da2acc5264ba0d2bf00a208ad89dc2f1ba90b3f775f5d6c8fd3194780ab53c91"
+    }
+  ],
+  "release": "20261115-228-16f024e597a6"
+}

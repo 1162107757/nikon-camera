@@ -24,10 +24,10 @@ export function mountDownload(document, location, fetchImpl = fetch, historyImpl
   const parameters = new URL(location.href).searchParams;
   let channel = parameters.get('channel') === 'beta' ? 'beta' : 'stable';
   let platform = parameters.get('platform') === 'ios' || !parameters.has('platform') && /iPhone|iPad|iPod/.test(navigatorImpl?.userAgent || '') ? 'ios' : 'android';
-  let edition = parameters.get('edition') === 'next' ? 'next' : 'legacy';
+  const edition = 'next';
   let serial = 0;
   const controls = [...document.querySelectorAll('[data-channel]')];
-  const platforms = [...document.querySelectorAll('[data-platform]')], editions = [...document.querySelectorAll('[data-edition]')];
+  const platforms = [...document.querySelectorAll('[data-platform]')];
   function pageUrl() {
     const url = new URL('/', location.origin);
     if (channel === 'beta') url.searchParams.set('channel', channel);
@@ -46,8 +46,6 @@ export function mountDownload(document, location, fetchImpl = fetch, historyImpl
   function sync(updateUrl = true) {
     controls.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.channel === channel)));
     platforms.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.platform === platform)));
-    editions.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.edition === edition)));
-    byId('android-editions').hidden = platform === 'ios';
     byId('ios-file-note').hidden = platform !== 'ios';
     if(updateUrl){const url=pageUrl();url.hash=location.hash||'';historyImpl.replaceState(null,'',url);}
     drawQr();
@@ -89,7 +87,7 @@ export function mountDownload(document, location, fetchImpl = fetch, historyImpl
       if(ios!==(release.platform==='ios')||!ios&&((edition==='next')!==(release.packageName==='cc.huevia.next')))throw Error('版本平台不匹配，请重新读取。');
       byId('download-file').href = href;
       byId('ios-file-note').hidden = true;
-      byId('download-label').textContent=ios?'下载 iOS IPA 文件':edition==='next'?'下载 Android 新版':'下载 Android 安装包';
+      byId('download-label').textContent=ios?'下载 iOS IPA 文件':'下载 Android 安装包';
       byId('download-hint').textContent=ios?'下载 IPA 文件后，请自行签名安装。':'下载后打开 APK，按手机提示安装。';
       byId('version-name').textContent = 'Huevia ' + release.versionName;
       byId('channel-label').textContent = channel === 'beta' ? '测试版' : '正式版';
@@ -110,7 +108,6 @@ export function mountDownload(document, location, fetchImpl = fetch, historyImpl
   }
   controls.forEach(button => button.addEventListener('click', () => { choose(button.dataset.channel); load(); }));
   platforms.forEach(button=>button.addEventListener('click',()=>{if(platform===button.dataset.platform)return;platform=button.dataset.platform;sync();load(true);}));
-  editions.forEach(button=>button.addEventListener('click',()=>{if(edition===button.dataset.edition)return;edition=button.dataset.edition;sync();load(true);}));
   document.querySelectorAll('[data-download-platform]').forEach(link=>link.addEventListener('click',()=>{platform=link.dataset.downloadPlatform;sync();load(true);}));
   byId('retry').addEventListener('click', () => load());
   choose(channel, false);

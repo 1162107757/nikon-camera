@@ -29,7 +29,7 @@ export function releaseDownloadUrl(release, currentBase = base) {
 const parameters = new URL(location.href).searchParams;
 let activeChannel = parameters.get('channel') === 'beta' ? 'beta' : 'stable';
 let activePlatform = parameters.get('platform') === 'ios' || !parameters.has('platform') && /iPhone|iPad|iPod/.test(navigator.userAgent || '') ? 'ios' : 'android';
-let activeEdition = parameters.get('edition') === 'next' ? 'next' : 'legacy';
+const activeEdition = 'next';
 let serial = 0;
 const android = sdk => ({24:'7.0',25:'7.1',26:'8.0',27:'8.1',28:'9',29:'10',30:'11',31:'12',32:'12L',33:'13',34:'14',35:'15',36:'16',37:'17'}[sdk] || `API ${sdk}`);
 function pageUrl() {
@@ -61,12 +61,10 @@ function chooseChannel(channel) {
 function syncSelection() {
   document.querySelectorAll('[data-channel]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.channel === activeChannel)));
   document.querySelectorAll('[data-platform]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.platform === activePlatform)));
-  document.querySelectorAll('[data-edition]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.edition === activeEdition)));
   const ios = activePlatform === 'ios';
-  byId('android-editions').hidden = ios;
   byId('ios-file-note').hidden = !ios;
   byId('install-title').textContent = ios ? '关于 IPA 文件' : '安装前的小提示';
-  byId('install-copy').textContent = ios ? '此处仅提供未签名 IPA 文件下载。请自行签名后安装，下载文件不会自动安装应用。' : '下载完成后，打开 APK 并按 Android 提示安装。系统可能需要你允许浏览器安装应用。新版与原版分别安装，各自保留本机数据。';
+  byId('install-copy').textContent = ios ? '此处仅提供未签名 IPA 文件下载。请自行签名后安装，下载文件不会自动安装应用。' : '下载完成后，打开 APK 并按 Android 提示安装。系统可能需要你允许浏览器安装应用。';
   const currentUrl=new URL(location.href);currentUrl.search=new URL(pageUrl()).search;
   history.replaceState(null, '', currentUrl);
 }
@@ -83,7 +81,7 @@ function render(data, fallback = false) {
   if (ios !== (release.platform === 'ios') || !ios && ((activeEdition === 'next') !== (release.packageName === 'cc.huevia.next'))) throw new Error('版本平台不匹配，请重新检查。');
   byId('version').textContent = `Huevia ${release.versionName}`; byId('channel-label').textContent = activeChannel === 'beta' ? '测试版' : '正式版';
   byId('download-button').href = download.href;
-  byId('download-label').textContent = ios ? '下载 iOS IPA 文件' : activeEdition === 'next' ? '下载 Android 新版' : '下载 Android 安装包';
+  byId('download-label').textContent = ios ? '下载 iOS IPA 文件' : '下载 Android 安装包';
   const time = new Intl.DateTimeFormat('zh-CN', {year:'numeric',month:'long',day:'numeric'}).format(new Date(release.publishedAt));
   byId('metadata').textContent = `${ios ? `iOS ${release.minimumIOS}` : `Android ${android(release.minSdk)}`} 及以上 · ${(release.byteLength/1048576).toFixed(2)} MiB · ${time}`;
   byId('notes').textContent = release.notes; byId('sha256').textContent = release.sha256; byId('package').textContent = ios ? release.bundleId : release.packageName; byId('signer').textContent = ios ? '' : release.signerSha256;
@@ -111,7 +109,6 @@ async function load({allowFallback = false} = {}) {
 }
 document.querySelectorAll('[data-channel]').forEach(button => button.addEventListener('click', () => { chooseChannel(button.dataset.channel); load(); }));
 document.querySelectorAll('[data-platform]').forEach(button => button.addEventListener('click', () => { if(activePlatform===button.dataset.platform)return;activePlatform=button.dataset.platform;syncSelection();load({allowFallback:true}); }));
-document.querySelectorAll('[data-edition]').forEach(button => button.addEventListener('click', () => { if(activeEdition===button.dataset.edition)return;activeEdition=button.dataset.edition;syncSelection();load({allowFallback:true}); }));
 byId('retry').addEventListener('click', () => load());
 byId('copy-link').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText(pageUrl()); byId('copy-status').textContent = '链接已复制'; }

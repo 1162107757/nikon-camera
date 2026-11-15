@@ -1,0 +1,12 @@
+[
+  {
+    "platform": "android",
+    "exit": 0,
+    "sha256": "50759de4f4525d0053f5f4d93ff2763512b5509e31e248e6132643453bd17b63"
+  },
+  {
+    "platform": "ios",
+    "exit": 0,
+    "sha256": "874e5a5f60c8651c7bf0da18b89ea677963657f27bce6d5df07db31e8bdb3591"
+  }
+]
