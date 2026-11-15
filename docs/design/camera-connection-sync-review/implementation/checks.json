@@ -1,0 +1,74 @@
+{
+  "scope": "Authorized source integration only; not native-product or real-camera acceptance",
+  "baseCommit": "a0ff5db5209c65dfac0489bb3c22d597587127aa",
+  "executed": {
+    "dartAnalyze": {
+      "targets": [
+        "cross-platform/app/lib/camera.dart",
+        "cross-platform/app/lib/camera_connection_view.dart",
+        "cross-platform/app/lib/camera_connection.dart",
+        "cross-platform/app/lib/camera_photo_sort.dart",
+        "cross-platform/app/lib/camera_photo_toolbar.dart",
+        "cross-platform/app/lib/wired_camera.dart",
+        "cross-platform/app/lib/sync_tools_dock.dart",
+        "cross-platform/app/lib/camera_downloads.dart",
+        "cross-platform/app/lib/camera_grid.dart",
+        "cross-platform/app/lib/camera_remote.dart",
+        "cross-platform/app/lib/camera_remote_preview.dart",
+        "cross-platform/app/tool/check_camera_photo_sort.dart",
+        "cross-platform/app/test/camera_connection_test.dart",
+        "cross-platform/app/test/camera_intent_test.dart",
+        "cross-platform/app/test/camera_sync_tools_test.dart",
+        "cross-platform/app/test/camera_test.dart",
+        "cross-platform/app/test/camera_design_ui_test.dart"
+      ],
+      "result": "No issues found",
+      "exitCode": 0
+    },
+    "pureDartCameraPhotoSort": {
+      "checks": 23,
+      "passed": 23,
+      "exitCode": 0
+    },
+    "htmlSortPreview": {
+      "checks": 5,
+      "passed": 5,
+      "nativeEvidence": false
+    }
+  },
+  "notExecuted": [
+    "Flutter widget tests (including the 4 added design cases)",
+    "Flutter or Gradle build",
+    "Apple CI",
+    "native device / real-camera validation"
+  ],
+  "sourceReview": {
+    "materialFindings": 3,
+    "resolved": 3,
+    "scope": "Source review only"
+  },
+  "sourceFingerprintsRecordedAfterChecks": {
+    "cross-platform/app/lib/camera.dart": "668a16ed09f962eeb6acc93c5a914bd2449c35f5e426962c0cf087d84c3c7725",
+    "cross-platform/app/lib/camera_connection_view.dart": "ebcd3c45eba54343100aa05c33e9397126c41c6ecc7fdba2709da0b85570ffac",
+    "cross-platform/app/lib/camera_connection.dart": "f6fe686333a61716cf0371f483155174aa461cef94fb77646933dd6c2d18de5f",
+    "cross-platform/app/lib/camera_photo_sort.dart": "221f7eb0b7f746fe9f2ebee23e4be7ed15db850ecef13fcf89d95fffe2c5187a",
+    "cross-platform/app/lib/camera_photo_toolbar.dart": "ffeb63b83781829e91ab912dd49db18af11cffe4c66298019de13ff82cb5bb01",
+    "cross-platform/app/lib/wired_camera.dart": "cb88f87857fc81432c28db844fcace4ac87801a1d03839441bbdb533e147b42d",
+    "cross-platform/app/lib/sync_tools_dock.dart": "1a7e02b87d03f8818432a32972caf1687f9128e651303f3219569f972037104b",
+    "cross-platform/app/lib/camera_downloads.dart": "1162a241503bc9835647947733cf5608fa2ec8e4de4e0f42571da45d9ecfeaa6",
+    "cross-platform/app/lib/camera_grid.dart": "7d51f44c431c5ed2ce6f0c5124ddc56f5812ba4377795189884028ba5628a089",
+    "cross-platform/app/lib/camera_remote.dart": "71dd4fffd12edd89932c48125a72b4572a3849a3262e06f4511b24c12f3bff3a",
+    "cross-platform/app/lib/camera_remote_preview.dart": "56890de07e799e4add91a7d085ca70381440e4fde69a0358fed01046d465111c",
+    "cross-platform/app/tool/check_camera_photo_sort.dart": "3d9013af1efc944af5eb57d557c653f775eee4f44669a3d86ba20c58882b0f70",
+    "cross-platform/app/test/camera_connection_test.dart": "b7f4ddcae5989aa52df381cbe2d886bef3a5610261110f16acd4aa1b66584afa",
+    "cross-platform/app/test/camera_intent_test.dart": "ea7c05a699e3e942b28f25655e3a4d8f146e84997a8d3f8347e77e378182a75f",
+    "cross-platform/app/test/camera_sync_tools_test.dart": "890600b5f8aaa9b7c2bddcb5d1f99b2646973c3b5511d6dbfce36b57df9dc474",
+    "cross-platform/app/test/camera_test.dart": "9e62efe614ee5057569590e9b3e7d51434c38dc0f36e218b469a6b30aafa911d",
+    "cross-platform/app/test/camera_design_ui_test.dart": "7a3dbfdacd1c7e618ed1ff063eec44fb46d27eacecf462640ad3c7974c662504"
+  },
+  "committed": false,
+  "pushed": false,
+  "packaged": false,
+  "versionChangedByThisTask": false,
+  "frozen221ArtifactsChangedByThisTask": false
+}

@@ -1,0 +1,140 @@
+{
+  "scope": "Standalone HTML mockup only. All data synthetic. No camera or product runtime was tested.",
+  "viewport": {
+    "width": 375,
+    "height": 812
+  },
+  "captures": 92,
+  "checks": [
+    {
+      "name": "iOS Wi-Fi action names guidance without promising a deep link",
+      "passed": true
+    },
+    {
+      "name": "iOS idle advanced settings fits within visible content",
+      "passed": true
+    },
+    {
+      "name": "iOS Wi-Fi guide describes manual Settings > Wi-Fi and return",
+      "passed": true
+    },
+    {
+      "name": "Connection success returns to caller without loading photo list",
+      "passed": true
+    },
+    {
+      "name": "No photo grid exists after successful connection",
+      "passed": true
+    },
+    {
+      "name": "Photos appear only after explicit browse",
+      "passed": true
+    },
+    {
+      "name": "Single button expands three tool entries",
+      "passed": true
+    },
+    {
+      "name": "Empty download queue is compact (<=185px)",
+      "passed": true
+    },
+    {
+      "name": "Camera tools disappear outside Sync",
+      "passed": true
+    },
+    {
+      "name": "Preset caller receives successful connection back",
+      "passed": true
+    },
+    {
+      "name": "Cancelled connection cannot return late as success",
+      "passed": true
+    },
+    {
+      "name": "Ready shutter and camera status have no looping animations",
+      "passed": true
+    },
+    {
+      "name": "Shutter briefly disables after one press",
+      "passed": true
+    },
+    {
+      "name": "Shutter returns to enabled state with one confirmation",
+      "passed": true
+    },
+    {
+      "name": "Remote route has a full live-view stage and hides Sync navigation",
+      "passed": true
+    },
+    {
+      "name": "Composition grid can be hidden",
+      "passed": true
+    },
+    {
+      "name": "Histogram is computed from the local demonstration image",
+      "passed": true
+    },
+    {
+      "name": "Point focus displays a reticle only after a tap",
+      "passed": true
+    },
+    {
+      "name": "Paused view explicitly labels its retained demo frame",
+      "passed": true
+    },
+    {
+      "name": "Paused view can resume",
+      "passed": true
+    },
+    {
+      "name": "Camera parameters are read-only",
+      "passed": true
+    },
+    {
+      "name": "Capture import setting is an explicit local toggle",
+      "passed": true
+    },
+    {
+      "name": "Closing remote returns to Sync and retains connection",
+      "passed": true
+    },
+    {
+      "name": "Uncertain capture result prevents duplicate shutter",
+      "passed": true
+    },
+    {
+      "name": "Uncertain result requires explicit camera verification",
+      "passed": true
+    },
+    {
+      "name": "All nine slots are visible",
+      "passed": true
+    },
+    {
+      "name": "Back-to-tools touch target is at least 44px square",
+      "passed": true
+    },
+    {
+      "name": "C9 selection updates target",
+      "passed": true
+    },
+    {
+      "name": "Escape closes tool content",
+      "passed": true
+    },
+    {
+      "name": "Disconnected shutter is disabled",
+      "passed": true
+    },
+    {
+      "name": "Reduced motion has no active animation",
+      "passed": true
+    },
+    {
+      "name": "320px fallback has no horizontal overflow",
+      "passed": true
+    }
+  ],
+  "issues": [],
+  "emptyQueueHeight": 172
+}

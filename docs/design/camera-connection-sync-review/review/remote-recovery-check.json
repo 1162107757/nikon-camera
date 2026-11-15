@@ -1,0 +1,55 @@
+{
+  "scope": "Targeted HTML remote recovery/state pass after independent review; all data synthetic; no camera or native product was tested.",
+  "captures": 24,
+  "checks": [
+    {
+      "name": "remote focus affordance matches ready capability",
+      "passed": true
+    },
+    {
+      "name": "remote-paused focus affordance matches ready capability",
+      "passed": true
+    },
+    {
+      "name": "remote-waiting focus affordance matches ready capability",
+      "passed": true
+    },
+    {
+      "name": "remote-unsupported focus affordance matches ready capability",
+      "passed": true
+    },
+    {
+      "name": "remote-uncertain focus affordance matches ready capability",
+      "passed": true
+    },
+    {
+      "name": "Uncertain result blocks shutter initially",
+      "passed": true
+    },
+    {
+      "name": "remote-offline focus affordance matches ready capability",
+      "passed": true
+    },
+    {
+      "name": "Changing view off and on cannot clear capture uncertainty",
+      "passed": true
+    },
+    {
+      "name": "Leaving and re-entering remote retains capture uncertainty",
+      "passed": true
+    },
+    {
+      "name": "Dismissing verification sheet does not acknowledge result",
+      "passed": true
+    },
+    {
+      "name": "Only explicit acknowledgement restores shutter",
+      "passed": true
+    },
+    {
+      "name": "Single deliberate shutter produces one stable send confirmation",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

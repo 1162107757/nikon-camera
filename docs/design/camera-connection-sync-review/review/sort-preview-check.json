@@ -1,0 +1,25 @@
+{
+  "scope": "Standalone HTML sorting preview only; not native product UI validation",
+  "checks": [
+    {
+      "name": "375px toolbar has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "RAW, sorting and select actions are on the same line",
+      "passed": true
+    },
+    {
+      "name": "Four requested time/name sort choices exist",
+      "passed": true
+    },
+    {
+      "name": "Ascending file-name option reorders the example grid",
+      "passed": true
+    },
+    {
+      "name": "Newest example order can be restored",
+      "passed": true
+    }
+  ]
+}

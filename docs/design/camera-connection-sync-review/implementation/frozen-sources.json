@@ -1,0 +1,134 @@
+{
+  "clientDate": "2026-11-14",
+  "state": "camera-source-and-tests-frozen-awaiting-unified-222-gates",
+  "baseCommit": "a0ff5db5209c65dfac0489bb3c22d597587127aa",
+  "sourceScope": "Only the 17 camera-owned source/tool/test files listed; parallel editor changes are excluded",
+  "fileCount": 17,
+  "files": {
+    "cross-platform/app/lib/camera.dart": {
+      "sha256": "668a16ed09f962eeb6acc93c5a914bd2449c35f5e426962c0cf087d84c3c7725",
+      "lfSha256": "8820557a55c2b2989e50c798eeb892950549d1efc42b928bdfcce078cc345d86",
+      "bytes": 42735
+    },
+    "cross-platform/app/lib/camera_connection_view.dart": {
+      "sha256": "ebcd3c45eba54343100aa05c33e9397126c41c6ecc7fdba2709da0b85570ffac",
+      "lfSha256": "22df32ac6b6ac7124959e235ae43c2a06c2be587a34540c11572da69953fd34f",
+      "bytes": 21226
+    },
+    "cross-platform/app/lib/camera_connection.dart": {
+      "sha256": "f6fe686333a61716cf0371f483155174aa461cef94fb77646933dd6c2d18de5f",
+      "lfSha256": "55146f63c3f23839f40e4002c23800300a033bb41287c1d1f505d37e82a142a3",
+      "bytes": 4521
+    },
+    "cross-platform/app/lib/camera_photo_sort.dart": {
+      "sha256": "221f7eb0b7f746fe9f2ebee23e4be7ed15db850ecef13fcf89d95fffe2c5187a",
+      "lfSha256": "d44b67c04eaa5050e1d41208d56ba032eabd9be4e5b8db7176365eb841cc21ef",
+      "bytes": 3370
+    },
+    "cross-platform/app/lib/camera_photo_toolbar.dart": {
+      "sha256": "ffeb63b83781829e91ab912dd49db18af11cffe4c66298019de13ff82cb5bb01",
+      "lfSha256": "25be028255295a563e09aa43942dd8c81c5a2aeb3c45d09f1961f5025f48c3d5",
+      "bytes": 5247
+    },
+    "cross-platform/app/lib/wired_camera.dart": {
+      "sha256": "cb88f87857fc81432c28db844fcace4ac87801a1d03839441bbdb533e147b42d",
+      "lfSha256": "605af0ba959fd4975a8574741e0ac1cfbbf3224dfa5a757e6facbe3494e3237b",
+      "bytes": 4660
+    },
+    "cross-platform/app/lib/sync_tools_dock.dart": {
+      "sha256": "1a7e02b87d03f8818432a32972caf1687f9128e651303f3219569f972037104b",
+      "lfSha256": "96ef1302f7f496d1562ec0a0a94a931baf0f40062291b59dc2d42155d96526f6",
+      "bytes": 7609
+    },
+    "cross-platform/app/lib/camera_downloads.dart": {
+      "sha256": "1162a241503bc9835647947733cf5608fa2ec8e4de4e0f42571da45d9ecfeaa6",
+      "lfSha256": "c8d3a7aef15e2647eeea7f3a2a1cc4e0436b4ba257369c9bff2182bce64f8572",
+      "bytes": 25830
+    },
+    "cross-platform/app/lib/camera_grid.dart": {
+      "sha256": "7d51f44c431c5ed2ce6f0c5124ddc56f5812ba4377795189884028ba5628a089",
+      "lfSha256": "1bd4ff58cde9c57b0dc26797ec7495a2cd11f9f8a888823921e4050556f2f78d",
+      "bytes": 17409
+    },
+    "cross-platform/app/lib/camera_remote.dart": {
+      "sha256": "71dd4fffd12edd89932c48125a72b4572a3849a3262e06f4511b24c12f3bff3a",
+      "lfSha256": "7db5d88790c57163ee38bcdfe2200cf465aba840a186a015541b52214233978b",
+      "bytes": 39725
+    },
+    "cross-platform/app/lib/camera_remote_preview.dart": {
+      "sha256": "56890de07e799e4add91a7d085ca70381440e4fde69a0358fed01046d465111c",
+      "lfSha256": "2ace6352eabe2cd7f5996a4d5288c0ebe3b1bd1e17c1ec7f4b791949499c8613",
+      "bytes": 12793
+    },
+    "cross-platform/app/tool/check_camera_photo_sort.dart": {
+      "sha256": "3d9013af1efc944af5eb57d557c653f775eee4f44669a3d86ba20c58882b0f70",
+      "lfSha256": "650874a0679ddd15cf9a59b05f2c4cd13562c8ae5a090fa951e4777f3ff651bb",
+      "bytes": 3655
+    },
+    "cross-platform/app/test/camera_connection_test.dart": {
+      "sha256": "b7f4ddcae5989aa52df381cbe2d886bef3a5610261110f16acd4aa1b66584afa",
+      "lfSha256": "07a528c7a3ccbc6cc23db92d124b3354c4810674293b31f2ecf013b12ad1c100",
+      "bytes": 11930
+    },
+    "cross-platform/app/test/camera_intent_test.dart": {
+      "sha256": "ea7c05a699e3e942b28f25655e3a4d8f146e84997a8d3f8347e77e378182a75f",
+      "lfSha256": "3dd8e41414a8c9f3b91bbdf278c33cca7adbea43b626b62fbc0f5af310dfbccb",
+      "bytes": 19884
+    },
+    "cross-platform/app/test/camera_sync_tools_test.dart": {
+      "sha256": "890600b5f8aaa9b7c2bddcb5d1f99b2646973c3b5511d6dbfce36b57df9dc474",
+      "lfSha256": "9e17c876b24ce40e4dee03e822e4b4e153024ac8d480b13086626471cceb368d",
+      "bytes": 11315
+    },
+    "cross-platform/app/test/camera_test.dart": {
+      "sha256": "9e62efe614ee5057569590e9b3e7d51434c38dc0f36e218b469a6b30aafa911d",
+      "lfSha256": "1c21e0b8c874359e1dd77c793f37be9f98547909d21f6b923b2fc6be9c06fc69",
+      "bytes": 10183
+    },
+    "cross-platform/app/test/camera_design_ui_test.dart": {
+      "sha256": "7a3dbfdacd1c7e618ed1ff063eec44fb46d27eacecf462640ad3c7974c662504",
+      "lfSha256": "7a3dbfdacd1c7e618ed1ff063eec44fb46d27eacecf462640ad3c7974c662504",
+      "bytes": 6554
+    }
+  },
+  "matchesFinalDartCheckFingerprints": true,
+  "readOnlySelfCheck": {
+    "ownedFilesChangedSinceChecks": 0,
+    "scopedGitDiffCheckExit": 0,
+    "pubspecUnchanged": true,
+    "frozen221RecordsUnchanged": true
+  },
+  "validationAlreadyExecuted": {
+    "dartAnalyzer": "No issues found for all 17 files",
+    "pureDartSortChecks": 23,
+    "independentSourceReview": "3 findings resolved; source-only verdict"
+  },
+  "notExecutedByCameraTask": [
+    "Flutter widget runtime",
+    "Flutter/Gradle build",
+    "Apple CI",
+    "native visual or real-camera validation"
+  ],
+  "primaryWidgetTests": [
+    "cross-platform/app/test/camera_design_ui_test.dart",
+    "cross-platform/app/test/camera_connection_test.dart",
+    "cross-platform/app/test/camera_intent_test.dart",
+    "cross-platform/app/test/camera_sync_tools_test.dart",
+    "cross-platform/app/test/camera_test.dart"
+  ],
+  "affectedRegressionTests": [
+    "cross-platform/app/test/camera_remote_poll_test.dart",
+    "cross-platform/app/test/camera_remote_test.dart",
+    "cross-platform/app/test/camera_controls_test.dart",
+    "cross-platform/app/test/camera_navigation_test.dart",
+    "cross-platform/app/test/camera_viewer_test.dart",
+    "cross-platform/app/test/camera_viewer_layout_test.dart",
+    "cross-platform/app/test/camera_downloads_test.dart",
+    "cross-platform/app/test/wired_camera_test.dart",
+    "cross-platform/app/test/camera_slots_ui_test.dart",
+    "cross-platform/app/test/camera_previews_test.dart"
+  ],
+  "sdkProcessHeldByCameraTask": false,
+  "buildOwner": "main coordination chat; unified source freeze, widget gates and Android/iOS build222",
+  "noCommitPushVersionBumpOrReleaseByCameraTask": true
+}

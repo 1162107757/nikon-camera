@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-14T01:54:38Z",
+  "title": "Design System: Huevia 相机连接与同步工具原型",
+  "scope": "Local design guide and approved source-integration contract in docs/design/camera-connection-sync-review only",
+  "primitiveSource": "DESIGN.md YAML frontmatter",
+  "sourceFiles": ["index.html", "screen.css", "screen.js", "remote.css", "remote-ui.js", "board.js", "README.md", "implementation/README.md"],
+  "extensions": {
+    "cssSourceOfTruth": "screen.css; final .dock-button override implements user-selected option B",
+    "darkThemeMapping": {
+      "surface": "{colors.dark-surface}",
+      "card": "{colors.dark-card}",
+      "container": "{colors.dark-container}",
+      "ink": "{colors.dark-ink}",
+      "secondary": "{colors.dark-secondary}",
+      "accent": "{colors.dark-accent}",
+      "accent-soft": "{colors.dark-accent-soft}",
+      "on-accent": "{colors.dark-on-accent}",
+      "outline": "{colors.dark-outline}",
+      "action": "{colors.dark-action}",
+      "on-action": "{colors.dark-on-action}",
+      "success": "{colors.dark-success}",
+      "error": "{colors.dark-error}",
+      "error-soft": "{colors.dark-error-soft}"
+    },
+    "remoteThemeMapping": {
+      "scope": ".screen.remote-mode; photography dark regardless global theme",
+      "surface": "{colors.remote-surface}",
+      "card": "{colors.remote-card}",
+      "container": "{colors.remote-container}",
+      "ink": "{colors.dark-ink}",
+      "secondary": "{colors.remote-secondary}",
+      "accent": "{colors.dark-accent}",
+      "accent-soft": "{colors.dark-accent-soft}",
+      "action": "{colors.dark-accent}",
+      "on-action": "{colors.remote-on-action}",
+      "outline": "{colors.remote-outline}"
+    },
+    "glass": {
+      "lightSurface": "rgba(255,255,255,.83)",
+      "darkSurface": "rgba(41,39,36,.88)",
+      "remoteSurface": "rgba(36,38,34,.92)",
+      "lightRim": "rgba(255,255,255,.9)",
+      "darkRim": "rgba(255,255,255,.14)",
+      "backdropFilter": "blur(28px) saturate(155%)",
+      "boxShadow": "inset 0 1px 0 var(--rim),inset 0 0 0 .6px var(--rim),var(--shadow)"
+    },
+    "shadows": [
+      {"name": "floating-light", "value": "0 10px 32px #24232020", "purpose": "Light-theme floating glass and toast"},
+      {"name": "floating-dark", "value": "0 10px 36px #0005", "purpose": "Dark-theme floating glass and toast"},
+      {"name": "transport-selected", "value": "0 2px 5px #2423200a", "purpose": "Selected connection transport"}
+    ],
+    "motion": [
+      {"name": "ease-out", "value": "cubic-bezier(.23,1,.32,1)", "purpose": "Declared incumbent CSS easing; not a new animation requirement"},
+      {"name": "button-press", "value": "scale(.97)", "purpose": "Active enabled buttons"},
+      {"name": "loading-glyph", "value": "turn 1.3s linear infinite", "purpose": "Connecting indicator only"},
+      {"name": "shutter-feedback", "value": "850ms", "purpose": "One simulated instruction send, then static sent feedback"},
+      {"name": "toast-dismiss", "value": "2600ms", "purpose": "Nonpersistent toast lifetime"}
+    ],
+    "breakpoints": [
+      {"name": "narrow", "value": "350px", "query": "(max-width:350px)"},
+      {"name": "short-remote", "value": "720px", "query": "(max-height:720px)"}
+    ],
+    "layout": {
+      "reviewPhone": {"width": 375, "height": 812},
+      "screen": {"maxWidth": "520px", "minHeight": "600px", "height": "100dvh"},
+      "collapsedEntry": {"right": "18px", "bottom": "108px", "iconSize": "22px"},
+      "toolsPanel": {"right": "14px", "bottom": "108px"},
+      "contentSheet": {"left": "12px", "right": "12px", "bottom": "108px", "maxHeight": "calc(100% - 196px)", "overflowY": "auto"},
+      "emptyQueue": {"measuredHeightAt375x812": "approximately 172px", "heightMode": "content-driven"},
+      "tabbar": {"androidContainerHeight": "91px", "iosContainerHeight": "97px", "barHeight": "64px"},
+      "slots": {"columns": 3, "rows": 3, "labels": "C1–C9"},
+      "photoToolbar": {
+        "left": "Photo source and already-read count; product count has + while more pages remain",
+        "rightOrder": ["RAW", "sort", "selection"],
+        "sortEntry": {"minWidth": "44px", "minHeight": "44px", "icon": "17px"},
+        "sortMenuRow": {"minHeight": "48px", "padding": "8px 3px"}
+      },
+      "fullscreenRemote": {
+        "route": "model.page=remote",
+        "syncNavigationVisible": false,
+        "syncDockVisible": false,
+        "headerHeight": "50px",
+        "liveStageMinHeight": "210px",
+        "liveStageShortMinHeight": "180px",
+        "imageMaxHeight": "370px",
+        "stageBackground": "{colors.remote-stage}",
+        "shutter": "78px; 68px at max-height:720px",
+        "focusMarker": "43px × 36px; 1.5px accent border",
+        "subpanelBottom": "30px",
+        "subpanelMaxHeight": "calc(100% - 140px)"
+      }
+    },
+    "accessibility": {
+      "focus": "3px solid var(--accent); outline-offset:3px",
+      "entryAccessibleName": "相机工具",
+      "noBackdropSupport": "Use var(--card) surface",
+      "reducedTransparency": "Use var(--card); disable backdrop filters",
+      "increasedContrast": "Use solid card and inset 1px ink border",
+      "reducedMotion": "Disable animations, transitions and smooth scrolling",
+      "dismiss": ["outside click", "close button", "Escape"]
+    },
+    "behavior": {
+      "cameraToolsScope": "Sync only; tab change hides entry and closes panel",
+      "collapsedBadge": "Omitted for empty queue; present for active, paused or recoverable queue",
+      "panelReplacement": "Downloads and slots replace the tools list; remote opens a dedicated fullscreen page",
+      "connection": "Wi-Fi and USB; permission, denied, timeout, retry, cancel and camera confirmation states",
+      "iosWifi": "Manual camera-network connection guidance plus local-network permission explanation",
+      "success": "Return to calling source; model.loaded=false; photos require explicit browse action",
+      "remote": {
+        "composition": "Header/back, camera/transport/battery, settings/histogram/grid tools, preview, four read-only parameters, stable status, recent/shutter/focus",
+        "preview": "Local assets/alpine-lake.jpg explicitly labeled 取景演示; never a real camera feed",
+        "controls": ["grid", "luminance histogram computed from demo still image", "point-focus marker", "pause/resume", "focus"],
+        "parameters": ["快门", "光圈", "ISO", "曝光补偿"],
+        "parameterDetail": "Eight read-only rows; unsupported values shown as —",
+        "settings": ["实时取景", "拍摄后传入 App"],
+        "recent": "Empty until new photographs have been verified; sending shutter does not confirm capture",
+        "previewStates": ["ready", "paused", "waiting", "unsupported"],
+        "disconnected": "Independent connection state; disables shutter and focus",
+        "feedback": "One 850ms simulated send, then stable sent message",
+        "captureUncertainty": {
+          "flag": "model.remoteCaptureUncertain",
+          "independentOfPreviewState": true,
+          "queryInitialization": "remoteState=uncertain initializes ready preview and capture uncertainty",
+          "persistsAcross": ["preview pause/resume", "preview settings toggles", "exit and re-enter remote"],
+          "clearAction": "remote-acknowledge only, after explicit user verification",
+          "shutter": "Disabled until acknowledged",
+          "retry": "Never retry shutter automatically"
+        },
+        "focusAvailability": "Enabled only when preview is ready, connected, not busy and no capture uncertainty; handler enforces the same conditions",
+        "exit": "Return to Sync and end this view while retaining connection and capture uncertainty",
+        "boundary": "All frames, parameters, focus, capture and import switches are local UI demonstrations"
+      },
+      "slots": "Default unread; read/write previews; confirm overwrite target before simulated write",
+      "photoSorting": {
+        "requestedOptions": ["拍摄时间 · 新到旧", "拍摄时间 · 旧到新", "名称 · 升序", "名称 · 降序"],
+        "cameraOrderRestore": "Additional action in Flutter product source; HTML shows the four requested options",
+        "scope": "Already-returned photo metadata only; no extra camera-directory scan",
+        "time": "Use capturedAt; missing or invalid dates stay last in both directions",
+        "name": "Numeric natural ordering, ascending or descending",
+        "ties": "Preserve camera order",
+        "pagination": "Insert newly returned pages under the current sort rule",
+        "viewer": "Follow sorted order while preserving the currently displayed photo handle",
+        "independence": "Sort entry is between RAW and selection; each control retains its separate purpose"
+      },
+      "boundary": "HTML prototype makes no camera or system-setting calls; source integration is recorded separately and is not hardware or native-runtime verification"
+    },
+    "sourceIntegration": {
+      "authorization": "User explicitly approved implementing this design, compact photo toolbar and both time/name sorting",
+      "status": "Flutter source integrated; no Flutter/Gradle/CI/runtime/build/package execution",
+      "record": "implementation/README.md",
+      "verification": {
+        "dartAnalyzerIssues": 0,
+        "pureDartSortChecksPassed": 23,
+        "widgetTests": "Added, not run",
+        "htmlSortBrowserChecksPassed": 5,
+        "nativeRuntimeVerified": false
+      },
+      "screenshots": ["review/sync-toolbar-sort-375.png", "review/sync-toolbar-sort-menu.png"],
+      "frozenBoundary": "Version unchanged; frozen 221 packages and validation records unchanged"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Current light-theme primary action, including focus and press states.",
+      "html": "<button class=\"ds-primary\">开始连接</button>",
+      "css": ".ds-primary{font:550 14px -apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Microsoft YaHei\",sans-serif;background:#242420;color:#fff;border:0;border-radius:14px;min-height:50px;width:100%;padding:12px 16px;cursor:pointer}.ds-primary:active{transform:scale(.97)}.ds-primary:focus-visible{outline:3px solid #b3432d;outline-offset:3px}.ds-primary:disabled{opacity:.64;transform:none;cursor:default}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Container-tone alternative action.",
+      "html": "<button class=\"ds-secondary\">重试</button>",
+      "css": ".ds-secondary{font:550 14px -apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Microsoft YaHei\",sans-serif;background:#eeece6;color:#242320;border:0;border-radius:14px;min-height:50px;width:100%;padding:12px 16px;cursor:pointer}.ds-secondary:active{transform:scale(.97)}.ds-secondary:focus-visible{outline:3px solid #b3432d;outline-offset:3px}.ds-secondary:disabled{opacity:.64;transform:none;cursor:default}"
+    },
+    {
+      "name": "Connection input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Observed manual connection field treatment.",
+      "html": "<label class=\"ds-field\">相机 IP<input placeholder=\"192.168.1.1\"></label>",
+      "css": ".ds-field{font:11px -apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Microsoft YaHei\",sans-serif;color:#635d53}.ds-field input{display:block;width:100%;height:47px;box-sizing:border-box;border:1px solid #e4dfd8;border-radius:11px;background:#fff;padding:0 13px;font:14px -apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Microsoft YaHei\",sans-serif;color:#242320;margin-top:7px;caret-color:#b3432d;font-variant-numeric:tabular-nums}.ds-field input:focus-visible{outline:3px solid #b3432d;outline-offset:3px}"
+    },
+    {
+      "name": "Circular camera tools entry",
+      "kind": "custom",
+      "refersTo": "camera-tool-entry",
+      "description": "User-selected B circle; empty queue has no visible count.",
+      "html": "<button class=\"ds-entry\" aria-label=\"相机工具\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 6h3m5 0h8M4 12h9m5 0h2M4 18h2m5 0h9\"/><circle cx=\"9.5\" cy=\"6\" r=\"2.5\"/><circle cx=\"15.5\" cy=\"12\" r=\"2.5\"/><circle cx=\"8.5\" cy=\"18\" r=\"2.5\"/></svg></button>",
+      "css": ".ds-entry{width:52px;height:52px;padding:0;border:0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#242320;background:rgba(255,255,255,.83);backdrop-filter:blur(28px) saturate(155%);-webkit-backdrop-filter:blur(28px) saturate(155%);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 .6px rgba(255,255,255,.9),0 10px 32px #24232020;cursor:pointer}.ds-entry svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.ds-entry:active{transform:scale(.97)}.ds-entry:focus-visible{outline:3px solid #b3432d;outline-offset:3px}"
+    },
+    {
+      "name": "Selected preset slot",
+      "kind": "card",
+      "refersTo": "slot-selected",
+      "description": "Current selected state in the three-by-three C1–C9 grid.",
+      "html": "<button class=\"ds-slot\" aria-pressed=\"true\"><strong>C1</strong><small>未读取</small></button>",
+      "css": ".ds-slot{min-height:65px;background:#f4d6c0;color:#85311f;border-radius:13px;padding:11px 12px;text-align:left;display:flex;flex-direction:column;gap:7px;border:1px solid #b3432d;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Microsoft YaHei\",sans-serif;cursor:pointer}.ds-slot strong{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}.ds-slot:active{transform:scale(.97)}.ds-slot:focus-visible{outline:3px solid #b3432d;outline-offset:3px}"
+    },
+    {
+      "name": "Bottom navigation",
+      "kind": "nav",
+      "description": "Short labels and a tonal current destination; prototype excerpts retain the observed state styling.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主要导航\"><button class=\"ds-current\" aria-current=\"page\">同步</button><button>预设</button><button>相册</button><button>设置</button></nav>",
+      "css": ".ds-nav{height:64px;display:flex;border-radius:28px;padding:5px 7px;align-items:center;background:rgba(255,255,255,.83);backdrop-filter:blur(28px) saturate(155%);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 .6px rgba(255,255,255,.9),0 10px 32px #24232020}.ds-nav button{flex:1;height:54px;display:flex;align-items:center;justify-content:center;border:0;background:none;font:9px -apple-system,BlinkMacSystemFont,\"Segoe UI\",\"Microsoft YaHei\",sans-serif;color:#635d53;border-radius:22px;cursor:pointer}.ds-nav .ds-current{color:#242320;background:#eeece6;font-weight:600}.ds-nav button:active{transform:scale(.97)}.ds-nav button:focus-visible{outline:3px solid #b3432d;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "清晰连接，轻量工具",
+    "overview": "这是对已实现独立 HTML 原型的扫描记录，适用范围仅为本审核目录。延续既有 Huevia 视觉语言，不建立新的全局品牌规范，也不替代项目根目录的 DESIGN.md。方向依据是 index.html 开头的设计契约、screen.css / screen.js、remote.css / remote-ui.js、board.js 和 README.md。\n\n连接页逐步说明下一件事；同步页保留照片为主体，通过一个浮动入口按需展开工具。用户已选择 B 圆形图标，并追加选择独立全屏遥控取景页。collapsed-options/ 中的三张 ImageGen 设计图及提示词保留为入口选择依据，最终尺寸以代码为准。\n\n用户后续明确批准按此设计接入，并确认紧凑照片工具栏与时间 / 名称两类排序；现已接入 Flutter 源码。接入及验证边界见 implementation/README.md；此记录不表示原生运行、排版或真机验收完成。",
+    "keyCharacteristics": [
+      "暖白与石墨构成主体，陶土强调状态和选择。",
+      "系统字体、清楚的步骤与克制的信息密度。",
+      "玻璃集中在浮动控件；下载和槽位使用内容面板，遥控使用摄影暗色全屏页。"
+    ],
+    "rules": [],
+    "dos": [
+      "Do 保留既有 Huevia 浅深主题和本原型的单圆形入口。",
+      "Do 让步骤、失败原因和恢复操作明确可见。",
+      "Do 保留减少透明度、高对比度、减少运动与键盘焦点处理。",
+      "Do 让全屏遥控的演示标记、只读参数与待核对结果持续明确。"
+    ],
+    "donts": [
+      "Don't 将三个候选设计图实现成三个产品入口或三个原型。",
+      "Don't 持续闪烁就绪提示、重复播报状态，或在空队列显示 0。",
+      "Don't 把连接成功等同于加载照片，或把演示槽位和设备状态当作真机结果。",
+      "Don't 将本地原型指南扩展为全局品牌变更或产品接入许可。",
+      "Don't 将遥控退回小面板、把静态演示图称为真实取景，或自动重发未核对的快门。"
+    ]
+  }
+}

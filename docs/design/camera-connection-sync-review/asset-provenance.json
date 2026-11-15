@@ -1,0 +1,592 @@
+{
+  "scope": "Design prototype and three generated direction images only",
+  "assets": [
+    {
+      "file": "assets\\alpine-lake.jpg",
+      "origin": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\assets\\preset-showcase\\alpine-lake.jpg",
+      "source_sha256": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+      "sha256": "011a456b6cdd4295a2559ceab7663811ed3a678dc9218d8f28a0127c5a24216f"
+    },
+    {
+      "file": "assets\\coastal-water.jpg",
+      "origin": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\assets\\preset-showcase\\coastal-water.jpg",
+      "source_sha256": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+      "sha256": "152769b99ba72f1ac22cef1cf5df8b242d9107891a6911641b2965d6098be571"
+    },
+    {
+      "file": "assets\\pink-tulips.jpg",
+      "origin": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\assets\\preset-showcase\\pink-tulips.jpg",
+      "source_sha256": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+      "sha256": "d046453ff5a089361861324c7ea8ee0e117cf49c6acc0225d7302e304e1b5df9"
+    },
+    {
+      "file": "assets\\portrait-smile.jpg",
+      "origin": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\assets\\preset-showcase\\portrait-smile.jpg",
+      "source_sha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+      "sha256": "2f86499e8eb3def3b13cb36a9a356d49b4201b1e91cbb7a1e5a15f7432c33b12"
+    },
+    {
+      "file": "assets\\rainy-tokyo.jpg",
+      "origin": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\assets\\preset-showcase\\rainy-tokyo.jpg",
+      "source_sha256": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+      "sha256": "d0b978cf2a9698f8837be2dfca1259cae8cbee851ca6445154ddecaf417e170c"
+    },
+    {
+      "file": "assets\\sunlit-forest.jpg",
+      "origin": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\assets\\preset-showcase\\sunlit-forest.jpg",
+      "source_sha256": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473",
+      "sha256": "d4c2105601d76f4659e0991971b551952a5c370991a55ca7dbb0b8c346b85722"
+    },
+    {
+      "file": "review\\android-dark-camera-confirm.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-camera-confirm.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "6d15874b4052be632df708971a76bc560fab1262076ab7ac1ce8d7b1e9ee7214"
+    },
+    {
+      "file": "review\\android-dark-connecting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-connecting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "16a88d5e3fcebe4094e0a53dcbc4e56692c3c975996041840c41d301176598fe"
+    },
+    {
+      "file": "review\\android-dark-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "ce89599c25211353a365f10e49384417f7f69ec03f8112c439b8727cf32da55f"
+    },
+    {
+      "file": "review\\android-dark-permission-denied.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-permission-denied.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "3d81c8061c0d58c5fd88bbcf2db88862ef88661b82f61138018b965ba48071c3"
+    },
+    {
+      "file": "review\\android-dark-permission.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-permission.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "0a5cd63a36a7b818e4ad0b7495d49a912096cfb54f237429d5c21ed00eb83116"
+    },
+    {
+      "file": "review\\android-dark-queue-active.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-queue-active.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "b5a6bfb16d87a7cc702cfd20a24c0973dd205639d3865b27b2a359b2f823cb49"
+    },
+    {
+      "file": "review\\android-dark-queue-empty.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-queue-empty.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "adbebbd3982c6aa88f235dcdfef1e6f82203b65e6ed8859bafcc506638448d23"
+    },
+    {
+      "file": "review\\android-dark-queue-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-queue-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "1860f0cd64047b5163d597e2692cfa1f294e4f4d4ebee7f93f85a67038a41604"
+    },
+    {
+      "file": "review\\android-dark-remote-offline.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-remote-offline.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "46da4577a788d21793d2c9393ac14a8b3eafe2ce5c7037e2a2467339032a77e1"
+    },
+    {
+      "file": "review\\android-dark-remote-paused.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-remote-paused.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "8acae09e2c53308f2684e7c08de78796a1ead7cb60571d992eb82f4cdaa84fec"
+    },
+    {
+      "file": "review\\android-dark-remote-uncertain.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-remote-uncertain.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "eda6c1ae8cd16f63b595bb9b00f737518c3f6d8999ee4960d91acbacc225c866"
+    },
+    {
+      "file": "review\\android-dark-remote-unsupported.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-remote-unsupported.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "bfc2e8fe0e0bd9ce2f25cc281bdba4072d6c6bc138783fec0a34b71de1fa2ea8"
+    },
+    {
+      "file": "review\\android-dark-remote-waiting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-remote-waiting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "0da007110aec7614d87b840da4139f810a87c8390c74cdd8e208c5c73bb5fe6f"
+    },
+    {
+      "file": "review\\android-dark-remote.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-remote.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "d58e13d6c9079d536c4fb43fe424240072a6715a22def276ec4b5c82cb083480"
+    },
+    {
+      "file": "review\\android-dark-slots.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-slots.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "7f71d52dd04845847af9a3f8945b5f94c8864ab60dbff4305e21cfa4a26f08e3"
+    },
+    {
+      "file": "review\\android-dark-success-return.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-success-return.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "63fd842452624ae68d0710fe90f0ef9f1c01722b85b95c5fa0f881bef260f823"
+    },
+    {
+      "file": "review\\android-dark-sync-entry.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-sync-entry.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "8c3d1f6893e8ca0d68e5d74a8def57ccbac4aa36cc38133052e1cd6dc237ab65"
+    },
+    {
+      "file": "review\\android-dark-sync-tools.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-sync-tools.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "b5eb97f32520cb1630484f3471b8de76474ba04235d64a1cdecf319a2b653f64"
+    },
+    {
+      "file": "review\\android-dark-timeout.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-timeout.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "14d10dd42de65589546b79733d517f698152e62b2e0a15dffcdc2533856ea6ec"
+    },
+    {
+      "file": "review\\android-dark-usb-found.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-usb-found.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "22970942664856bd661a5de43c5a91bf09d6331fc04ccc609febfc8eeef79f51"
+    },
+    {
+      "file": "review\\android-dark-usb-missing.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-usb-missing.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "98d73f909482ef04ca0e7fdc28e06b71c0575c798aadde96bf1f2bf4f1aa6f78"
+    },
+    {
+      "file": "review\\android-dark-usb-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-usb-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "d5ce0391a82cf000266b0829f2bd754345a475eb35a94cb7b976d41d1f722b79"
+    },
+    {
+      "file": "review\\android-dark-wifi-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-dark-wifi-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "58d2a508f8eadb3a44f1a1eec73f166b5bbbd46a9c169e98e598bfa821db1938"
+    },
+    {
+      "file": "review\\android-light-camera-confirm.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-camera-confirm.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "4e5d17e0c659294641625cbd945896afbc6b46501521e4894791fb037ec0b3a0"
+    },
+    {
+      "file": "review\\android-light-connecting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-connecting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "5eb74ba5c10950dc409247c362404529f2d8ccc530b6f7824a9ee3c0828a6623"
+    },
+    {
+      "file": "review\\android-light-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "6371c8d9c0ab7fa38409d2089aed29027da0251feeae56384deba407f515771b"
+    },
+    {
+      "file": "review\\android-light-permission-denied.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-permission-denied.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "79843f48f0cc8bbe052df462d666b1e7d5b4d19c958c9545e750ded0c41eec81"
+    },
+    {
+      "file": "review\\android-light-permission.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-permission.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "6a023497df8a20c03268ef632dea11c6722b0600593f6eaaa92e10bf30babe9e"
+    },
+    {
+      "file": "review\\android-light-queue-active.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-queue-active.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "f9e3886f47d28bb178d584e0fdd8d66765bcebad86a7d37da7871dc6fdcbcc69"
+    },
+    {
+      "file": "review\\android-light-queue-empty.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-queue-empty.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e8f6d182de5594adb00e87dc284c96c806dee96cc36ce5c2fec0428d4f667257"
+    },
+    {
+      "file": "review\\android-light-queue-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-queue-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "8f28a6dc1c454e354ea73f2871db4a49d93c7c78d4d6cd6c662283af7018eb7b"
+    },
+    {
+      "file": "review\\android-light-remote-histogram.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-histogram.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "47671440d806d3b0a3fcf3d99dfcb4e15d9490a2dc05898158758e55f360c82c"
+    },
+    {
+      "file": "review\\android-light-remote-offline.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-offline.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "d09e2afe8deda448f00aebe909a18676869ad8af6593334c4d1fa60c6b3464df"
+    },
+    {
+      "file": "review\\android-light-remote-parameters.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-parameters.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "4c410529b0bf0ebb5cbecff9b0718730cd49dbb6a31ab57eb4936292aabe139c"
+    },
+    {
+      "file": "review\\android-light-remote-paused.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-paused.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "8613c633b565018be2af20bfc59ca9b4bc9c5ecbac0c429d59f95047d3e240a5"
+    },
+    {
+      "file": "review\\android-light-remote-settings.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-settings.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "b4d05f438789c6c4aa310d9e5d7ac17ac13b2af9215fb2e70506cb38d4116c00"
+    },
+    {
+      "file": "review\\android-light-remote-uncertain.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-uncertain.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e54fcd95182231c32260a8c88b209de20e7da8cdc539c687375103c9aa7538c3"
+    },
+    {
+      "file": "review\\android-light-remote-unsupported.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-unsupported.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "afc8eaa5525dfbf25974771dfbf8547fdb890a05313092e0fb84f75230977136"
+    },
+    {
+      "file": "review\\android-light-remote-waiting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote-waiting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "6aff4b7d082228e563d9d323d4e84a62487fcbfc2eab77172e997ec804fec265"
+    },
+    {
+      "file": "review\\android-light-remote.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-remote.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "3c64a0c82dbc00111cda2de9d951adab4170e7a56c882d865adb2cf2646c3a91"
+    },
+    {
+      "file": "review\\android-light-slots.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-slots.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "9f9266fdb317e8f8cf08e279ec4cd03559145aec943b53ee2e3bf13b62f82c60"
+    },
+    {
+      "file": "review\\android-light-success-return.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-success-return.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e9e8e6b3115f2902e3c1312a30d1134bf393e76e46e49959beab839520e206ac"
+    },
+    {
+      "file": "review\\android-light-sync-entry.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-sync-entry.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e67e772817f6248fb837c8799b017fa7e1cdab5b1e2a69efc3fe8a51f1a1f6b0"
+    },
+    {
+      "file": "review\\android-light-sync-tools.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-sync-tools.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "91971cdcecc4299e4ee659581d2069b91aad5d65a42349de0d265acfaeae61c9"
+    },
+    {
+      "file": "review\\android-light-timeout.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-timeout.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "55cdeffbb30f7f541cbcbcbcd52a5f07fed9f70ae047cecce948eae2523ced5e"
+    },
+    {
+      "file": "review\\android-light-usb-found.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-usb-found.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "5b4d3e4f78ea45fbce33306b7b88d44eae8ffa5f07989190119147fb4f027c3f"
+    },
+    {
+      "file": "review\\android-light-usb-missing.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-usb-missing.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "9d3c37ba88f10468eb16194ba4fd2369bcdb223187718c2ce354913e3e136dd6"
+    },
+    {
+      "file": "review\\android-light-usb-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-usb-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "169461a64d196081c082c6b85083a0c3927443025f10d31ffc01fac2ad72aa87"
+    },
+    {
+      "file": "review\\android-light-wifi-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, android-light-wifi-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "49dd5c307eb1045aa36ccd58a424c5f92cec2f1923906ba74d5abf8c1ebc3466"
+    },
+    {
+      "file": "review\\ios-dark-camera-confirm.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-camera-confirm.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "ff355266a5fcff1733d63745d7c63553769fb8000077628bbd72be2a248e75b5"
+    },
+    {
+      "file": "review\\ios-dark-connecting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-connecting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "a9fefe8c41ab155f7488f127584ddd5b3360ab54a90877dddecaf56c7c40a067"
+    },
+    {
+      "file": "review\\ios-dark-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "269f19cfeb205bed1562662a871e548866edbf5a314d5cdfa9b41729fb8c13b6"
+    },
+    {
+      "file": "review\\ios-dark-permission-denied.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-permission-denied.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e5c4afd005ddd2945c7decdd32e2d6b9ebd2175ee20c67c726710cf33762df73"
+    },
+    {
+      "file": "review\\ios-dark-permission.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-permission.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "2ad8a5a472e6c5985f84c1792777fde69c11c7e0efde5c6c6d144fede2ef7943"
+    },
+    {
+      "file": "review\\ios-dark-queue-active.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-queue-active.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "1171e7762897dd88b20abc285f524d3493356cee639a1ea60077831a585d3661"
+    },
+    {
+      "file": "review\\ios-dark-queue-empty.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-queue-empty.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "5d06552b9e8c889b4d3ad9c7619d13925ebf1b9818ed020dfe13ecb23a4cb543"
+    },
+    {
+      "file": "review\\ios-dark-queue-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-queue-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "5e3106a7e823d3ac7a345128cfd51e7189ffc6e875c039471e902d526d287012"
+    },
+    {
+      "file": "review\\ios-dark-remote-offline.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-remote-offline.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "ff9c0e47767d68d76e135511e46480634cef0d5738358a935d84422b3ce2174a"
+    },
+    {
+      "file": "review\\ios-dark-remote-paused.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-remote-paused.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "525a626d689770c1a6f76048e52b20cf73c03e267dd56ce3d4e38d6f555fa480"
+    },
+    {
+      "file": "review\\ios-dark-remote-uncertain.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-remote-uncertain.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e25195c5953c8c56948f0307b45b54acc77880e363b9478e7198a0005490d226"
+    },
+    {
+      "file": "review\\ios-dark-remote-unsupported.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-remote-unsupported.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "ffe25da951570ea4c7ba0bf3016ef36b26b685be235d8da7adc07cf0b906e9c2"
+    },
+    {
+      "file": "review\\ios-dark-remote-waiting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-remote-waiting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e4b51c78f00f78cdcdb86b58e2d59c8a2bc30dd59e920e5176e390a4d1926d2a"
+    },
+    {
+      "file": "review\\ios-dark-remote.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-remote.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "45f5c65460cdecf4e0e45c0a344132d99bdd267e22a0843dafe27102525f20cb"
+    },
+    {
+      "file": "review\\ios-dark-slots.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-slots.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "cf9345e152eb03506f57897976fa2cf9ca44a33ccb6d92e542b852234dd4b0af"
+    },
+    {
+      "file": "review\\ios-dark-success-return.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-success-return.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "8005b38e52977e5d7aa1f04d7568f7ac5427cfa00448a3f85003d6c8ef7a374e"
+    },
+    {
+      "file": "review\\ios-dark-sync-entry.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-sync-entry.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "3f5f929c8c292dfe3d19d5000107767406f0c1e333fac63ee7f5cc2ea395a5c2"
+    },
+    {
+      "file": "review\\ios-dark-sync-tools.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-sync-tools.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "a4224c6a01c566365ecbb62f7b8a4d55b105c4501274c556d87c8aeffc919dca"
+    },
+    {
+      "file": "review\\ios-dark-timeout.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-timeout.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e291e0c66febf7b5c8873670eb3b5b95d2ce6b648db8d77ce1dea456ac9ac4ae"
+    },
+    {
+      "file": "review\\ios-dark-usb-found.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-usb-found.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "869be67e70b143de5edac976c06ec03c054d2a072ee5422e04dc17ba2e76e92a"
+    },
+    {
+      "file": "review\\ios-dark-usb-missing.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-usb-missing.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "686367f4a6c2899a0e6f514f20864fd2d95bfde376f0837075408c84bc72028e"
+    },
+    {
+      "file": "review\\ios-dark-usb-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-usb-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "716c18bf67e081417e4ef79507cf4c8682ed82d65c1a50c6991570b91dfaea51"
+    },
+    {
+      "file": "review\\ios-dark-wifi-guide.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-wifi-guide.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "2b5bfb30df5e8a6ef1219e7fd0bff0626e57f9b2bc65b254e6e68aad0c2dd737"
+    },
+    {
+      "file": "review\\ios-dark-wifi-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-dark-wifi-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "25b420dd6e62084d9ee8f2fc2df2adefe47acb9bfdf010d201c6888aad1ba39c"
+    },
+    {
+      "file": "review\\ios-light-camera-confirm.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-camera-confirm.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "75418bcbd3f05a7192c8e6c7dec4b748f8aa4a4eb958bc85cd36c31c1625e99f"
+    },
+    {
+      "file": "review\\ios-light-connecting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-connecting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "5d150d45d07d2f79a63794be852461fafea3dbd0de711ddd8a64ddc007cc41db"
+    },
+    {
+      "file": "review\\ios-light-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e03d106293548721739ca1819054fbbf8022d1938d59666d95f9b5a1f0a7ede3"
+    },
+    {
+      "file": "review\\ios-light-permission-denied.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-permission-denied.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "fd50fb31f72bc4345405f0c530c229084b392b88c76dd9011fecc3f5048acd5a"
+    },
+    {
+      "file": "review\\ios-light-permission.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-permission.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "22b4e38dc3caaf3aaabe41b7a64de776d14767995a5e1d029d842f6156e6191c"
+    },
+    {
+      "file": "review\\ios-light-queue-active.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-queue-active.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e18c9643fdfb5bf228757c89375c898eb60325173fe2ce6a6f82e01d0093a619"
+    },
+    {
+      "file": "review\\ios-light-queue-empty.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-queue-empty.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "f55d66dc26f44e51dc10261c3e391a3f10af9b87a7d4b6fb2ce2af71245aed84"
+    },
+    {
+      "file": "review\\ios-light-queue-failed.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-queue-failed.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "5470488a28fb63991e6bb31ddb23002f820d8c1bd8a244742249c2bf79b18b90"
+    },
+    {
+      "file": "review\\ios-light-remote-offline.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-remote-offline.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "4c7370eff5df4a235decf4697b5ffcb34f611b1fe7dcf1b842b3ea616e3a4966"
+    },
+    {
+      "file": "review\\ios-light-remote-paused.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-remote-paused.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "0e6670345a14cdf85e56df8a803eef0f7416bf9cbe866d2585989ab9c473a7ba"
+    },
+    {
+      "file": "review\\ios-light-remote-uncertain.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-remote-uncertain.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "da719abc0ead82750fceb69bcecd0810f62aed15e2d0fefc977e03ecf9aefe30"
+    },
+    {
+      "file": "review\\ios-light-remote-unsupported.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-remote-unsupported.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "13e3078d788b852e6df0b8d080b89998ee4439ee7da7eed270e3759114c53163"
+    },
+    {
+      "file": "review\\ios-light-remote-waiting.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-remote-waiting.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "8252724329c5123e675b4365cbe3fad360f1530720bd93b77d817edf8b5654c2"
+    },
+    {
+      "file": "review\\ios-light-remote.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-remote.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "17b7e1d4b4f62da2da0ab7b0b525947d7ec420e754c6f9641cc48942ca1c77df"
+    },
+    {
+      "file": "review\\ios-light-slots.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-slots.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "41e5e827dfdddfe5cef6c93ab2c2a256a00af8e640e5e5ba6bae1e92e544f919"
+    },
+    {
+      "file": "review\\ios-light-success-return.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-success-return.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "b5ef0f701919909f2345c5b605e4538ebc65d63dc1c852bd4f3f59d37d07425e"
+    },
+    {
+      "file": "review\\ios-light-sync-entry.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-sync-entry.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "888c9c84c27a68046af1c4675abe179156f4f282c183df64d6449964763b710e"
+    },
+    {
+      "file": "review\\ios-light-sync-tools.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-sync-tools.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "d204c1798c36ba698ad0106a96a67fb4aa7c86de6f8fc2544cec76c37c169058"
+    },
+    {
+      "file": "review\\ios-light-timeout.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-timeout.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "9571aa51ff192e7873eb39c2404111d7b85897337eac8f765922068b58b46436"
+    },
+    {
+      "file": "review\\ios-light-usb-found.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-usb-found.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "389df1aad7581168ccfce47c02929b1608135e801011eb38a673b11de696d17f"
+    },
+    {
+      "file": "review\\ios-light-usb-missing.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-usb-missing.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "b3f3571271aca65e738fc41886311fbc28aa1239b6f026196188eaa4e6b1b64a"
+    },
+    {
+      "file": "review\\ios-light-usb-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-usb-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "798f192a8575b4c2e67dfa8dde8e6ce086b72f617946842052bf0c4e936cb267"
+    },
+    {
+      "file": "review\\ios-light-wifi-guide.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-wifi-guide.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "981d97b52891b8f239856a1dc55336556700a3a22361f908da151541ce49a9bd"
+    },
+    {
+      "file": "review\\ios-light-wifi-ready.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, ios-light-wifi-ready.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e3c1395ec28f0e0e170d977143f1146ceabaab2d716e936352bb8a295185c547"
+    },
+    {
+      "file": "review\\narrow-320.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, narrow-320.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "adee7e018a2c6c3ea6a66479d05b20dff0176902db5d55ea9c039e973b80ba94"
+    },
+    {
+      "file": "review\\remote-review-cover.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, remote-review-cover.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "199b543e90d82886f2bf7e779672e3f3ceee423606a37e10400a9cb026c63882"
+    },
+    {
+      "file": "review\\remote-uncertain-after-reentry.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, remote-uncertain-after-reentry.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "979b8150944806d7fc4a0d6c34e7979a57092524fd32b1a5e7f60a04534d1b6a"
+    },
+    {
+      "file": "review\\remote-uncertain-after-view-toggle.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, remote-uncertain-after-view-toggle.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "911c53e2d9909c743cce485b7ec019298d9d8256f9ebd9746eb9004909e8c9ec"
+    },
+    {
+      "file": "review\\review-board-connection.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, review-board-connection.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "baf1511e9fba3f1df0ecc5065c948bde2fef86885b09b639ae80c8b038067e3d"
+    },
+    {
+      "file": "review\\review-board-tools.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, review-board-tools.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "7b184a9bcf8681da5730ca63799aeba90d79d86836d3a2430e8113a579c4d069"
+    },
+    {
+      "file": "review\\review-cover.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, review-cover.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "a89c8c67c5fa25eff5ec122b0c923de0594badc370a9b5a2903e9cc40286f1f2"
+    },
+    {
+      "file": "review\\sync-toolbar-sort-375.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, sync-toolbar-sort-375.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "e4f9ff510aa8dbb578bda3fc8dd445b019aaf88ffca39f7a1c65c51295ee8b06"
+    },
+    {
+      "file": "review\\sync-toolbar-sort-menu.png",
+      "origin": "Browser screenshot of standalone local Huevia HTML prototype, sync-toolbar-sort-menu.png. Source: http://127.0.0.1:4319/ ; capture recipes review-check.cjs and remote-recovery-check.cjs; board/cover screenshots render their corresponding local HTML routes. Phone screens 375x812 except named board/cover/narrow captures. All camera and task data synthetic; no native runtime or camera verification.",
+      "sha256": "27578499358cb909fa06df8bba0968a13b6d28eff0545d2d5fbedf34298750ed"
+    },
+    {
+      "file": "collapsed-options\\A-capsule.png",
+      "origin": "Built-in ImageGen; references review/android-light-sync-entry.png and review/android-dark-sync-entry.png from before the selected B circle was implemented.",
+      "prompt": "collapsed-options\\A.prompt.txt",
+      "selected": false,
+      "sha256": "d79a952bf06eba6a534c2fa29550e2d060f2ca04907fefe1f72a0f0ea12dc09d"
+    },
+    {
+      "file": "collapsed-options\\B-circle.png",
+      "origin": "Built-in ImageGen; references review/android-light-sync-entry.png and review/android-dark-sync-entry.png from before the selected B circle was implemented.",
+      "prompt": "collapsed-options\\B.prompt.txt",
+      "selected": true,
+      "sha256": "a1d0e366293ec3eec09c33ab42207fe9ffc32d612836fb4b2f2c6a0d7500477d"
+    },
+    {
+      "file": "collapsed-options\\C-edge-tab.png",
+      "origin": "Built-in ImageGen; references review/android-light-sync-entry.png and review/android-dark-sync-entry.png from before the selected B circle was implemented.",
+      "prompt": "collapsed-options\\C.prompt.txt",
+      "selected": false,
+      "sha256": "28ca4041ef49a3fcfcc96d3a276356511dd4401077b445e56934ee5aa5adb7ad"
+    }
+  ]
+}

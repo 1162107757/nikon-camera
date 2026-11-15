@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Huevia · 相机连接与同步工具设计审核</title>
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+<!--
+THESIS: A clear connection task and a small, contextual camera tool. Established Huevia world, no new identity.
+OWN-WORLD: Incumbent warm white #F8F7F4, graphite #242320, terracotta #B3432D; system UI typography; substantial glass only on floating controls.
+STORY: Choose Wi-Fi or USB, understand the next action, recover from failure, return to the calling screen. Open camera tools only in Sync.
+FIRST VIEWPORT: Two exact 375 × 812 interactive phones, Android and iOS, beside review controls. Native screens put connection actions within reach and preserve photographs behind a single lower-right 52px tool circle.
+FORM: Task-led refinement within the original Android visual system, explicitly requested standalone HTML; no identity roll applies. User selected one tool button.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+  <aside class="sidebar">
+    <a class="brand" href="index.html">Huevia<span>设计审核</span></a>
+    <p class="review-context">相机连接 / 同步工具<br>独立交互原型 · 已确认接入</p>
+    <form id="controls">
+      <fieldset><legend>审核界面</legend><div class="switcher" data-control="surface"><button type="button" data-value="connection" class="selected">相机连接</button><button type="button" data-value="sync">同步工具</button></div></fieldset>
+      <fieldset><legend>外观</legend><div class="switcher three" data-control="theme"><button type="button" data-value="light">浅色</button><button type="button" data-value="dark">深色</button><button type="button" data-value="compare" class="selected">浅深对照</button></div></fieldset>
+      <div id="connection-options">
+        <fieldset><legend>连接方式</legend><div class="switcher" data-control="transport"><button type="button" data-value="wifi" class="selected">Wi-Fi</button><button type="button" data-value="usb">USB</button></div></fieldset>
+        <label class="field-label" for="connection-state">关键状态</label><select id="connection-state" name="state"></select>
+        <label class="field-label" for="source">连接成功后返回</label><select id="source" name="source"><option value="sync">同步页</option><option value="presets">预设页</option></select>
+      </div>
+      <div id="sync-options" hidden>
+        <label class="field-label" for="panel">工具面板</label><select id="panel" name="panel"><option value="closed">单个浮动入口</option><option value="tools">三个工具入口</option><option value="downloads">下载队列</option><option value="remote">遥控拍照</option><option value="presets">C1–C9 相机预设槽位</option></select>
+        <label class="field-label" for="queue">下载状态</label><select id="queue" name="queue"><option value="empty">空队列 · 紧凑</option><option value="active">正在下载 · 6 项</option><option value="failed">连接中断 · 可重试</option></select>
+        <div id="remote-options" hidden><label class="field-label" for="remote-state">全屏遥控状态</label><select id="remote-state" name="remoteState"><option value="ready">取景中 · 演示画面</option><option value="paused">取景已暂停</option><option value="waiting">等待相机画面</option><option value="unsupported">机型未提供实时取景</option><option value="uncertain">拍摄结果待核对</option></select></div>
+        <label class="checkbox"><input type="checkbox" id="disconnected">相机已断开</label>
+      </div>
+      <button class="reset" id="reset" type="button">重置当前预览</button>
+    </form>
+    <div class="scope-note"><span class="small-dot"></span><strong>只做设计审核</strong><p>相机、照片数量、网络与任务均为演示。按钮不会访问相机、系统设置或网络。</p></div>
+  </aside>
+  <main class="review-main">
+    <header class="review-heading"><div><h1>连接清楚，工具轻一点。</h1><p>连接后回到原处；需要时再展开工具。</p></div><span class="draft">已确认 · 源码接入</span></header>
+    <section class="phones" aria-label="Android 与 iOS 手机交互预览">
+      <article class="phone-column"><div class="device-title"><h2>Android</h2><span id="android-theme">浅色 · 375 × 812</span></div><div class="phone-frame"><iframe id="android-frame" title="Android 375 像素交互预览" src="screen.html?platform=android&amp;theme=light"></iframe></div><a class="open-screen" id="android-open" target="_blank" href="screen.html?platform=android&amp;theme=light">单独打开 Android 预览 <span aria-hidden="true">↗</span></a></article>
+      <article class="phone-column"><div class="device-title"><h2>iOS</h2><span id="ios-theme">深色 · 375 × 812</span></div><div class="phone-frame"><iframe id="ios-frame" title="iOS 375 像素交互预览" src="screen.html?platform=ios&amp;theme=dark"></iframe></div><a class="open-screen" id="ios-open" target="_blank" href="screen.html?platform=ios&amp;theme=dark">单独打开 iOS 预览 <span aria-hidden="true">↗</span></a></article>
+    </section>
+    <section class="decision-notes" aria-live="polite"><h2 id="note-title">先选连接方式，再做一件事</h2><p id="note-body">Wi-Fi 引导用户先连接相机网络；USB 独立呈现设备检测和授权。过程显示当前阶段，失败后保留连接方式。</p><div class="interaction-tip"><strong>可以直接点击手机里的按钮</strong><span id="interaction-hint">点“开始连接”走完演示流程；可切换相机类型、打开连接设置，或用左侧固定查看异常状态。</span></div></section>
+    <footer class="review-footer"><span>保留原版 Huevia 暖白 / 石墨 / 陶土色</span><span>未接入产品 · 无相机实测结论</span><a href="gallery.html">全部关键状态截图</a><a href="README.md">交互说明</a></footer>
+  </main>
+  <script src="board.js"></script>
+</body>
+</html>
