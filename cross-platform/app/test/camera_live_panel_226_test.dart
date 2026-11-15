@@ -169,12 +169,32 @@ void main() {
       );
       final before = tester.getRect(frame);
       await tester.tap(action);
-      await tester.pumpAndSettle();
-      expect(find.textContaining('新拍摄的 RAW 原片'), findsOneWidget);
+      await until(
+        tester,
+        () => find
+            .widgetWithText(FilledButton, '开始拍摄')
+            .hitTestable()
+            .evaluate()
+            .isNotEmpty,
+        'The RAW confirmation must be ready for an explicit start',
+      );
+      expect(
+        find.descendant(
+          of: find.byType(Dialog),
+          matching: find.textContaining('新拍摄的 RAW 原片'),
+        ),
+        findsOneWidget,
+      );
       await tester.tap(find.text('开始拍摄'));
       await until(
         tester,
-        () => state.controller.phase == CameraLivePhase.watching,
+        () =>
+            state.controller.phase == CameraLivePhase.watching &&
+            find
+                .widgetWithText(FilledButton, '停止边拍边传')
+                .hitTestable()
+                .evaluate()
+                .isNotEmpty,
         'Explicit RAW start must reach the actual controller',
       );
       expect(core.lastStart['format'], 'raw');
@@ -192,7 +212,10 @@ void main() {
       await tester.tap(find.text('停止边拍边传'));
       await until(
         tester,
-        () => !state.controller.active && !state.controller.working,
+        () =>
+            !state.controller.active &&
+            !state.controller.working &&
+            state.controller.phase == CameraLivePhase.stopped,
         'Stop must release format selection',
       );
       expect(
@@ -222,11 +245,25 @@ void main() {
       final frame = find.byKey(const Key('live-transfer-preview'));
       final before = tester.getRect(frame);
       await tester.tap(find.byKey(const Key('live-transfer-action')));
-      await tester.pumpAndSettle();
+      await until(
+        tester,
+        () => find
+            .widgetWithText(FilledButton, '开始拍摄')
+            .hitTestable()
+            .evaluate()
+            .isNotEmpty,
+        'The JPEG confirmation must be ready for an explicit start',
+      );
       await tester.tap(find.text('开始拍摄'));
       await until(
         tester,
-        () => state.controller.phase == CameraLivePhase.watching,
+        () =>
+            state.controller.phase == CameraLivePhase.watching &&
+            find
+                .widgetWithText(FilledButton, '停止边拍边传')
+                .hitTestable()
+                .evaluate()
+                .isNotEmpty,
         'JPEG capture must start',
       );
       core.visible = [fixtures.shot(2)];
@@ -253,7 +290,10 @@ void main() {
       await tester.tap(find.text('停止边拍边传'));
       await until(
         tester,
-        () => !state.controller.active && !state.controller.working,
+        () =>
+            !state.controller.active &&
+            !state.controller.working &&
+            state.controller.phase == CameraLivePhase.stopped,
         'Stop must complete',
       );
       expect(tester.getRect(frame), before);
