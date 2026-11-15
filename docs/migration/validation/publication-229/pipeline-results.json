@@ -1,0 +1,30 @@
+[
+  {
+    "stage": "draft",
+    "platform": "android",
+    "exit": 0,
+    "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+    "seconds": 236.33
+  },
+  {
+    "stage": "draft",
+    "platform": "ios",
+    "exit": 0,
+    "sha256": "f1919917d4e042c1974f87e62dfe62c8864cbb72c992b9b6ea7e54accaec87dd",
+    "seconds": 83.27
+  },
+  {
+    "stage": "publish",
+    "platform": "android",
+    "exit": 0,
+    "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+    "seconds": 31.9
+  },
+  {
+    "stage": "publish",
+    "platform": "ios",
+    "exit": 0,
+    "sha256": "f1919917d4e042c1974f87e62dfe62c8864cbb72c992b9b6ea7e54accaec87dd",
+    "seconds": 31.95
+  }
+]

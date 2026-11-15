@@ -1,0 +1,580 @@
+{
+  "version": 229,
+  "pageChecks": [
+    {
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/download/",
+      "status": 200,
+      "legacyEditionSelectorPresent": false,
+      "scriptSha256": "c22fc015cb431bcc5e029f03ac17f34ec2c2b36c05123b810d2cca7e9237a048",
+      "scriptMatchesReviewedSource": true,
+      "qualification": "Page script unchanged from228; it loads current release metadata dynamically."
+    },
+    {
+      "url": "https://huevia.cc/preset-library/download/",
+      "status": 200,
+      "legacyEditionSelectorPresent": false,
+      "scriptSha256": "c22fc015cb431bcc5e029f03ac17f34ec2c2b36c05123b810d2cca7e9237a048",
+      "scriptMatchesReviewedSource": true,
+      "qualification": "Page script unchanged from228; it loads current release metadata dynamically."
+    },
+    {
+      "url": "https://huevia.cc/",
+      "status": 200,
+      "legacyEditionSelectorPresent": false,
+      "scriptSha256": "da2acc5264ba0d2bf00a208ad89dc2f1ba90b3f775f5d6c8fd3194780ab53c91",
+      "scriptMatchesReviewedSource": true,
+      "qualification": "Page script unchanged from228; it loads current release metadata dynamically."
+    }
+  ],
+  "latestChecks": [
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "platform": "android",
+      "status": 200,
+      "versionCode": 229,
+      "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/207a5fb8-3824-49f8-b7c0-2d3a08f0b07c/file",
+      "reason": "available"
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "platform": "ios",
+      "status": 200,
+      "versionCode": 229,
+      "sha256": "f1919917d4e042c1974f87e62dfe62c8864cbb72c992b9b6ea7e54accaec87dd",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/c88bdaa5-b0c4-4644-b681-e34204037567/file",
+      "reason": "available"
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "platform": "legacy",
+      "status": 200,
+      "versionCode": null,
+      "sha256": null,
+      "downloadUrl": null,
+      "reason": "withdrawn"
+    },
+    {
+      "origin": "https://huevia.cc",
+      "platform": "android",
+      "status": 200,
+      "versionCode": 229,
+      "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/207a5fb8-3824-49f8-b7c0-2d3a08f0b07c/file",
+      "reason": "available"
+    },
+    {
+      "origin": "https://huevia.cc",
+      "platform": "ios",
+      "status": 200,
+      "versionCode": 229,
+      "sha256": "f1919917d4e042c1974f87e62dfe62c8864cbb72c992b9b6ea7e54accaec87dd",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/c88bdaa5-b0c4-4644-b681-e34204037567/file",
+      "reason": "available"
+    },
+    {
+      "origin": "https://huevia.cc",
+      "platform": "legacy",
+      "status": 200,
+      "versionCode": null,
+      "sha256": null,
+      "downloadUrl": null,
+      "reason": "withdrawn"
+    }
+  ],
+  "oldDownloadChecks": [
+    {
+      "platform": "legacy",
+      "id": "96dbb045-c40c-4a6d-895c-acc406007d4b",
+      "versionCode": 191,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/96dbb045-c40c-4a6d-895c-acc406007d4b/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "766adc1c-168b-4d4b-b4db-917694ba57a7",
+      "versionCode": 196,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/766adc1c-168b-4d4b-b4db-917694ba57a7/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "766adc1c-168b-4d4b-b4db-917694ba57a7",
+      "versionCode": 196,
+      "url": "https://huevia.cc/preset-library/releases/766adc1c-168b-4d4b-b4db-917694ba57a7/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "cd0d0697-6bdb-4b79-9d87-94c2cbe923ba",
+      "versionCode": 186,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/cd0d0697-6bdb-4b79-9d87-94c2cbe923ba/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "fe8e51d4-a1ac-4094-95c9-5183f86e8b48",
+      "versionCode": 184,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/fe8e51d4-a1ac-4094-95c9-5183f86e8b48/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "96dbb045-c40c-4a6d-895c-acc406007d4b",
+      "versionCode": 191,
+      "url": "https://huevia.cc/preset-library/releases/96dbb045-c40c-4a6d-895c-acc406007d4b/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "cefb0213-cd0b-415c-b1f0-bf7ac4e5f8e0",
+      "versionCode": 182,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/cefb0213-cd0b-415c-b1f0-bf7ac4e5f8e0/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "fe8e51d4-a1ac-4094-95c9-5183f86e8b48",
+      "versionCode": 184,
+      "url": "https://huevia.cc/preset-library/releases/fe8e51d4-a1ac-4094-95c9-5183f86e8b48/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "cd0d0697-6bdb-4b79-9d87-94c2cbe923ba",
+      "versionCode": 186,
+      "url": "https://huevia.cc/preset-library/releases/cd0d0697-6bdb-4b79-9d87-94c2cbe923ba/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "96a31515-8567-48a9-9708-342e26ec10fb",
+      "versionCode": 175,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/96a31515-8567-48a9-9708-342e26ec10fb/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "cefb0213-cd0b-415c-b1f0-bf7ac4e5f8e0",
+      "versionCode": 182,
+      "url": "https://huevia.cc/preset-library/releases/cefb0213-cd0b-415c-b1f0-bf7ac4e5f8e0/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "407dff3a-7a82-4708-88d6-030eaafab1e9",
+      "versionCode": 174,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/407dff3a-7a82-4708-88d6-030eaafab1e9/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "96a31515-8567-48a9-9708-342e26ec10fb",
+      "versionCode": 175,
+      "url": "https://huevia.cc/preset-library/releases/96a31515-8567-48a9-9708-342e26ec10fb/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "407dff3a-7a82-4708-88d6-030eaafab1e9",
+      "versionCode": 174,
+      "url": "https://huevia.cc/preset-library/releases/407dff3a-7a82-4708-88d6-030eaafab1e9/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "7bc4be8b-0bd9-4111-b0fa-f092a233353c",
+      "versionCode": 165,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/7bc4be8b-0bd9-4111-b0fa-f092a233353c/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "7bc4be8b-0bd9-4111-b0fa-f092a233353c",
+      "versionCode": 165,
+      "url": "https://huevia.cc/preset-library/releases/7bc4be8b-0bd9-4111-b0fa-f092a233353c/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "dbe2a014-2014-4e1e-8cb1-1ad27440fd99",
+      "versionCode": 164,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/dbe2a014-2014-4e1e-8cb1-1ad27440fd99/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "dbe2a014-2014-4e1e-8cb1-1ad27440fd99",
+      "versionCode": 164,
+      "url": "https://huevia.cc/preset-library/releases/dbe2a014-2014-4e1e-8cb1-1ad27440fd99/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "3e32c8b4-613d-4adf-91c9-26d3badae0ff",
+      "versionCode": 156,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/3e32c8b4-613d-4adf-91c9-26d3badae0ff/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "7205dc77-3d55-4c1a-95a6-9c8cdf7d3179",
+      "versionCode": 115,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/7205dc77-3d55-4c1a-95a6-9c8cdf7d3179/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "3e32c8b4-613d-4adf-91c9-26d3badae0ff",
+      "versionCode": 156,
+      "url": "https://huevia.cc/preset-library/releases/3e32c8b4-613d-4adf-91c9-26d3badae0ff/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+      "versionCode": 114,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "7205dc77-3d55-4c1a-95a6-9c8cdf7d3179",
+      "versionCode": 115,
+      "url": "https://huevia.cc/preset-library/releases/7205dc77-3d55-4c1a-95a6-9c8cdf7d3179/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+      "versionCode": 112,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+      "versionCode": 114,
+      "url": "https://huevia.cc/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "485954a2-dff9-4fbc-a176-d5798f4623e8",
+      "versionCode": 113,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/485954a2-dff9-4fbc-a176-d5798f4623e8/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "485954a2-dff9-4fbc-a176-d5798f4623e8",
+      "versionCode": 113,
+      "url": "https://huevia.cc/preset-library/releases/485954a2-dff9-4fbc-a176-d5798f4623e8/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "36356cac-43d8-4732-aee3-630e68acd2f0",
+      "versionCode": 111,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/36356cac-43d8-4732-aee3-630e68acd2f0/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "36356cac-43d8-4732-aee3-630e68acd2f0",
+      "versionCode": 111,
+      "url": "https://huevia.cc/preset-library/releases/36356cac-43d8-4732-aee3-630e68acd2f0/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+      "versionCode": 110,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/fdb53c9f-f523-4b0c-a67e-e3e85b68e37d/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+      "versionCode": 112,
+      "url": "https://huevia.cc/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "5e6fe107-06f3-4eed-a4cc-36ab4cf6cdfc",
+      "versionCode": 108,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/5e6fe107-06f3-4eed-a4cc-36ab4cf6cdfc/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+      "versionCode": 110,
+      "url": "https://huevia.cc/preset-library/releases/fdb53c9f-f523-4b0c-a67e-e3e85b68e37d/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "88dc4d86-8409-4579-b418-acc1d5c6fbdd",
+      "versionCode": 107,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/88dc4d86-8409-4579-b418-acc1d5c6fbdd/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "5e6fe107-06f3-4eed-a4cc-36ab4cf6cdfc",
+      "versionCode": 108,
+      "url": "https://huevia.cc/preset-library/releases/5e6fe107-06f3-4eed-a4cc-36ab4cf6cdfc/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "88dc4d86-8409-4579-b418-acc1d5c6fbdd",
+      "versionCode": 107,
+      "url": "https://huevia.cc/preset-library/releases/88dc4d86-8409-4579-b418-acc1d5c6fbdd/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+      "versionCode": 100,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a7a5ad8b-db8a-4de6-b951-adf0a71ff02c/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "5e67b2cd-d628-46c0-b80f-ad4d2c1f4af1",
+      "versionCode": 83,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/5e67b2cd-d628-46c0-b80f-ad4d2c1f4af1/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "4c9aee32-1c86-4482-a68e-9c16f583406a",
+      "versionCode": 82,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/4c9aee32-1c86-4482-a68e-9c16f583406a/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+      "versionCode": 100,
+      "url": "https://huevia.cc/preset-library/releases/a7a5ad8b-db8a-4de6-b951-adf0a71ff02c/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "5e67b2cd-d628-46c0-b80f-ad4d2c1f4af1",
+      "versionCode": 83,
+      "url": "https://huevia.cc/preset-library/releases/5e67b2cd-d628-46c0-b80f-ad4d2c1f4af1/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "4c9aee32-1c86-4482-a68e-9c16f583406a",
+      "versionCode": 82,
+      "url": "https://huevia.cc/preset-library/releases/4c9aee32-1c86-4482-a68e-9c16f583406a/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "8448462f-6610-4800-b057-6f045ce03cda",
+      "versionCode": 81,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/8448462f-6610-4800-b057-6f045ce03cda/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "e7cb7d02-d9bc-4a59-9f00-a42bcf2a3659",
+      "versionCode": 80,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/e7cb7d02-d9bc-4a59-9f00-a42bcf2a3659/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "8448462f-6610-4800-b057-6f045ce03cda",
+      "versionCode": 81,
+      "url": "https://huevia.cc/preset-library/releases/8448462f-6610-4800-b057-6f045ce03cda/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "f31228cb-5913-4e4e-b9ac-7910bcc9c285",
+      "versionCode": 77,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/f31228cb-5913-4e4e-b9ac-7910bcc9c285/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "e7cb7d02-d9bc-4a59-9f00-a42bcf2a3659",
+      "versionCode": 80,
+      "url": "https://huevia.cc/preset-library/releases/e7cb7d02-d9bc-4a59-9f00-a42bcf2a3659/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "0419d4ab-ce9d-4ca5-a7c7-a28d83fa6fc3",
+      "versionCode": 76,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/0419d4ab-ce9d-4ca5-a7c7-a28d83fa6fc3/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "f31228cb-5913-4e4e-b9ac-7910bcc9c285",
+      "versionCode": 77,
+      "url": "https://huevia.cc/preset-library/releases/f31228cb-5913-4e4e-b9ac-7910bcc9c285/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "dbe0c6c8-cbda-43db-9c2c-80c85f51031b",
+      "versionCode": 73,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/dbe0c6c8-cbda-43db-9c2c-80c85f51031b/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "0419d4ab-ce9d-4ca5-a7c7-a28d83fa6fc3",
+      "versionCode": 76,
+      "url": "https://huevia.cc/preset-library/releases/0419d4ab-ce9d-4ca5-a7c7-a28d83fa6fc3/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "ce7b7797-e3c8-4b53-9702-22a59166531e",
+      "versionCode": 61,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/ce7b7797-e3c8-4b53-9702-22a59166531e/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "dbe0c6c8-cbda-43db-9c2c-80c85f51031b",
+      "versionCode": 73,
+      "url": "https://huevia.cc/preset-library/releases/dbe0c6c8-cbda-43db-9c2c-80c85f51031b/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "5961ecb9-3b36-4233-a535-9673d8c5dcca",
+      "versionCode": 60,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/5961ecb9-3b36-4233-a535-9673d8c5dcca/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "ce7b7797-e3c8-4b53-9702-22a59166531e",
+      "versionCode": 61,
+      "url": "https://huevia.cc/preset-library/releases/ce7b7797-e3c8-4b53-9702-22a59166531e/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "63a4672c-d4a2-4d92-b47d-459094d62c9f",
+      "versionCode": 59,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/63a4672c-d4a2-4d92-b47d-459094d62c9f/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "63a4672c-d4a2-4d92-b47d-459094d62c9f",
+      "versionCode": 59,
+      "url": "https://huevia.cc/preset-library/releases/63a4672c-d4a2-4d92-b47d-459094d62c9f/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "5961ecb9-3b36-4233-a535-9673d8c5dcca",
+      "versionCode": 60,
+      "url": "https://huevia.cc/preset-library/releases/5961ecb9-3b36-4233-a535-9673d8c5dcca/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "ef9caf3d-6ef7-4992-9488-b994e0512710",
+      "versionCode": 58,
+      "url": "https://huevia.cc/preset-library/releases/ef9caf3d-6ef7-4992-9488-b994e0512710/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "ef9caf3d-6ef7-4992-9488-b994e0512710",
+      "versionCode": 58,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/ef9caf3d-6ef7-4992-9488-b994e0512710/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "cd66e443-b657-4203-93ff-cd471259c928",
+      "versionCode": 56,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/cd66e443-b657-4203-93ff-cd471259c928/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "8c55d9d5-5e62-476a-bcc5-9a102662e8fd",
+      "versionCode": 54,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/8c55d9d5-5e62-476a-bcc5-9a102662e8fd/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "b51fe228-4be1-4304-a72a-c611a7ec374a",
+      "versionCode": 55,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/b51fe228-4be1-4304-a72a-c611a7ec374a/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "cd66e443-b657-4203-93ff-cd471259c928",
+      "versionCode": 56,
+      "url": "https://huevia.cc/preset-library/releases/cd66e443-b657-4203-93ff-cd471259c928/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "b51fe228-4be1-4304-a72a-c611a7ec374a",
+      "versionCode": 55,
+      "url": "https://huevia.cc/preset-library/releases/b51fe228-4be1-4304-a72a-c611a7ec374a/file",
+      "status": 404
+    },
+    {
+      "platform": "android",
+      "id": "c2f18a1b-0fa3-4087-aae3-38e1c28a9c03",
+      "versionCode": 228,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/c2f18a1b-0fa3-4087-aae3-38e1c28a9c03/file",
+      "status": 404
+    },
+    {
+      "platform": "ios",
+      "id": "54b37e71-d58d-4fc5-b2d0-7096197e1f73",
+      "versionCode": 228,
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/54b37e71-d58d-4fc5-b2d0-7096197e1f73/file",
+      "status": 404
+    },
+    {
+      "platform": "legacy",
+      "id": "8c55d9d5-5e62-476a-bcc5-9a102662e8fd",
+      "versionCode": 54,
+      "url": "https://huevia.cc/preset-library/releases/8c55d9d5-5e62-476a-bcc5-9a102662e8fd/file",
+      "status": 404
+    },
+    {
+      "platform": "android",
+      "id": "c2f18a1b-0fa3-4087-aae3-38e1c28a9c03",
+      "versionCode": 228,
+      "url": "https://huevia.cc/preset-library/next/releases/c2f18a1b-0fa3-4087-aae3-38e1c28a9c03/file",
+      "status": 404
+    },
+    {
+      "platform": "ios",
+      "id": "54b37e71-d58d-4fc5-b2d0-7096197e1f73",
+      "versionCode": 228,
+      "url": "https://huevia.cc/preset-library/ios/releases/54b37e71-d58d-4fc5-b2d0-7096197e1f73/file",
+      "status": 404
+    }
+  ],
+  "complete": true,
+  "mainHomepageVerified": true,
+  "bothReleaseManifestsVerified": true
+}

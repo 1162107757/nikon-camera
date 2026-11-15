@@ -1,0 +1,21 @@
+{
+  "complete": true,
+  "results": [
+    {
+      "platform": "android",
+      "id": "c2f18a1b-0fa3-4087-aae3-38e1c28a9c03",
+      "versionCode": 228,
+      "sha256": "50759de4f4525d0053f5f4d93ff2763512b5509e31e248e6132643453bd17b63",
+      "status": "withdrawn",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/c2f18a1b-0fa3-4087-aae3-38e1c28a9c03/file"
+    },
+    {
+      "platform": "ios",
+      "id": "54b37e71-d58d-4fc5-b2d0-7096197e1f73",
+      "versionCode": 228,
+      "sha256": "874e5a5f60c8651c7bf0da18b89ea677963657f27bce6d5df07db31e8bdb3591",
+      "status": "withdrawn",
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/54b37e71-d58d-4fc5-b2d0-7096197e1f73/file"
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "platform": "android",
+    "path": "/api/next/releases",
+    "items": [
+      {
+        "abis": [
+          "arm64-v8a"
+        ],
+        "minSdk": 26,
+        "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+        "byteLength": 53264170,
+        "packageName": "cc.huevia.next",
+        "versionCode": 229,
+        "versionName": "0.31.0-dev",
+        "signerSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+        "signatureSchemes": [
+          2
+        ],
+        "platform": "android",
+        "createdAt": "2026-11-15T21:40:53.639125+08:00",
+        "publishedAt": "2026-11-15T21:42:18.794998+08:00",
+        "withdrawnAt": null,
+        "notes": "1. 连接页统一为顶部 Wi-Fi／USB 双标签，新连接默认 Wi-Fi，连接成功后返回原功能。\n2. 改善 Android USB 相机目录读取，增加未挂载卡槽处理、有限重试及诊断信息。\n3. 修复重新连接失败后仍显示旧连接状态的问题，完善授权拒绝、取消和切换连接方式的处理。\n\niOS 为未签名 IPA，需自行签名安装。",
+        "id": "207a5fb8-3824-49f8-b7c0-2d3a08f0b07c",
+        "channel": "beta",
+        "revision": 2,
+        "mandatory": false,
+        "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/207a5fb8-3824-49f8-b7c0-2d3a08f0b07c/file",
+        "status": "published"
+      },
+      {
+        "abis": [
+          "arm64-v8a"
+        ],
+        "minSdk": 26,
+        "sha256": "50759de4f4525d0053f5f4d93ff2763512b5509e31e248e6132643453bd17b63",
+        "byteLength": 53264170,
+        "packageName": "cc.huevia.next",
+        "versionCode": 228,
+        "versionName": "0.31.0-dev",
+        "signerSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+        "signatureSchemes": [
+          2
+        ],
+        "platform": "android",
+        "createdAt": "2026-11-15T17:52:55.013623+08:00",
+        "publishedAt": "2026-11-15T17:55:53.750051+08:00",
+        "withdrawnAt": null,
+        "notes": "Huevia 0.31.0（228）\n\n优化相机连接与照片同步流程，未连接时可从边拍边传直接进入连接页。\n调整停止边拍边传、下载队列和单张下载的处理，当前传输结束后停止，保留相机连接。\n相机照片支持长按多选，右下方使用带数量角标的圆形下载按钮。\n改善同步标签与内容之间的留白、滚动过渡，以及下载队列的按钮间距。\n保留近期人像、调色编辑、登录及在线预设相关改进。\n\niOS 提供未签名 IPA，请自行签名后安装。",
+        "id": "c2f18a1b-0fa3-4087-aae3-38e1c28a9c03",
+        "channel": "beta",
+        "revision": 2,
+        "mandatory": false,
+        "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/c2f18a1b-0fa3-4087-aae3-38e1c28a9c03/file",
+        "status": "published"
+      }
+    ]
+  },
+  {
+    "platform": "ios",
+    "path": "/api/ios/releases",
+    "items": [
+      {
+        "schema": 1,
+        "sha256": "f1919917d4e042c1974f87e62dfe62c8864cbb72c992b9b6ea7e54accaec87dd",
+        "bundleId": "cc.huevia.next",
+        "platform": "ios",
+        "byteLength": 65178765,
+        "minimumIOS": "16.0",
+        "versionCode": 229,
+        "versionName": "0.31.0",
+        "distribution": "unsigned-ipa",
+        "createdAt": "2026-11-15T21:42:16.907094+08:00",
+        "publishedAt": "2026-11-15T21:42:55.115296+08:00",
+        "withdrawnAt": null,
+        "notes": "1. 连接页统一为顶部 Wi-Fi／USB 双标签，新连接默认 Wi-Fi，连接成功后返回原功能。\n2. 改善 Android USB 相机目录读取，增加未挂载卡槽处理、有限重试及诊断信息。\n3. 修复重新连接失败后仍显示旧连接状态的问题，完善授权拒绝、取消和切换连接方式的处理。\n\niOS 为未签名 IPA，需自行签名安装。",
+        "id": "c88bdaa5-b0c4-4644-b681-e34204037567",
+        "channel": "beta",
+        "revision": 2,
+        "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/c88bdaa5-b0c4-4644-b681-e34204037567/file",
+        "status": "published"
+      },
+      {
+        "schema": 1,
+        "sha256": "874e5a5f60c8651c7bf0da18b89ea677963657f27bce6d5df07db31e8bdb3591",
+        "bundleId": "cc.huevia.next",
+        "platform": "ios",
+        "byteLength": 65179274,
+        "minimumIOS": "16.0",
+        "versionCode": 228,
+        "versionName": "0.31.0",
+        "distribution": "unsigned-ipa",
+        "createdAt": "2026-11-15T17:54:22.000464+08:00",
+        "publishedAt": "2026-11-15T17:56:19.49998+08:00",
+        "withdrawnAt": null,
+        "notes": "Huevia 0.31.0（228）\n\n优化相机连接与照片同步流程，未连接时可从边拍边传直接进入连接页。\n调整停止边拍边传、下载队列和单张下载的处理，当前传输结束后停止，保留相机连接。\n相机照片支持长按多选，右下方使用带数量角标的圆形下载按钮。\n改善同步标签与内容之间的留白、滚动过渡，以及下载队列的按钮间距。\n保留近期人像、调色编辑、登录及在线预设相关改进。\n\niOS 提供未签名 IPA，请自行签名后安装。",
+        "id": "54b37e71-d58d-4fc5-b2d0-7096197e1f73",
+        "channel": "beta",
+        "revision": 2,
+        "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/54b37e71-d58d-4fc5-b2d0-7096197e1f73/file",
+        "status": "published"
+      }
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "platform": "android",
+  "channel": "beta",
+  "versionCode": 229,
+  "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+  "status": "published",
+  "uploaded": true,
+  "published": true,
+  "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/207a5fb8-3824-49f8-b7c0-2d3a08f0b07c/file",
+  "publicBytesVerified": true
+}
