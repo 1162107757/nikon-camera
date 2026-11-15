@@ -48,7 +48,7 @@ final class WiredLiveBoundaryTest {
         Map<String,Object> stale=new LinkedHashMap<>(download);stale.put("session","stale");rejects(()->call(camera,"camera.download",stale));yes(peer.reads==0);
         Map<String,Object> wrongFormat=new LinkedHashMap<>(download);wrongFormat.put("raw",!raw);rejects(()->call(camera,"camera.download",wrongFormat));yes(peer.reads==0);
         Map<String,Object> receipt=call(camera,"camera.download",download);byte[] expected=peer.data.get(2L);
-        yes(Arrays.equals(expected,Files.readAllBytes(Path.of((String)receipt.get("path")))));yes(PhotoEditStore.hash(expected).equals(receipt.get("sha256")));
+        yes(Arrays.equals(expected,Files.readAllBytes(Paths.get((String)receipt.get("path")))));yes(PhotoEditStore.hash(expected).equals(receipt.get("sha256")));
         yes(id.equals(receipt.get("cameraId")));yes(start.get("watchId").equals(receipt.get("watchId")));yes(peer.reads==1);
         call(camera,"camera.live.ack",SharedRuntime.map("session",session,"watchId",start.get("watchId"),"objectKey",item.get("objectKey")));
         clock.addAndGet(3100000000L);yes(items(call(camera,"camera.live.poll",request)).isEmpty());rejects(()->call(camera,"camera.download",download));
@@ -57,7 +57,7 @@ final class WiredLiveBoundaryTest {
         LongConsumer late=peer.listener;call(camera,"camera.live.stop",request);yes(peer.open&&peer.listener==null);late.accept(99);yes(peer.calls==calls);
         yes(session.equals(call(camera,"camera.keepAlive",Map.of()).get("session")));
         call(camera,"camera.page",SharedRuntime.map("session",session,"raw",raw));
-        Map<String,Object> manual=call(camera,"camera.download",SharedRuntime.map("session",session,"handle",2,"raw",raw));yes(Arrays.equals(expected,Files.readAllBytes(Path.of((String)manual.get("path")))));
+        Map<String,Object> manual=call(camera,"camera.download",SharedRuntime.map("session",session,"handle",2,"raw",raw));yes(Arrays.equals(expected,Files.readAllBytes(Paths.get((String)manual.get("path")))));
         start=call(camera,"camera.live.start",SharedRuntime.map("session",session,"format",format));yes(items(call(camera,"camera.live.poll",SharedRuntime.map("session",session,"watchId",start.get("watchId")))).isEmpty());
         Map<String,Object> old=request;rejects(()->call(camera,"camera.live.stop",old));
         Map<String,Object> current=SharedRuntime.map("session",session,"watchId",start.get("watchId"));peer.open=false;rejects(()->call(camera,"camera.live.poll",current));camera.disconnect();
