@@ -251,7 +251,7 @@ public final class PhotoLiveProjectStore {
     }
     private static String checkedFilename(String name) throws IOException {
         if (name == null || name.length() < 1 || name.length() > 255 || name.indexOf('/') >= 0 || name.indexOf('\\') >= 0 || name.contains("..")
-                || !name.toLowerCase(Locale.ROOT).matches(".*\\.jpe?g")) throw new IOException("项目照片文件名无效。");
+                || !name.toLowerCase(Locale.ROOT).matches(".*\\.(jpe?g|nef)")) throw new IOException("项目照片文件名无效。");
         for (int i = 0; i < name.length(); i++) if (Character.isISOControl(name.charAt(i))) throw new IOException("项目照片文件名无效。");
         return name;
     }
