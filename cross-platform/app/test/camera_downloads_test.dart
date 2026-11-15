@@ -45,7 +45,7 @@ class DownloadCore extends HueviaCore {
   late Json queue;
   final calls = <(String, Json)>[];
   final progress = StreamController<dynamic>.broadcast(sync: true);
-  Completer<void>? mediaGate, publishGate, listGate;
+  Completer<void>? mediaGate, publishGate, listGate, statusGate, mutationGate;
   bool persistReceipt = true, readAllowed = true;
   List<Json> issues = [];
   Json get receipt => {
@@ -97,12 +97,20 @@ class DownloadCore extends HueviaCore {
         queue['phase'] = 'paused';
         return copy(queue);
       case 'camera.status':
+        await statusGate?.future;
         return {
           'connected': true,
           'downloadCameraId': 'camera-one',
           'downloadTrusted': true,
           'session': 'session-one',
         };
+      case 'downloads.bind':
+        queue['cameraId'] = payload['cameraId'];
+        queue['session'] = payload['session'];
+        queue['trusted'] = payload['trusted'];
+        final bound = copy(queue);
+        await mutationGate?.future;
+        return bound;
       case 'camera.resolve':
         return {
           'match': {'handle': 1},
@@ -148,7 +156,9 @@ class DownloadCore extends HueviaCore {
           row['publication'] = publication;
         }
         row['phase'] = payload['phase'];
-        return copy(queue);
+        final updated = copy(queue);
+        if (payload['phase'] == 'skipped') await mutationGate?.future;
+        return updated;
       case 'downloads.finish':
         queue['phase'] = 'done';
         return copy(queue);
@@ -433,6 +443,94 @@ void main() {
       expect(queue.queues, isEmpty);
       expect(queue.current, isNull);
       expect(queue.issues, isEmpty);
+    },
+  );
+  for (final operation in ['downloads.bind', 'downloads.item']) {
+    Future<void> mutate(CameraDownloads queue) => operation == 'downloads.bind'
+        ? queue.bindCurrent()
+        : queue.skip('a' * 32, 'b' * 32);
+    test(
+      '$operation ignores a completed old-owner reply after account change',
+      () async {
+        final (core, state, queue) = await fixture();
+        await queue.restore();
+        queue.current = copy(core.queue);
+        final gate = core.mutationGate = Completer<void>();
+        final pending = mutate(queue);
+        await until(() => core.calls.any((call) => call.$1 == operation));
+        final request = core.calls.lastWhere((call) => call.$1 == operation).$2;
+        expect(request['owner'], 'owner');
+        expect(request['id'], 'a' * 32);
+        state.changeOwner();
+        expect(queue.current, isNull);
+        gate.complete();
+        await pending;
+        expect(queue.current, isNull);
+        expect(queue.queues, isEmpty);
+        expect(queue.issues, isEmpty);
+        expect(queue.owner, 'other');
+        expect(core.calls.where((call) => call.$1 == 'cancel'), isEmpty);
+        expect(await core.file.readAsBytes(), [255, 216, 1, 2, 3, 4, 255, 217]);
+      },
+    );
+    test(
+      '$operation cannot replace another selected queue with a late reply',
+      () async {
+        final (core, _, queue) = await fixture();
+        await queue.restore();
+        queue.current = copy(core.queue);
+        final gate = core.mutationGate = Completer<void>();
+        final pending = mutate(queue);
+        await until(() => core.calls.any((call) => call.$1 == operation));
+        final selected = {...copy(core.queue), 'id': 'c' * 32};
+        queue.current = selected;
+        queue.error = '新队列状态';
+        queue.bindingNeeded = true;
+        gate.complete();
+        await pending;
+        expect(identical(queue.current, selected), true);
+        expect(queue.error, '新队列状态');
+        expect(queue.bindingNeeded, true);
+      },
+    );
+    test(
+      '$operation accepts the current owner and selected queue result',
+      () async {
+        final (core, _, queue) = await fixture();
+        await queue.restore();
+        queue.current = copy(core.queue);
+        queue.error = '旧错误';
+        queue.bindingNeeded = true;
+        await mutate(queue);
+        expect(queue.current!['id'], 'a' * 32);
+        if (operation == 'downloads.bind') {
+          expect(queue.error, isNull);
+          expect(queue.bindingNeeded, false);
+          expect(queue.current!['session'], 'session-one');
+        } else {
+          expect(
+            object((queue.current!['items'] as List).single)['phase'],
+            'skipped',
+          );
+          expect(queue.queues, hasLength(1));
+        }
+      },
+    );
+  }
+  test(
+    'binding does not use a status reply after its owner has changed',
+    () async {
+      final (core, state, queue) = await fixture();
+      await queue.restore();
+      queue.current = copy(core.queue);
+      final gate = core.statusGate = Completer<void>();
+      final binding = queue.bindCurrent();
+      await until(() => core.calls.any((call) => call.$1 == 'camera.status'));
+      state.changeOwner();
+      gate.complete();
+      await binding;
+      expect(core.calls.where((call) => call.$1 == 'downloads.bind'), isEmpty);
+      expect(queue.current, isNull);
     },
   );
   test(

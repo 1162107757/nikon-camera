@@ -397,17 +397,30 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> bindCurrent() async {
-    if (busy || current == null) return;
+    if (!alive || busy || current == null) return;
+    final expectedOwner = currentOwner;
+    final expectedGeneration = generation;
+    final expectedId = current!['id'];
+    bool stillCurrent() =>
+        alive &&
+        !busy &&
+        expectedOwner == currentOwner &&
+        expectedGeneration == generation &&
+        current?['id'] == expectedId &&
+        state.session['logoutPending'] != true;
     final status = await state.core.call('camera.status');
+    if (!stillCurrent()) return;
     if (status['connected'] != true) throw const AppFailure('请先连接并核对相机。');
-    current = await state.core.call('downloads.bind', {
-      'owner': currentOwner,
-      'id': current!['id'],
+    final result = await state.core.call('downloads.bind', {
+      'owner': expectedOwner,
+      'id': expectedId,
       'cameraId': status['downloadCameraId'],
       'session': status['session'],
       'trusted': status['downloadTrusted'] == true,
       'confirmed': true,
     });
+    if (!stillCurrent()) return;
+    current = result;
     bindingNeeded = false;
     error = null;
     changed();
@@ -428,13 +441,24 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> skip(String id, String itemId) async {
-    if (busy) return;
-    current = await state.core.call('downloads.item', {
-      'owner': currentOwner,
+    if (!alive || busy || current?['id'] != id) return;
+    final expectedOwner = currentOwner;
+    final expectedGeneration = generation;
+    final result = await state.core.call('downloads.item', {
+      'owner': expectedOwner,
       'id': id,
       'itemId': itemId,
       'phase': 'skipped',
     });
+    if (!alive ||
+        busy ||
+        expectedOwner != currentOwner ||
+        expectedGeneration != generation ||
+        current?['id'] != id ||
+        state.session['logoutPending'] == true) {
+      return;
+    }
+    current = result;
     await restore();
   }
 

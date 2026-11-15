@@ -44,3 +44,4 @@ docs/migration/validation/features-225/**/*.txt -text -whitespace
 docs/migration/validation/features-225/**/*.exit -text -whitespace
 docs/migration/validation/features-225/**/*.bin -text -whitespace
 docs/migration/validation/features-225/** -text -whitespace
+docs/migration/validation/features-226/** -text -whitespace
