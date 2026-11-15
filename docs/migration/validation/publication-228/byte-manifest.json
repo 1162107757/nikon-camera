@@ -21,6 +21,11 @@
       "sha256": "c2c05089d769c30b36a21c1c665d69089b2a7448bf9ee80bf9840eb867133bdd"
     },
     {
+      "path": "browser-ui-verification.json",
+      "bytes": 837,
+      "sha256": "adff52a0727e1e93a322e27f6df9776f441631bb0369baf0e7c471ab494fdc77"
+    },
+    {
       "path": "draft-upload-results.json",
       "bytes": 275,
       "sha256": "463519fb5e984f772ebead4e47e27c4c78c5e83bb5ce7c745cd33759e90426c3"
@@ -36,9 +41,24 @@
       "sha256": "0eae0ab5400fc77b6dcf8c100902e7374642313a611a77788ebd6536a4b10354"
     },
     {
+      "path": "home-android-228.jpg",
+      "bytes": 74055,
+      "sha256": "c4cae7367aa1ff6e919e3d792d3dae5c59ac15f1fa95b8256096a2d2eb25a30b"
+    },
+    {
       "path": "home-candidate-plan.json",
       "bytes": 953,
       "sha256": "5b45600c2089636dc2ed889cbd31502f1b93ba9dfaf5256d5d9cf7f993deadf7"
+    },
+    {
+      "path": "home-compact-proof.json",
+      "bytes": 394,
+      "sha256": "2188096d584ffd36a54acca89a75702be8df2a87873fce8582822776b10c7bc4"
+    },
+    {
+      "path": "home-deployment-result.json",
+      "bytes": 870,
+      "sha256": "42036b4a098d7422702312319240fa6edd067d1a0b8e6c3fedd97082e0b98de1"
     },
     {
       "path": "home-http-before.json",
@@ -71,14 +91,19 @@
       "sha256": "27f69ab8453184502b14055fd4c69c95571b74b41bc7313a2722704155c40ebe"
     },
     {
+      "path": "public-verification.json",
+      "bytes": 22769,
+      "sha256": "eef1ffae2d6f7a834b745b71f83d3786904073a3f97f562b729852378fd6205b"
+    },
+    {
       "path": "publication-results.json",
       "bytes": 275,
       "sha256": "463519fb5e984f772ebead4e47e27c4c78c5e83bb5ce7c745cd33759e90426c3"
     },
     {
       "path": "README.md",
-      "bytes": 1295,
-      "sha256": "49c5ed0e1bc40e64a97e3184203c1875ef0a247e52307365724233e86d1cf550"
+      "bytes": 1560,
+      "sha256": "bb411599795fb503d51e4c437299166e1d387be7619ceb9dbfbb880a21f9ebbc"
     },
     {
       "path": "release-notes.txt",

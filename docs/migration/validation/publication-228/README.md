@@ -8,4 +8,6 @@ CloudBase下载页及huevia.cc/preset-library/download/已去掉原版/新版选
 
 页面与发布/撤回定向测试29通过、2个数据库外部环境测试按既有条件跳过、0失败。原应用724项Flutter/5UIKit/1Native等完整构建证明保持在features-228，未修改冻结记录。
 
-主站独立首页的旧版选择器仍待服务器登录后更新；源文件与原子切换脚本已准备并通过测试。当前CLI云会话缺少tat:RunCommand权限，Chrome腾讯云登录页等待用户完成登录。
+主站首页已通过用户登录的腾讯云控制台完成原子切换，仅更新home.js和index.html，14个其他文件及Caddy配置保持。浏览器实测Android仅有一个安装包下载按钮，iOS显示当前228及自行签名提示。[Android实际页面截图](home-android-228.jpg)。
+
+public-verification-partial.json保留首页登录前的检查，当前以public-verification.json完整结果为准：3个页面、6个版本查询、66个旧地址全部符合预期。

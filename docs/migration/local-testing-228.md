@@ -1,6 +1,6 @@
 # Huevia 228 本地测试
 
-Android 和 iOS 均已通过本地测试验证。最终产品源码 `734aa3b0f6687dda815af9e13070f0f3c463873c`，两端使用同一来源。本页保留本地验收记录。后续已按用户要求上传至既有beta公开下载渠道，见 [发布记录](../../dist/migration228/PUBLICATION.json)；主站独立首页的旧版选择器仍待服务器登录后更新。未上架应用商店。
+Android 和 iOS 均已通过本地测试验证。最终产品源码 `734aa3b0f6687dda815af9e13070f0f3c463873c`，两端使用同一来源。本页保留本地验收记录。后续已按用户要求上传至既有beta公开下载渠道，见 [发布记录](../../dist/migration228/PUBLICATION.json)；主站首页与独立下载页均已取消原版/新版选择，双端仅提供当前228版。未上架应用商店。
 
 - [Android 手机 ARM64](../../dist/migration228/huevia-0.31.0-dev-228-android-arm64.apk)
 - [Android 模拟器 x64](../../dist/migration228/huevia-0.31.0-dev-228-android-x64.apk)

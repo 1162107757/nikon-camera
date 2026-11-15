@@ -10,4 +10,4 @@ Android 和 iOS 均已通过本地测试验证，最终源码 `734aa3b0f6687dda8
 
 [测试指南](../../docs/migration/local-testing-228.md) / [字节与SHA清单](ARTIFACTS.json)。实体相机仍需复测；iOS QQ Universal Link/AASA尚未配置。
 
-公开下载页：https://huevia.cc/preset-library/download/?channel=beta 。23条旧公开记录已下架，两个域名66个旧下载地址均404。主站独立首页旧版选择器仍待腾讯云服务器登录后更新。
+公开下载页：https://huevia.cc/preset-library/download/?channel=beta 。23条旧公开记录已下架，两个域名66个旧下载地址均404。主站首页与下载页均已取消原版/新版选择，Android仅开放当前228版下载；iOS同样提供当前228版。

@@ -1,0 +1,20 @@
+{
+  "applied": true,
+  "beforeDirectory": "/var/www/huevia-home/releases/20261113-mobile-488717ad3a33",
+  "afterDirectory": "/var/www/huevia-home/releases/20261115-228-16f024e597a6",
+  "changedFiles": [
+    "home.js",
+    "index.html"
+  ],
+  "unchangedFiles": 14,
+  "configurationUnchanged": true,
+  "caddySha256": "4fff434b6f048d3486c1adfb188693fa0dfe67dfffe9a531fecbfff891222414",
+  "exitCode": 0,
+  "consoleStatus": "命令成功",
+  "startedAt": "2026-11-15 18:47:35 Asia/Shanghai",
+  "completedAt": "2026-11-15 18:47:35 Asia/Shanghai",
+  "transport": "Authenticated Tencent Cloud console UI; no IAM or credential changes",
+  "commandLfSha256": "806e67385f8e2491a0726a160f81511fc556eeac3e82bdca24e6e6ab5a17959a",
+  "scriptFileSha256": "2aac74bf09a3f41d108f22dadc49713835f4a1ae13369441d99a85f0507c8c41",
+  "lineEndingsNormalizedForEditor": true
+}

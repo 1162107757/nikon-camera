@@ -1,0 +1,17 @@
+{
+  "android": {
+    "versionCode": 228,
+    "downloadUrl": "https://huevia.cc/preset-library/next/releases/c2f18a1b-0fa3-4087-aae3-38e1c28a9c03/file",
+    "legacyEditionSelector": false,
+    "downloadLabel": "下载 Android 安装包",
+    "screenshot": "home-android-228.jpg",
+    "screenshotSha256": "c4cae7367aa1ff6e919e3d792d3dae5c59ac15f1fa95b8256096a2d2eb25a30b"
+  },
+  "ios": {
+    "versionCode": 228,
+    "downloadUrl": "https://huevia.cc/preset-library/ios/releases/54b37e71-d58d-4fc5-b2d0-7096197e1f73/file",
+    "selfSigningNoticeObserved": true,
+    "sha256": "874e5a5f60c8651c7bf0da18b89ea677963657f27bce6d5df07db31e8bdb3591"
+  },
+  "provenance": "Observed public homepage through Chrome after successful server-console command. Neither file link was clicked; previously verified public bytes retained."
+}

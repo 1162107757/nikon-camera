@@ -1,0 +1,13 @@
+{
+  "changedFiles": [
+    "index.html",
+    "home.js"
+  ],
+  "matchesFullCandidate": true,
+  "bytes": 3448,
+  "sha256": "806e67385f8e2491a0726a160f81511fc556eeac3e82bdca24e6e6ab5a17959a",
+  "afterHashes": {
+    "index.html": "3c8eef60e665a7869cb928e7861f9568783c3be3085445abb034593e1c6f5e88",
+    "home.js": "da2acc5264ba0d2bf00a208ad89dc2f1ba90b3f775f5d6c8fd3194780ab53c91"
+  }
+}
