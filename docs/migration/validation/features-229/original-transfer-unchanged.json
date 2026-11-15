@@ -1,0 +1,8 @@
+{
+  "sourceCommit": "4ec25b757ada7715b250226cb6b258231fbae8eb",
+  "baselineSourceCommit": "734aa3b0f6687dda815af9e13070f0f3c463873c",
+  "method": "NativeUsbCamera.Client.readTo",
+  "normalizedUtf8Sha256": "9cee7aead46c7ebf41478da26575d4a719e66118ac1a6810725aa6c7a17c2fb8",
+  "exactMethodTextMatches": true,
+  "qualification": "Static preservation check of original-byte transfer method; not a hardware transfer test."
+}

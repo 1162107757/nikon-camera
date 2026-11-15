@@ -1,0 +1,57 @@
+{
+  "build": 229,
+  "versionCode": 229,
+  "versionName": "0.31.0-dev",
+  "appName": "Huevia",
+  "sourceCommit": "4ec25b757ada7715b250226cb6b258231fbae8eb",
+  "sourceFrozen": true,
+  "acceptedForUserTesting": true,
+  "productionRelease": false,
+  "published": false,
+  "approval": "User selected design A and requested Android/iOS test packages after checks pass. Do not publish229.",
+  "checks": {
+    "flutterFullMac": 731,
+    "uiKit": 5,
+    "nativeScenarios": 1,
+    "usbDirectoryJvm": 124,
+    "cameraRegressionDistinct": 58,
+    "androidActualReleaseUi": true,
+    "androidSigningAnd16KiB": true,
+    "physicalZ6IIUsbVerified": false
+  },
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-229-android-arm64.apk",
+      "platform": "Android",
+      "abi": "arm64",
+      "unsigned": false,
+      "bytes": 53264170,
+      "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+      "sourceCommit": "4ec25b757ada7715b250226cb6b258231fbae8eb",
+      "acceptedForUserTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-229-android-x64.apk",
+      "platform": "Android",
+      "abi": "x64",
+      "unsigned": false,
+      "bytes": 56766674,
+      "sha256": "da58d9079f63f7cba91c206351d001e8254a8a2a35e36c478815c2d110b57aa7",
+      "sourceCommit": "4ec25b757ada7715b250226cb6b258231fbae8eb",
+      "acceptedForUserTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-229-ios-unsigned.ipa",
+      "platform": "iOS",
+      "abi": "arm64",
+      "unsigned": true,
+      "bytes": 65178765,
+      "sha256": "f1919917d4e042c1974f87e62dfe62c8864cbb72c992b9b6ea7e54accaec87dd",
+      "sourceCommit": "4ec25b757ada7715b250226cb6b258231fbae8eb",
+      "acceptedForUserTesting": true,
+      "published": false
+    }
+  ]
+}

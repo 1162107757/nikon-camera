@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "4ec25b757ada7715b250226cb6b258231fbae8eb",
+  "inputCount": 261,
+  "distinctInputs": 246,
+  "allInputsMatchBaseline227": true,
+  "freshLocalSharedCoreExecution": false,
+  "expectedChecksFromUnchangedBaseline": 1891,
+  "androidUsbDirectoryHelperIsSeparate": true,
+  "freshUsbDirectoryHelperChecksPassed": 124,
+  "qualification": "Binding of unchanged SharedCore inputs is not a rerun. Fresh Mac parity and separate Android USB helper checks are independently recorded."
+}

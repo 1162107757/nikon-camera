@@ -1,0 +1,12 @@
+{
+  "exit": 1,
+  "seconds": 490.3,
+  "passed": 639,
+  "failed": 89,
+  "skipped": 0,
+  "done": {
+    "success": false,
+    "type": "done",
+    "time": 487133
+  }
+}

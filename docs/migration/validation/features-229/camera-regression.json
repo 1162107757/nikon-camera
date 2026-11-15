@@ -1,0 +1,299 @@
+{
+  "sourceCommit": "4ec25b757ada7715b250226cb6b258231fbae8eb",
+  "distinctTestsPassed": 58,
+  "groupInvocationExit": 1,
+  "isolatedConnectionSuiteExit": 0,
+  "qualification": "Grouped Windows invocation had one incomplete test with no assertion error. The full connection suite was rerun in isolation and all its cases passed. Counts merge by normalized source file and exact test name. Full frozen-source Mac execution is recorded separately.",
+  "cases": [
+    {
+      "file": "camera_connection_test.dart",
+      "test": "Camera UI exposes phase and cancel while connecting and never displays a late cancelled session",
+      "result": "success"
+    },
+    {
+      "file": "camera_connection_test.dart",
+      "test": "Camera cancellation completes immediately even if native cancellation acknowledgement is blocked and rejects late results",
+      "result": "success"
+    },
+    {
+      "file": "camera_connection_test.dart",
+      "test": "Camera handshake reports permission, confirmation, session and capabilities only for its own job",
+      "result": "success"
+    },
+    {
+      "file": "camera_connection_test.dart",
+      "test": "Camera overall deadline cancels the exact native job and identifies the stalled phase",
+      "result": "success"
+    },
+    {
+      "file": "camera_connection_test.dart",
+      "test": "Connect-only returns success without reading photos; explicit Sync reads and cancels only its page job",
+      "result": "success"
+    },
+    {
+      "file": "camera_connection_test.dart",
+      "test": "USB discovery is bounded and disposal cancels an in-flight permission wait without late notifications",
+      "result": "success"
+    },
+    {
+      "file": "camera_design_ui_test.dart",
+      "test": "Approved compact photo header fits 375dp and large text; its controls remain independent",
+      "result": "success"
+    },
+    {
+      "file": "camera_design_ui_test.dart",
+      "test": "B entry is a single 52dp circle and opens exactly the three camera tools",
+      "result": "success"
+    },
+    {
+      "file": "camera_design_ui_test.dart",
+      "test": "Connection from visible Sync reads photos on return without a second browse action",
+      "result": "success"
+    },
+    {
+      "file": "camera_design_ui_test.dart",
+      "test": "Empty floating download queue uses its content height",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "A delayed old stop cannot disconnect a replacement camera session",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "A failure result cannot continue preset import to slots",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "A not-connected result cannot continue preset import to slots",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Already connected preset import skips connection and keeps the selected source",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "An owner change during connection cannot import the old preset for a new account",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Cancel and leaving discard a late connection result and cancel only its pending job once",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Explicit disconnect captures the active slots token",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Explicit photo-page disconnect remains available without cancelling a completed connection job",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Healthy slots mode is connected without loading photos or reporting zero photos",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Hidden sync never reads photos; explicitly entering camera photos does",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Leaving before remote opens releases only its late-owned lease and starts no preview",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Leaving before slots opens releases only its late-owned lease and starts no preview",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Leaving while an explicit disconnect waits for stop sends no later disconnect or setState",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Preset import connects then returns directly to the selected preset slots without browsing",
+      "result": "success"
+    },
+    {
+      "file": "camera_intent_test.dart",
+      "test": "Repeated explicit disconnect activations remain one session-owned operation",
+      "result": "success"
+    },
+    {
+      "file": "camera_live_start_connection_test.dart",
+      "test": "A connected snapshot with an empty session still reconnects before it can start",
+      "result": "success"
+    },
+    {
+      "file": "camera_live_start_connection_test.dart",
+      "test": "A to B to A account changes retire an awaiting Start connection intent",
+      "result": "success"
+    },
+    {
+      "file": "camera_live_start_connection_test.dart",
+      "test": "A valid session without RAW capability reports the format limitation without reconnecting",
+      "result": "success"
+    },
+    {
+      "file": "camera_live_start_connection_test.dart",
+      "test": "Canceling a disconnected Start ends its intent even if another session becomes available",
+      "result": "success"
+    },
+    {
+      "file": "camera_live_start_connection_test.dart",
+      "test": "Live tab and disconnected Start connect before one jpeg confirmation without loading camera photos",
+      "result": "success"
+    },
+    {
+      "file": "camera_live_start_connection_test.dart",
+      "test": "Live tab and disconnected Start connect before one raw confirmation without loading camera photos",
+      "result": "success"
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "test": "A current photo-read failure survives healthy status and retries only on the explicit retry action",
+      "result": "success"
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "test": "A fatal photo read refreshes closed native status before displaying a disconnected header",
+      "result": "success"
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "test": "A real disconnected notice remains visible until a newer healthy status retires only that notice",
+      "result": "success"
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "test": "An already connected hidden Sync waits for foreground visibility then reads exactly once",
+      "result": "success"
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "test": "Connecting for slots performs no photo IO while the child owns the channel and reads on return to Sync",
+      "result": "success"
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "test": "Scrolling camera photos retain space and a soft edge below the Sync tabs",
+      "result": "success"
+    },
+    {
+      "file": "camera_sync_autoload_test.dart",
+      "test": "Visible Sync connects then reads once without a second browse action or empty-album reload loop",
+      "result": "success"
+    },
+    {
+      "file": "camera_transport_selection_test.dart",
+      "test": "An existing USB session is identified as USB and returning does not reconnect as Wi-Fi",
+      "result": "success"
+    },
+    {
+      "file": "camera_transport_selection_test.dart",
+      "test": "Approved transport layout keeps fixed actions accessible on a narrow screen with large text and dark mode",
+      "result": "success"
+    },
+    {
+      "file": "camera_transport_selection_test.dart",
+      "test": "Every new connection starts on Wi-Fi without USB scanning; mode switches preserve selected USB device without granting permission",
+      "result": "success"
+    },
+    {
+      "file": "camera_transport_selection_test.dart",
+      "test": "Replacement failure refreshes actual native connection; old session closed=false",
+      "result": "success"
+    },
+    {
+      "file": "camera_transport_selection_test.dart",
+      "test": "Replacement failure refreshes actual native connection; old session closed=true",
+      "result": "success"
+    },
+    {
+      "file": "camera_transport_selection_test.dart",
+      "test": "USB discovery cancellation owns only discovery and leaves an existing Wi-Fi session intact",
+      "result": "success"
+    },
+    {
+      "file": "camera_transport_selection_test.dart",
+      "test": "USB permission denial remains on the selected transport and can retry explicitly",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "expired native event wins over an earlier active response",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "foreground arrival before canceled download returns still resumes live automatically",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "foreground commands are serialized and a delayed background command is followed by the latest resumed state",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "malformed protection events suspend background work and foreground state is forwarded",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "notification stop ends idle foreground live and is never replayed on foreground",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "out-of-order actor replies cannot restore protection after the last actor stopped",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "permission inactive never forwards a background command",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "protected background live expires without polling and automatically reconciles on foreground",
+      "result": "success"
+    },
+    {
+      "file": "connection_protection_test.dart",
+      "test": "superseded foreground transitions do not replay an obsolete state",
+      "result": "success"
+    },
+    {
+      "file": "session_race_test.dart",
+      "test": "Late old status cannot replace a connect-only session; only explicit Sync pages with the new session",
+      "result": "success"
+    },
+    {
+      "file": "session_race_test.dart",
+      "test": "Personal sync respects the explicit existing-preset choice and pins every request to the owner",
+      "result": "success"
+    },
+    {
+      "file": "wired_camera_test.dart",
+      "test": "USB discovery can refresh after attach, obtains permission and connects the selected device",
+      "result": "success"
+    },
+    {
+      "file": "wired_camera_test.dart",
+      "test": "USB permission denial is visible and does not open a camera session",
+      "result": "success"
+    }
+  ]
+}

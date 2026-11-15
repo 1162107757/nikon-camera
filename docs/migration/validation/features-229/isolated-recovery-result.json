@@ -1,0 +1,154 @@
+[
+  {
+    "file": "test/batch_export_test.dart",
+    "exit": 0,
+    "seconds": 7.21,
+    "passed": 9,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/camera_controls_test.dart",
+    "exit": 0,
+    "seconds": 5.99,
+    "passed": 4,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/camera_intent_test.dart",
+    "exit": 0,
+    "seconds": 7.75,
+    "passed": 15,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/camera_live_start_connection_test.dart",
+    "exit": 0,
+    "seconds": 7.11,
+    "passed": 6,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/camera_slots_ui_test.dart",
+    "exit": 0,
+    "seconds": 7.21,
+    "passed": 8,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/camera_sync_tools_test.dart",
+    "exit": 0,
+    "seconds": 9.72,
+    "passed": 8,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/camera_viewer_test.dart",
+    "exit": 0,
+    "seconds": 5.54,
+    "passed": 6,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/editor_color_workspace_test.dart",
+    "exit": 79,
+    "seconds": 9.83,
+    "passed": 0,
+    "incompleteOrFailed": 8,
+    "errorCount": 0
+  },
+  {
+    "file": "test/editor_workspace_test.dart",
+    "exit": 0,
+    "seconds": 10.42,
+    "passed": 6,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/export_settings_test.dart",
+    "exit": 0,
+    "seconds": 7.34,
+    "passed": 7,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/legacy_pagination_test.dart",
+    "exit": 0,
+    "seconds": 5.87,
+    "passed": 1,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/preset_context_integration_test.dart",
+    "exit": 0,
+    "seconds": 5.77,
+    "passed": 3,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/preset_context_menu_test.dart",
+    "exit": 0,
+    "seconds": 5.76,
+    "passed": 13,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/recipes_test.dart",
+    "exit": 0,
+    "seconds": 5.62,
+    "passed": 2,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/retouch_blemish_review_test.dart",
+    "exit": 0,
+    "seconds": 6.31,
+    "passed": 13,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  },
+  {
+    "file": "test/retouch_original_body_test.dart",
+    "exit": 1,
+    "seconds": 9.79,
+    "passed": 2,
+    "incompleteOrFailed": 4,
+    "errorCount": 0
+  },
+  {
+    "file": "test/retouch_original_controls_test.dart",
+    "exit": 1,
+    "seconds": 13.61,
+    "passed": 6,
+    "incompleteOrFailed": 21,
+    "errorCount": 0
+  },
+  {
+    "file": "test/retouch_workspace_test.dart",
+    "exit": 1,
+    "seconds": 13.94,
+    "passed": 1,
+    "incompleteOrFailed": 26,
+    "errorCount": 0
+  },
+  {
+    "file": "test/session_race_test.dart",
+    "exit": 0,
+    "seconds": 5.68,
+    "passed": 2,
+    "incompleteOrFailed": 0,
+    "errorCount": 0
+  }
+]

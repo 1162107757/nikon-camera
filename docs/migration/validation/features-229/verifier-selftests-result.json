@@ -1,0 +1,10 @@
+[
+  {
+    "script": "test_apple_full_source_evidence229.py",
+    "exit": 0
+  },
+  {
+    "script": "test_public_internet_evidence229.py",
+    "exit": 0
+  }
+]
