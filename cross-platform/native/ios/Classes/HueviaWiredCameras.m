@@ -23,6 +23,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @property(nonatomic,strong) ICCameraDevice *device;
 @property(atomic) BOOL open;
 @property(atomic,strong) id<JavaLangRunnable> closed;
+@property(atomic,strong) id<JavaUtilFunctionLongConsumer> objectAdded;
 @property(nonatomic,strong) dispatch_semaphore_t ready;
 @property(atomic,strong) dispatch_semaphore_t closing;
 @property(atomic,strong) NSError *sessionError;
@@ -118,10 +119,21 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (jint)connectedPort {return 0;}
 - (NSString *)cameraIdentity {return @"";}
 - (void)setOnClosedWithJavaLangRunnable:(id<JavaLangRunnable>)listener {self.closed=listener;}
-- (void)setOnObjectAddedWithJavaUtilFunctionLongConsumer:(id<JavaUtilFunctionLongConsumer>)listener {}
+- (void)setOnObjectAddedWithJavaUtilFunctionLongConsumer:(id<JavaUtilFunctionLongConsumer>)listener {self.objectAdded=listener;}
 - (void)setConnectionStageListenerWithJavaUtilFunctionConsumer:(id)listener {}
 - (void)beginPhotoPage {}
 - (void)endPhotoPage {}
+- (bool)canReadLiveObjectWithLong:(jlong)handle withLong:(jlong)expected {
+  if(!self.open)wiredFailure(@"USB 相机已断开，请重新连接。");
+  if(self.cancellation&&[self.cancellation getAsBoolean])wiredFailure(@"USB 相机操作已取消。");
+  __block BOOL readable=NO;
+  // PTP metadata may arrive before ImageCaptureCore adds the readable file.
+  mainSync(^{if(self.open)for(ICCameraItem *item in self.device.mediaFiles)if([item isKindOfClass:ICCameraFile.class]){
+    ICCameraFile *file=(ICCameraFile *)item;
+    if((jlong)file.ptpObjectHandle==handle&&expected>0&&file.fileSize==(off_t)expected){readable=YES;break;}
+  }});
+  return readable;
+}
 - (IOSByteArray *)readAlbumDeviceInfo {return [self getDataWithInt:0x1001 withInt:65536 withLongArray:[IOSLongArray arrayWithLength:0]];}
 - (IOSByteArray *)getDataWithInt:(jint)operation withInt:(jint)limit withLongArray:(IOSLongArray *)parameters {
   if(!self.open)wiredFailure(@"USB 相机已断开。");
@@ -159,6 +171,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (void)close {
   ICCameraDevice *device;dispatch_semaphore_t done;
   @synchronized(self){
+    self.objectAdded=nil;
     if(!self.open)return;self.open=NO;device=self.device;
     done=dispatch_semaphore_create(0);self.closing=done;self.closeError=nil;
   }
@@ -179,7 +192,15 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (void)device:(ICDevice *)device didReceiveStatusInformation:(NSDictionary *)status {}
 - (void)device:(ICDevice *)device didEjectWithError:(NSError *)error {if(error)[self close];}
 - (void)device:(ICDevice *)device didEncounterError:(NSError *)error {[self close];}
-- (void)cameraDevice:(ICCameraDevice *)camera didAddItems:(NSArray<ICCameraItem *> *)items {}
+- (void)cameraDevice:(ICCameraDevice *)camera didAddItems:(NSArray<ICCameraItem *> *)items {
+  id<JavaUtilFunctionLongConsumer> listener=self.objectAdded;
+  if(!self.open||camera!=self.device||!listener)return;
+  // The delegate only queues hints; all PTP reads stay on the shared worker.
+  for(ICCameraItem *item in items)if([item isKindOfClass:ICCameraFile.class]){
+    jlong handle=(jlong)((ICCameraFile *)item).ptpObjectHandle;
+    if(handle>0&&handle<0xffffffffL)[listener acceptWithLong:handle];
+  }
+}
 - (void)cameraDevice:(ICCameraDevice *)camera didRemoveItems:(NSArray<ICCameraItem *> *)items {}
 - (void)cameraDevice:(ICCameraDevice *)camera didRenameItems:(NSArray<ICCameraItem *> *)items {}
 - (void)cameraDevice:(ICCameraDevice *)camera didReceiveThumbnail:(CGImageRef)image forItem:(ICCameraItem *)item error:(NSError *)error {}

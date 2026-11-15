@@ -43,6 +43,7 @@ class LiveCore extends HueviaCore {
   bool supportsRaw = true;
   bool thumbnailFails = false;
   String activeFormat = 'jpeg';
+  String transport = 'wifi';
   String session = 'session-one', activeWatch = '', activeToken = '';
   String? corruptReceipt;
   int exports = 0, downloads = 0;
@@ -68,6 +69,7 @@ class LiveCore extends HueviaCore {
     'session': session,
     'trustedCamera': trusted,
     'supportsLive': true,
+    'transport': transport,
     'liveFormats': ['jpeg', if (supportsRaw) 'raw'],
   };
   Json liveState() => {
@@ -351,6 +353,50 @@ void main() {
       await state.controller.stop();
       state.dispose();
       await core.events.close();
+    });
+    for (final raw in [false, true]) {
+      test(
+        'USB ${raw ? 'NEF' : 'JPEG'} receives once and soft stop retains the session',
+        () async {
+          core.transport = 'usb';
+          final live = state.controller;
+          live.selectFormat(raw ? CameraLiveFormat.raw : CameraLiveFormat.jpeg);
+          await live.start('project-one', 'USB 拍摄');
+          expect(core.lastStart['format'], raw ? 'raw' : 'jpeg');
+          core.visible = [shot(2, raw: raw), shot(2, raw: raw)];
+          await live.pollOnce();
+          await live.pollOnce();
+          expect(core.downloads, 1);
+          expect(live.completed, 1);
+          expect(state.registered, hasLength(1));
+          final session = live.session;
+          await live.stop();
+          expect(core.connected, true);
+          expect(core.session, session);
+          expect(core.calls.where((op) => op == 'camera.disconnect'), isEmpty);
+          expect(core.cancelledJobs, isEmpty);
+        },
+      );
+    }
+    test('USB unplug pauses and requires explicit trusted resume for the new session', () async {
+      core.transport = 'usb';
+      final live = state.controller;
+      await live.start('project-one', 'USB 拍摄');
+      core.visible = [shot(2)];
+      await live.pollOnce();
+      core.connected = false;
+      await live.pollOnce();
+      expect(live.phase, CameraLivePhase.blocked);
+      core.connected = true;
+      core.session = 'usb-reconnected';
+      core.visible = [shot(2), shot(3)];
+      await live.pollOnce();
+      expect(core.downloads, 1);
+      await live.start('project-one', 'USB 拍摄', resume: true);
+      await live.pollOnce();
+      expect(core.downloads, 2);
+      expect(core.lastStart['cursor'], core.cursor);
+      expect(live.session, 'usb-reconnected');
     });
     test('Arming ignores existing inventory; repeated new shots save and process once', () async {
       final live = state.controller;

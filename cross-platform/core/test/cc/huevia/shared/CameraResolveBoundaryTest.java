@@ -17,7 +17,7 @@ public final class CameraResolveBoundaryTest {
         checks=0;File root=Files.createDirectory(temporary.resolve("camera-resolve")).toFile();Peer peer=new Peer();
         SharedCamera camera=new SharedCamera(root.getPath(),(h,p,f)->{throw new AssertionError("Unexpected Wi-Fi");},new SharedCamera.WiredConnections(){public String devices(){return "{\"items\":[]}";}public PhotoCameraClient create(String id){return peer;}});
         Map<String,Object> connect=SharedRuntime.map("transport","usb","deviceId","fixture","protocol","nikon"),status=call(camera,"camera.connect",connect);String session=(String)status.get("session"),identity=(String)status.get("downloadCameraId");
-        yes(Boolean.TRUE.equals(status.get("downloadTrusted")));yes(Boolean.FALSE.equals(status.get("trustedCamera")));yes(identity.matches("[0-9a-f]{64}"));
+        yes(Boolean.TRUE.equals(status.get("downloadTrusted")));yes(Boolean.TRUE.equals(status.get("trustedCamera")));yes(identity.matches("[0-9a-f]{64}"));yes(identity.equals(status.get("cameraId")));
         Map<String,Object> page=call(camera,"camera.page",SharedRuntime.map("session",session,"limit",1));Map<String,Object> first=map(((List<?>)page.get("items")).get(0));yes(((Number)first.get("storage")).longValue()==1);String descriptor=(String)first.get("descriptor");yes(descriptor.matches("[0-9a-f]{64}"));
         Map<String,Object> request=SharedRuntime.map("session",session,"handle",260,"descriptor",descriptor,"offset",0);
         Map<String,Object> resolved=call(camera,"camera.resolve",request);yes(((Number)map(resolved.get("match")).get("handle")).longValue()==260);yes(peer.downloads==0);
@@ -28,7 +28,7 @@ public final class CameraResolveBoundaryTest {
         rejects(()->call(camera,"camera.resolve",SharedRuntime.map("session",session,"descriptor","bad")));
         camera.disconnect();status=call(camera,"camera.connect",connect);yes(status.get("downloadCameraId").equals(identity));yes(!status.get("session").equals(session));
         peer.serial="000000";camera.disconnect();status=call(camera,"camera.connect",connect);yes(Boolean.FALSE.equals(status.get("downloadTrusted")));String unknown=(String)status.get("downloadCameraId");camera.disconnect();status=call(camera,"camera.connect",connect);yes(!unknown.equals(status.get("downloadCameraId")));camera.disconnect();
-        System.out.println("PASS "+checks+" camera descriptor recovery checks; real serial identity, unchanged A1 trust, 128-object paging, relocated handle and exact download authorization");return checks;
+        System.out.println("PASS "+checks+" camera descriptor recovery checks; real USB serial identity for download/live, 128-object paging, relocated handle and exact download authorization");return checks;
     }
     private static final class Peer implements PhotoCameraClient {
         final LinkedHashMap<Long,PtpObjectInfo> items=new LinkedHashMap<>();String serial="REAL-12345";boolean open;int downloads;final byte[] jpeg={(byte)255,(byte)216,1,2,3,4,(byte)255,(byte)217};

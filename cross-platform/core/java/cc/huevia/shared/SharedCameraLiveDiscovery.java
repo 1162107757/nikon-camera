@@ -62,7 +62,10 @@ final class SharedCameraLiveDiscovery {
         Ready(String key,PtpObjectInfo info){this.key=key;this.info=info;}
     }
     SharedCameraLiveDiscovery(PhotoCameraClient client,PtpDeviceInfo device,String session,LongSupplier clock){
-        this.client=client;this.session=session;this.clock=clock;trusted=trusted(client);cameraId=cameraId(client,device,session);
+        this(client,session,clock,cameraId(client,device,session),trusted(client));
+    }
+    SharedCameraLiveDiscovery(PhotoCameraClient client,String session,LongSupplier clock,String cameraId,boolean trusted){
+        this.client=client;this.session=session;this.clock=clock;this.trusted=trusted;this.cameraId=cameraId;
     }
     static boolean trusted(PhotoCameraClient client){String id=client.cameraIdentity();return id!=null&&id.matches("[0-9a-fA-F]{32}")&&!id.matches("0+");}
     static String cameraId(PhotoCameraClient client,PtpDeviceInfo device,String session){
@@ -177,6 +180,7 @@ final class SharedCameraLiveDiscovery {
         }
         if(key.equals(acknowledged.get(handle))){ready.remove(handle);return;}
         if(info.compressedSize()<(selected==PhotoFormat.NEF?32:4)||info.compressedSize()>512L*1024*1024||selected==PhotoFormat.JPEG&&(info.imagePixWidth()<1||info.imagePixHeight()<1)){ready.remove(handle);probes.remove(handle);enqueue(handle);return;}
+        if(!client.canReadLiveObject(handle,info.compressedSize())){ready.remove(handle);probes.remove(handle);enqueue(handle);return;}
         Ready offered=ready.get(handle);if(offered!=null&&offered.key.equals(key))return;
         Probe previous=probes.get(handle);
         if(previous==null||!previous.key.equals(key)){probes.put(handle,new Probe(key,now));ready.remove(handle);enqueue(handle);return;}

@@ -21,16 +21,17 @@ final class WiredCameraBoundaryTest {
         });
         yes(((List<?>)call(camera,"camera.usb.devices",Map.of()).get("items")).size()==1);
         Map<String,Object> connect=SharedRuntime.map("transport","usb","deviceId","fixture","protocol","nikon");Map<String,Object> status=call(camera,"camera.connect",connect);String session=(String)status.get("session");
-        yes(Boolean.TRUE.equals(status.get("connected")));yes(status.get("transport").equals("usb"));yes(Boolean.FALSE.equals(status.get("supportsLive")));
+        yes(Boolean.TRUE.equals(status.get("connected")));yes(status.get("transport").equals("usb"));yes(Boolean.TRUE.equals(status.get("supportsLive")));
         Map<String,Object> page=call(camera,"camera.page",SharedRuntime.map("session",session,"limit",24));yes(((List<?>)page.get("items")).size()==1);
         Map<String,Object> request=SharedRuntime.map("session",session,"handle",1);Map<String,Object> saved=call(camera,"camera.download",request);
         yes(Arrays.equals(Files.readAllBytes(Paths.get((String)saved.get("path"))),peer.jpeg));yes(((Number)saved.get("bytes")).longValue()==peer.jpeg.length);
         rejects(()->call(camera,"camera.download",SharedRuntime.map("session","stale","handle",1)));
         rejects(()->call(camera,"camera.connect",SharedRuntime.map("transport","invalid","protocol","nikon")));yes(peer.open);
-        rejects(()->call(camera,"camera.live.start",SharedRuntime.map("session",session)));
+        Map<String,Object> started=call(camera,"camera.live.start",SharedRuntime.map("session",session));
+        call(camera,"camera.live.stop",SharedRuntime.map("session",session,"watchId",started.get("watchId")));yes(peer.open);
         camera.disconnect();yes(!peer.open);rejects(()->call(camera,"camera.download",request));
         yes(Files.list(root.toPath().resolve("originals")).noneMatch(path->path.toString().endsWith(".part")));
-        System.out.println("PASS "+checks+" wired camera checks; native selection, no Wi-Fi, validated original download, session isolation and disconnect");return checks;
+        System.out.println("PASS "+checks+" wired camera checks; native selection, no Wi-Fi, validated original download, session isolation and disconnect");return checks+WiredLiveBoundaryTest.run(temporary);
     }
     private static Map<String,Object> call(SharedCamera camera,String op,Map<String,Object> p)throws IOException{return SharedJson.object(camera.request(op,SharedJson.encode(p),"wired-test",()->false,v->{}));}
     private static final class Peer implements PhotoCameraClient{

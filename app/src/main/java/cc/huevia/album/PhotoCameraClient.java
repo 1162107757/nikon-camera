@@ -24,6 +24,8 @@ public interface PhotoCameraClient extends AutoCloseable {
     /** Serialized page scope; transports may share negotiation across metadata reads. */
     default void beginPhotoPage() throws IOException { }
     default void endPhotoPage() throws IOException { }
+    /** Live discovery only: defer an object until the transport can read its complete original. */
+    default boolean canReadLiveObject(long handle, long expectedBytes) throws IOException { return true; }
     byte[] getData(int operation, int maxBytes, long... parameters) throws IOException;
     byte[] getLargeThumbnail(long handle) throws IOException;
     long readTo(int operation, OutputStream destination, long maxBytes, long expectedBytes,
