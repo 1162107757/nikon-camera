@@ -15,6 +15,7 @@ class _SyncCore extends IntentCameraCore {
   Object? pageFailure;
   bool disconnectOnPageFailure = false;
   bool indexed = false;
+  List<Json> photos = [];
   @override
   Stream<dynamic> get operationProgress => events.stream;
   int get pages => calls.where((call) => call.$1 == 'camera.page').length;
@@ -34,7 +35,7 @@ class _SyncCore extends IntentCameraCore {
         throw pageFailure!;
       }
       indexed = true;
-      return {'items': [], 'nextOffset': 0, 'hasMore': false};
+      return {'items': photos, 'nextOffset': photos.length, 'hasMore': false};
     }
     if (operation == 'camera.connect') indexed = false;
     final result = await super.call(operation, payload, jobId);
@@ -81,6 +82,57 @@ Future<void> _connect(WidgetTester tester) async {
 }
 
 void main() {
+  testWidgets(
+    'Scrolling camera photos retain space and a soft edge below the Sync tabs',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(390, 844));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      final core = _SyncCore()
+        ..connected = true
+        ..photos = [
+          for (var handle = 1; handle <= 30; handle++)
+            {'handle': handle, 'name': 'DSC_$handle.JPG', 'raw': false},
+        ];
+      await _open(tester, core);
+      final tabs = find.byType(CapsuleSwitch);
+      final viewport = find.byKey(const Key('sync-content-viewport'));
+      final list = find.byKey(const PageStorageKey('sync-camera-photos'));
+      expect(core.pages, 1);
+      expect(list, findsOneWidget);
+      void checkSpace() {
+        expect(
+          tester.getRect(viewport).top - tester.getRect(tabs).bottom,
+          greaterThanOrEqualTo(16),
+        );
+        final fade = find.byKey(const Key('sync-content-top-fade'));
+        expect(tester.getRect(fade).top, tester.getRect(viewport).top);
+        expect(tester.getSize(fade).height, 12);
+        expect(
+          tester
+              .widget<IgnorePointer>(
+                find
+                    .ancestor(of: fade, matching: find.byType(IgnorePointer))
+                    .first,
+              )
+              .ignoring,
+          isTrue,
+        );
+      }
+
+      checkSpace();
+      await tester.drag(list, const Offset(0, -650));
+      await tester.pumpAndSettle();
+      final scroll = tester.state<ScrollableState>(
+        find.descendant(of: list, matching: find.byType(Scrollable)).first,
+      );
+      expect(scroll.position.pixels, greaterThan(300));
+      checkSpace();
+      expect(core.pages, 1);
+      expect(core.cancelled, isEmpty);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
   testWidgets(
     'Visible Sync connects then reads once without a second browse action or empty-album reload loop',
     (tester) async {

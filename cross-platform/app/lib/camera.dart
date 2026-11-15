@@ -23,6 +23,7 @@ import 'camera_photo_sort.dart';
 import 'camera_photo_toolbar.dart';
 import 'legacy_glass_sheet.dart';
 import 'sync_tools_dock.dart';
+import 'sync_content_viewport.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -1091,216 +1092,220 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
             const LinearProgressIndicator(minHeight: 2),
           if (connectionRequest.busy && !loadingMore) connectionStatus(),
           Expanded(
-            child: overviewTab == 1
-                ? ProjectPresetsPage(
-                    state: widget.state,
-                    embedded: true,
-                    onConnect: () =>
-                        openConnection(loadPhotos: false, waitForStatus: false),
-                  )
-                : overviewTab == 2 && widget.state.photos.isNotEmpty
-                ? downloadedPhotos()
-                : connected && overviewTab == 0
-                ? NotificationListener<OverscrollNotification>(
-                    onNotification: (notification) {
-                      if (notification.overscroll > 0) loadNearEnd();
-                      return false;
-                    },
-                    child: RefreshIndicator(
-                      onRefresh: () => page(),
-                      child: CustomScrollView(
-                        key: const PageStorageKey('sync-camera-photos'),
-                        controller: listScroll,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        slivers: [
-                          SliverPadding(
-                            padding: const EdgeInsets.fromLTRB(24, 4, 24, 8),
-                            sliver: SliverToBoxAdapter(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CameraTransferCard(transfer: transfer),
-                                  photoTools(),
-                                  if (connectionMode == 'slots')
-                                    Text(
-                                      '相机预设槽位正在使用连接，照片尚未读取。',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: p.secondary,
-                                      ),
-                                    ),
-                                  if (visibleError != null) ...[
-                                    const SizedBox(height: 12),
-                                    Text(
-                                      visibleError!,
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .error,
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: busy ? null : () => page(),
-                                      child: const Text('重试读取照片'),
-                                    ),
-                                  ],
-                                  if (warning != null) Text(warning!),
-                                  if (inventoryReady &&
-                                      items.isEmpty &&
-                                      !busy &&
-                                      error == null &&
-                                      warning == null)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 24,
-                                      ),
-                                      child: Text(emptyMessage),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          if (photosReady)
+            child: SyncContentViewport(
+              child: overviewTab == 1
+                  ? ProjectPresetsPage(
+                      state: widget.state,
+                      embedded: true,
+                      onConnect: () => openConnection(
+                        loadPhotos: false,
+                        waitForStatus: false,
+                      ),
+                    )
+                  : overviewTab == 2 && widget.state.photos.isNotEmpty
+                  ? downloadedPhotos()
+                  : connected && overviewTab == 0
+                  ? NotificationListener<OverscrollNotification>(
+                      onNotification: (notification) {
+                        if (notification.overscroll > 0) loadNearEnd();
+                        return false;
+                      },
+                      child: RefreshIndicator(
+                        onRefresh: () => page(),
+                        child: CustomScrollView(
+                          key: const PageStorageKey('sync-camera-photos'),
+                          controller: listScroll,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          slivers: [
                             SliverPadding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                              ),
-                              sliver: cameraGrid(),
-                            ),
-                          SliverToBoxAdapter(
-                            child: Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                20,
-                                16,
-                                20,
-                                100 + hueNavigationInset(context),
-                              ),
-                              child: Center(
-                                child: loadingMore
-                                    ? const SizedBox(
-                                        width: 22,
-                                        height: 22,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                        ),
-                                      )
-                                    : paginationError != null
-                                    ? Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            paginationError!,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .error,
-                                            ),
-                                          ),
-                                          TextButton(
-                                            onPressed: busy
-                                                ? null
-                                                : () => page(next: true),
-                                            child: const Text('重试加载'),
-                                          ),
-                                        ],
-                                      )
-                                    : Text(
-                                        hasMore
-                                            ? '上拉继续加载'
-                                            : items.isEmpty
-                                            ? ''
-                                            : '已显示全部照片',
+                              padding: const EdgeInsets.fromLTRB(24, 4, 24, 8),
+                              sliver: SliverToBoxAdapter(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CameraTransferCard(transfer: transfer),
+                                    photoTools(),
+                                    if (connectionMode == 'slots')
+                                      Text(
+                                        '相机预设槽位正在使用连接，照片尚未读取。',
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: p.secondary,
                                         ),
                                       ),
+                                    if (visibleError != null) ...[
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        visibleError!,
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .error,
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: busy ? null : () => page(),
+                                        child: const Text('重试读取照片'),
+                                      ),
+                                    ],
+                                    if (warning != null) Text(warning!),
+                                    if (inventoryReady &&
+                                        items.isEmpty &&
+                                        !busy &&
+                                        error == null &&
+                                        warning == null)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 24,
+                                        ),
+                                        child: Text(emptyMessage),
+                                      ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : SingleChildScrollView(
-                    controller: listScroll,
-                    padding: const EdgeInsets.fromLTRB(28, 44, 28, 100),
-                    child: Column(
-                      children: [
-                        CameraTransferCard(transfer: transfer),
-                        if (!compact)
-                          Container(
-                            width: 84,
-                            height: 84,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: p.card,
-                              borderRadius: BorderRadius.circular(26),
+                            if (photosReady)
+                              SliverPadding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                ),
+                                sliver: cameraGrid(),
+                              ),
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  20,
+                                  16,
+                                  20,
+                                  100 + hueNavigationInset(context),
+                                ),
+                                child: Center(
+                                  child: loadingMore
+                                      ? const SizedBox(
+                                          width: 22,
+                                          height: 22,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : paginationError != null
+                                      ? Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              paginationError!,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .error,
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: busy
+                                                  ? null
+                                                  : () => page(next: true),
+                                              child: const Text('重试加载'),
+                                            ),
+                                          ],
+                                        )
+                                      : Text(
+                                          hasMore
+                                              ? '上拉继续加载'
+                                              : items.isEmpty
+                                              ? ''
+                                              : '已显示全部照片',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: p.secondary,
+                                          ),
+                                        ),
+                                ),
+                              ),
                             ),
-                            child: HueIcon(
-                              overviewTab == 2
-                                  ? HueIconKind.album
-                                  : HueIconKind.camera,
-                              size: 34,
+                          ],
+                        ),
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      controller: listScroll,
+                      padding: const EdgeInsets.fromLTRB(28, 44, 28, 100),
+                      child: Column(
+                        children: [
+                          CameraTransferCard(transfer: transfer),
+                          if (!compact)
+                            Container(
+                              width: 84,
+                              height: 84,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: p.card,
+                                borderRadius: BorderRadius.circular(26),
+                              ),
+                              child: HueIcon(
+                                overviewTab == 2
+                                    ? HueIconKind.album
+                                    : HueIconKind.camera,
+                                size: 34,
+                                color: p.secondary,
+                              ),
+                            ),
+                          SizedBox(height: compact ? 0 : 16),
+                          Text(
+                            overviewTab == 2
+                                ? '还没有已下载照片'
+                                : overviewTab == 1
+                                ? '边拍边传'
+                                : '连接相机，开始浏览',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: compact ? 18 : 19,
+                              height: 1.2,
+                              fontWeight: FontWeight.w700,
+                              color: p.ink,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            overviewTab == 2
+                                ? '从相机下载的原图会保存在这里，\n断开连接也能继续查看。'
+                                : overviewTab == 1
+                                ? '连接相机后，接收拍摄的照片。'
+                                : '连接相机 Wi-Fi 或使用 USB 数据线，\n照片会显示在这里。',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14,
+                              height: 1.48,
                               color: p.secondary,
                             ),
                           ),
-                        SizedBox(height: compact ? 0 : 16),
-                        Text(
-                          overviewTab == 2
-                              ? '还没有已下载照片'
-                              : overviewTab == 1
-                              ? '边拍边传'
-                              : '连接相机，开始浏览',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: compact ? 18 : 19,
-                            height: 1.2,
-                            fontWeight: FontWeight.w700,
-                            color: p.ink,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          overviewTab == 2
-                              ? '从相机下载的原图会保存在这里，\n断开连接也能继续查看。'
-                              : overviewTab == 1
-                              ? '连接相机后，接收拍摄的照片。'
-                              : '连接相机 Wi-Fi 或使用 USB 数据线，\n照片会显示在这里。',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            height: 1.48,
-                            color: p.secondary,
-                          ),
-                        ),
-                        if (overviewTab == 0 && visibleError != null) ...[
-                          const SizedBox(height: 12),
-                          Text(
-                            visibleError!,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
-                          ),
-                        ],
-                        if (overviewTab != 2) ...[
-                          const SizedBox(height: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            child: FilledButton(
-                              style: FilledButton.styleFrom(
-                                minimumSize: const Size(48, 50),
+                          if (overviewTab == 0 && visibleError != null) ...[
+                            const SizedBox(height: 12),
+                            Text(
+                              visibleError!,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
                               ),
-                              onPressed: openConnection,
-                              child: const Text('连接相机'),
                             ),
-                          ),
+                          ],
+                          if (overviewTab != 2) ...[
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              child: FilledButton(
+                                style: FilledButton.styleFrom(
+                                  minimumSize: const Size(48, 50),
+                                ),
+                                onPressed: openConnection,
+                                child: const Text('连接相机'),
+                              ),
+                            ),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
+            ),
           ),
         ],
       ),

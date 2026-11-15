@@ -20,6 +20,7 @@ class CameraSelectionDownload extends StatelessWidget {
       button: true,
       enabled: onPressed != null,
       label: '下载所选 $count 张照片',
+      onTap: onPressed,
       excludeSemantics: true,
       child: Tooltip(
         message: '下载所选 $count 张照片',
@@ -31,15 +32,22 @@ class CameraSelectionDownload extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               Positioned.fill(
-                child: IconButton.filled(
-                  onPressed: onPressed,
-                  style: IconButton.styleFrom(
-                    backgroundColor: p.primaryContainer,
-                    foregroundColor: p.onPrimaryContainer,
-                    padding: EdgeInsets.zero,
-                    shape: const CircleBorder(),
+                child: Material(
+                  color: const Color(0xff242420),
+                  shape: const CircleBorder(),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: onPressed,
+                    customBorder: const CircleBorder(),
+                    excludeFromSemantics: true,
+                    child: const Center(
+                      child: Icon(
+                        Icons.download_rounded,
+                        size: 28,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                  icon: const Icon(Icons.download_rounded, size: 28),
                 ),
               ),
               Positioned(

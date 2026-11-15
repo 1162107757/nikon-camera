@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/camera_grid.dart';
+import 'package:huevia/camera_selection_download.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/sync_tools_dock.dart';
 import 'package:huevia/theme.dart';
@@ -44,6 +46,76 @@ class SelectionCameraCore extends fixtures.ReconnectCore226 {
 }
 
 void main() {
+  for (final brightness in [Brightness.light, Brightness.dark]) {
+    testWidgets(
+      'Download circle paints a dark 56dp disc and white icon under conflicting ${brightness.name} button themes',
+      (tester) async {
+        for (final enabled in [true, false]) {
+          var downloads = 0;
+          await tester.pumpWidget(
+            MaterialApp(
+              theme: hueviaTheme(brightness).copyWith(
+                iconButtonTheme: const IconButtonThemeData(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStatePropertyAll(Colors.transparent),
+                    foregroundColor: WidgetStatePropertyAll(Colors.black),
+                  ),
+                ),
+                iconTheme: const IconThemeData(color: Colors.black, size: 14),
+              ),
+              home: Scaffold(
+                body: Center(
+                  child: CameraSelectionDownload(
+                    count: 137,
+                    onPressed: enabled ? () => downloads++ : null,
+                  ),
+                ),
+              ),
+            ),
+          );
+          final action = find.byKey(const Key('camera-selection-download'));
+          expect(tester.getSize(action), const Size(56, 56));
+          final surface = find.descendant(
+            of: action,
+            matching: find.byType(Material),
+          );
+          expect(surface, findsOneWidget);
+          final material = tester.widget<Material>(surface);
+          expect(material.color, const Color(0xff242420));
+          expect(material.shape, isA<CircleBorder>());
+          expect(material.clipBehavior, Clip.antiAlias);
+          final physicalShape = find.descendant(
+            of: surface,
+            matching: find.byType(PhysicalShape),
+          );
+          expect(physicalShape, findsOneWidget);
+          final paint = tester.renderObject<RenderPhysicalShape>(physicalShape);
+          expect(paint.color, const Color(0xff242420));
+          expect(paint.size, const Size(56, 56));
+          final outline = paint.clipper!.getClip(paint.size);
+          expect(outline.contains(const Offset(28, 28)), true);
+          expect(outline.contains(const Offset(28, 2)), true);
+          expect(outline.contains(const Offset(1, 1)), false);
+          final icon = tester.widget<Icon>(
+            find.descendant(of: action, matching: find.byType(Icon)),
+          );
+          expect(icon.icon, Icons.download_rounded);
+          expect(icon.color, Colors.white);
+          expect(icon.size, 28);
+          expect(find.text('99+'), findsOneWidget);
+          final gesture = await tester.startGesture(tester.getCenter(action));
+          await tester.pump();
+          expect(paint.color, const Color(0xff242420));
+          expect(icon.color, Colors.white);
+          await gesture.up();
+          await tester.pump(const Duration(milliseconds: 500));
+          expect(downloads, enabled ? 1 : 0);
+          expect(tester.takeException(), isNull);
+        }
+      },
+    );
+  }
+
   testWidgets(
     'Long press selects camera photos in place and downloads through the approved floating circle',
     (tester) async {
