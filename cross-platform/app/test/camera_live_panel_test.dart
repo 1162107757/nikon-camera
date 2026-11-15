@@ -100,7 +100,13 @@ void main() {
       await tester.tap(find.byTooltip('放大当前照片'));
       await tester.pumpAndSettle();
       expect(find.byType(InteractiveViewer), findsOneWidget);
-      expect(find.text('DSC_2.JPG'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(Dialog),
+          matching: find.text('DSC_2.JPG'),
+        ),
+        findsOneWidget,
+      );
       state.changeOwner();
       await tester.pump();
       expect(find.byType(InteractiveViewer), findsNothing);

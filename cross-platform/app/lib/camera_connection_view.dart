@@ -499,7 +499,9 @@ class CameraConnectionView extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          connected
+                          busy
+                              ? '正在准备连接…'
+                              : connected
                               ? '返回继续操作'
                               : error == null
                               ? '开始连接'
@@ -507,9 +509,24 @@ class CameraConnectionView extends StatelessWidget {
                         ),
                       ),
                     ),
+                  if (connected && !request.busy) ...[
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        key: const Key('camera-reconnect'),
+                        onPressed: locked ? null : onConnect,
+                        child: const Text('重新连接相机'),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 10),
                   Text(
-                    request.busy ? '取消后停止本次连接，保留连接方式。' : '连接成功后，直接返回上一页。',
+                    request.busy
+                        ? '取消后停止本次连接，保留连接方式。'
+                        : connected
+                        ? '重新连接会结束当前接收，已保存的照片会保留。'
+                        : '连接成功后，直接返回上一页。',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 11,

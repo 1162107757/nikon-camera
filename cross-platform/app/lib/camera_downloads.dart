@@ -24,12 +24,20 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   List<Json> issues = [];
   Json? current;
   String? error, job;
+  String? _jobOperation;
+  String? get pendingCameraJob =>
+      _jobOperation?.startsWith('camera.') == true ? job : null;
   String phase = 'idle';
   int index = 0, received = 0, total = 0;
   bool busy = false, stopped = false, alive = true, bindingNeeded = false;
   int generation = 0;
+  int _restoreRevision = 0;
   int _stopRevision = 0;
   String owner = '';
+  String _transportSession = '';
+  String get activeSession => _transportSession.isNotEmpty
+      ? _transportSession
+      : current?['session'] as String? ?? '';
   Future<void>? running;
   StreamSubscription<dynamic>? events;
   bool foreground = true;
@@ -57,19 +65,27 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
     check(epoch);
     final identity = 'camera-queue-${DateTime.now().microsecondsSinceEpoch}';
     job = identity;
+    _jobOperation = op;
     try {
       final result = await state.core.call(op, payload, identity);
       check(epoch);
       return result;
     } finally {
-      if (job == identity) job = null;
+      if (job == identity) {
+        job = null;
+        _jobOperation = null;
+      }
     }
   }
 
   Future<void> restore() async {
     final expected = currentOwner;
+    final expectedGeneration = generation;
+    final revision = ++_restoreRevision;
     final result = await state.core.call('downloads.list', {'owner': expected});
     if (!alive ||
+        expectedGeneration != generation ||
+        revision != _restoreRevision ||
         expected != currentOwner ||
         state.session['logoutPending'] == true) {
       return;
@@ -118,6 +134,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
     bindingNeeded = false;
     error = null;
     final epoch = ++generation;
+    _transportSession = '';
     busy = true;
     phase = 'preparing';
     changed();
@@ -128,8 +145,9 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
 
   Future<void> run(String id, int epoch) async {
     String? itemId;
-    events = state.core.operationProgress.listen((event) {
+    final runEvents = state.core.operationProgress.listen((event) {
       if (!busy ||
+          generation != epoch ||
           stopped ||
           event is! Map ||
           event['jobId'] != job ||
@@ -145,6 +163,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
         }
       }
     }, onError: (_) {});
+    events = runEvents;
     try {
       current = await call('downloads.get', {'owner': owner, 'id': id}, epoch);
       final target = object(current!['target']);
@@ -191,6 +210,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
           if (status['connected'] != true) {
             throw const AppFailure('请重新连接原相机后继续；已完成的照片会保留。');
           }
+          _transportSession = status['session'] as String? ?? '';
           if (status['downloadCameraId'] != current!['cameraId'] ||
               !(current!['trusted'] == true &&
                       status['downloadTrusted'] == true ||
@@ -306,41 +326,74 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
       }, epoch);
       phase = 'done';
     } catch (failure) {
-      if (alive && owner == currentOwner) {
+      if (alive && generation == epoch && owner == currentOwner) {
         if (!stopped) error = '$failure';
         phase = 'paused';
         try {
           if (!stopped && itemId != null) {
             final text = '$failure';
-            current = await state.core.call('downloads.item', {
+            final failed = await state.core.call('downloads.item', {
               'owner': owner,
               'id': id,
               'itemId': itemId,
               'phase': 'failed',
               'error': text.length > 500 ? text.substring(0, 500) : text,
             });
+            if (generation != epoch) return;
+            current = failed;
           }
-          current = await state.core.call('downloads.pause', {
+          final paused = await state.core.call('downloads.pause', {
             'owner': owner,
             'id': id,
           });
+          if (generation == epoch) current = paused;
         } catch (_) {
           /* The original journal remains recoverable. */
         }
       }
     } finally {
-      await events?.cancel();
-      events = null;
-      job = null;
-      busy = false;
-      await state.connectionProtection.setActive('downloads', false);
-      if (alive && owner == currentOwner) {
-        try {
-          await restore();
-        } catch (_) {}
+      await runEvents.cancel();
+      if (generation == epoch) {
+        if (identical(events, runEvents)) events = null;
+        job = null;
+        _jobOperation = null;
+        busy = false;
+        await state.connectionProtection.setActive('downloads', false);
+        if (alive && generation == epoch && owner == currentOwner) {
+          try {
+            await restore();
+          } catch (_) {}
+        }
+        changed();
       }
-      changed();
     }
+  }
+
+  bool connectionLost({
+    String? expectedSession,
+    String reason = '相机已断开，重新连接后可继续下载，已完成的照片会保留。',
+  }) {
+    if (!alive ||
+        !busy ||
+        expectedSession != null && expectedSession != activeSession) {
+      return false;
+    }
+    generation++;
+    stopped = true;
+    busy = false;
+    job = null;
+    _jobOperation = null;
+    phase = 'paused';
+    error = reason;
+    bindingNeeded = true;
+    final oldEvents = events;
+    events = null;
+    unawaited(oldEvents?.cancel());
+    // Retire the local lease only. Closing/canceling an old camera job here
+    // could otherwise reach a newly connected session.
+    unawaited(state.connectionProtection.setActive('downloads', false));
+    changed();
+    return true;
   }
 
   Future<void> bindCurrent() async {
@@ -388,6 +441,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   void accountChanged() {
     if (owner != currentOwner || state.session['logoutPending'] == true) {
       if (busy) unawaited(stop());
+      connectionLost(reason: '账号已变化，旧下载队列已停止。');
       ++generation;
       current = null;
       queues = [];

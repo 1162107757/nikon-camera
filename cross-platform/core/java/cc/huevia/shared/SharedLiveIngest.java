@@ -41,18 +41,21 @@ final class SharedLiveIngest {
         }
         if(operation.equals("project.live.start")){
             String mode=text(p,"mode",8),session=identifier(p,"session"),watch=identifier(p,"watchId");
+            String selectedFormat=format(p);
+            if(!selectedFormat.equals(format(object(p.get("cursor")))))throw new IOException("自动收片基线与所选格式不符。");
             if(!mode.equals("fresh")&&!mode.equals("resume"))throw new IOException("请选择开始或恢复自动收片。");
             boolean trusted=Boolean.TRUE.equals(p.get("trustedCamera"));
             if(mode.equals("resume")){
                 if(state==null||!Boolean.TRUE.equals(state.get("active")))throw new IOException("此拍摄任务已停止，请重新开始拍摄。");
                 if(!trusted||!Boolean.TRUE.equals(state.get("trustedCamera")))throw new IOException("相机身份无法确认，请重新开始拍摄。");
+                if(!selectedFormat.equals(format(state)))throw new IOException("上次拍摄接收格式不同，请选择原格式后继续。");
                 // Discovery normalizes removed entries and first-readable cards
                 // while starting. Those changes are not replayed by the next poll.
                 state.put("cursor",cursor(p.get("cursor")));
             }else{
                 preset(project.preset()); // No default still receives and preserves originals.
                 if(state!=null)for(Object row:entries(state).values())if("received".equals(object(row).get("status")))throw new IOException("有已接收原图的未完成记录，请先恢复任务。");
-                Map<String,Object> previous=state;state=SharedRuntime.map("schema",1,"projectId",projectId,"cameraId",camera,"trustedCamera",trusted,"active",true,"session",session,"watchId",watch,"cursor",cursor(p.get("cursor")),"entries",new LinkedHashMap<String,Object>());
+                Map<String,Object> previous=state;state=SharedRuntime.map("schema",1,"projectId",projectId,"cameraId",camera,"format",selectedFormat,"trustedCamera",trusted,"active",true,"session",session,"watchId",watch,"cursor",cursor(p.get("cursor")),"entries",new LinkedHashMap<String,Object>());
                 if(previous!=null)for(Map.Entry<String,Object> row:entries(previous).entrySet())if("done".equals(object(row.getValue()).get("status")))entries(state).put(row.getKey(),row.getValue());
             }
             state.put("active",true);state.put("session",session);state.put("watchId",watch);
@@ -81,7 +84,7 @@ final class SharedLiveIngest {
             List<Object> acknowledged=new ArrayList<>();List<?> items=list(p,"items",60);
             Map<String,Object> preset=null;
             for(Object raw:items){
-                check(cancel);Map<String,Object> incoming=item(raw);String objectKey=(String)incoming.get("objectKey");Map<String,Object> known=entries(state).containsKey(objectKey)?object(entries(state).get(objectKey)):null;
+                check(cancel);Map<String,Object> incoming=item(raw);if(raw(incoming)!=format(state).equals("raw"))throw new IOException("相机新照片格式与当前拍摄任务不符。");String objectKey=(String)incoming.get("objectKey");Map<String,Object> known=entries(state).containsKey(objectKey)?object(entries(state).get(objectKey)):null;
                 if(known!=null){
                     same(incoming,known);
                     if("done".equals(known.get("status")))acknowledged.add(objectKey);
@@ -113,12 +116,12 @@ final class SharedLiveIngest {
             return snapshot(state,owner,key);
         }
         if(operation.equals("project.live.commit")){
-            if(Boolean.TRUE.equals(p.get("raw"))||number(p,"handle")!=number(entry,"handle")||number(p,"storage")!=number(entry,"storage")||!text(p,"name",240).equals(entry.get("name"))||size(p)!=size(entry))throw new IOException("相机收片回执与当前照片不符。");
+            if(raw(p)!=raw(entry)||raw(entry)!=format(state).equals("raw")||number(p,"handle")!=number(entry,"handle")||number(p,"storage")!=number(entry,"storage")||!text(p,"name",240).equals(entry.get("name"))||size(p)!=size(entry))throw new IOException("相机收片回执与当前照片不符。");
             String sha=hash(p,"sha256");
             if(entry.containsKey("sha256")&&!sha.equals(entry.get("sha256")))throw new IOException("同一相机照片的原文件校验已变化，未覆盖。");
             project.validate(entry,p);check(cancel);
             if(!"done".equals(entry.get("status"))){
-                entry.put("sha256",sha);entry.put("sourceFileName",sha+".jpg");entry.put("status","received");entry.put("error","");persist(file,state);
+                entry.put("sha256",sha);entry.put("sourceFileName",sha+(raw(entry)?".nef":".jpg"));entry.put("status","received");entry.put("error","");persist(file,state);
                 finish(file,state,entry,project);
             }
             Map<String,Object> result=snapshot(state,owner,key);result.put("acknowledged",java.util.Collections.singletonList(objectKey));return result;
@@ -126,12 +129,13 @@ final class SharedLiveIngest {
         throw new IOException("未知的自动收片操作。");
     }
     private void finish(File file,Map<String,Object> state,Map<String,Object> entry,Project project)throws IOException{
-        Map<String,Object> receipt=SharedRuntime.map("sourceFileName",text(entry,"sourceFileName",80),"sha256",hash(entry,"sha256"),"bytes",size(entry),"name",entry.get("name"));
+        Map<String,Object> receipt=SharedRuntime.map("sourceFileName",text(entry,"sourceFileName",80),"sha256",hash(entry,"sha256"),"bytes",size(entry),"name",entry.get("name"),"raw",raw(entry));
         project.validate(entry,receipt);String task=project.apply(entry,receipt);entry.put("taskKey",task);entry.put("status","done");entry.put("error","");persist(file,state);
     }
     private void require(Map<String,Object> state,String owner,String key,Map<String,Object> p)throws IOException{
         Lease lease=leases.get(owner);
         if(state==null||!Boolean.TRUE.equals(state.get("active"))||lease==null||!lease.key.equals(key)||!lease.session.equals(state.get("session"))||!lease.watch.equals(state.get("watchId"))||!lease.token.equals(text(p,"token",36))||!lease.session.equals(text(p,"session",64))||!lease.watch.equals(text(p,"watchId",64)))throw new IOException("自动收片任务已变化，请重新打开拍摄项目。");
+        if(p.containsKey("format")&&!format(state).equals(format(p)))throw new IOException("拍摄期间不能切换接收格式。");
     }
     private Map<String,Object> snapshot(Map<String,Object> state,String owner,String key)throws IOException{
         if(state==null)return SharedRuntime.map("exists",false,"active",false,"token","","session","","watchId","","trustedCamera",false,"pending",new ArrayList<>(),"completedCount",0,"failedCount",0,"cursor",SharedRuntime.map("baseline",new ArrayList<>(),"baselinePages",new ArrayList<>(),"baselineCount",0,"initializedStorages",new ArrayList<>(),"pending",new ArrayList<>()));
@@ -144,22 +148,23 @@ final class SharedLiveIngest {
             if("waiting".equals(item.get("status"))||"received".equals(item.get("status")))hints.add(SharedRuntime.map("storage",item.get("storage"),"handle",item.get("handle"),"objectKey",item.get("objectKey")));
         }
         cursor.put("pending",hints);Lease lease=leases.get(owner);
-        return SharedRuntime.map("exists",true,"active",state.get("active"),"token",lease!=null&&lease.key.equals(key)?lease.token:"","session",state.get("session"),"watchId",state.get("watchId"),"cameraId",state.get("cameraId"),"trustedCamera",state.get("trustedCamera"),"cursor",cursor,"pending",pending,"completedCount",completed,"failedCount",failed);
+        return SharedRuntime.map("exists",true,"active",state.get("active"),"format",format(state),"token",lease!=null&&lease.key.equals(key)?lease.token:"","session",state.get("session"),"watchId",state.get("watchId"),"cameraId",state.get("cameraId"),"trustedCamera",state.get("trustedCamera"),"cursor",cursor,"pending",pending,"completedCount",completed,"failedCount",failed);
     }
     private static Map<String,Object> item(Object value)throws IOException{
         Map<String,Object> p=object(value);String name=text(p,"name",240);
-        if(Boolean.TRUE.equals(p.get("raw"))||!name.toLowerCase(java.util.Locale.ROOT).matches("[^/\\\\\\p{Cntrl}]+\\.jpe?g")||name.contains(".."))throw new IOException("自动收片仅接收独立 JPEG 原文件。");
-        Map<String,Object> result=SharedRuntime.map("objectKey",hash(p,"objectKey"),"storage",number(p,"storage"),"handle",number(p,"handle"),"name",name,"bytes",size(p),"raw",false);
+        boolean raw=raw(p);String suffix=raw?"nef":"jpe?g";
+        if(!name.toLowerCase(java.util.Locale.ROOT).matches("[^/\\\\\\p{Cntrl}]+\\.("+suffix+")")||name.contains(".."))throw new IOException("自动收片原文件格式无效，仅支持 JPEG 或 NEF。");
+        Map<String,Object> result=SharedRuntime.map("objectKey",hash(p,"objectKey"),"storage",number(p,"storage"),"handle",number(p,"handle"),"name",name,"bytes",size(p),"raw",raw);
         for(String dimension:new String[]{"width","height"}){Object n=p.get(dimension);if(n instanceof Number&&((Number)n).longValue()>=0&&((Number)n).longValue()<=100000)result.put(dimension,((Number)n).longValue());}
         String captured=text(p,"capturedAt",64);result.put("capturedAt",captured);return result;
     }
     private static void same(Map<String,Object> a,Map<String,Object> b)throws IOException{
-        if(!a.get("objectKey").equals(b.get("objectKey"))||!a.get("name").equals(b.get("name"))||number(a,"storage")!=number(b,"storage")||number(a,"handle")!=number(b,"handle")||size(a)!=size(b))throw new IOException("相机新片记录已变化，未接收。");
+        if(raw(a)!=raw(b)||!a.get("objectKey").equals(b.get("objectKey"))||!a.get("name").equals(b.get("name"))||number(a,"storage")!=number(b,"storage")||number(a,"handle")!=number(b,"handle")||size(a)!=size(b))throw new IOException("相机新片记录已变化，未接收。");
     }
     private static Map<String,Object> cursor(Object raw)throws IOException{
         Map<String,Object> p=object(raw),rows=new LinkedHashMap<>();
         for(Object value:baselineRows(p)){Map<String,Object> row=cursorRow(value);String key=pair(row);if(rows.put(key,row)!=null)throw new IOException("相机基线包含重复照片索引。");}
-        Map<String,Object> result=SharedRuntime.map("initializedStorages",storages(p.get("initializedStorages")));putBaseline(result,new ArrayList<>(rows.values()));return result;
+        Map<String,Object> result=SharedRuntime.map("format",format(p),"initializedStorages",storages(p.get("initializedStorages")));putBaseline(result,new ArrayList<>(rows.values()));return result;
     }
     private static List<Object> baselineRows(Map<String,Object> p)throws IOException{
         List<Object> result=new ArrayList<>(list(p,"baseline",MAX_OBJECTS));
@@ -206,6 +211,7 @@ final class SharedLiveIngest {
         Object schema=state.get("schema");
         if(!project.equals(state.get("projectId"))||!camera.equals(state.get("cameraId"))||!(schema instanceof Number)||((Number)schema).doubleValue()!=1||!(state.get("active") instanceof Boolean)||!(state.get("trustedCamera") instanceof Boolean))throw new IOException("自动收片记录身份无效。");
         identifier(state,"session");identifier(state,"watchId");state.put("cursor",cursor(state.get("cursor")));Map<String,Object> all=new LinkedHashMap<>(entries(state));
+        if(!format(state).equals(format(object(state.get("cursor")))))throw new IOException("自动收片记录格式与基线不符。");
         for(Object raw:list(state,"entryPages",20)){
             Map<String,Object> page=object(raw);if(page.size()>1000)throw new IOException("自动收片记录分页无效。");
             for(Map.Entry<String,Object> row:page.entrySet())if(all.put(row.getKey(),row.getValue())!=null)throw new IOException("自动收片分页记录重复。");
@@ -214,7 +220,8 @@ final class SharedLiveIngest {
         for(Map.Entry<String,Object> row:all.entrySet()){
             Map<String,Object> entry=object(row.getValue());item(entry);if(!hash(entry,"objectKey").equals(row.getKey()))throw new IOException("自动收片记录身份不符。");preset(entry);text(entry,"error",240);String status=text(entry,"status",16);
             if(!status.equals("waiting")&&!status.equals("error")&&!status.equals("received")&&!status.equals("done"))throw new IOException("自动收片记录状态无效。");
-            if(status.equals("received")||status.equals("done")){if(!(hash(entry,"sha256")+".jpg").equals(text(entry,"sourceFileName",80)))throw new IOException("自动收片原文件记录无效。");}
+            if(!status.equals("done")&&raw(entry)!=format(state).equals("raw"))throw new IOException("自动收片待接收原片格式不符。");
+            if(status.equals("received")||status.equals("done")){if(!(hash(entry,"sha256")+(raw(entry)?".nef":".jpg")).equals(text(entry,"sourceFileName",80)))throw new IOException("自动收片原文件记录无效。");}
         }
         return state;
     }
@@ -231,6 +238,8 @@ final class SharedLiveIngest {
         try{try(FileOutputStream output=new FileOutputStream(temporary)){output.write(encoded);output.getFD().sync();}Files.move(temporary.toPath(),file.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}finally{Files.deleteIfExists(temporary.toPath());}
     }
     private static Map<String,Object> entries(Map<String,Object> state)throws IOException{return object(state.get("entries"));}
+    private static String format(Map<String,Object> value)throws IOException{Object raw=value.get("format");if(raw==null)return "jpeg";if(!(raw instanceof String)||!raw.equals("jpeg")&&!raw.equals("raw"))throw new IOException("自动收片格式无效。");return (String)raw;}
+    private static boolean raw(Map<String,Object> value)throws IOException{Object raw=value.get("raw");if(raw!=null&&!(raw instanceof Boolean))throw new IOException("自动收片原片格式标记无效。");return Boolean.TRUE.equals(raw);}
     private static int pendingCount(Map<String,Object> state)throws IOException{int count=0;for(Object value:entries(state).values())if(!"done".equals(object(value).get("status")))count++;return count;}
     private static Map<String,Object> object(Object value)throws IOException{return SharedRuntime.object(value);}
     private static List<?> list(Map<String,Object> p,String key,int max)throws IOException{Object value=p.get(key);if(value==null)return java.util.Collections.emptyList();if(!(value instanceof List)||((List<?>)value).size()>max)throw new IOException("自动收片列表大小无效。");return (List<?>)value;}

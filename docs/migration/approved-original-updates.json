@@ -83,6 +83,16 @@
           "gitBlob": "c4b81552ca89d02b323f74b90e379a3fca5e0ae5"
         }
       ]
+    },
+    {
+      "commit": "9f18f923d222bf021d5c8ef55c657c5b1a61e730",
+      "reason": "User-approved 226 JPEG/RAW live transfer. Project originals validate NEF with the existing NEF structure validator and retain JPEG validation. The existing safe filename allowlist also accepts NEF for record/reload/snapshot; length, control characters, traversal, canonical owner/path, SHA and schema protections remain unchanged.",
+      "files": [
+        {
+          "path": "app/src/main/java/cc/huevia/album/PhotoLiveProjectStore.java",
+          "gitBlob": "3389c77d1844dbf49a250c00799f6a1593552bb8"
+        }
+      ]
     }
   ]
 }

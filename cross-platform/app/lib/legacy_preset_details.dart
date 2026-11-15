@@ -57,7 +57,7 @@ class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
       final status = await widget.state.core.call('camera.status');
       if (!mounted || !current()) return;
       if (status['connected'] != true &&
-          !await connectCamera(context, widget.state)) {
+          !await connectCamera(context, widget.state, reuseConnected: true)) {
         return;
       }
       if (!mounted || !current()) return;

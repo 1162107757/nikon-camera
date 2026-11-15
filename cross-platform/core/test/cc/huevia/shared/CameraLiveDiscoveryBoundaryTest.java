@@ -52,7 +52,7 @@ final class CameraLiveDiscoveryBoundaryTest {
         Map<String,Object> receipt=call(camera,"camera.download",download);yes(peer.originals==1);yes(key.equals(receipt.get("objectKey")));yes(watch.equals(receipt.get("watchId")));yes(cameraId.equals(receipt.get("cameraId")));yes(Arrays.equals(Files.readAllBytes(new File((String)receipt.get("path")).toPath()),peer.jpeg));
         Map<String,Object> ack=SharedRuntime.map("session",session,"watchId",watch,"objectKey",key);yes(Boolean.TRUE.equals(call(camera,"camera.live.ack",ack).get("acknowledged")));
         peer.event(2);clock.addAndGet(300000000L);yes(items(call(camera,"camera.live.poll",request)).isEmpty());rejects(()->call(camera,"camera.download",download));
-        // Missed events reconcile through periodic inventory, and NEFs remain manual-only.
+        // Missed events reconcile through periodic inventory; a JPEG watch excludes NEFs.
         peer.put(1,3,"MISSED.JPG",8);peer.put(1,4,"RAW.NEF",30);clock.addAndGet(3100000000L);
         yes(items(call(camera,"camera.live.poll",request)).isEmpty());clock.addAndGet(300000000L);found=call(camera,"camera.live.poll",request);yes(items(found).size()==1);Map<String,Object> third=object(items(found).get(0));yes(((Number)third.get("handle")).longValue()==3);
         // A handle reused in the initial baseline is a new identity after its old descriptor was sampled.
@@ -102,8 +102,52 @@ final class CameraLiveDiscoveryBoundaryTest {
         peer.objects.clear();peer.put(1,1,"OLD.JPG",8);peer.cardTwo=false;connected=connect(camera);String cards=(String)connected.get("session");start=call(camera,"camera.live.start",SharedRuntime.map("session",cards));
         for(long handle=1000;handle<3000;handle++)peer.put(2,handle,"OLD2.JPG",8);peer.cardTwo=true;clock.addAndGet(3100000000L);found=call(camera,"camera.live.poll",SharedRuntime.map("session",cards,"watchId",start.get("watchId")));
         yes(((List<?>)found.get("baselineUpdates")).size()==1000);yes(found.get("cursor") instanceof Map);yes(baseline(found).size()==2001);yes(items(found).isEmpty());camera.disconnect();
-        System.out.println("PASS "+checks+" camera live discovery checks; handle baselines, event-only hints, stable descriptors, missed events, independent browsing, reconnect, storage recovery and scoped downloads");return checks;
+        rawSelection(temporary);
+        System.out.println("PASS "+checks+" camera live discovery checks; handle baselines, frozen JPEG/NEF selection, stable descriptors, missed events, independent browsing, reconnect, storage recovery and scoped original downloads");return checks;
     }
+    private static void rawSelection(Path temporary)throws Exception{
+        Peer peer=new Peer();peer.put(1,1,"OLD.JPG",peer.jpeg.length);peer.put(1,2,"OLD.NEF",peer.nef.length);
+        AtomicLong clock=new AtomicLong(10000000000L);File root=temporary.resolve("raw-live-camera").toFile();yes(root.mkdirs());
+        SharedCamera camera=new SharedCamera(root.getPath(),(h,p,f)->null,(c,f)->peer,clock::get);
+        Map<String,Object> status=connect(camera);String session=(String)status.get("session"),cameraId=(String)status.get("cameraId");
+        yes(((List<?>)status.get("liveFormats")).equals(Arrays.asList("jpeg","raw")));yes(status.get("liveRawFormat").equals("NEF"));
+        int rawInventoryStart=peer.inventoryFormats.size();
+        Map<String,Object> started=call(camera,"camera.live.start",SharedRuntime.map("session",session,"format","raw"));
+        Map<String,Object> request=SharedRuntime.map("session",session,"watchId",started.get("watchId"),"format","raw");
+        yes(object(started.get("cursor")).get("format").equals("raw"));yes(peer.originals==0);
+        peer.put(1,3,"DSC_0042.JPG",peer.jpeg.length);peer.put(1,4,"DSC_0042.NEF",peer.nef.length);peer.event(3);peer.event(4);
+        // RAW descriptors may omit dimensions; complete immutable NEF bytes remain mandatory.
+        peer.objects.put(4L,new PtpObjectInfo.Builder().storageId(1).objectFormat(0xb103).filename("DSC_0042.NEF").compressedSize(peer.nef.length).imagePixWidth(0).imagePixHeight(0).build());
+        Map<String,Object> inspected=call(camera,"camera.live.poll",request);yes(((Number)inspected.get("otherFormatCount")).intValue()==1);clock.addAndGet(300000000L);Map<String,Object> found=call(camera,"camera.live.poll",request);
+        yes(items(found).size()==1,"RAW watch must offer exactly one stable NEF: "+SharedJson.encode(found));
+        Map<String,Object> raw=object(items(found).get(0));
+        yes(Boolean.TRUE.equals(raw.get("raw")),"NEF candidate must keep raw:true");
+        yes(((Number)raw.get("handle")).longValue()==4,"RAW watch must never offer its JPEG companion");
+        yes(((Number)found.get("otherFormatCount")).intValue()==0,"An unchanged JPEG companion must not be counted again: "+SharedJson.encode(found));
+        yes(peer.inventoryFormats.subList(rawInventoryStart,peer.inventoryFormats.size()).stream().allMatch(value->value==0L),"RAW discovery must query all object formats even while JPEG objects exist");
+        Map<String,Object> download=SharedRuntime.map("session",session,"watchId",started.get("watchId"),"objectKey",raw.get("objectKey"),"handle",4,"raw",true,"format","raw");
+        Map<String,Object> wrong=new LinkedHashMap<>(download);wrong.put("raw",false);rejectCall(camera,"camera.download",wrong);yes(peer.originals==0);
+        Map<String,Object> receipt=call(camera,"camera.download",download);String sha=cc.huevia.album.PhotoEditStore.hash(peer.nef);
+        yes(receipt.get("path").toString().endsWith(sha+".nef"));yes(receipt.get("sha256").equals(sha));yes(Boolean.TRUE.equals(receipt.get("raw")));yes(Arrays.equals(peer.nef,Files.readAllBytes(new File((String)receipt.get("path")).toPath())));yes(peer.originals==1);
+        call(camera,"camera.live.ack",SharedRuntime.map("session",session,"watchId",started.get("watchId"),"objectKey",raw.get("objectKey")));
+        peer.event(3);peer.event(4);clock.addAndGet(300000000L);yes(items(call(camera,"camera.live.poll",request)).isEmpty());
+        Map<String,Object> switched=new LinkedHashMap<>(request);switched.put("format","jpeg");rejectCall(camera,"camera.live.poll",switched);
+        call(camera,"camera.live.stop",request);yes(peer.open);
+        Map<String,Object> mismatch=SharedRuntime.map("session",session,"cameraId",cameraId,"format","jpeg","cursor",started.get("cursor"));rejectCall(camera,"camera.live.start",mismatch);yes(peer.listener==null&&peer.open);
+        int jpegInventoryStart=peer.inventoryFormats.size();started=call(camera,"camera.live.start",SharedRuntime.map("session",session,"format","jpeg"));request=SharedRuntime.map("session",session,"watchId",started.get("watchId"),"format","jpeg");
+        peer.put(1,5,"DSC_0043.JPG",peer.jpeg.length);peer.put(1,6,"DSC_0043.NEF",peer.nef.length);peer.event(5);peer.event(6);call(camera,"camera.live.poll",request);clock.addAndGet(300000000L);found=call(camera,"camera.live.poll",request);
+        yes(items(found).size()==1);Map<String,Object> jpeg=object(items(found).get(0));yes(Boolean.FALSE.equals(jpeg.get("raw")));yes(((Number)jpeg.get("handle")).longValue()==5);
+        yes(peer.inventoryFormats.subList(jpegInventoryStart,peer.inventoryFormats.size()).contains(0x3801L),"JPEG discovery must retain its existing filtered inventory path");
+        receipt=call(camera,"camera.download",SharedRuntime.map("session",session,"watchId",started.get("watchId"),"objectKey",jpeg.get("objectKey"),"handle",5,"raw",false));yes(Arrays.equals(peer.jpeg,Files.readAllBytes(new File((String)receipt.get("path")).toPath())));yes(peer.originals==2);call(camera,"camera.live.stop",request);
+        started=call(camera,"camera.live.start",SharedRuntime.map("session",session,"format","raw"));request=SharedRuntime.map("session",session,"watchId",started.get("watchId"),"format","raw");
+        peer.put(1,7,"FAKE.NEF",peer.nef.length);peer.event(7);call(camera,"camera.live.poll",request);clock.addAndGet(300000000L);found=call(camera,"camera.live.poll",request);Map<String,Object> fake=find(found,7);yes(fake!=null);
+        peer.corruptRaw=true;Map<String,Object> forged=SharedRuntime.map("session",session,"watchId",started.get("watchId"),"objectKey",fake.get("objectKey"),"handle",7,"raw",true);rejectCall(camera,"camera.download",forged);
+        try(java.util.stream.Stream<Path> paths=Files.list(root.toPath().resolve("originals"))){yes(paths.noneMatch(path->path.getFileName().toString().endsWith(".part")));}
+        call(camera,"camera.live.stop",request);started=call(camera,"camera.live.start",SharedRuntime.map("session",session,"format","raw"));request=SharedRuntime.map("session",session,"watchId",started.get("watchId"),"format","raw");
+        int originals=peer.originals;peer.put(1,8,"UNSUPPORTED.NRW",100);peer.event(8);found=call(camera,"camera.live.poll",request);yes(items(found).isEmpty());yes(((Number)found.get("unsupportedRawCount")).intValue()==1);yes(peer.originals==originals);
+        camera.disconnect();
+    }
+    private static void yes(boolean value,String reason){checks++;if(!value)throw new AssertionError("Camera live discovery "+checks+": "+reason);}
     private static void rejectCall(SharedCamera camera,String operation,Map<String,Object> p)throws Exception{rejects(()->call(camera,operation,p));}
     private static Map<String,Object> connect(SharedCamera camera)throws IOException{return call(camera,"camera.connect",SharedRuntime.map("host","192.168.1.1","protocol","nikon"));}
     private static Map<String,Object> call(SharedCamera camera,String operation,Map<String,Object> p)throws IOException{return SharedJson.object(camera.request(operation,SharedJson.encode(p),"live-test",()->false,v->{}));}
@@ -114,7 +158,8 @@ final class CameraLiveDiscoveryBoundaryTest {
     private static List<?> baseline(Map<String,Object> value){Map<String,Object> cursor=object(value.get("cursor"));List<Object> rows=new ArrayList<>((List<?>)cursor.get("baseline"));for(Object page:(List<?>)cursor.getOrDefault("baselinePages",new ArrayList<>()))rows.addAll((List<?>)page);return rows;}
     private static final class Peer implements PhotoCameraClient {
         boolean open,cardTwo,fuji;int metadata,originals,calls;String identity="11223344556677889900aabbccddeeff";LongConsumer listener;
-        final Map<Long,PtpObjectInfo> objects=new LinkedHashMap<>();final byte[] jpeg={(byte)255,(byte)216,1,2,3,4,(byte)255,(byte)217};
+        final Map<Long,PtpObjectInfo> objects=new LinkedHashMap<>();final byte[] jpeg={(byte)255,(byte)216,1,2,3,4,(byte)255,(byte)217},nef=CameraRawBoundaryTest.nef();boolean corruptRaw;
+        final List<Long> inventoryFormats=new ArrayList<>();
         void put(long storage,long handle,String name,long size){objects.put(handle,new PtpObjectInfo.Builder().storageId(storage).objectFormat(name.endsWith("NEF")?0xb103:0x3801).filename(name).compressedSize(size).imagePixWidth(6000).imagePixHeight(4000).captureDate("20261112T200000").build());}
         void event(long handle){if(listener!=null)listener.accept(handle);}
         public byte[] connect(String h,int p,byte[] g,String n){open=true;return info(fuji);}
@@ -123,12 +168,12 @@ final class CameraLiveDiscoveryBoundaryTest {
         public byte[] getData(int op,int max,long...p)throws IOException{
             calls++;
             if(op==0x1004)return concat(le32(2),le32(1),le32(2));
-            if(op==0x1007){if(p[0]==2&&!cardTwo)throw new PtpResponseException(0x2013,1);List<Long> ids=new ArrayList<>();for(Map.Entry<Long,PtpObjectInfo> e:objects.entrySet())if(e.getValue().storageId()==p[0]&&(p[1]==0||e.getValue().objectFormat()==p[1]))ids.add(e.getKey());ByteArrayOutputStream out=new ByteArrayOutputStream();out.writeBytes(le32(ids.size()));for(long id:ids)out.writeBytes(le32(id));return out.toByteArray();}
+            if(op==0x1007){inventoryFormats.add(p[1]);if(p[0]==2&&!cardTwo)throw new PtpResponseException(0x2013,1);List<Long> ids=new ArrayList<>();for(Map.Entry<Long,PtpObjectInfo> e:objects.entrySet())if(e.getValue().storageId()==p[0]&&(p[1]==0||e.getValue().objectFormat()==p[1]))ids.add(e.getKey());ByteArrayOutputStream out=new ByteArrayOutputStream();out.writeBytes(le32(ids.size()));for(long id:ids)out.writeBytes(le32(id));return out.toByteArray();}
             if(op==0x1008){metadata++;PtpObjectInfo value=objects.get(p[0]);if(value==null)throw new PtpResponseException(0x2009,1);return value.toBytes();}
             throw new IOException("Unexpected discovery operation "+op);
         }
         public byte[] getLargeThumbnail(long handle){return jpeg;}
-        public long readTo(int op,OutputStream out,long max,long expected,Progress progress,long...p)throws IOException{originals++;progress.onProgress(0,jpeg.length);out.write(jpeg);progress.onProgress(jpeg.length,jpeg.length);return jpeg.length;}
+        public long readTo(int op,OutputStream out,long max,long expected,Progress progress,long...p)throws IOException{originals++;byte[] bytes=objects.get(p[0]).filename().endsWith("NEF")?nef:jpeg;if(corruptRaw&&bytes==nef){bytes=new byte[nef.length];bytes[0]=(byte)255;bytes[1]=(byte)216;}progress.onProgress(0,bytes.length);out.write(bytes);progress.onProgress(bytes.length,bytes.length);return bytes.length;}
         public void abortProtocol(IOException e){open=false;}public void close(){open=false;listener=null;}
     }
     private static byte[] info(boolean fuji){int[] operations={0x1001,0x1002,0x1003,0x1004,0x1007,0x1008,0x1009,0x100a,0x90c4};ByteArrayOutputStream ops=new ByteArrayOutputStream();ops.writeBytes(le32(operations.length));for(int op:operations)ops.writeBytes(le16(op));return concat(le16(100),le32(fuji?14:10),le16(100),string("Fixture"),le16(0),ops.toByteArray(),le32(0),le32(0),le32(0),le32(0),string(fuji?"FUJIFILM":"NIKON CORPORATION"),string(fuji?"X-T20":"Z 6_2"),string("1"),string(""));}

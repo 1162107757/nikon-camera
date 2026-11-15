@@ -1,0 +1,14 @@
+{
+  "selected": "A",
+  "approvedByUser": true,
+  "formalName": "Huevia",
+  "uiImplementation": "implemented; package validation pending",
+  "approvedVisual": "approved-a.png",
+  "refinements": [
+    "Preserve identical preview bounds before start and while receiving",
+    "Center start CTA on both axes",
+    "JPEG and RAW mutually exclusive; default JPEG; freeze during a run",
+    "Records use root modal above bottom navigation"
+  ],
+  "rawImplementation": "JPEG/NEF transport, receipt, journal, project and raw preview implemented; physical camera verification pending"
+}

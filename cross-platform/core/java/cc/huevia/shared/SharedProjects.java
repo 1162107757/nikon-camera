@@ -6,6 +6,7 @@ import cc.huevia.album.PhotoLiveProject;
 import cc.huevia.album.PhotoLiveProjectStore;
 import cc.huevia.album.PhotoProjectPresetStore;
 import cc.huevia.album.PhotoSaveTarget;
+import cc.huevia.album.PhotoFormat;
 import cc.huevia.album.SharedProjectPhoto;
 import cc.huevia.library.PresetLibrary;
 import cc.huevia.library.SharedJson;
@@ -176,13 +177,14 @@ public final class SharedProjects {
     }
     private File liveSource(Map<String,Object> item,Map<String,Object> receipt)throws IOException{
         String sha=SharedRuntime.text(receipt,"sha256",64);if(!sha.matches("[0-9a-f]{64}"))throw new IOException("相机原文件校验无效。");
+        String extension=Boolean.TRUE.equals(item.get("raw"))?".nef":".jpg";
         String path=SharedRuntime.text(receipt,"path",4096);
         if(path.isEmpty()){
-            if(!(sha+".jpg").equals(SharedRuntime.text(receipt,"sourceFileName",80)))throw new IOException("自动收片原文件记录无效。");
-            path=new File(root,"originals/"+sha+".jpg").getPath();
+            if(!(sha+extension).equals(SharedRuntime.text(receipt,"sourceFileName",80)))throw new IOException("自动收片原文件记录无效。");
+            path=new File(root,"originals/"+sha+extension).getPath();
         }
         File source=source(path);
-        if(!source.getName().equals(sha+".jpg")||!(item.get("bytes") instanceof Number)||source.length()!=((Number)item.get("bytes")).longValue()||!runtime.sourceIdentity(source.getPath(),true).equals(sha))throw new IOException("自动收片原文件已变化，未加入项目。");
+        if(!source.getName().equals(sha+extension)||!(item.get("bytes") instanceof Number)||source.length()!=((Number)item.get("bytes")).longValue()||!runtime.sourceIdentity(source.getPath(),true).equals(sha))throw new IOException("自动收片原文件已变化，未加入项目。");
         SharedProjectPhoto.completed(source,(String)item.get("name"));return source;
     }
     private File defaultFile(String owner,String id)throws IOException{
@@ -231,7 +233,7 @@ public final class SharedProjects {
     }
     private static Map<String,Object> open(PhotoLiveProject project,PhotoProjectPresetStore store){
         Map<String,Object> result=summary(project,store);List<Object> photos=new ArrayList<>(),tasks=new ArrayList<>();
-        for(DownloadedPhoto photo:project.photos)photos.add(SharedRuntime.map("path",photo.file().getPath(),"name",photo.filename(),"bytes",photo.byteSize()));
+        for(DownloadedPhoto photo:project.photos)photos.add(SharedRuntime.map("path",photo.file().getPath(),"name",photo.filename(),"bytes",photo.byteSize(),"raw",PhotoFormat.isNefName(photo.file().getName())));
         for(PhotoProjectPresetStore.Task task:store.tasks(project.id))tasks.add(task(task));
         result.put("photos",photos);result.put("tasks",tasks);return result;
     }

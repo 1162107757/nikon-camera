@@ -121,7 +121,14 @@ class CameraTransfer extends ChangeNotifier {
       _changed();
       return;
     }
-    if (!state.claimCameraTransfer()) {
+    if (!state.claimCameraTransfer(
+      session: session,
+      onStop: () async {
+        // An already verified photo can finish its local publication. A
+        // reconnect only cancels this download while it still owns camera I/O.
+        if (canStop) await stop();
+      },
+    )) {
       phase = CameraTransferPhase.failed;
       error = '另一项相机传输正在进行，请先结束当前传输。';
       _changed();

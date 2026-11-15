@@ -26,6 +26,8 @@ enum CameraLivePhase {
   failed,
 }
 
+enum CameraLiveFormat { jpeg, raw }
+
 /// One foreground producer per application, independent of the visible tab.
 /// Durable cursor/receipts belong to the shared core; this object never treats
 /// a transport reply alone as a received project photo.
@@ -46,10 +48,16 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   CameraLivePhase phase = CameraLivePhase.idle;
   bool active = false, _alive = true, _foreground = true, _working = false;
   bool _protectionPaused = false;
+  bool _transportRetired = false;
+  String _retiredSession = '';
+  CameraLiveFormat _selectedFormat = CameraLiveFormat.jpeg;
+  CameraLiveFormat _sessionFormat = CameraLiveFormat.jpeg;
+  int _lastTransportLossGeneration = -1;
   int _stopRevision = 0;
   String owner = '', projectId = '', projectName = '', cameraId = '';
   String session = '', watchId = '', token = '', name = '';
-  String? error, _job;
+  String? error, _job, _jobOperation;
+  String? formatNotice, _latestPreviewPath;
   int received = 0, total = 0, completed = 0, failed = 0, queued = 0;
   double? renderProgress;
   int _generation = 0, _sequence = 0;
@@ -61,6 +69,21 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   Future<void>? _processingFuture;
 
   bool get working => _working;
+  CameraLiveFormat get selectedFormat => _selectedFormat;
+  bool get transportRetired => _transportRetired;
+  String? get pendingCameraJob =>
+      _jobOperation?.startsWith('camera.') == true ? _job : null;
+  String? get latestPreviewPath =>
+      latestPhoto?.info['raw'] == true ? _latestPreviewPath : latestPhoto?.path;
+  bool selectFormat(CameraLiveFormat format) {
+    if (active || _working || phase == CameraLivePhase.stopping) return false;
+    if (_selectedFormat == format) return true;
+    _selectedFormat = format;
+    formatNotice = null;
+    _changed();
+    return true;
+  }
+
   bool get foreground => _foreground;
   bool get _canRun =>
       _foreground || state.connectionProtection.backgroundAllowed;
@@ -73,7 +96,8 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   String get title => switch (phase) {
     CameraLivePhase.idle => '边拍边传',
     CameraLivePhase.starting => '正在准备边拍边传',
-    CameraLivePhase.watching => '等待相机新照片',
+    CameraLivePhase.watching =>
+      '等待相机新${_sessionFormat == CameraLiveFormat.raw ? ' RAW（NEF）' : ' JPEG'}照片',
     CameraLivePhase.receiving => '正在接收新照片',
     CameraLivePhase.importing => '正在保存新照片',
     CameraLivePhase.processing => '正在套用项目预设',
@@ -106,15 +130,17 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     'session': session,
     'watchId': watchId,
     'token': token,
+    'format': _sessionFormat.name,
   };
   Future<Json> _call(String operation, Json payload, int generation) async {
     _check(generation);
     final job = 'camera-live-$generation-${_sequence++}';
     _job = job;
+    _jobOperation = operation;
     try {
       final value = await state.core.call(operation, payload, job);
       if (!_current(generation)) {
-        await _discardLateStart(operation, payload, value);
+        await _discardLateStart(operation, payload, value, generation);
       }
       _check(generation);
       return value;
@@ -122,7 +148,10 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       if (failure is _LiveOperationFailure) rethrow;
       throw _LiveOperationFailure(operation, failure);
     } finally {
-      if (_job == job) _job = null;
+      if (_job == job) {
+        _job = null;
+        _jobOperation = null;
+      }
     }
   }
 
@@ -130,7 +159,10 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     String operation,
     Json payload,
     Json value,
+    int generation,
   ) async {
+    // A transport boundary must never send a delayed stop into a new session.
+    if (generation <= _lastTransportLossGeneration) return;
     try {
       if (operation == 'project.live.start' && value['token'] is String) {
         await state.core.call('project.live.stop', {
@@ -173,6 +205,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     if (status['supportsLive'] != true) {
       throw const AppFailure('当前相机尚未提供已验证的边拍边传能力。');
     }
+    _validateStatus(status, format: selectedFormat);
     final value = await state.core.call('project.live.state', {
       'owner': expectedOwner,
       'projectId': selected,
@@ -199,11 +232,17 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       throw const AppFailure('请先停止手动接收，再开启边拍边传。');
     }
     owner = currentOwner;
+    _sessionFormat = _selectedFormat;
+    final previousProcessing = _processingFuture;
     _stopRevision = state.connectionProtection.stopRevision;
     projectId = selected;
     projectName = label;
     cameraId = session = watchId = token = name = '';
     error = null;
+    formatNotice = null;
+    _latestPreviewPath = null;
+    _transportRetired = false;
+    _retiredSession = '';
     _protectionPaused = false;
     received = total = completed = failed = queued = 0;
     latestPhoto = null;
@@ -214,6 +253,12 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     _events = state.core.operationProgress.listen(_progress, onError: (_) {});
     _changed();
     try {
+      try {
+        await previousProcessing;
+      } catch (_) {
+        // A retired processor's failure is already retained by its project task.
+      }
+      _check(generation);
       await state.connectionProtection.setActive('live', true);
       final status = await _call('camera.status', {}, generation);
       _validateStatus(status);
@@ -229,11 +274,17 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       if (resume && persisted['active'] != true) {
         throw const AppFailure('没有可继续的拍摄记录，请重新开始。');
       }
+      if (resume && (persisted['format'] ?? 'jpeg') != _sessionFormat.name) {
+        throw AppFailure(
+          '上次拍摄接收${persisted['format'] == 'raw' ? ' RAW（NEF）' : ' JPEG'}，请选择相同格式后继续，或先结束旧任务。',
+        );
+      }
       await _attach(status, persisted, generation, resume: resume);
       _processor = ProjectPresetsModel(state)..selected = projectId;
       _processor!.addListener(_processingChanged);
       phase = _canRun ? CameraLivePhase.watching : CameraLivePhase.paused;
     } catch (failure) {
+      if (_generation != generation) return;
       if (_current(generation)) {
         error = '$failure';
         active = false;
@@ -253,18 +304,25 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
         }
       }
     } finally {
-      _working = false;
-      _changed();
-      _schedule();
+      if (_generation == generation) {
+        _working = false;
+        _changed();
+        _schedule();
+      }
     }
   }
 
-  void _validateStatus(Json status) {
+  void _validateStatus(Json status, {CameraLiveFormat? format}) {
     if (status['connected'] != true) throw const AppFailure('请先连接相机，再开启边拍边传。');
     if (status['supportsLive'] != true ||
         status['cameraId'] is! String ||
         status['session'] is! String) {
       throw const AppFailure('当前相机尚未提供已验证的边拍边传能力。');
+    }
+    final formats = status['liveFormats'];
+    if ((format ?? _sessionFormat) == CameraLiveFormat.raw &&
+        (formats is! List || !formats.contains('raw'))) {
+      throw const AppFailure('当前相机连接尚未提供受支持的 RAW（NEF）边拍边传，请选择 JPEG。');
     }
   }
 
@@ -275,13 +333,21 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     required bool resume,
   }) async {
     final nextSession = status['session'] as String;
+    session = nextSession;
     final discovery = await _call('camera.live.start', {
       'session': nextSession,
       'cameraId': cameraId,
+      'format': _sessionFormat.name,
       if (resume) 'cursor': persisted['cursor'],
     }, generation);
     session = nextSession;
     watchId = discovery['watchId'] as String;
+    if (watchId.isEmpty ||
+        discovery['session'] != session ||
+        discovery['cameraId'] != cameraId ||
+        (discovery['format'] ?? 'jpeg') != _sessionFormat.name) {
+      throw const AppFailure('相机未确认本次接收格式或会话，未开始边拍边传。');
+    }
     final value = await _call('project.live.start', {
       'owner': owner,
       'projectId': projectId,
@@ -290,10 +356,17 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       'watchId': watchId,
       'trustedCamera': status['trustedCamera'] == true,
       'mode': resume ? 'resume' : 'fresh',
+      'format': _sessionFormat.name,
       'cursor': discovery['cursor'],
     }, generation);
     token = value['token'] as String;
-    if (token.isEmpty) throw const AppFailure('拍摄项目未确认收片任务。');
+    if (token.isEmpty ||
+        value['session'] != session ||
+        value['watchId'] != watchId ||
+        value['cameraId'] != cameraId ||
+        (value['format'] ?? 'jpeg') != _sessionFormat.name) {
+      throw const AppFailure('拍摄项目未确认本次接收格式或收片任务。');
+    }
     _update(value);
   }
 
@@ -323,35 +396,50 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     try {
       final status = await _call('camera.status', {}, generation);
       if (status['connected'] != true) {
-        phase = CameraLivePhase.waiting;
+        connectionLost(expectedSession: session);
         return;
       }
       if (status['cameraId'] != cameraId) {
-        phase = CameraLivePhase.blocked;
-        error = '当前相机与拍摄记录不一致，请停止后重新开始。';
+        connectionLost(
+          expectedSession: session,
+          reason: '当前相机已改变，请重新连接并明确选择继续或重新开始拍摄。',
+        );
         return;
       }
       if (status['session'] != session) {
-        if (status['trustedCamera'] != true) {
-          phase = CameraLivePhase.blocked;
-          error = '无法核对重新连接的相机身份，请停止后重新开始。';
-          return;
-        }
-        final persisted = await _call('project.live.state', {
-          'owner': owner,
-          'projectId': projectId,
-          'cameraId': cameraId,
-        }, generation);
-        await _attach(status, persisted, generation, resume: true);
+        connectionLost(
+          expectedSession: session,
+          reason: '相机会话已改变，请重新连接后明确继续上次拍摄。',
+        );
+        return;
       }
       final found = await _call('camera.live.poll', {
         'session': session,
         'watchId': watchId,
         'limit': 12,
+        'format': _sessionFormat.name,
       }, generation);
+      final unsupportedRaw =
+          _sessionFormat == CameraLiveFormat.raw &&
+          (found['unsupportedRawCount'] as num? ?? 0) > 0 &&
+          (found['items'] as List? ?? const []).isEmpty;
+      if ((found['otherFormatCount'] as num? ?? 0) > 0 &&
+          (found['items'] as List? ?? const []).isEmpty) {
+        formatNotice = _sessionFormat == CameraLiveFormat.raw
+            ? '已发现新的 JPEG，尚未收到 RAW（NEF）。请确认相机拍摄格式为 RAW 或 RAW+JPEG。'
+            : '已发现新的 RAW，本次仅接收 JPEG。请确认相机拍摄格式包含 JPEG。';
+      } else if ((found['items'] as List? ?? const []).isNotEmpty) {
+        formatNotice = null;
+      }
       _update(
         await _call('project.live.observe', {..._lease, ...found}, generation),
       );
+      if (unsupportedRaw) {
+        phase = CameraLivePhase.blocked;
+        error = '相机提供了当前不支持的 RAW 格式；本次 RAW 接收仅支持 NEF，请停止后改选 JPEG。';
+        formatNotice = error;
+        return;
+      }
       for (final key in snapshot['acknowledged'] as List? ?? []) {
         await _call('camera.live.ack', {
           'session': session,
@@ -389,7 +477,9 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
             failure.operation.startsWith('camera.')) {
           try {
             final status = await _call('camera.status', {}, generation);
-            if (status['connected'] != true) phase = CameraLivePhase.waiting;
+            if (status['connected'] != true || status['session'] != session) {
+              connectionLost(expectedSession: session);
+            }
           } catch (_) {
             /* Retain the stopped retry state if status is unknown. */
           }
@@ -402,12 +492,14 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
         error = null;
         phase = CameraLivePhase.watching;
       }
-      _working = false;
-      _changed();
-      if (recover && automatic) {
-        unawaited(pollOnce());
-      } else {
-        _schedule();
+      if (_generation == generation) {
+        _working = false;
+        _changed();
+        if (recover && automatic) {
+          unawaited(pollOnce());
+        } else {
+          _schedule();
+        }
       }
     }
   }
@@ -420,6 +512,10 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> _receive(Json item, int generation) async {
+    final raw = _sessionFormat == CameraLiveFormat.raw;
+    if ((item['raw'] == true) != raw) {
+      throw const AppFailure('相机新照片格式与本次拍摄任务不符，未接收。');
+    }
     name = item['name'] as String;
     total = item['bytes'] as int;
     received = 0;
@@ -431,7 +527,8 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       'watchId': watchId,
       'objectKey': item['objectKey'],
       'handle': item['handle'],
-      'raw': false,
+      'raw': raw,
+      'format': _sessionFormat.name,
     }, generation);
     final path = receipt['path'], sha = receipt['sha256'];
     if (path is! String ||
@@ -439,19 +536,22 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
         !RegExp(r'^[0-9a-f]{64}$').hasMatch(sha) ||
         receipt['bytes'] != total ||
         receipt['name'] != name ||
-        receipt['raw'] != false ||
+        receipt['raw'] != raw ||
         receipt['session'] != session ||
         receipt['watchId'] != watchId ||
         receipt['cameraId'] != cameraId ||
         receipt['objectKey'] != item['objectKey'] ||
         !p.isWithin(p.join(state.core.root, 'originals'), path) ||
-        p.basename(path) != '$sha.jpg') {
+        p.basename(path) != '$sha.${raw ? 'nef' : 'jpg'}') {
       throw const AppFailure('新照片收据与当前拍摄任务不符。');
     }
     received = total;
     phase = CameraLivePhase.importing;
     _changed();
     final info = await _call('media.info', {'path': path}, generation);
+    if (raw && info['raw'] != true || !raw && info['raw'] == true) {
+      throw const AppFailure('已接收原片的格式检查与本次拍摄任务不符。');
+    }
     _check(generation);
     final imported = await state.registerPhoto(path, name, info);
     _check(generation);
@@ -459,12 +559,109 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       await _call('project.live.commit', {...receipt, ..._lease}, generation),
     );
     latestPhoto = imported;
+    _latestPreviewPath = raw ? null : path;
     _changed();
     await _call('camera.live.ack', {
       'session': session,
       'watchId': watchId,
       'objectKey': item['objectKey'],
     }, generation);
+    if (raw) {
+      try {
+        final preview = await _call('media.rawThumbnail', {
+          'path': path,
+          'owner': owner,
+          'expectedSourceSha': sha,
+        }, generation);
+        final thumbnail = preview['path'];
+        if (preview['sourceSha'] == sha &&
+            thumbnail is String &&
+            p.isWithin(p.join(state.core.root, 'raw-thumbnails'), thumbnail)) {
+          _latestPreviewPath = thumbnail;
+          _changed();
+        }
+      } catch (_) {
+        // The committed RAW is valid even when an optional preview is unavailable.
+      }
+    }
+  }
+
+  bool connectionLost({
+    String? expectedSession,
+    String reason = '相机已断开，请重新连接后继续上次拍摄。',
+  }) {
+    if ((!active && phase != CameraLivePhase.starting) ||
+        expectedSession != null && expectedSession != session) {
+      return false;
+    }
+    _lastTransportLossGeneration = _generation;
+    _transportRetired = true;
+    _retiredSession = session;
+    active = false;
+    ++_generation;
+    _working = false;
+    _protectionPaused = false;
+    _timer?.cancel();
+    _timer = null;
+    _job = null;
+    _jobOperation = null;
+    token = '';
+    phase = CameraLivePhase.blocked;
+    error = reason;
+    unawaited(_events?.cancel());
+    _events = null;
+    final processor = _processor;
+    _processor = null;
+    if (processor != null) {
+      processor.removeListener(_processingChanged);
+      processor.stopped = true;
+      processor.job = null;
+      final processing = _processingFuture;
+      if (processing == null) {
+        processor.dispose();
+      } else {
+        // Keep the old project lease alive through its own completion/failure
+        // boundary, without canceling any camera transport or a newer job.
+        unawaited(() async {
+          try {
+            await processing;
+          } catch (_) {
+            /* The original/task journal retains this stopped attempt. */
+          }
+          processor.job = null;
+          processor.dispose();
+        }());
+      }
+    }
+    // Retain the durable journal for explicit resume. No old camera job is
+    // canceled, stopped or closed after a different transport/session appears.
+    unawaited(
+      state.connectionProtection
+          .setActive('live', false)
+          .catchError((Object _) {}),
+    );
+    _changed();
+    return true;
+  }
+
+  bool connectionRestored({required String session}) {
+    if (!_alive ||
+        !_transportRetired ||
+        active ||
+        owner != currentOwner ||
+        state.session['logoutPending'] == true ||
+        !RegExp(r'^[A-Za-z0-9_-]{1,64}$').hasMatch(session) ||
+        session == _retiredSession) {
+      return false;
+    }
+    // A verified new transport only unlocks explicit Start/Resume. Keep any old
+    // processing boundary and its working lock; start() already waits for it.
+    _transportRetired = false;
+    _retiredSession = '';
+    error = null;
+    phase = CameraLivePhase.stopped;
+    _changed();
+    return true;
   }
 
   Future<void> _process(int generation) async {
@@ -523,7 +720,30 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       return;
     }
     latestPhoto = null;
+    _latestPreviewPath = null;
     if (!active) {
+      _transportRetired = false;
+      _retiredSession = '';
+      error = formatNotice = null;
+      name = '';
+      received = total = completed = failed = queued = 0;
+      renderProgress = null;
+      snapshot = {};
+      if (phase != CameraLivePhase.stopping) {
+        // This is a local privacy boundary, not authority to stop an old camera
+        // or to adopt the new owner's durable producer.
+        _lastTransportLossGeneration = _generation;
+        ++_generation;
+        _working = false;
+        _protectionPaused = false;
+        _timer?.cancel();
+        _timer = null;
+        _job = null;
+        _jobOperation = null;
+        owner = projectId = projectName = cameraId = '';
+        session = watchId = token = '';
+        phase = CameraLivePhase.stopped;
+      }
       _changed();
       return;
     }
@@ -574,6 +794,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     active = false;
     _protectionPaused = false;
     ++_generation;
+    _working = false;
     _timer?.cancel();
     _timer = null;
     phase = CameraLivePhase.stopping;

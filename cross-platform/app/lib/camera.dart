@@ -26,11 +26,19 @@ import 'sync_tools_dock.dart';
 
 import 'package:go_router/go_router.dart';
 
-Future<bool> connectCamera(BuildContext context, AppState state) async =>
+Future<bool> connectCamera(
+  BuildContext context,
+  AppState state, {
+  bool reuseConnected = false,
+}) async =>
     await hueRootPage<bool>(
       context,
       MaterialPageRoute<bool>(
-        builder: (_) => CameraPage(state: state, configuration: true),
+        builder: (_) => CameraPage(
+          state: state,
+          configuration: true,
+          reuseConnected: reuseConnected,
+        ),
       ),
     ) ==
     true;
@@ -40,9 +48,11 @@ class CameraPage extends StatefulWidget {
     super.key,
     required this.state,
     this.configuration = false,
+    this.reuseConnected = false,
   });
   final AppState state;
   final bool configuration;
+  final bool reuseConnected;
   @override
   State<CameraPage> createState() => _CameraPageState();
 }
@@ -63,7 +73,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   late final CameraConnectionRequest connectionRequest;
   StreamSubscription<dynamic>? maintenanceEvents;
   final listScroll = ScrollController();
-  int offset = 0, epoch = 0;
+  int offset = 0, epoch = 0, statusRevision = 0;
   String? error;
   String? connectionNotice;
   // Status notifications must not retry a failed/empty first page in a loop.
@@ -163,6 +173,8 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         );
       }
     } finally {
+      childOpen = false;
+      if (mounted) setState(() {});
       if (afterClose != null) {
         try {
           await afterClose();
@@ -170,9 +182,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           /* Closing does not reconnect. */
         }
       }
-      childOpen = false;
       if (mounted) {
-        setState(() {});
         if (!exclusive && browsingPhotos && photosReady) previews.resume();
         await status(reload: false);
       }
@@ -283,21 +293,27 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   }
 
   Future<void> openConnection({bool? loadPhotos}) async {
-    if (childOpen || busy || transfer.busy || exclusive) return;
+    if (childOpen) return;
     final browseAfter = loadPhotos ?? browsingPhotos;
-    childOpen = true;
+    setState(() => childOpen = true);
     previews.pause();
+    var didConnect = false;
     try {
-      final connected = await connectCamera(context, widget.state);
-      if (mounted && connected) {
-        childOpen = !browseAfter;
-        await status(reload: browseAfter, inspectOnly: !browseAfter);
-      }
+      didConnect = await connectCamera(context, widget.state);
     } finally {
       childOpen = false;
-      if (mounted && !exclusive && browsingPhotos && photosReady) {
-        previews.resume();
-      }
+      if (mounted) setState(() {});
+    }
+    if (!mounted) return;
+    // The navigation lease ends when the route closes, not when a later
+    // transport snapshot eventually returns.
+    if (didConnect) {
+      await status(reload: browseAfter, inspectOnly: !browseAfter);
+    } else {
+      unawaited(status(reload: false, inspectOnly: true));
+    }
+    if (mounted && !exclusive && browsingPhotos && photosReady) {
+      previews.resume();
     }
   }
 
@@ -336,10 +352,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
             event['kind'] != 'cameraConnectionChanged' ||
             !inForeground ||
             !widget.state.cameraVisible.value ||
-            busy ||
-            childOpen ||
-            transfer.busy ||
-            exclusive) {
+            childOpen) {
           return;
         }
         unawaited(status(reload: false, inspectOnly: true));
@@ -351,6 +364,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   @override
   void dispose() {
     epoch++;
+    statusRevision++;
     WidgetsBinding.instance.removeObserver(this);
     unawaited(maintenanceEvents?.cancel());
     connectionRequest.removeListener(connectionProgressChanged);
@@ -378,11 +392,10 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       previews.pause();
     } else if (!widget.configuration &&
         widget.state.cameraVisible.value &&
-        !busy &&
-        !childOpen &&
-        !transfer.busy &&
-        !exclusive) {
-      unawaited(status(reload: false));
+        !childOpen) {
+      unawaited(
+        status(reload: false, inspectOnly: busy || transfer.busy || exclusive),
+      );
     }
   }
 
@@ -427,16 +440,25 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       if (mounted) setState(() {});
       return;
     }
-    if (transfer.busy || exclusive) return;
     if (browsingPhotos && photosReady) previews.resume();
-    if (!busy) unawaited(status(reload: false));
+    if (!childOpen) {
+      unawaited(
+        status(reload: false, inspectOnly: busy || transfer.busy || exclusive),
+      );
+    }
   }
 
   Future<void> status({bool reload = true, bool inspectOnly = false}) async {
-    final request = ++epoch;
+    final request = ++statusRevision, operation = epoch;
     try {
       final result = await widget.state.core.call('camera.status');
-      if (!mounted || request != epoch) return;
+      if (!mounted ||
+          request != statusRevision ||
+          operation != epoch ||
+          childOpen && !widget.configuration) {
+        return;
+      }
+      final previousSession = session;
       final changed = session != result['session'];
       final wasConnected = connected;
       setState(() {
@@ -456,6 +478,12 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           connectionNotice = '相机连接已断开，请重新连接后继续。';
         }
       });
+      if (!connected || changed && previousSession.isNotEmpty) {
+        retireSessionWork(previousSession);
+      }
+      if (connected && session.isNotEmpty) {
+        widget.state.cameraLive.connectionRestored(session: session);
+      }
       previews.setSession(session);
       if (browsingPhotos && photosReady && !exclusive) {
         previews.resume();
@@ -466,7 +494,13 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         selection.clear();
         selecting = false;
       }
-      if (widget.configuration && connected && session.isNotEmpty) {
+      // Only an internal operation such as preset import may reuse a known
+      // connection without showing this page. An explicit connect entry must
+      // remain visible even when a stale native snapshot still says connected.
+      if (widget.configuration &&
+          widget.reuseConnected &&
+          connected &&
+          session.isNotEmpty) {
         finishConnection();
         return;
       }
@@ -478,14 +512,64 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         await page();
       }
     } catch (failure) {
-      if (mounted && request == epoch) setState(() => error = '$failure');
+      if (mounted && request == statusRevision && operation == epoch) {
+        setState(() => error = '$failure');
+      }
+    }
+  }
+
+  void retireSessionWork(String previousSession) {
+    const reason = '相机连接已改变，请重新连接后继续，已接收的照片会保留。';
+    final state = widget.state;
+    if (state.cameraLiveActive) {
+      final live = state.cameraLive;
+      live.connectionLost(
+        expectedSession: previousSession.isEmpty
+            ? live.session
+            : previousSession,
+        reason: reason,
+      );
+    }
+    if (state.cameraDownloadsActive) {
+      final queue = state.cameraDownloads;
+      queue.connectionLost(
+        expectedSession: previousSession.isEmpty
+            ? queue.activeSession
+            : previousSession,
+        reason: reason,
+      );
+    }
+    unawaited(
+      state
+          .stopCameraManualTransfer(
+            expectedSession: previousSession.isEmpty ? null : previousSession,
+          )
+          .catchError((Object _) {}),
+    );
+    final oldPageRequest =
+        connectionRequest.busy && connectionRequest.operation == 'camera.page';
+    if (busy && (!connectionRequest.busy || oldPageRequest)) {
+      final oldJob = job;
+      epoch++;
+      setState(() {
+        busy = loadingMore = false;
+        job = '';
+      });
+      if (oldPageRequest) {
+        connectionRequest.cancel(message: reason);
+      } else if (oldJob.isNotEmpty) {
+        unawaited(widget.state.core.cancel(oldJob).catchError((Object _) {}));
+      }
     }
   }
 
   Future<void> connectWired(String id) => connect(usbId: id);
 
   Future<void> connect({String? usbId}) async {
-    if (exclusive || transfer.busy || busy) return;
+    if (busy || connectionRequest.busy) {
+      setState(() => error = '本次连接仍在进行，可以先取消后重试。');
+      return;
+    }
     final request = ++epoch;
     setState(() {
       busy = true;
@@ -496,6 +580,33 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       job = 'camera-connect-${DateTime.now().microsecondsSinceEpoch}';
     });
     try {
+      // This is an explicit reconnect request. Retire old local producers by
+      // their own session; do not send a late stop to the new camera session.
+      if (widget.state.cameraLiveActive) {
+        final live = widget.state.cameraLive;
+        final oldCameraJob = live.pendingCameraJob;
+        live.connectionLost(expectedSession: live.session);
+        if (oldCameraJob != null) {
+          await widget.state.core
+              .cancel(oldCameraJob)
+              .timeout(const Duration(seconds: 2));
+        }
+      }
+      if (widget.state.cameraDownloadsActive) {
+        final queue = widget.state.cameraDownloads;
+        final oldCameraJob = queue.pendingCameraJob;
+        queue.connectionLost(expectedSession: queue.activeSession);
+        if (oldCameraJob != null) {
+          await widget.state.core
+              .cancel(oldCameraJob)
+              .timeout(const Duration(seconds: 2));
+        }
+      }
+      await widget.state.stopCameraManualTransfer();
+      if (!mounted || request != epoch) return;
+      if (widget.state.cameraManualTransferActive) {
+        throw const AppFailure('另一项照片传输仍在结束，请稍后重新连接。');
+      }
       final result = await connectionRequest.run(
         'camera.connect',
         {
@@ -519,6 +630,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         busy = false;
         job = '';
       });
+      widget.state.cameraLive.connectionRestored(session: session);
       previews.setSession(session);
       if (widget.configuration) {
         finishConnection();

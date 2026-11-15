@@ -2,6 +2,9 @@ package cc.huevia.shared;
 
 import cc.huevia.account.AccountRepository;
 import cc.huevia.album.PhotoEditStore;
+import cc.huevia.album.PhotoLiveProject;
+import cc.huevia.album.PhotoLiveProjectStore;
+import cc.huevia.album.SharedProjectPhoto;
 import cc.huevia.library.SharedJson;
 import cc.huevia.ncp.NcpCompatibilityFixtures;
 import java.io.IOException;
@@ -86,7 +89,50 @@ public final class LiveIngestBoundaryTest {
         intentRecovery(temporary);
         largeCursor(temporary);
         noDefaultOriginals(temporary);
+        rawOriginals(temporary);
         System.out.println("PASS "+checks+" live ingest checks; durable cursors, explicit resume/stop, source receipts, frozen defaults, duplicate-source suppression and intent recovery");return checks;
+    }
+    private static void rawOriginals(Path temporary)throws Exception{
+        Path root=temporary.resolve("raw-live-ingest");Files.createDirectories(root);SharedRuntime runtime=runtime(root);SharedProjects projects=new SharedProjects(runtime);
+        String project=(String)call(projects,"project.create",SharedRuntime.map("name","NEF 原片项目")).get("id"),camera=hash("raw-live-camera");
+        Map<String,Object> identity=SharedRuntime.map("projectId",project,"cameraId",camera),rawCursor=with(cursor(),"format","raw");
+        Map<String,Object> start=with(identity,"session","raw-one","watchId","raw-watch","mode","fresh","trustedCamera",true,"format","raw","cursor",rawCursor);
+        Map<String,Object> active=call(projects,"project.live.start",start),lease=with(start,"token",active.get("token"));yes(active.get("format").equals("raw"));
+        byte[] nef=CameraRawBoundaryTest.nef();String sha=PhotoEditStore.hash(nef);Path source=root.resolve("originals/"+sha+".nef");Files.write(source,nef);
+        String key=hash("new-nef-201");Map<String,Object> item=with(candidate(key,201,nef.length),"name","DSC_0201.NEF","raw",true,"width",0,"height",0);
+        rejects(()->call(projects,"project.live.observe",with(lease,"items",Arrays.asList(candidate(hash("jpeg-companion"),202,8)))));
+        Map<String,Object> observed=call(projects,"project.live.observe",with(lease,"items",Arrays.asList(item,item)));yes(rows(observed,"pending").size()==1);yes(Boolean.TRUE.equals(rows(observed,"pending").get(0).get("raw")));
+        Map<String,Object> receipt=with(lease,"objectKey",key,"handle",201,"storage",1,"name",item.get("name"),"path",source.toString(),"sha256",sha,"bytes",nef.length,"raw",true);
+        rejects(()->call(projects,"project.live.commit",with(receipt,"raw",false)));rejects(()->call(projects,"project.live.commit",with(receipt,"owner","another-owner")));rejects(()->call(projects,"project.live.commit",with(receipt,"session","stale")));
+        Map<String,Object> committed=call(projects,"project.live.commit",receipt);yes(((Number)committed.get("completedCount")).intValue()==1);yes(((Number)committed.get("queuedCount")).intValue()==0);yes(Arrays.equals(nef,Files.readAllBytes(source)));
+        Map<String,Object> opened=call(projects,"project.open",SharedRuntime.map("projectId",project));yes(((Number)opened.get("photoCount")).intValue()==1);yes(rows(opened,"photos").get(0).get("path").equals(source.toString()));
+        SharedRuntime recoveredRuntime=runtime(root);SharedProjects recovered=new SharedProjects(recoveredRuntime);yes(call(recovered,"project.live.state",identity).get("format").equals("raw"));yes(((Number)call(recovered,"project.open",SharedRuntime.map("projectId",project)).get("photoCount")).intValue()==1);
+        // The original catalog uses one filename boundary for commit, recovery and snapshots.
+        Path catalogPath=root.resolve("filename-boundary-projects");PhotoLiveProjectStore catalog=new PhotoLiveProjectStore(catalogPath.toFile(),root.resolve("originals").toFile());String catalogId=catalog.create("NEF 文件名边界").id;
+        catalog.record(catalogId,key,SharedProjectPhoto.completed(source.toFile(),"DSC_0201.nEf"));
+        PhotoLiveProject catalogReloaded=new PhotoLiveProjectStore(catalogPath.toFile(),root.resolve("originals").toFile()).get(catalogId);
+        yes(catalogReloaded.photoCount==1);yes(catalogReloaded.photos.get(0).filename().equals("DSC_0201.nEf"));yes(catalogReloaded.photos.get(0).file().equals(source.toFile().getCanonicalFile()));yes(PhotoEditStore.hash(Files.readAllBytes(catalogReloaded.photos.get(0).file().toPath())).equals(sha));
+        for(String invalid:new String[]{"../DSC.NEF","dir/DSC.NEF","dir\\DSC.NEF","DSC..NEF","DSC.NEF\u0001","DSC.NEF.part","DSC.NRW","DSC.DNG","DSC.NEF/","DSC.NEF\\"})rejects(()->catalog.record(catalogId,key,SharedProjectPhoto.completed(source.toFile(),invalid)));
+        char[] longName=new char[256];Arrays.fill(longName,'a');longName[252]='.';longName[253]='n';longName[254]='e';longName[255]='f';rejects(()->catalog.record(catalogId,key,SharedProjectPhoto.completed(source.toFile(),new String(longName))));
+        Path outside=root.resolve(sha+".nef");Files.write(outside,nef);rejects(()->catalog.record(catalogId,key,SharedProjectPhoto.completed(outside.toFile(),"DSC_0201.NEF")));yes(catalog.get(catalogId).photoCount==1);yes(Arrays.equals(nef,Files.readAllBytes(source)));
+        rejects(()->call(recovered,"project.live.start",with(start,"mode","resume","format","jpeg","cursor",cursor())));
+        Map<String,Object> resumed=call(recovered,"project.live.start",with(start,"mode","resume","session","raw-two","watchId","raw-two-watch"));
+        Map<String,Object> nextLease=with(start,"session","raw-two","watchId","raw-two-watch","token",resumed.get("token"));
+        // An NEF extension or raw:true is never a substitute for genuine TIFF/NEF structure.
+        byte[] jpeg={(byte)255,(byte)216,1,2,3,4,(byte)255,(byte)217};String jpegSha=PhotoEditStore.hash(jpeg);Path fake=root.resolve("originals/"+jpegSha+".nef");Files.write(fake,jpeg);
+        Map<String,Object> fakeItem=with(item,"objectKey",hash("fake-nef"),"handle",203,"name","FAKE.NEF","bytes",jpeg.length);
+        call(recovered,"project.live.observe",with(nextLease,"items",Arrays.asList(fakeItem)));rejects(()->call(recovered,"project.live.commit",with(nextLease,"objectKey",fakeItem.get("objectKey"),"handle",203,"storage",1,"name","FAKE.NEF","path",fake.toString(),"sha256",jpegSha,"bytes",jpeg.length,"raw",true)));
+        // RAW originals retain the same frozen-preset queue and ownership contract.
+        Path incoming=root.resolve("incoming.ncp");Files.write(incoming,NcpCompatibilityFixtures.ncp());Map<String,Object> imported=SharedJson.object(recoveredRuntime.request("library.import",SharedJson.encode(SharedRuntime.map("path",incoming.toString(),"name","RAW 项目预设.ncp"))));String preset=(String)SharedRuntime.object(imported.get("record")).get("id");call(recovered,"project.setPreset",SharedRuntime.map("projectId",project,"presetId",preset));
+        byte[] second=nef.clone();second[second.length-1]=19;String secondSha=PhotoEditStore.hash(second);Path secondSource=root.resolve("originals/"+secondSha+".nef");Files.write(secondSource,second);
+        Map<String,Object> secondItem=with(item,"objectKey",hash("new-nef-204"),"handle",204,"name","DSC_0204.NEF");call(recovered,"project.live.observe",with(nextLease,"items",Arrays.asList(secondItem)));
+        call(recovered,"project.live.commit",with(nextLease,"objectKey",secondItem.get("objectKey"),"handle",204,"storage",1,"name",secondItem.get("name"),"path",secondSource.toString(),"sha256",secondSha,"bytes",second.length,"raw",true));
+        opened=call(recovered,"project.open",SharedRuntime.map("projectId",project));yes(rows(opened,"tasks").size()==1);Map<String,Object> task=rows(opened,"tasks").get(0);yes(task.get("identity").equals(secondSha));
+        Map<String,Object> prepared=call(recovered,"project.begin",SharedRuntime.map("projectId",project,"key",task.get("key")));yes(prepared.get("path").equals(secondSource.toString()));yes(prepared.get("sourceSha").equals(secondSha));yes(Arrays.equals(second,Files.readAllBytes(secondSource)));
+        call(recovered,"project.live.stop",nextLease);Map<String,Object> jpegStart=with(start,"session","jpeg-session","watchId","jpeg-watch","format","jpeg","cursor",cursor());Map<String,Object> jpegActive=call(recovered,"project.live.start",jpegStart),jpegLease=with(jpegStart,"token",jpegActive.get("token"));
+        Map<String,Object> jpegItem=candidate(hash("retained-jpeg"),205,jpeg.length);Path jpegSource=root.resolve("originals/"+jpegSha+".jpg");Files.write(jpegSource,jpeg);call(recovered,"project.live.observe",with(jpegLease,"items",Arrays.asList(jpegItem)));
+        call(recovered,"project.live.commit",with(jpegLease,"objectKey",jpegItem.get("objectKey"),"handle",205,"storage",1,"name",jpegItem.get("name"),"path",jpegSource.toString(),"sha256",jpegSha,"bytes",jpeg.length,"raw",false));yes(Arrays.equals(jpeg,Files.readAllBytes(jpegSource)));yes(Arrays.equals(nef,Files.readAllBytes(source)));
+        yes(((Number)call(recovered,"project.open",SharedRuntime.map("projectId",project)).get("photoCount")).intValue()==3);
     }
     private static void intentRecovery(Path temporary)throws Exception{
         Path root=temporary.resolve("intent-runtime");Files.createDirectories(root);SharedLiveIngest journal=new SharedLiveIngest(root.toFile());String project="12345678-1234-1234-1234-123456789012",camera=hash("intent-camera");

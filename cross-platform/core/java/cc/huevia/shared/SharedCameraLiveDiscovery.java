@@ -41,6 +41,8 @@ final class SharedCameraLiveDiscovery {
     private final Map<Long,Probe> probes=new LinkedHashMap<>();
     private final Map<Long,Ready> ready=new LinkedHashMap<>();
     private final Map<Long,String> acknowledged=new LinkedHashMap<>();
+    private int otherFormatCount,unsupportedRawCount;
+    private String format="jpeg";
     private final Map<Long,String> restored=new LinkedHashMap<>();
     private final List<Object> updates=new ArrayList<>(),removed=new ArrayList<>();
     private final Map<String,Object> unavailableObjects=new LinkedHashMap<>();
@@ -69,11 +71,13 @@ final class SharedCameraLiveDiscovery {
     }
     Map<String,Object> start(Map<String,Object> p,BooleanSupplier cancel)throws IOException{
         check(cancel);
+        format=format(p);
         if(p.containsKey("cameraId")&&!cameraId.equals(p.get("cameraId")))throw new IOException("相机身份已改变，未开始边拍边传。");
         Object cursor=p.get("cursor");
         if(cursor!=null){
             if(!trusted||!cameraId.equals(p.get("cameraId")))throw new IOException("相机身份未确认，不能继续旧边拍边传记录。");
             if(!(cursor instanceof Map))throw new IOException("边拍边传基线无效。");
+            if(!format.equals(format((Map<?,?>)cursor)))throw new IOException("上次拍摄格式不同，请选择原格式后继续。");
             restore((Map<?,?>)cursor);
         }
         client.setOnObjectAdded(this::hint);
@@ -81,7 +85,7 @@ final class SharedCameraLiveDiscovery {
             scan(cancel,cursor==null);
             if(unavailable.size()>0&&references.isEmpty())throw new IOException("相机存储卡暂不可读取，请确认存储卡后重试。");
             if(cursor!=null)for(long handle:restored.keySet())enqueue(handle);
-            return SharedRuntime.map("session",session,"watchId",watchId,"cameraId",cameraId,"trustedCamera",trusted,"cursor",cursor(),"unavailableStorages",unavailable.size());
+            return SharedRuntime.map("session",session,"watchId",watchId,"cameraId",cameraId,"format",format,"trustedCamera",trusted,"cursor",cursor(),"unavailableStorages",unavailable.size());
         }catch(IOException|RuntimeException failure){stop();throw failure;}
     }
     private void restore(Map<?,?> cursor)throws IOException{
@@ -110,6 +114,7 @@ final class SharedCameraLiveDiscovery {
     Map<String,Object> poll(Map<String,Object> p,BooleanSupplier cancel)throws IOException{
         require(p);check(cancel);int limit=SharedRuntime.integer(p,"limit",12);if(limit<1||limit>60)throw new IOException("边拍边传读取数量无效。");
         updates.clear();removed.clear();
+        otherFormatCount=unsupportedRawCount=0;
         List<Long> events;
         synchronized(hints){events=new ArrayList<>(hints);hints.clear();}
         boolean unknown=false;for(long handle:events)if(!references.containsKey(handle))unknown=true;
@@ -140,7 +145,7 @@ final class SharedCameraLiveDiscovery {
             items.add(row(handle,value));
         }
         if(!keys.isEmpty())offerCursor=(offerCursor+Math.max(1,items.size()))%keys.size();
-        Map<String,Object> result=SharedRuntime.map("session",session,"watchId",watchId,"cameraId",cameraId,"items",items,"baselineUpdates",new ArrayList<>(updates.subList(0,Math.min(1000,updates.size()))),"baselineRemoved",new ArrayList<>(removed.subList(0,Math.min(1000,removed.size()))),"initializedStorages",new ArrayList<>(initialized),"unavailable",new ArrayList<>(unavailableObjects.values()),"unavailableStorages",unavailable.size(),"pending",ready.size(),"inspecting",inspect.size(),"totalHandles",references.size());
+        Map<String,Object> result=SharedRuntime.map("session",session,"watchId",watchId,"cameraId",cameraId,"format",format,"items",items,"otherFormatCount",otherFormatCount,"unsupportedRawCount",unsupportedRawCount,"baselineUpdates",new ArrayList<>(updates.subList(0,Math.min(1000,updates.size()))),"baselineRemoved",new ArrayList<>(removed.subList(0,Math.min(1000,removed.size()))),"initializedStorages",new ArrayList<>(initialized),"unavailable",new ArrayList<>(unavailableObjects.values()),"unavailableStorages",unavailable.size(),"pending",ready.size(),"inspecting",inspect.size(),"totalHandles",references.size());
         if(updates.size()>1000||removed.size()>1000)result.put("cursor",cursor());
         unavailableObjects.clear();return result;
     }
@@ -156,14 +161,22 @@ final class SharedCameraLiveDiscovery {
         String key=objectKey(cameraId,handle,info);String expected=restored.get(handle);
         if(expected!=null&&!expected.equals(key))markUnavailable(handle,"changed");
         Ready previousReady=ready.get(handle);if(previousReady!=null&&!previousReady.key.equals(key))markUnavailable(handle,"changed");
-        if(SharedCamera.photoFormat(info)!=PhotoFormat.JPEG){acknowledged.put(handle,key);ready.remove(handle);return;}
         Baseline old=baseline.get(handle);
+        PhotoFormat actual=SharedCamera.photoFormat(info),selected=format.equals("raw")?PhotoFormat.NEF:PhotoFormat.JPEG;
+        if(actual!=selected){
+            boolean fresh=old==null||!old.key.isEmpty()&&!old.key.equals(key);
+            if(fresh&&!key.equals(acknowledged.get(handle))){
+                if(format.equals("raw")&&info.filename().toLowerCase(java.util.Locale.ROOT).matches(".*\\.(nrw|dng|arw|cr2|cr3|raf|rw2|orf|pef|srw)"))unsupportedRawCount++;
+                else if(actual==PhotoFormat.JPEG||actual==PhotoFormat.NEF)otherFormatCount++;
+            }
+            acknowledged.put(handle,key);ready.remove(handle);probes.remove(handle);return;
+        }
         if(old!=null&&expected==null){
             if(old.key.isEmpty()){old.key=key;updates.add(baselineRow(handle,old));return;}
             if(old.key.equals(key)){ready.remove(handle);return;}
         }
         if(key.equals(acknowledged.get(handle))){ready.remove(handle);return;}
-        if(info.compressedSize()<4||info.compressedSize()>512L*1024*1024||info.imagePixWidth()<1||info.imagePixHeight()<1){ready.remove(handle);probes.remove(handle);enqueue(handle);return;}
+        if(info.compressedSize()<(selected==PhotoFormat.NEF?32:4)||info.compressedSize()>512L*1024*1024||selected==PhotoFormat.JPEG&&(info.imagePixWidth()<1||info.imagePixHeight()<1)){ready.remove(handle);probes.remove(handle);enqueue(handle);return;}
         Ready offered=ready.get(handle);if(offered!=null&&offered.key.equals(key))return;
         Probe previous=probes.get(handle);
         if(previous==null||!previous.key.equals(key)){probes.put(handle,new Probe(key,now));ready.remove(handle);enqueue(handle);return;}
@@ -186,10 +199,16 @@ final class SharedCameraLiveDiscovery {
         for(long storage:storages){
             check(cancel);id(storage);long[] values;
             try{
-                boolean filtered=true;
-                try{values=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,storage,0x3801,0));}
-                catch(PtpResponseException unsupported){if(unsupported.responseCode()!=0x2014)throw unsupported;filtered=false;values=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,storage,0,0));}
-                if(filtered&&values.length==0)values=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,storage,0,0));
+                if(format.equals("raw")){
+                    // NEF vendor object-format codes vary. Inspect the complete
+                    // bounded inventory, then require NEF descriptors and bytes.
+                    values=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,storage,0,0));
+                }else{
+                    boolean filtered=true;
+                    try{values=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,storage,0x3801,0));}
+                    catch(PtpResponseException unsupported){if(unsupported.responseCode()!=0x2014)throw unsupported;filtered=false;values=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,storage,0,0));}
+                    if(filtered&&values.length==0)values=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,storage,0,0));
+                }
             }catch(PtpResponseException failure){if(failure.responseCode()==0x2013){missing.add(storage);continue;}throw failure;}
             available.add(storage);
             for(long handle:values){id(handle);Long other=next.put(handle,storage);if(other!=null&&other.longValue()!=storage)throw new IOException("不同存储卡返回重复边拍边传索引。");if(next.size()>MAX_HANDLES)throw new IOException("边拍边传最多读取 20000 个对象。");}
@@ -216,6 +235,7 @@ final class SharedCameraLiveDiscovery {
     }
     PtpObjectInfo authorize(Map<String,Object> p,long handle)throws IOException{
         require(p);String key=requiredKey(p.get("objectKey"));Ready candidate=ready.get(handle);
+        if(Boolean.TRUE.equals(p.get("raw"))!=format.equals("raw"))throw new IOException("相机原片格式与本次边拍边传不符。");
         if(candidate==null||!candidate.key.equals(key))throw new IOException("边拍边传照片已改变或未确认，未下载。");return candidate.info;
     }
     void invalidate(long handle)throws IOException{markUnavailable(handle,"changed");enqueue(handle);}
@@ -224,16 +244,17 @@ final class SharedCameraLiveDiscovery {
         List<Object> rows=new ArrayList<>();for(Map.Entry<Long,Baseline> entry:baseline.entrySet())rows.add(baselineRow(entry.getKey(),entry.getValue()));
         List<Object> first=new ArrayList<>(rows.subList(0,Math.min(1000,rows.size()))),pages=new ArrayList<>();
         for(int offset=1000;offset<rows.size();offset+=1000)pages.add(new ArrayList<>(rows.subList(offset,Math.min(offset+1000,rows.size()))));
-        Map<String,Object> value=SharedRuntime.map("baseline",first,"baselineCount",rows.size(),"initializedStorages",new ArrayList<>(initialized));if(!pages.isEmpty())value.put("baselinePages",pages);return value;
+        Map<String,Object> value=SharedRuntime.map("format",format,"baseline",first,"baselineCount",rows.size(),"initializedStorages",new ArrayList<>(initialized));if(!pages.isEmpty())value.put("baselinePages",pages);return value;
     }
-    void require(Map<String,Object> p)throws IOException{if(stopped||!watchId.equals(p.get("watchId")))throw new IOException("边拍边传会话已改变，请重新开始。");}
+    void require(Map<String,Object> p)throws IOException{if(stopped||!watchId.equals(p.get("watchId")))throw new IOException("边拍边传会话已改变，请重新开始。");if(p.containsKey("format")&&!format.equals(format(p)))throw new IOException("拍摄期间不能切换接收格式。");}
     void stop(){stopped=true;client.setOnObjectAdded(null);synchronized(hints){hints.clear();}inspect.clear();ready.clear();probes.clear();}
     String cameraId(){return cameraId;}
     String watchId(){return watchId;}
     private void hint(long handle){if(handle<1||handle>=0xffffffffL)return;synchronized(hints){if(!stopped&&hints.size()<MAX_HINTS)hints.add(handle);}}
     private void enqueue(long handle){if(inspect.size()<MAX_HINTS)inspect.add(handle);}
     private static Map<String,Object> baselineRow(long handle,Baseline row){Map<String,Object> value=SharedRuntime.map("storage",row.storage,"handle",handle);if(!row.key.isEmpty())value.put("objectKey",row.key);return value;}
-    private static Map<String,Object> row(long handle,Ready value){PtpObjectInfo info=value.info;return SharedRuntime.map("objectKey",value.key,"storage",info.storageId(),"handle",handle,"name",info.filename(),"bytes",info.compressedSize(),"width",info.imagePixWidth(),"height",info.imagePixHeight(),"capturedAt",info.captureDate(),"raw",false);}
+    private static Map<String,Object> row(long handle,Ready value){PtpObjectInfo info=value.info;return SharedRuntime.map("objectKey",value.key,"storage",info.storageId(),"handle",handle,"name",info.filename(),"bytes",info.compressedSize(),"width",info.imagePixWidth(),"height",info.imagePixHeight(),"capturedAt",info.captureDate(),"raw",SharedCamera.photoFormat(info)==PhotoFormat.NEF);}
+    private static String format(Map<?,?> p)throws IOException{Object value=p.get("format");if(value==null)return "jpeg";if(!(value instanceof String)||!value.equals("jpeg")&&!value.equals("raw"))throw new IOException("边拍边传格式无效。");return (String)value;}
     static String objectKey(String camera,long handle,PtpObjectInfo info){MessageDigest digest=digest();digest.update((camera+"\n"+info.storageId()+"\n"+handle+"\n").getBytes(StandardCharsets.UTF_8));digest.update(info.toBytes());return hex(digest.digest());}
     private static long id(Object value)throws IOException{if(!(value instanceof Number)||((Number)value).doubleValue()!=((Number)value).longValue()||((Number)value).longValue()<1||((Number)value).longValue()>=0xffffffffL)throw new IOException("边拍边传照片或存储卡索引无效。");return ((Number)value).longValue();}
     private static String optionalKey(Object value)throws IOException{if(value==null)return "";return requiredKey(value);}

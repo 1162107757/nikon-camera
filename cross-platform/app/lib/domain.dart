@@ -310,12 +310,21 @@ class AppState extends ChangeNotifier {
       _cameraDownloads ??= CameraDownloads(this);
   bool get cameraDownloadsActive => _cameraDownloads?.busy ?? false;
   bool _cameraManualTransfer = false;
+  Object? _cameraManualLease;
+  String _cameraManualSession = '';
+  Future<void> Function()? _cameraManualStop;
   bool get cameraManualTransferActive => _cameraManualTransfer;
-  bool claimCameraTransfer() {
+  bool claimCameraTransfer({
+    String session = '',
+    Future<void> Function()? onStop,
+  }) {
     if (_cameraManualTransfer || cameraLiveActive || cameraDownloadsActive) {
       return false;
     }
     _cameraManualTransfer = true;
+    _cameraManualLease = Object();
+    _cameraManualSession = session;
+    _cameraManualStop = onStop;
     notifyListeners();
     return true;
   }
@@ -323,7 +332,36 @@ class AppState extends ChangeNotifier {
   void releaseCameraTransfer() {
     if (_cameraManualTransfer) {
       _cameraManualTransfer = false;
+      _cameraManualLease = null;
+      _cameraManualSession = '';
+      _cameraManualStop = null;
       notifyListeners();
+    }
+  }
+
+  Future<void> stopCameraManualTransfer({String? expectedSession}) async {
+    final lease = _cameraManualLease, stop = _cameraManualStop;
+    if (lease == null ||
+        stop == null ||
+        expectedSession != null && expectedSession != _cameraManualSession) {
+      return;
+    }
+    final released = Completer<void>();
+    void changed() {
+      if (!identical(_cameraManualLease, lease) && !released.isCompleted) {
+        released.complete();
+      }
+    }
+
+    addListener(changed);
+    try {
+      await stop().timeout(const Duration(seconds: 2));
+      changed();
+      await released.future.timeout(const Duration(seconds: 2));
+    } on TimeoutException {
+      throw const AppFailure('上一张照片仍在保存或结束，请稍后重试连接。');
+    } finally {
+      removeListener(changed);
     }
   }
 
