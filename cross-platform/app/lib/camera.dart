@@ -240,11 +240,22 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
   void toggleSelection(Json item) {
     final handle = item['handle'];
-    if (busy || exclusive || handle is! int) return;
+    if (busy || transfer.busy || exclusive || handle is! int) return;
     setState(() {
       if (!selection.remove(handle)) {
         if (selection.length < 100) selection.add(handle);
       }
+    });
+  }
+
+  void beginSelection(Json item) {
+    final handle = item['handle'];
+    if (busy || transfer.busy || exclusive || handle is! int) return;
+    setState(() {
+      selecting = true;
+      selection
+        ..clear()
+        ..add(handle);
     });
   }
 
@@ -292,8 +303,11 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     setState(() {});
   }
 
-  Future<void> openConnection({bool? loadPhotos}) async {
-    if (childOpen) return;
+  Future<bool> openConnection({
+    bool? loadPhotos,
+    bool waitForStatus = true,
+  }) async {
+    if (!mounted || childOpen) return false;
     final browseAfter = loadPhotos ?? browsingPhotos;
     setState(() => childOpen = true);
     previews.pause();
@@ -304,17 +318,23 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       childOpen = false;
       if (mounted) setState(() {});
     }
-    if (!mounted) return;
+    if (!mounted) return false;
     // The navigation lease ends when the route closes, not when a later
     // transport snapshot eventually returns.
     if (didConnect) {
-      await status(reload: browseAfter, inspectOnly: !browseAfter);
+      final refresh = status(reload: browseAfter, inspectOnly: !browseAfter);
+      if (waitForStatus) {
+        await refresh;
+      } else {
+        unawaited(refresh);
+      }
     } else {
       unawaited(status(reload: false, inspectOnly: true));
     }
     if (mounted && !exclusive && browsingPhotos && photosReady) {
       previews.resume();
     }
+    return didConnect;
   }
 
   Future<void> chooseProtocol() async {
@@ -667,6 +687,9 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       if (!busy && !exclusive) unawaited(status(reload: false));
     } else {
       previews.pause();
+      if (value == 1 && (!connected || session.isEmpty)) {
+        unawaited(openConnection(loadPhotos: false, waitForStatus: false));
+      }
     }
   }
 
@@ -806,12 +829,16 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       error = null;
     });
     try {
+      await widget.state.stopCameraManualTransfer(
+        expectedSession: expectedSession,
+      );
+      if (!mounted || request != epoch) return;
       if (widget.state.cameraDownloadsActive) {
-        await widget.state.cameraDownloads.stop();
+        await widget.state.cameraDownloads.stop(preserveConnection: false);
       }
       if (!mounted || request != epoch) return;
       if (widget.state.cameraLiveActive) {
-        await widget.state.cameraLive.stop();
+        await widget.state.cameraLive.stop(preserveConnection: false);
       }
       if (!mounted || request != epoch) return;
       final result = await widget.state.core.call('camera.disconnect', {
@@ -933,6 +960,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           inventoryReady: inventoryReady,
           raw: raw,
           selecting: selecting,
+          selectedCount: selection.length,
           order: photoSort,
           onRawChanged: busy || exclusive || transfer.busy
               ? null
@@ -949,33 +977,18 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                   selecting = !selecting;
                   selection.clear();
                 }),
+          onSelectAll: busy || exclusive || transfer.busy
+              ? null
+              : () => setState(() {
+                  selection
+                    ..clear()
+                    ..addAll(
+                      displayedItems
+                          .take(100)
+                          .map((row) => row['handle'] as int),
+                    );
+                }),
         ),
-        if (selecting)
-          Wrap(
-            spacing: 8,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              TextButton(
-                onPressed: busy || exclusive
-                    ? null
-                    : () => setState(() {
-                        selection.clear();
-                        selection.addAll(
-                          displayedItems
-                              .take(100)
-                              .map((row) => row['handle'] as int),
-                        );
-                      }),
-                child: const Text('选择已读取照片'),
-              ),
-              FilledButton(
-                onPressed: selection.isEmpty || busy || exclusive
-                    ? null
-                    : receiveSelection,
-                child: Text('接收 ${selection.length} 张'),
-              ),
-            ],
-          ),
       ],
     );
   }
@@ -990,6 +1003,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     sliver: true,
     selection: selecting ? selection : null,
     onSelect: toggleSelection,
+    onBeginSelection: beginSelection,
   );
 
   Widget downloadedPhotos() => Column(
@@ -1068,6 +1082,9 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
               labels: const ['相机照片', '边拍边传', '已下载'],
               selected: overviewTab,
               onSelected: selectOverview,
+              gap: 8,
+              padding: const EdgeInsets.all(6),
+              height: 60,
             ),
           ),
           if (busy && !transfer.busy && !loadingMore)
@@ -1078,7 +1095,8 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                 ? ProjectPresetsPage(
                     state: widget.state,
                     embedded: true,
-                    onConnect: openConnection,
+                    onConnect: () =>
+                        openConnection(loadPhotos: false, waitForStatus: false),
                   )
                 : overviewTab == 2 && widget.state.photos.isNotEmpty
                 ? downloadedPhotos()
@@ -1291,6 +1309,12 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           : Padding(
               padding: EdgeInsets.only(bottom: hueNavigationInset(context) + 8),
               child: SyncToolsDock(
+                selectionCount: overviewTab == 0 && connected && selecting
+                    ? selection.length
+                    : 0,
+                onDownloadSelection: busy || transfer.busy || exclusive
+                    ? null
+                    : receiveSelection,
                 onDownloads: busy || transfer.busy ? null : openDownloads,
                 onRemote: busy || transfer.busy || exclusive
                     ? null

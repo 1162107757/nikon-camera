@@ -32,7 +32,11 @@ class CameraTransfer extends ChangeNotifier {
   bool busy = false, _alive = true, _stopped = false, _invalid = false;
   String _owner = '';
   int _sequence = 0;
+  int _generation = 0;
   StreamSubscription<dynamic>? _events;
+  Completer<void>? _runCompletion, _stopCompletion;
+  int _stoppingRunEpoch = -1;
+  Set<String> _stopCancelledJobs = {};
 
   bool get visible => phase != CameraTransferPhase.idle;
   bool get done => phase == CameraTransferPhase.done;
@@ -56,8 +60,10 @@ class CameraTransfer extends ChangeNotifier {
   }
 
   String get _currentOwner => state.session['user']?['id'] as String? ?? '';
-  void _check() {
-    if (!_alive || _stopped) throw const AppFailure('下载已停止。');
+  void _check(int epoch) {
+    if (!_alive || _stopped || epoch != _generation) {
+      throw const AppFailure('下载已停止。');
+    }
     if (_invalid ||
         _currentOwner != _owner ||
         state.session['logoutPending'] == true) {
@@ -76,12 +82,13 @@ class CameraTransfer extends ChangeNotifier {
     received = total = 0;
     phase = CameraTransferPhase.invalid;
     error = '请返回后重新读取照片。';
-    unawaited(stop());
+    unawaited(stop(preserveConnection: false));
     _changed();
   }
 
-  void _progress(dynamic event) {
+  void _progress(dynamic event, int epoch) {
     if (!_alive ||
+        epoch != _generation ||
         !busy ||
         _stopped ||
         _invalid ||
@@ -126,7 +133,9 @@ class CameraTransfer extends ChangeNotifier {
       onStop: () async {
         // An already verified photo can finish its local publication. A
         // reconnect only cancels this download while it still owns camera I/O.
-        if (canStop) await stop();
+        if (canStop || busy && _stopCompletion != null) {
+          await stop(preserveConnection: false);
+        }
       },
     )) {
       phase = CameraTransferPhase.failed;
@@ -142,21 +151,34 @@ class CameraTransfer extends ChangeNotifier {
     total = size;
     error = null;
     busy = true;
+    final epoch = ++_generation;
+    final completed = Completer<void>();
+    _runCompletion = completed;
+    _stopCompletion = null;
+    _stopCancelledJobs = {};
     phase = CameraTransferPhase.preparing;
     final identity =
         'camera-download-${DateTime.now().microsecondsSinceEpoch}-${_sequence++}';
     job = identity;
-    _events = state.core.operationProgress.listen(_progress, onError: (_) {});
+    final runEvents = state.core.operationProgress.listen(
+      (event) => _progress(event, epoch),
+      onError: (_) {},
+    );
+    _events = runEvents;
     _changed();
     try {
-      _check();
-      final result = await state.core.call('camera.download', {
-        'session': session,
-        'handle': item['handle'],
-        'raw': raw,
-      }, identity);
-      _check();
-      job = null;
+      _check(epoch);
+      final Json result;
+      try {
+        result = await state.core.call('camera.download', {
+          'session': session,
+          'handle': item['handle'],
+          'raw': raw,
+        }, identity);
+      } finally {
+        if (job == identity) job = null;
+      }
+      _check(epoch);
       final path = result['path'],
           sha = result['sha256'],
           name = result['name'];
@@ -175,7 +197,7 @@ class CameraTransfer extends ChangeNotifier {
       phase = CameraTransferPhase.importing;
       _changed();
       final info = await state.core.call('media.info', {'path': path});
-      _check();
+      _check(epoch);
       if (result['downloadCameraId'] is String &&
           RegExp(r'^[0-9a-f]{64}$')
               .hasMatch(result['downloadCameraId'] as String) &&
@@ -189,43 +211,115 @@ class CameraTransfer extends ChangeNotifier {
           'trusted': result['downloadTrusted'] == true,
         };
       }
-      importedPhoto = await state.registerPhoto(path, name, info);
-      _check();
+      final saved = await state.registerPhoto(path, name, info);
+      _check(epoch);
+      importedPhoto = saved;
       phase = CameraTransferPhase.done;
     } catch (failure) {
-      if (_invalid) {
-        phase = CameraTransferPhase.invalid;
-      } else if (_stopped) {
-        phase = CameraTransferPhase.stopped;
-      } else {
-        phase = CameraTransferPhase.failed;
-        error = '$failure';
+      if (_generation == epoch) {
+        if (_invalid) {
+          phase = CameraTransferPhase.invalid;
+        } else if (_stopped) {
+          phase = CameraTransferPhase.stopped;
+        } else {
+          phase = CameraTransferPhase.failed;
+          error = '$failure';
+        }
       }
     } finally {
-      state.releaseCameraTransfer();
-      await _events?.cancel();
-      _events = null;
-      job = null;
-      busy = false;
-      _changed();
+      await runEvents.cancel();
+      if (_generation == epoch) {
+        if (identical(_events, runEvents)) _events = null;
+        job = null;
+        busy = false;
+        state.releaseCameraTransfer();
+        if (_generation == epoch) _changed();
+      }
+      if (identical(_runCompletion, completed)) _runCompletion = null;
+      if (!completed.isCompleted) completed.complete();
+    }
+    final stopping = _stopCompletion;
+    if (stopping != null && _stoppingRunEpoch == epoch) {
+      await stopping.future;
     }
   }
 
-  Future<void> stop() async {
-    if (!busy || _stopped) return;
+  Future<void> _cancelStoppingJob(
+    int epoch,
+    Completer<void> completion, {
+    required bool preserveConnection,
+  }) async {
+    if (preserveConnection ||
+        _generation != epoch ||
+        !identical(_stopCompletion, completion)) {
+      return;
+    }
+    final identity = job;
+    if (identity == null || !_stopCancelledJobs.add(identity)) return;
+    try {
+      await state.core.cancel(identity);
+    } catch (_) {
+      if (_alive &&
+          !_invalid &&
+          _generation == epoch &&
+          identical(_stopCompletion, completion) &&
+          _currentOwner == _owner) {
+        error = '停止请求未确认，正在等待当前任务结果。';
+        _changed();
+      }
+    }
+  }
+
+  Future<void> stop({bool preserveConnection = true}) async {
+    final existing = _stopCompletion;
+    if (existing != null) {
+      if (!preserveConnection) {
+        await _cancelStoppingJob(
+          _generation,
+          existing,
+          preserveConnection: false,
+        );
+      }
+      await existing.future;
+      return;
+    }
+    if (!busy) return;
+    final pending = _runCompletion;
+    final stoppedEvents = _events;
+    _stoppingRunEpoch = _generation;
+    final epoch = ++_generation;
+    final completion = Completer<void>();
+    _stopCompletion = completion;
+    _stopCancelledJobs = {};
     _stopped = true;
     if (!_invalid) phase = CameraTransferPhase.stopping;
     _changed();
-    final identity = job;
-    if (identity != null) {
+    bool currentStop() =>
+        _generation == epoch && identical(_stopCompletion, completion);
+    try {
+      await _cancelStoppingJob(
+        epoch,
+        completion,
+        preserveConnection: preserveConnection,
+      );
+      if (!currentStop()) return;
       try {
-        await state.core.cancel(identity);
+        await pending?.future;
       } catch (_) {
-        if (_alive && !_invalid) {
-          error = '停止请求未确认，正在等待当前任务结果。';
-          _changed();
-        }
+        // The retired run owns any failure and its received original file.
       }
+      if (!currentStop()) return;
+      if (identical(_events, stoppedEvents)) _events = null;
+      job = null;
+      busy = false;
+      phase = _invalid
+          ? CameraTransferPhase.invalid
+          : CameraTransferPhase.stopped;
+      state.releaseCameraTransfer();
+      if (currentStop()) _changed();
+    } finally {
+      if (!completion.isCompleted) completion.complete();
+      if (identical(_stopCompletion, completion)) _stopCompletion = null;
     }
   }
 

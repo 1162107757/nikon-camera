@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'theme.dart';
 import 'legacy_glass_sheet.dart';
+import 'camera_selection_download.dart';
 
 /// Local to Sync. User-selected B: a 52dp circular glass entry.
 class SyncToolsDock extends StatefulWidget {
@@ -14,10 +15,14 @@ class SyncToolsDock extends StatefulWidget {
     required this.onSlots,
     this.downloadActive = false,
     this.downloadRemaining = 0,
+    this.selectionCount = 0,
+    this.onDownloadSelection,
   });
   final VoidCallback? onDownloads, onRemote, onSlots;
   final bool downloadActive;
   final int downloadRemaining;
+  final int selectionCount;
+  final VoidCallback? onDownloadSelection;
   @override
   State<SyncToolsDock> createState() => _SyncToolsDockState();
 }
@@ -87,7 +92,7 @@ class _SyncToolsDockState extends State<SyncToolsDock> {
     final p = HuePalette.of(context),
         remaining = math.max(0, widget.downloadRemaining);
     if (!expanded) {
-      return SizedBox(
+      final entry = SizedBox(
         key: const Key('sync-tools-dock'),
         width: 52,
         height: 52,
@@ -150,6 +155,18 @@ class _SyncToolsDockState extends State<SyncToolsDock> {
             ),
           ),
         ),
+      );
+      if (widget.selectionCount <= 0) return entry;
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CameraSelectionDownload(
+            count: widget.selectionCount,
+            onPressed: widget.onDownloadSelection,
+          ),
+          const SizedBox(height: 12),
+          entry,
+        ],
       );
     }
     return TapRegion(

@@ -147,7 +147,7 @@ class HeldStopLive extends CameraLive {
   HeldStopLive(super.state) : super(automatic: false);
   final stopped = Completer<void>();
   @override
-  Future<void> stop() {
+  Future<void> stop({bool preserveConnection = true}) {
     active = false;
     return stopped.future;
   }

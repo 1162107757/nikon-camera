@@ -282,64 +282,113 @@ class CapsuleSwitch extends StatelessWidget {
     required this.selected,
     required this.onSelected,
     this.enabled = true,
-  });
+    this.gap = 0,
+    this.padding = const EdgeInsets.symmetric(horizontal: 4),
+    this.height = 48,
+  }) : assert(labels.length > 0),
+       assert(selected >= 0 && selected < labels.length),
+       assert(gap >= 0),
+       assert(height >= 44);
   final List<String> labels;
   final int selected;
   final ValueChanged<int> onSelected;
   final bool enabled;
+  final double gap, height;
+  final EdgeInsetsGeometry padding;
   @override
   Widget build(BuildContext context) {
     final p = HuePalette.of(context);
+    final insets = padding.resolve(Directionality.of(context));
+    final innerHeight = (height - insets.vertical)
+        .clamp(0.0, height)
+        .toDouble();
+    final pillHeight = (height - 8).clamp(0.0, innerHeight).toDouble();
+    final duration = MediaQuery.disableAnimationsOf(context)
+        ? Duration.zero
+        : const Duration(milliseconds: 220);
+    final inheritedText = DefaultTextStyle.of(context).style;
     return Container(
-      height: 48,
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      height: height,
+      padding: insets,
       decoration: BoxDecoration(
         color: p.container,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(height / 2),
       ),
-      child: Row(
-        children: [
-          for (var i = 0; i < labels.length; i++)
-            Expanded(
-              child: Opacity(
-                opacity: enabled ? 1 : .68,
-                child: Semantics(
-                  enabled: enabled,
-                  selected: i == selected,
-                  button: true,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: enabled ? () => onSelected(i) : null,
-                    child: Center(
-                      child: Container(
-                        height: 40,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: i == selected
-                              ? p.home && p.dark
-                                    ? const Color(0xff4b4640)
-                                    : p.card
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          labels[i],
-                          style: TextStyle(
-                            fontSize: 13,
-                            height: 1.2,
-                            fontWeight: i == selected
-                                ? FontWeight.w700
-                                : FontWeight.w400,
-                            color: i == selected ? p.ink : p.secondary,
-                          ),
-                        ),
+      child: LayoutBuilder(
+        builder: (context, bounds) {
+          final segmentWidth =
+              (bounds.maxWidth - gap * (labels.length - 1)) / labels.length;
+          return Opacity(
+            opacity: enabled ? 1 : .68,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                AnimatedPositionedDirectional(
+                  duration: duration,
+                  curve: Curves.easeOutCubic,
+                  start: selected * (segmentWidth + gap),
+                  top: (innerHeight - pillHeight) / 2,
+                  width: segmentWidth,
+                  height: pillHeight,
+                  child: IgnorePointer(
+                    child: DecoratedBox(
+                      key: const ValueKey('capsule-switch-indicator'),
+                      decoration: BoxDecoration(
+                        color: p.home && p.dark
+                            ? const Color(0xff4b4640)
+                            : p.card,
+                        borderRadius: BorderRadius.circular(pillHeight / 2),
                       ),
                     ),
                   ),
                 ),
-              ),
+                Row(
+                  children: [
+                    for (var i = 0; i < labels.length; i++) ...[
+                      if (i > 0) SizedBox(width: gap),
+                      Expanded(
+                        child: Semantics(
+                          enabled: enabled,
+                          selected: i == selected,
+                          button: true,
+                          child: GestureDetector(
+                            key: ValueKey('capsule-switch-tab-$i'),
+                            behavior: HitTestBehavior.opaque,
+                            onTap: enabled ? () => onSelected(i) : null,
+                            child: Center(
+                              child: AnimatedDefaultTextStyle(
+                                duration: duration,
+                                curve: Curves.easeOutCubic,
+                                style: inheritedText.merge(
+                                  TextStyle(
+                                    fontSize: 13,
+                                    height: 1.2,
+                                    fontWeight: i == selected
+                                        ? FontWeight.w700
+                                        : FontWeight.w400,
+                                    color: i == selected ? p.ink : p.secondary,
+                                  ),
+                                ),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    labels[i],
+                                    maxLines: 1,
+                                    softWrap: false,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
             ),
-        ],
+          );
+        },
       ),
     );
   }

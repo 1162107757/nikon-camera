@@ -67,6 +67,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   StreamSubscription<dynamic>? _events;
   ProjectPresetsModel? _processor;
   Future<void>? _processingFuture;
+  Completer<void>? _callCompletion, _stopCompletion;
 
   bool get working => _working;
   CameraLiveFormat get selectedFormat => _selectedFormat;
@@ -135,8 +136,10 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   Future<Json> _call(String operation, Json payload, int generation) async {
     _check(generation);
     final job = 'camera-live-$generation-${_sequence++}';
+    final completion = Completer<void>();
     _job = job;
     _jobOperation = operation;
+    _callCompletion = completion;
     try {
       final value = await state.core.call(operation, payload, job);
       if (!_current(generation)) {
@@ -151,7 +154,9 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       if (_job == job) {
         _job = null;
         _jobOperation = null;
+        if (identical(_callCompletion, completion)) _callCompletion = null;
       }
+      completion.complete();
     }
   }
 
@@ -605,6 +610,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     _timer = null;
     _job = null;
     _jobOperation = null;
+    _callCompletion = null;
     token = '';
     phase = CameraLivePhase.blocked;
     error = reason;
@@ -740,6 +746,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
         _timer = null;
         _job = null;
         _jobOperation = null;
+        _callCompletion = null;
         owner = projectId = projectName = cameraId = '';
         session = watchId = token = '';
         phase = CameraLivePhase.stopped;
@@ -788,55 +795,111 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     _changed();
   }
 
-  Future<void> stop() async {
+  Future<void> stop({bool preserveConnection = true}) async {
+    final previousStop = _stopCompletion;
+    if (phase == CameraLivePhase.stopping && previousStop != null) {
+      if (!preserveConnection) {
+        final generation = _generation, cameraJob = pendingCameraJob;
+        if (cameraJob != null) {
+          try {
+            await state.core.cancel(cameraJob);
+          } catch (failure) {
+            if (_generation == generation &&
+                phase == CameraLivePhase.stopping) {
+              error = '已请求断开相机，取消回复尚未确认：$failure';
+            }
+          }
+        }
+      }
+      await previousStop.future;
+      return;
+    }
     if (!active && phase != CameraLivePhase.starting) return;
+    final completion = _stopCompletion = Completer<void>();
     final lease = Map<String, dynamic>.of(_lease), job = _job;
-    active = false;
+    final cameraRequest = _jobOperation?.startsWith('camera.') == true;
+    final pendingCall = _callCompletion?.future;
+    final processor = _processor, processing = _processingFuture;
+    final events = _events;
     _protectionPaused = false;
-    ++_generation;
-    _working = false;
+    final generation = ++_generation;
+    // A PTP data transaction must finish before its discovery watch can stop.
+    // Keep the receive lease until then so manual/queue work cannot take over.
+    _working = true;
     _timer?.cancel();
     _timer = null;
     phase = CameraLivePhase.stopping;
     _changed();
+    bool currentStop() =>
+        _generation == generation &&
+        active &&
+        phase == CameraLivePhase.stopping;
     Future<void> attempt(Future<void> Function() action) async {
       try {
         await action();
       } catch (failure) {
-        error = '已停止发现新照片，部分停止记录尚未确认：$failure';
+        if (currentStop()) {
+          error = '已停止发现新照片，部分停止记录尚未确认：$failure';
+        }
       }
     }
 
-    if (job != null) await attempt(() => state.core.cancel(job));
-    await attempt(() async {
-      await _processor?.stop();
-    });
-    await attempt(() async {
-      await _processingFuture;
-    });
-    if ((lease['token'] as String).isNotEmpty) {
-      await attempt(() async {
-        await state.core.call('project.live.stop', lease);
-      });
-    }
     try {
-      if ((lease['watchId'] as String).isNotEmpty) {
-        await state.core.call('camera.live.stop', {
-          'session': lease['session'],
-          'watchId': lease['watchId'],
+      // Generic camera cancellation closes the transport on both platforms.
+      // Ordinary Stop drains it; explicit reconnect still uses the precise job.
+      if (job != null && (!preserveConnection || !cameraRequest)) {
+        await attempt(() => state.core.cancel(job));
+      }
+      await pendingCall;
+      if (!currentStop()) return;
+      await attempt(() async {
+        await processor?.stop();
+      });
+      if (!currentStop()) return;
+      await attempt(() async {
+        await processing;
+      });
+      if (!currentStop()) return;
+      if ((lease['token'] as String).isNotEmpty) {
+        await attempt(() async {
+          await state.core.call('project.live.stop', lease);
         });
       }
-    } catch (_) {
-      /* The camera may already be disconnected. */
+      if (!currentStop()) return;
+      if ((lease['watchId'] as String).isNotEmpty) {
+        try {
+          final status = await state.core.call('camera.status');
+          if (!currentStop()) return;
+          if (status['connected'] == true &&
+              status['session'] == lease['session']) {
+            await state.core.call('camera.live.stop', {
+              'session': lease['session'],
+              'watchId': lease['watchId'],
+            });
+          }
+        } catch (_) {
+          /* An expired watch cannot affect a different camera session. */
+        }
+      }
+      if (!currentStop()) return;
+      await attempt(() async {
+        await events?.cancel();
+      });
+      if (!currentStop()) return;
+      if (identical(_events, events)) _events = null;
+      processor?.removeListener(_processingChanged);
+      processor?.dispose();
+      if (identical(_processor, processor)) _processor = null;
+      await attempt(() => state.connectionProtection.setActive('live', false));
+      if (!currentStop()) return;
+      active = false;
+      _working = false;
+      phase = CameraLivePhase.stopped;
+      _changed();
+    } finally {
+      if (identical(_stopCompletion, completion)) _stopCompletion = null;
+      completion.complete();
     }
-    await _events?.cancel();
-    _events = null;
-    _processor?.removeListener(_processingChanged);
-    _processor?.dispose();
-    _processor = null;
-    await state.connectionProtection.setActive('live', false);
-    phase = CameraLivePhase.stopped;
-    _changed();
   }
 
   @override

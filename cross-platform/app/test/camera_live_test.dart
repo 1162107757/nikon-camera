@@ -31,12 +31,14 @@ class LiveCore extends HueviaCore {
   final calls = <String>[];
   final requests = <(String, Json)>[];
   final jobs = <(String, String?)>[];
+  final cancelledJobs = <String>[];
   final pending = <String, Json>{}, completed = <String, Json>{};
   final tasks = <Json>[];
   final otherSeen = <String>{};
   List<Json> visible = [];
   bool connected = true, trusted = true, persistentActive = false;
   bool cancelFails = false, downloadFails = false;
+  bool cancelClosesCamera = false;
   bool usePreset = true;
   bool supportsRaw = true;
   bool thumbnailFails = false;
@@ -46,7 +48,11 @@ class LiveCore extends HueviaCore {
   int exports = 0, downloads = 0;
   Completer<void>? downloadGate;
   Completer<void>? exportGate;
-  Completer<void>? watchGate, projectGate, mediaGate;
+  Completer<void>? watchGate,
+      projectGate,
+      mediaGate,
+      pollGate,
+      cancellationGate;
   Json lastStart = {};
   Json cursor = {
     'baseline': [
@@ -95,6 +101,20 @@ class LiveCore extends HueviaCore {
     ],
     'tasks': tasks,
   };
+  void releaseHeldOperations() {
+    for (final gate in [
+      downloadGate,
+      exportGate,
+      watchGate,
+      projectGate,
+      mediaGate,
+      pollGate,
+      cancellationGate,
+    ]) {
+      if (gate != null && !gate.isCompleted) gate.complete();
+    }
+  }
+
   @override
   Future<Json> call(
     String operation, [
@@ -106,6 +126,7 @@ class LiveCore extends HueviaCore {
     jobs.add((operation, jobId));
     switch (operation) {
       case 'camera.status':
+      case 'camera.keepAlive':
         return status();
       case 'camera.live.start':
         otherSeen.clear();
@@ -128,6 +149,7 @@ class LiveCore extends HueviaCore {
         await projectGate?.future;
         return liveState();
       case 'camera.live.poll':
+        await pollGate?.future;
         final otherFormats = visible
             .where(
               (item) =>
@@ -260,6 +282,17 @@ class LiveCore extends HueviaCore {
   @override
   Future<void> cancel(String jobId) async {
     calls.add('cancel');
+    cancelledJobs.add(jobId);
+    if (cancelClosesCamera &&
+        jobs.last.$2 == jobId &&
+        jobs.last.$1.startsWith('camera.')) {
+      connected = false;
+      activeWatch = '';
+      for (final gate in [downloadGate, pollGate, watchGate]) {
+        if (gate != null && !gate.isCompleted) gate.complete();
+      }
+    }
+    await cancellationGate?.future;
     if (cancelFails) throw const AppFailure('Cancellation response lost');
   }
 }
@@ -297,6 +330,13 @@ class LiveState extends AppState {
   }
 }
 
+Future<void> untilLive(bool Function() ready) async {
+  for (var i = 0; i < 100 && !ready(); i++) {
+    await Future<void>.delayed(Duration.zero);
+  }
+  expect(ready(), true);
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   group('Foreground camera live', () {
@@ -307,6 +347,7 @@ void main() {
       state = LiveState(core);
     });
     tearDown(() async {
+      core.releaseHeldOperations();
       await state.controller.stop();
       state.dispose();
       await core.events.close();
@@ -805,23 +846,214 @@ void main() {
         hasLength(1),
       );
     });
-    test('Explicit stop discards a late download reply without committing to the stopped project', () async {
+    test('Stop drains the current download without disconnecting or releasing its receive lease', () async {
       final live = state.controller;
+      core.cancelClosesCamera = true;
       await live.start('project-one', '拍摄');
+      final originalSession = live.session;
       core.visible = [shot(2)];
-      core.downloadGate = Completer<void>();
+      final gate = core.downloadGate = Completer<void>();
+      addTearDown(() {
+        if (!gate.isCompleted) gate.complete();
+      });
       final running = live.pollOnce();
-      while (core.downloads == 0) {
-        await Future<void>.delayed(Duration.zero);
-      }
-      await live.stop();
-      core.downloadGate!.complete();
-      await running;
-      expect(core.calls, contains('cancel'));
+      await untilLive(() => core.downloads == 1);
+      final cameraJob = live.pendingCameraJob;
+      var stopCompleted = false;
+      final stopping = live.stop().then((_) => stopCompleted = true);
+      final repeatedStop = live.stop();
+      await Future<void>.delayed(Duration.zero);
+      expect(stopCompleted, false);
+      expect(live.phase, CameraLivePhase.stopping);
+      expect(live.active, true);
+      expect(live.working, true);
+      expect(live.pendingCameraJob, cameraJob);
+      expect(state.cameraLiveActive, true);
+      expect(state.claimCameraTransfer(), false);
+      await expectLater(
+        state.cameraDownloads.create(
+          {'connected': true},
+          [
+            {'handle': 3},
+          ],
+          {'kind': 'app'},
+        ),
+        throwsA(isA<AppFailure>()),
+      );
+      expect(core.calls, isNot(contains('cancel')));
+      expect(core.connected, true);
+      gate.complete();
+      await Future.wait([running, stopping, repeatedStop]);
       expect(state.registered, isEmpty);
       expect(core.completed, isEmpty);
       expect(core.calls, isNot(contains('camera.disconnect')));
+      expect(core.calls, isNot(contains('cancel')));
+      expect(core.persistentActive, false);
+      expect(core.activeWatch, isEmpty);
+      expect(live.active, false);
+      expect(live.working, false);
+      expect(live.pendingCameraJob, isNull);
       expect(live.phase, CameraLivePhase.stopped);
+      final status = await core.call('camera.keepAlive', {
+        'session': originalSession,
+      });
+      expect(status['connected'], true);
+      expect(status['session'], originalSession);
+      core.visible = [shot(3)];
+      await live.start('project-one', '继续拍摄');
+      await live.pollOnce();
+      expect(live.active, true);
+      expect(live.session, originalSession);
+      expect(core.completed.keys, [shot(3)['objectKey']]);
+      expect(state.registered, hasLength(1));
+      expect(core.calls, isNot(contains('camera.connect')));
+    });
+    test('An explicit disconnect can still cancel the exact in-flight camera transaction', () async {
+      final live = state.controller;
+      core.cancelClosesCamera = true;
+      await live.start('project-one', '拍摄');
+      core.visible = [shot(2)];
+      core.downloadGate = Completer<void>();
+      final polling = live.pollOnce();
+      await untilLive(() => core.downloads == 1);
+      final cameraJob = live.pendingCameraJob;
+      expect(cameraJob, isNotNull);
+      await live.stop(preserveConnection: false);
+      await polling;
+      expect(core.cancelledJobs, [cameraJob]);
+      expect(core.connected, false);
+      expect(core.persistentActive, false);
+      expect(state.registered, isEmpty);
+      expect(live.active, false);
+      expect(live.working, false);
+      expect(live.phase, CameraLivePhase.stopped);
+    });
+    test('Explicit disconnect upgrades a draining soft stop and its late cancel reply cannot change a new session', () async {
+      final live = state.controller;
+      core.cancelClosesCamera = true;
+      core.cancelFails = true;
+      await live.start('project-one', '拍摄');
+      core.visible = [shot(2)];
+      core.downloadGate = Completer<void>();
+      final polling = live.pollOnce();
+      await untilLive(() => core.downloads == 1);
+      final cameraJob = live.pendingCameraJob;
+      final softStop = live.stop();
+      final acknowledgement = core.cancellationGate = Completer<void>();
+      final hardStop = live.stop(preserveConnection: false);
+      await untilLive(() => core.cancelledJobs.isNotEmpty);
+      await Future.wait([polling, softStop]);
+      expect(core.cancelledJobs, [cameraJob]);
+      expect(core.connected, false);
+      expect(live.phase, CameraLivePhase.stopped);
+      core.connected = true;
+      core.session = 'session-two';
+      core.visible = [];
+      core.downloadGate = null;
+      await live.start('project-one', '新连接拍摄');
+      final watch = live.watchId, token = live.token;
+      acknowledgement.complete();
+      await hardStop;
+      expect(live.active, true);
+      expect(live.phase, CameraLivePhase.watching);
+      expect(live.session, 'session-two');
+      expect(live.watchId, watch);
+      expect(live.token, token);
+      expect(live.error, isNull);
+      expect(core.connected, true);
+      expect(core.activeWatch, watch);
+      expect(core.cancelledJobs, [cameraJob]);
+      expect(core.calls, isNot(contains('camera.live.stop')));
+    });
+    test('Stop drains a held discovery poll without accepting another photo or closing its session', () async {
+      final live = state.controller;
+      core.cancelClosesCamera = true;
+      await live.start('project-one', '拍摄');
+      final session = live.session;
+      core.visible = [shot(2)];
+      final gate = core.pollGate = Completer<void>();
+      addTearDown(() {
+        if (!gate.isCompleted) gate.complete();
+      });
+      final polling = live.pollOnce();
+      await untilLive(() => core.calls.contains('camera.live.poll'));
+      final cameraJob = live.pendingCameraJob;
+      var completed = false;
+      final stopping = live.stop().then((_) => completed = true);
+      await Future<void>.delayed(Duration.zero);
+      expect(completed, false);
+      expect(live.active, true);
+      expect(live.working, true);
+      expect(live.pendingCameraJob, cameraJob);
+      expect(core.calls, isNot(contains('cancel')));
+      gate.complete();
+      await Future.wait([polling, stopping]);
+      expect(live.phase, CameraLivePhase.stopped);
+      expect(live.active, false);
+      expect(core.downloads, 0);
+      expect(state.registered, isEmpty);
+      expect(core.connected, true);
+      expect(
+        (await core.call('camera.keepAlive', {'session': session}))['session'],
+        session,
+      );
+      expect(core.calls, isNot(contains('cancel')));
+      expect(core.calls, isNot(contains('project.live.observe')));
+    });
+    test('An explicit replacement can retire a draining stop without letting its old cleanup stop the new live session', () async {
+      final live = state.controller;
+      await live.start('project-one', '拍摄');
+      core.visible = [shot(2)];
+      final gate = core.downloadGate = Completer<void>();
+      addTearDown(() {
+        if (!gate.isCompleted) gate.complete();
+      });
+      final polling = live.pollOnce();
+      await untilLive(() => core.downloads == 1);
+      final oldJob = live.pendingCameraJob;
+      final stopping = live.stop();
+      expect(live.pendingCameraJob, oldJob);
+      expect(live.connectionLost(expectedSession: 'session-one'), true);
+      core.session = 'session-two';
+      core.visible = [];
+      core.downloadGate = null;
+      await live.start('project-one', '继续拍摄', resume: true);
+      final newWatch = live.watchId, newToken = live.token;
+      gate.complete();
+      await Future.wait([polling, stopping]);
+      expect(live.active, true);
+      expect(live.working, false);
+      expect(live.phase, CameraLivePhase.watching);
+      expect(live.session, 'session-two');
+      expect(live.watchId, newWatch);
+      expect(live.token, newToken);
+      expect(core.activeWatch, newWatch);
+      expect(core.persistentActive, true);
+      expect(state.registered, isEmpty);
+      expect(core.calls, isNot(contains('camera.live.stop')));
+      expect(core.calls, isNot(contains('project.live.stop')));
+      expect(core.calls, isNot(contains('cancel')));
+    });
+    test('A draining stop skips its old watch when Native has already replaced the camera session', () async {
+      final live = state.controller;
+      await live.start('project-one', '拍摄');
+      final gate = core.pollGate = Completer<void>();
+      addTearDown(() {
+        if (!gate.isCompleted) gate.complete();
+      });
+      final polling = live.pollOnce();
+      await untilLive(() => core.calls.contains('camera.live.poll'));
+      final stopping = live.stop();
+      core.session = 'session-two';
+      core.activeWatch = 'watch-new-native-session';
+      gate.complete();
+      await Future.wait([polling, stopping]);
+      expect(live.active, false);
+      expect(live.phase, CameraLivePhase.stopped);
+      expect(core.connected, true);
+      expect(core.activeWatch, 'watch-new-native-session');
+      expect(core.calls, isNot(contains('camera.live.stop')));
+      expect(core.calls, isNot(contains('cancel')));
     });
     test('Owner changes invalidate in-flight work before registration or project commit', () async {
       final live = state.controller;
@@ -835,6 +1067,7 @@ void main() {
       state.changeOwner();
       core.downloadGate!.complete();
       await running;
+      await live.stop();
       await Future<void>.delayed(Duration.zero);
       expect(live.active, false);
       expect(state.registered, isEmpty);
@@ -902,12 +1135,16 @@ void main() {
         while (core.activeWatch.isEmpty) {
           await Future<void>.delayed(Duration.zero);
         }
-        await state.controller.stop();
+        final stopping = state.controller.stop();
+        expect(state.controller.phase, CameraLivePhase.stopping);
+        expect(state.controller.active, true);
         core.watchGate!.complete();
-        await starting;
+        await Future.wait([starting, stopping]);
         expect(core.activeWatch, isEmpty);
         expect(core.persistentActive, false);
         expect(state.controller.active, false);
+        expect(core.connected, true);
+        expect(core.calls, isNot(contains('cancel')));
       },
     );
     test('Stopping during durable start compensates its late token and active journal', () async {
@@ -916,9 +1153,9 @@ void main() {
       while (!core.persistentActive) {
         await Future<void>.delayed(Duration.zero);
       }
-      await state.controller.stop();
+      final stopping = state.controller.stop();
       core.projectGate!.complete();
-      await starting;
+      await Future.wait([starting, stopping]);
       expect(core.persistentActive, false);
       expect(state.controller.active, false);
       expect(state.registered, isEmpty);
@@ -927,15 +1164,14 @@ void main() {
       final live = state.controller;
       await live.start('project-one', '拍摄');
       core.visible = [shot(2)];
-      core.downloadGate = Completer<void>();
+      core.mediaGate = Completer<void>();
       core.cancelFails = true;
       final running = live.pollOnce();
-      while (core.downloads == 0) {
-        await Future<void>.delayed(Duration.zero);
-      }
-      await live.stop();
-      core.downloadGate!.complete();
-      await running;
+      await untilLive(() => core.calls.contains('media.info'));
+      final stopping = live.stop();
+      expect(core.calls, contains('cancel'));
+      core.mediaGate!.complete();
+      await Future.wait([running, stopping]);
       expect(core.persistentActive, false);
       expect(state.registered, isEmpty);
       expect(core.calls, contains('project.live.stop'));
@@ -1019,6 +1255,7 @@ void main() {
                 hasPreset: true,
                 onConnect: () async {
                   opened = true;
+                  return false;
                 },
               ),
             ),

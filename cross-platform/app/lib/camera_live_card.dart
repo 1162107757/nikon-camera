@@ -24,7 +24,7 @@ class CameraLiveCard extends StatelessWidget {
   final AppState state;
   final String projectId, projectName;
   final bool hasPreset, enabled;
-  final Future<void> Function()? onConnect;
+  final Future<bool> Function()? onConnect;
   @override
   Widget build(BuildContext context) => Card(
     margin: EdgeInsets.zero,
@@ -55,7 +55,7 @@ class CameraLivePanel extends StatefulWidget {
   final AppState state;
   final String projectId, projectName;
   final bool hasPreset, enabled, embedded;
-  final Future<void> Function()? onConnect;
+  final Future<bool> Function()? onConnect;
   @override
   State<CameraLivePanel> createState() => _CameraLivePanelState();
 }
@@ -74,19 +74,56 @@ class _CameraLivePanelState extends State<CameraLivePanel> {
 
   Future<void> start() async {
     if (checking || selected.isEmpty) return;
-    final selectedProject = selected, expectedOwner = owner;
-    final live = widget.state.cameraLive,
-        format = widget.state.cameraLive.selectedFormat;
+    final state = widget.state;
+    final selectedProject = selected,
+        selectedLabel = label,
+        expectedOwner = owner;
+    final live = state.cameraLive, format = live.selectedFormat;
     final formatLabel = format == CameraLiveFormat.raw ? 'RAW 原片' : 'JPEG';
+    var accountCurrent = true;
+    void accountChanged() {
+      if ((state.session['user']?['id'] as String? ?? '') != expectedOwner ||
+          state.session['logoutPending'] == true) {
+        accountCurrent = false;
+      }
+    }
+
+    bool current() =>
+        mounted &&
+        identical(widget.state, state) &&
+        accountCurrent &&
+        state.session['logoutPending'] != true &&
+        owner == expectedOwner &&
+        selectedProject == selected &&
+        live.selectedFormat == format;
+    bool hasSession(Json status) =>
+        status['connected'] == true &&
+        status['session'] is String &&
+        (status['session'] as String).trim().isNotEmpty &&
+        status['cameraId'] is String &&
+        (status['cameraId'] as String).isNotEmpty;
+
+    state.addListener(accountChanged);
     setState(() => checking = true);
     try {
-      final previous = await widget.state.cameraLive.available(selectedProject);
-      if (!mounted ||
-          owner != expectedOwner ||
-          selectedProject != selected ||
-          live.selectedFormat != format) {
-        return;
+      final status = await state.core.call('camera.status');
+      if (!current()) return;
+      if (!hasSession(status)) {
+        final connect = widget.onConnect;
+        if (connect == null) {
+          throw const AppFailure('请先连接相机，再开启边拍边传。');
+        }
+        // The callback reports the actual route result. Cancel ends this start
+        // intent even if a different connection appears while the route closes.
+        if (!await connect() || !current()) return;
+        final connected = await state.core.call('camera.status');
+        if (!current()) return;
+        if (!hasSession(connected)) {
+          throw const AppFailure('相机会话尚未就绪，请重新连接后开始拍摄。');
+        }
       }
+      final previous = await live.available(selectedProject);
+      if (!mounted || !current()) return;
       final resume = previous['active'] == true;
       final previousFormat = previous['format'] == 'raw'
           ? CameraLiveFormat.raw
@@ -133,20 +170,13 @@ class _CameraLivePanelState extends State<CameraLivePanel> {
           ],
         ),
       );
-      if (confirmed == true &&
-          mounted &&
-          owner == expectedOwner &&
-          selectedProject == selected &&
-          live.selectedFormat == format) {
-        await widget.state.cameraLive.start(
-          selectedProject,
-          label,
-          resume: resume,
-        );
+      if (confirmed == true && current()) {
+        await live.start(selectedProject, selectedLabel, resume: resume);
       }
     } catch (failure) {
-      if (mounted && owner == expectedOwner) report(context, failure);
+      if (mounted && current()) report(context, failure);
     } finally {
+      state.removeListener(accountChanged);
       if (mounted) setState(() => checking = false);
     }
   }
@@ -401,7 +431,7 @@ class _CameraLivePanelState extends State<CameraLivePanel> {
               reconnect
                   ? '连接相机'
                   : stopping
-                  ? '正在停止边拍边传'
+                  ? '完成当前传输后停止'
                   : live.active
                   ? '停止边拍边传'
                   : '开始边拍边传',

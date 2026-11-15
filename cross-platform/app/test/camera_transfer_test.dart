@@ -110,13 +110,20 @@ void main() {
       final core = TransferCore();
       final transfer = CameraTransfer(TransferState(core));
       final pending = transfer.start('session', transferPhoto, raw: false);
-      if (reason == 'cancel') await transfer.stop();
+      Future<void>? stopping;
+      if (reason == 'cancel') {
+        stopping = transfer.stop();
+        expect(transfer.busy, isTrue);
+        expect(core.cancelled, isEmpty);
+      }
       if (reason == 'owner') (transfer.state as TransferState).changeOwner();
       if (reason == 'dispose') transfer.dispose();
       core.response.complete(core.receipt());
       await pending;
+      await stopping;
       expect((transfer.state as TransferState).registrations, 0);
-      expect(core.cancelled, hasLength(1));
+      expect(core.cancelled, hasLength(reason == 'owner' ? 1 : 0));
+      expect(transfer.state.cameraManualTransferActive, isFalse);
       if (reason != 'dispose') transfer.dispose();
       transfer.state.dispose();
       await core.events.close();
@@ -144,12 +151,56 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
       final core = TransferCore();
-      final transfer = CameraTransfer(TransferState(core))
-        ..photo = transferPhoto
-        ..phase = CameraTransferPhase.receiving
-        ..received = 4000
-        ..total = 8000
-        ..busy = true;
+      final transfer = CameraTransfer(TransferState(core));
+      final receiving = transfer.start('session', transferPhoto, raw: false);
+      var receivingSettled = false;
+      Object? receivingFailure;
+      StackTrace? receivingStack;
+      unawaited(
+        receiving.then<void>(
+          (_) {
+            receivingSettled = true;
+          },
+          onError: (Object failure, StackTrace stack) {
+            receivingFailure = failure;
+            receivingStack = stack;
+            receivingSettled = true;
+          },
+        ),
+      );
+      Future<void> drainReceiving() async {
+        for (var i = 0; i < 100 && !receivingSettled; i++) {
+          // Stream cancellation can finish outside the widget fake clock.
+          // Give both that zone and the frame/microtask queue a turn.
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 10)),
+          );
+          await tester.pump();
+        }
+        expect(
+          receivingSettled,
+          isTrue,
+          reason: 'The released camera response and soft stop must both drain.',
+        );
+        if (receivingFailure != null) {
+          Error.throwWithStackTrace(receivingFailure!, receivingStack!);
+        }
+      }
+
+      core.progress(.5);
+      addTearDown(() async {
+        if (!core.response.isCompleted) core.response.complete(core.receipt());
+        if (!core.info.isCompleted) core.info.complete({});
+        try {
+          await drainReceiving();
+        } finally {
+          transfer.dispose();
+          transfer.state.dispose();
+          await tester.runAsync(
+            () => core.events.close().timeout(const Duration(seconds: 1)),
+          );
+        }
+      });
       await tester.pumpWidget(
         MaterialApp(
           theme: hueviaTheme(Brightness.light),
@@ -170,11 +221,12 @@ void main() {
       await tester.tap(find.text('停止下载'));
       await tester.pump();
       expect(find.text('正在停止下载'), findsOneWidget);
-      transfer.busy = false;
+      expect(transfer.busy, isTrue);
+      expect(core.cancelled, isEmpty);
+      core.response.complete(core.receipt());
+      await drainReceiving();
+      expect(transfer.busy, isFalse);
       await tester.pumpWidget(const SizedBox());
-      transfer.dispose();
-      transfer.state.dispose();
-      unawaited(core.events.close());
     },
   );
 }

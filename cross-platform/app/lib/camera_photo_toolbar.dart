@@ -16,6 +16,8 @@ class CameraPhotoToolbar extends StatelessWidget {
     required this.onRawChanged,
     required this.onOrderChanged,
     required this.onSelection,
+    this.selectedCount = 0,
+    this.onSelectAll,
   });
   final int count, missingTimeCount;
   final bool hasMore, inventoryReady, raw, selecting;
@@ -23,10 +25,40 @@ class CameraPhotoToolbar extends StatelessWidget {
   final ValueChanged<bool>? onRawChanged;
   final ValueChanged<CameraPhotoSort>? onOrderChanged;
   final VoidCallback? onSelection;
+  final int selectedCount;
+  final VoidCallback? onSelectAll;
 
   @override
   Widget build(BuildContext context) {
     final p = HuePalette.of(context);
+    if (selecting) {
+      return Row(
+        children: [
+          Expanded(
+            child: Text(
+              '已选 $selectedCount 张',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: p.ink,
+              ),
+            ),
+          ),
+          TextButton(
+            key: const Key('camera-select-all'),
+            onPressed: onSelectAll,
+            style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+            child: const Text('全选'),
+          ),
+          const SizedBox(width: 6),
+          TextButton(
+            onPressed: onSelection,
+            style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+            child: const Text('取消'),
+          ),
+        ],
+      );
+    }
     final title = Row(
       mainAxisSize: MainAxisSize.min,
       children: [

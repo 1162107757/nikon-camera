@@ -39,6 +39,10 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
       ? _transportSession
       : current?['session'] as String? ?? '';
   Future<void>? running;
+  Completer<void>? _stopCompletion;
+  int _stoppingRunEpoch = -1;
+  Set<String> _stopCancelledJobs = {};
+  String _runningQueueId = '';
   StreamSubscription<dynamic>? events;
   bool foreground = true;
   String get currentOwner => state.session['user']?['id'] as String? ?? '';
@@ -135,12 +139,26 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
     error = null;
     final epoch = ++generation;
     _transportSession = '';
+    _runningQueueId = id;
+    _stopCompletion = null;
+    _stopCancelledJobs = {};
     busy = true;
     phase = 'preparing';
-    changed();
     final future = run(id, epoch);
     running = future;
-    return future;
+    changed();
+    return _settledRun(future, epoch);
+  }
+
+  Future<void> _settledRun(Future<void> future, int epoch) async {
+    try {
+      await future;
+    } finally {
+      final stopping = _stopCompletion;
+      if (stopping != null && _stoppingRunEpoch == epoch) {
+        await stopping.future;
+      }
+    }
   }
 
   Future<void> run(String id, int epoch) async {
@@ -379,6 +397,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
       return false;
     }
     generation++;
+    _stopCompletion = null;
     stopped = true;
     busy = false;
     job = null;
@@ -426,18 +445,104 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
     changed();
   }
 
-  Future<void> stop() async {
-    if (!busy || stopped) return;
+  Future<void> _cancelStoppingJob(
+    int epoch,
+    Completer<void> completion, {
+    required bool preserveConnection,
+  }) async {
+    if (generation != epoch || !identical(_stopCompletion, completion)) return;
+    final identity = job;
+    if (identity == null ||
+        preserveConnection && _jobOperation?.startsWith('camera.') == true ||
+        !_stopCancelledJobs.add(identity)) {
+      return;
+    }
+    try {
+      await state.core.cancel(identity);
+    } catch (_) {
+      if (alive &&
+          generation == epoch &&
+          identical(_stopCompletion, completion) &&
+          owner == currentOwner) {
+        error = '停止请求未确认，正在等待当前任务结果。';
+        changed();
+      }
+    }
+  }
+
+  Future<void> stop({bool preserveConnection = true}) async {
+    final existing = _stopCompletion;
+    if (existing != null) {
+      if (!preserveConnection) {
+        await _cancelStoppingJob(
+          generation,
+          existing,
+          preserveConnection: false,
+        );
+      }
+      await existing.future;
+      return;
+    }
+    if (!busy) return;
+    final pending = running;
+    final stoppedOwner = owner, stoppedId = _runningQueueId;
+    final stoppedEvents = events;
+    _stoppingRunEpoch = generation;
+    final epoch = ++generation;
+    final completion = Completer<void>();
+    _stopCompletion = completion;
+    _stopCancelledJobs = {};
     stopped = true;
     phase = 'stopping';
     changed();
-    final identity = job;
-    if (identity != null) {
+    bool currentStop() =>
+        generation == epoch && identical(_stopCompletion, completion);
+    try {
+      await _cancelStoppingJob(
+        epoch,
+        completion,
+        preserveConnection: preserveConnection,
+      );
+      if (!currentStop()) return;
       try {
-        await state.core.cancel(identity);
-      } catch (_) {}
+        await pending;
+      } catch (_) {
+        // The retired run retains its own error and original-file receipt.
+      }
+      if (!currentStop()) return;
+      if (stoppedId.isNotEmpty &&
+          stoppedOwner == currentOwner &&
+          state.session['logoutPending'] != true) {
+        try {
+          final paused = await state.core.call('downloads.pause', {
+            'owner': stoppedOwner,
+            'id': stoppedId,
+          });
+          if (!currentStop()) return;
+          current = paused;
+        } catch (_) {
+          // Native received-file receipts remain recoverable on the next read.
+        }
+      }
+      if (!currentStop()) return;
+      await state.connectionProtection.setActive('downloads', false);
+      if (!currentStop()) return;
+      if (identical(events, stoppedEvents)) events = null;
+      job = null;
+      _jobOperation = null;
+      _runningQueueId = '';
+      busy = false;
+      phase = 'paused';
+      changed();
+      if (alive && stoppedOwner == currentOwner && currentStop()) {
+        try {
+          await restore();
+        } catch (_) {}
+      }
+    } finally {
+      if (!completion.isCompleted) completion.complete();
+      if (identical(_stopCompletion, completion)) _stopCompletion = null;
     }
-    await running;
   }
 
   Future<void> skip(String id, String itemId) async {
@@ -464,7 +569,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
 
   void accountChanged() {
     if (owner != currentOwner || state.session['logoutPending'] == true) {
-      if (busy) unawaited(stop());
+      if (busy) unawaited(stop(preserveConnection: false));
       connectionLost(reason: '账号已变化，旧下载队列已停止。');
       ++generation;
       current = null;
@@ -679,16 +784,20 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
           if (queue.current != null) ...[
             const SizedBox(height: 16),
             Text('已完成 ${queue.done} / ${queue.items.length}'),
+            const SizedBox(height: 10),
             if (queue.busy)
               LinearProgressIndicator(
                 value: queue.total > 0 && queue.phase == 'receiving'
                     ? queue.received / queue.total
                     : null,
               ),
+            if (queue.busy) const SizedBox(height: 10),
             if (queue.busy)
               Text(
                 '${queue.phase == 'receiving'
                     ? '接收原文件'
+                    : queue.phase == 'stopping'
+                    ? '完成当前传输后暂停'
                     : queue.phase == 'checking'
                     ? '核对相机目录'
                     : queue.phase == 'publishing'
@@ -735,15 +844,27 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
                 },
                 child: const Text('核对并绑定当前相机'),
               ),
-            FilledButton(
-              onPressed: queue.busy
-                  ? changeQueue
-                  : queue.current!['phase'] == 'done' ||
-                        widget.state.cameraLiveActive ||
-                        widget.state.cameraManualTransferActive
-                  ? null
-                  : changeQueue,
-              child: Text(queue.busy ? '停止队列' : '继续未完成项'),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 8),
+              child: FilledButton(
+                style: FilledButton.styleFrom(minimumSize: const Size(48, 50)),
+                onPressed: queue.phase == 'stopping'
+                    ? null
+                    : queue.busy
+                    ? changeQueue
+                    : queue.current!['phase'] == 'done' ||
+                          widget.state.cameraLiveActive ||
+                          widget.state.cameraManualTransferActive
+                    ? null
+                    : changeQueue,
+                child: Text(
+                  queue.phase == 'stopping'
+                      ? '正在暂停队列'
+                      : queue.busy
+                      ? '停止队列'
+                      : '继续未完成项',
+                ),
+              ),
             ),
           ],
           if (queue.queues.isEmpty)

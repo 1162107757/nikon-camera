@@ -103,7 +103,27 @@ final class CameraLiveDiscoveryBoundaryTest {
         for(long handle=1000;handle<3000;handle++)peer.put(2,handle,"OLD2.JPG",8);peer.cardTwo=true;clock.addAndGet(3100000000L);found=call(camera,"camera.live.poll",SharedRuntime.map("session",cards,"watchId",start.get("watchId")));
         yes(((List<?>)found.get("baselineUpdates")).size()==1000);yes(found.get("cursor") instanceof Map);yes(baseline(found).size()==2001);yes(items(found).isEmpty());camera.disconnect();
         rawSelection(temporary);
+        stopRetainsTransport(temporary);
         System.out.println("PASS "+checks+" camera live discovery checks; handle baselines, frozen JPEG/NEF selection, stable descriptors, missed events, independent browsing, reconnect, storage recovery and scoped original downloads");return checks;
+    }
+    private static void stopRetainsTransport(Path temporary)throws Exception{
+        Peer peer=new Peer();peer.put(1,1,"JPEG_AFTER_STOP.JPG",peer.jpeg.length);peer.put(1,2,"RAW_AFTER_STOP.NEF",peer.nef.length);
+        File root=temporary.resolve("live-stop-keeps-session").toFile();yes(root.mkdirs());
+        AtomicLong clock=new AtomicLong(10000000000L);SharedCamera camera=new SharedCamera(root.getPath(),(h,p,f)->null,(c,f)->peer,clock::get);
+        String session=(String)connect(camera).get("session"),previousWatch="";
+        for(boolean raw:new boolean[]{false,true}){
+            call(camera,"camera.page",SharedRuntime.map("session",session,"offset",0,"limit",24,"raw",raw));
+            Map<String,Object> started=call(camera,"camera.live.start",SharedRuntime.map("session",session,"format",raw?"raw":"jpeg"));String watch=(String)started.get("watchId");
+            yes(!watch.equals(previousWatch));previousWatch=watch;
+            call(camera,"camera.live.stop",SharedRuntime.map("session",session,"watchId",watch));
+            yes(peer.open&&peer.closes==0,"Stopping discovery must leave the exact PTP client open");yes(peer.listener==null);
+            Map<String,Object> status=call(camera,"camera.status",SharedRuntime.map());yes(Boolean.TRUE.equals(status.get("connected")));yes(session.equals(status.get("session")));
+            Map<String,Object> heartbeat=call(camera,"camera.keepAlive",SharedRuntime.map("session",session));yes(Boolean.TRUE.equals(heartbeat.get("connected")));yes(session.equals(heartbeat.get("session")));
+            Map<String,Object> receipt=call(camera,"camera.download",SharedRuntime.map("session",session,"handle",raw?2:1,"raw",raw));byte[] expected=raw?peer.nef:peer.jpeg;
+            yes(Arrays.equals(expected,Files.readAllBytes(new File((String)receipt.get("path")).toPath())),"Manual original receive must still work after Live stops");
+            yes(cc.huevia.album.PhotoEditStore.hash(expected).equals(receipt.get("sha256")));yes(Boolean.valueOf(raw).equals(receipt.get("raw")));yes(peer.closes==0);
+        }
+        call(camera,"camera.disconnect",SharedRuntime.map("session",session));yes(!peer.open);yes(peer.closes==1);yes(Boolean.FALSE.equals(call(camera,"camera.status",SharedRuntime.map()).get("connected")));
     }
     private static void rawSelection(Path temporary)throws Exception{
         Peer peer=new Peer();peer.put(1,1,"OLD.JPG",peer.jpeg.length);peer.put(1,2,"OLD.NEF",peer.nef.length);
@@ -157,7 +177,7 @@ final class CameraLiveDiscoveryBoundaryTest {
     private static boolean unavailable(Map<String,Object> value,Object key,String reason){for(Object raw:(List<?>)value.get("unavailable")){Map<String,Object> row=object(raw);if(key.equals(row.get("objectKey"))&&reason.equals(row.get("reason")))return true;}return false;}
     private static List<?> baseline(Map<String,Object> value){Map<String,Object> cursor=object(value.get("cursor"));List<Object> rows=new ArrayList<>((List<?>)cursor.get("baseline"));for(Object page:(List<?>)cursor.getOrDefault("baselinePages",new ArrayList<>()))rows.addAll((List<?>)page);return rows;}
     private static final class Peer implements PhotoCameraClient {
-        boolean open,cardTwo,fuji;int metadata,originals,calls;String identity="11223344556677889900aabbccddeeff";LongConsumer listener;
+        boolean open,cardTwo,fuji;int metadata,originals,calls,closes;String identity="11223344556677889900aabbccddeeff";LongConsumer listener;
         final Map<Long,PtpObjectInfo> objects=new LinkedHashMap<>();final byte[] jpeg={(byte)255,(byte)216,1,2,3,4,(byte)255,(byte)217},nef=CameraRawBoundaryTest.nef();boolean corruptRaw;
         final List<Long> inventoryFormats=new ArrayList<>();
         void put(long storage,long handle,String name,long size){objects.put(handle,new PtpObjectInfo.Builder().storageId(storage).objectFormat(name.endsWith("NEF")?0xb103:0x3801).filename(name).compressedSize(size).imagePixWidth(6000).imagePixHeight(4000).captureDate("20261112T200000").build());}
@@ -174,7 +194,7 @@ final class CameraLiveDiscoveryBoundaryTest {
         }
         public byte[] getLargeThumbnail(long handle){return jpeg;}
         public long readTo(int op,OutputStream out,long max,long expected,Progress progress,long...p)throws IOException{originals++;byte[] bytes=objects.get(p[0]).filename().endsWith("NEF")?nef:jpeg;if(corruptRaw&&bytes==nef){bytes=new byte[nef.length];bytes[0]=(byte)255;bytes[1]=(byte)216;}progress.onProgress(0,bytes.length);out.write(bytes);progress.onProgress(bytes.length,bytes.length);return bytes.length;}
-        public void abortProtocol(IOException e){open=false;}public void close(){open=false;listener=null;}
+        public void abortProtocol(IOException e){open=false;}public void close(){closes++;open=false;listener=null;}
     }
     private static byte[] info(boolean fuji){int[] operations={0x1001,0x1002,0x1003,0x1004,0x1007,0x1008,0x1009,0x100a,0x90c4};ByteArrayOutputStream ops=new ByteArrayOutputStream();ops.writeBytes(le32(operations.length));for(int op:operations)ops.writeBytes(le16(op));return concat(le16(100),le32(fuji?14:10),le16(100),string("Fixture"),le16(0),ops.toByteArray(),le32(0),le32(0),le32(0),le32(0),string(fuji?"FUJIFILM":"NIKON CORPORATION"),string(fuji?"X-T20":"Z 6_2"),string("1"),string(""));}
     private static byte[] string(String text){return text.isEmpty()?new byte[]{0}:concat(new byte[]{(byte)(text.length()+1)},(text+'\0').getBytes(StandardCharsets.UTF_16LE));}

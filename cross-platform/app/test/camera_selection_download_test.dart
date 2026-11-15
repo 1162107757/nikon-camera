@@ -1,0 +1,138 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:huevia/camera_grid.dart';
+import 'package:huevia/domain.dart';
+import 'package:huevia/sync_tools_dock.dart';
+import 'package:huevia/theme.dart';
+
+import 'camera_reconnect_226_test.dart' as fixtures;
+
+class SelectionCameraCore extends fixtures.ReconnectCore226 {
+  @override
+  Json snapshot({String? session, bool? isConnected}) => {
+    ...super.snapshot(session: session, isConnected: isConnected),
+    'inventoryReady': true,
+  };
+
+  @override
+  Future<Json> call(
+    String operation, [
+    Json payload = const {},
+    String? jobId,
+  ]) async {
+    if (operation == 'camera.page') {
+      calls.add((operation, Map<String, dynamic>.of(payload), jobId));
+      return {
+        'items': [
+          for (var handle = 1; handle <= 3; handle++)
+            {
+              'handle': handle,
+              'storage': 1,
+              'name': 'DSC_000$handle.JPG',
+              'bytes': 5000,
+              'width': 2400,
+              'height': 1600,
+              'raw': false,
+            },
+        ],
+        'nextOffset': 3,
+        'hasMore': false,
+      };
+    }
+    return super.call(operation, payload, jobId);
+  }
+}
+
+void main() {
+  testWidgets(
+    'Long press selects camera photos in place and downloads through the approved floating circle',
+    (tester) async {
+      final core = SelectionCameraCore()..connected = true;
+      final state = fixtures.ReconnectState226(core);
+      addTearDown(() => fixtures.closeReconnect226(tester, state, core));
+      await fixtures.mountCamera226(tester, state);
+      await fixtures.untilReconnect(
+        tester,
+        () => find.text('DSC_0001.JPG').evaluate().isNotEmpty,
+        'Camera photos must actually be loaded',
+      );
+      expect(find.byKey(const Key('camera-selection-download')), findsNothing);
+      await tester.longPress(find.text('DSC_0001.JPG'));
+      await tester.pump();
+      expect(find.text('已选 1 张'), findsOneWidget);
+      expect(find.byType(CameraPhotoViewer), findsNothing);
+      await tester.tap(find.text('DSC_0002.JPG'));
+      await tester.pump();
+      expect(find.text('已选 2 张'), findsOneWidget);
+      expect(find.textContaining('接收 2 张'), findsNothing);
+      expect(core.operations('camera.download'), isEmpty);
+      final action = find.byKey(const Key('camera-selection-download'));
+      final circle = tester.getRect(action);
+      final tools = tester.getRect(find.byKey(const Key('sync-tools-dock')));
+      expect(circle.width, 56);
+      expect(circle.height, circle.width);
+      expect(circle.center.dx, closeTo(tools.center.dx, .01));
+      expect(tools.top - circle.bottom, 12);
+      await tester.tap(action);
+      await fixtures.untilReconnect(
+        tester,
+        () => find.text('接收原文件到哪里').hitTestable().evaluate().isNotEmpty,
+        'The floating action must use the real download destination flow',
+      );
+      expect(find.text('应用相册'), findsOneWidget);
+      Navigator.of(tester.element(find.byType(Dialog))).pop();
+      await tester.pumpAndSettle();
+      expect(find.text('已选 2 张'), findsOneWidget);
+      await tester.tap(find.text('取消'));
+      await tester.pump();
+      expect(find.byKey(const Key('camera-selection-download')), findsNothing);
+      expect(find.text('选择'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'Selection circle fits a narrow large-text screen and yields to the expanded tools panel',
+    (tester) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(320, 640);
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      var downloads = 0;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.light),
+          home: MediaQuery(
+            data: const MediaQueryData(
+              size: Size(320, 640),
+              textScaler: TextScaler.linear(2),
+            ),
+            child: Scaffold(
+              floatingActionButton: SyncToolsDock(
+                selectionCount: 100,
+                onDownloadSelection: () => downloads++,
+                onDownloads: () {},
+                onRemote: () {},
+                onSlots: () {},
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.byKey(const Key('camera-selection-download')));
+      await tester.pump();
+      expect(downloads, 1);
+      await tester.tap(find.byKey(const Key('sync-tools-dock')));
+      await tester.pump();
+      expect(find.byKey(const Key('camera-selection-download')), findsNothing);
+      expect(find.byKey(const Key('sync-tools-panel')), findsOneWidget);
+      await tester.tap(find.byTooltip('收起相机工具'));
+      await tester.pump();
+      expect(
+        find.byKey(const Key('camera-selection-download')),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
+}

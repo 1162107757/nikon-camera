@@ -31,6 +31,9 @@ void main() {
       ..commitGate = Completer<void>();
     final state = fixtures.LiveState(core);
     addTearDown(() async {
+      final commit = core.commitGate;
+      if (commit != null && !commit.isCompleted) commit.complete();
+      core.releaseHeldOperations();
       await state.controller.stop();
       state.dispose();
       await core.events.close();

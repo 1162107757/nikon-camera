@@ -20,7 +20,7 @@ class ProjectPresetsPage extends StatefulWidget {
   });
   final AppState state;
   final bool embedded;
-  final Future<void> Function()? onConnect;
+  final Future<bool> Function()? onConnect;
   @override
   State<ProjectPresetsPage> createState() => _ProjectPresetsPageState();
 }

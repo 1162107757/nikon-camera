@@ -120,7 +120,7 @@ Future<void> close(
   });
 }
 
-Widget panel(fixtures.LiveState state, {Future<void> Function()? onConnect}) =>
+Widget panel(fixtures.LiveState state, {Future<bool> Function()? onConnect}) =>
     MaterialApp(
       theme: hueviaTheme(Brightness.light),
       home: Scaffold(
@@ -366,6 +366,7 @@ void main() {
             state,
             onConnect: () async {
               connects++;
+              return false;
             },
           ),
         );

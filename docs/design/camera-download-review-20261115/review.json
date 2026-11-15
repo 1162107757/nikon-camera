@@ -1,0 +1,56 @@
+{
+  "status": "B-implemented-platform-validation-pending",
+  "sourceBaseline": "ed48347f1b3e6c92492207259cf24d1613ea12e3",
+  "placement": "Above the existing lower-right camera tools floating button, above the bottom four-tab navigation; visible only when camera photos have a nonempty selection.",
+  "invariants": [
+    "No receive/download CTA in top toolbar.",
+    "Keep Huevia current typography/palette/top tabs/bottom navigation.",
+    "Show download icon, selection count, and at least48dp target.",
+    "Do not hide the existing camera-tools button."
+  ],
+  "variants": [
+    {
+      "id": "A",
+      "label": "下载3张胶囊",
+      "recommended": true
+    },
+    {
+      "id": "B",
+      "label": "圆形下载角标"
+    },
+    {
+      "id": "C",
+      "label": "双行下载按钮"
+    }
+  ],
+  "imageTool": "built-in image_gen",
+  "implementationOfDownloadLayout": "implemented",
+  "selected": "B",
+  "approvedByUser": true,
+  "selectedDescription": "Circular download button with count badge above camera-tools button",
+  "rawVariants": [
+    {
+      "id": "A",
+      "source": "C:\\Users\\11621\\.codex\\generated_images\\01a1d049-3904-7680-aca1-130a3db744c0\\exec-0d2a2464-aec6-4782-9db8-678f17ab990a.png",
+      "path": "drafts/variant-a-v1.png",
+      "sha256": "6725633d63ca1a187b6bc72746055f707a3611a5fcc1c33ae3be8c2ea6975ea5"
+    },
+    {
+      "id": "B",
+      "source": "C:\\Users\\11621\\.codex\\generated_images\\01a1d049-3904-7680-aca1-130a3db744c0\\exec-b5642f2f-5f97-45df-ba9a-2b1ef34a5aa0.png",
+      "path": "drafts/variant-b-v1.png",
+      "sha256": "965db6e1fe1c43be031d852f0ba05fd37d47dcc6460b90c714bbef78de84e2a1"
+    },
+    {
+      "id": "C",
+      "source": "C:\\Users\\11621\\.codex\\generated_images\\01a1d049-3904-7680-aca1-130a3db744c0\\exec-d20ca074-e38a-4e1f-8df6-1600280c95ab.png",
+      "path": "drafts/variant-c-v1.png",
+      "sha256": "8d5cf164de6e59aff6f7381c46ae8bd29fdc82ec72baaa2e923399ede0148173"
+    }
+  ],
+  "discardedVariantNotes": {
+    "A": "not selected",
+    "C": "not selected; generated preview shrinks the right image column; not implementation guidance"
+  },
+  "localSelectionAndCapsuleUiTestsPassed": true
+}

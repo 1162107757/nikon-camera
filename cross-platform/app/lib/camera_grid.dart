@@ -8,6 +8,7 @@ import 'camera_transfer.dart';
 import 'camera_raw_pairing.dart';
 import 'camera_photo_sort.dart';
 import 'domain.dart';
+import 'theme.dart';
 
 /// Original AlbumPanel: square cells, 8dp gaps, 14dp corners, format badge.
 class CameraPhotoGrid extends StatelessWidget {
@@ -20,6 +21,7 @@ class CameraPhotoGrid extends StatelessWidget {
     this.onMore,
     this.selection,
     this.onSelect,
+    this.onBeginSelection,
     this.sliver = false,
     this.order = CameraPhotoSort.cameraOrder,
   });
@@ -30,6 +32,7 @@ class CameraPhotoGrid extends StatelessWidget {
   final Future<List<Json>> Function()? onMore;
   final Set<int>? selection;
   final void Function(Json)? onSelect;
+  final void Function(Json)? onBeginSelection;
   final bool sliver;
   final CameraPhotoSort order;
   @override
@@ -53,6 +56,7 @@ class CameraPhotoGrid extends StatelessWidget {
     final cells = SliverChildBuilderDelegate((context, index) {
       final item = items[index];
       final selected = selection?.contains(item['handle']) == true;
+      final p = HuePalette.of(context);
       return Semantics(
         button: true,
         label: '${item['name']}，相机照片',
@@ -61,6 +65,11 @@ class CameraPhotoGrid extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           child: Material(
             child: InkWell(
+              onLongPress: selection != null
+                  ? () => onSelect?.call(item)
+                  : onBeginSelection == null
+                  ? null
+                  : () => onBeginSelection!(item),
               onTap: selection != null
                   ? () => onSelect?.call(item)
                   : () => Navigator.of(context, rootNavigator: true).push<void>(
@@ -91,14 +100,28 @@ class CameraPhotoGrid extends StatelessWidget {
                     top: 6,
                     child: selection == null
                         ? const SizedBox.shrink()
-                        : Icon(
-                            selected
-                                ? Icons.check_circle
-                                : Icons.circle_outlined,
-                            color: selected
-                                ? Theme.of(context).colorScheme.primary
-                                : Colors.white,
-                            shadows: const [
+                        : selected
+                        ? Container(
+                            width: 24,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              color: p.primaryContainer,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.check_rounded,
+                              size: 17,
+                              color: p.onPrimaryContainer,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.circle_outlined,
+                            color: Colors.white,
+                            shadows: [
                               Shadow(color: Colors.black54, blurRadius: 4),
                             ],
                           ),
@@ -136,6 +159,17 @@ class CameraPhotoGrid extends StatelessWidget {
                           child: Text(
                             'NEF',
                             style: TextStyle(fontSize: 9, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (selected)
+                    Positioned.fill(
+                      child: IgnorePointer(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: p.ink, width: 2),
                           ),
                         ),
                       ),
