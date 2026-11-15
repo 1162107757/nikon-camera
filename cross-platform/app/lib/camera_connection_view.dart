@@ -20,6 +20,7 @@ class CameraConnectionView extends StatelessWidget {
     required this.host,
     required this.port,
     required this.usbPicker,
+    required this.usbPrimaryAction,
     required this.transferCard,
     required this.onTransportChanged,
     required this.onProtocol,
@@ -36,7 +37,7 @@ class CameraConnectionView extends StatelessWidget {
   final String? error;
   final CameraConnectionRequest request;
   final TextEditingController host, port;
-  final Widget usbPicker, transferCard;
+  final Widget usbPicker, usbPrimaryAction, transferCard;
   final ValueChanged<bool> onTransportChanged;
   final VoidCallback onProtocol,
       onConnect,
@@ -133,8 +134,8 @@ class CameraConnectionView extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             Theme.of(context).platform == TargetPlatform.iOS
-                ? '打开 iPhone 的“设置” → “Wi-Fi”，选择相机网络并完成连接，然后返回 Huevia，点击“开始连接”。'
-                : '打开手机的系统 Wi-Fi 设置，选择相机网络。完成连接后返回 Huevia，点击“开始连接”。',
+                ? '打开 iPhone 的“设置” → “Wi-Fi”，选择相机网络并完成连接，然后返回 Huevia，点击“连接相机”。'
+                : '打开手机的系统 Wi-Fi 设置，选择相机网络。完成连接后返回 Huevia，点击“连接相机”。',
             style: const TextStyle(fontSize: 14, height: 1.8),
           ),
           const SizedBox(height: 20),
@@ -157,86 +158,46 @@ class CameraConnectionView extends StatelessWidget {
     final locked = busy || usbBusy;
     return Scaffold(
       appBar: HueHeader(
-        title: '',
-        back: true,
-        actions: [
-          Text(
-            usb ? 'USB' : 'Wi-Fi',
-            style: TextStyle(fontSize: 12, color: p.secondary),
+        title: '连接相机',
+        leading: const Center(
+          child: Text(
+            '连接相机',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
+        ),
+        back: true,
+        endPadding: 8,
+        actions: [
           if (connected)
             IconButton(
               tooltip: '断开相机',
               onPressed: locked ? null : onDisconnect,
               icon: const Icon(Icons.link_off_rounded),
-            ),
+            )
+          else
+            const SizedBox(width: 48),
         ],
       ),
       body: SafeArea(
         top: false,
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 8, 24, 10),
+              child: CapsuleSwitch(
+                key: const Key('camera-transport'),
+                labels: const ['Wi-Fi 无线', 'USB 有线'],
+                selected: usb ? 1 : 0,
+                height: 58,
+                padding: const EdgeInsets.all(5),
+                enabled: !locked,
+                onSelected: (mode) => onTransportChanged(mode == 1),
+              ),
+            ),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(24, 8, 24, 18),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 18),
                 children: [
-                  Text(
-                    '连接相机',
-                    style: TextStyle(
-                      fontSize: 28,
-                      height: 1.3,
-                      letterSpacing: -.7,
-                      fontWeight: FontWeight.w600,
-                      color: p.ink,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '选择连接方式，保持相机开启。',
-                    style: TextStyle(
-                      fontSize: 13,
-                      height: 1.7,
-                      color: p.secondary,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: p.container,
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    child: Row(
-                      children: [
-                        for (final mode in [false, true])
-                          Expanded(
-                            child: Semantics(
-                              selected: usb == mode,
-                              child: TextButton.icon(
-                                onPressed: locked
-                                    ? null
-                                    : () => onTransportChanged(mode),
-                                style: TextButton.styleFrom(
-                                  minimumSize: const Size(48, 44),
-                                  backgroundColor: usb == mode
-                                      ? p.card
-                                      : Colors.transparent,
-                                  foregroundColor: p.ink,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                icon: Icon(
-                                  mode ? Icons.usb_rounded : Icons.wifi_rounded,
-                                  size: 19,
-                                ),
-                                label: Text(mode ? 'USB' : 'Wi-Fi'),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
                   transferCard,
                   if (connected) ...[
                     const SizedBox(height: 30),
@@ -338,6 +299,41 @@ class CameraConnectionView extends StatelessWidget {
                           ),
                         ),
                       ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 28, bottom: 8),
+                      child: Center(
+                        child: SizedBox(
+                          width: 116,
+                          height: 90,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Icon(
+                                Icons.camera_alt_outlined,
+                                size: 76,
+                                color: p.ink,
+                              ),
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: ColoredBox(
+                                  color: p.surface,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: Icon(
+                                      usb
+                                          ? Icons.usb_rounded
+                                          : Icons.wifi_rounded,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     if (usb) ...[
                       step(context, 1, '用数据线连接相机与手机', '使用支持数据传输的线缆，保持相机开启。'),
                       step(
@@ -349,46 +345,12 @@ class CameraConnectionView extends StatelessWidget {
                       const SizedBox(height: 18),
                       usbPicker,
                     ] else ...[
-                      const SizedBox(height: 12),
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        minVerticalPadding: 10,
-                        onTap: locked ? null : onProtocol,
-                        title: Text(
-                          '相机类型',
-                          style: TextStyle(fontSize: 13, color: p.secondary),
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              protocol == 'nikon' ? '尼康' : '富士 X-T20',
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            const SizedBox(width: 6),
-                            const Icon(Icons.chevron_right, size: 17),
-                          ],
-                        ),
-                      ),
-                      Divider(height: 1, color: p.outline),
                       step(context, 1, '在相机上开启 Wi-Fi', '保持机身的无线连接界面开启。'),
                       step(
                         context,
                         2,
                         '让手机连接相机的 Wi-Fi',
                         '在系统 Wi-Fi 设置中选择相机网络。',
-                        action: TextButton.icon(
-                          onPressed: () => wifiGuide(context),
-                          icon: const Icon(Icons.open_in_new, size: 14),
-                          label: const Text(
-                            '查看 Wi-Fi 连接指引',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            minimumSize: const Size(48, 44),
-                          ),
-                        ),
                       ),
                       step(
                         context,
@@ -397,6 +359,41 @@ class CameraConnectionView extends StatelessWidget {
                         protocol == 'nikon'
                             ? '机身出现连接提示时，请在相机上确认。'
                             : '请在 X-T20 机身按 OK；当前支持 JPEG 浏览和下载。',
+                      ),
+                      const SizedBox(height: 24),
+                      Material(
+                        color: p.card,
+                        borderRadius: BorderRadius.circular(20),
+                        clipBehavior: Clip.antiAlias,
+                        child: ListTile(
+                          key: const Key('camera-brand'),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 8,
+                          ),
+                          onTap: locked ? null : onProtocol,
+                          title: const Text(
+                            '相机品牌',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(protocol == 'nikon' ? '尼康' : '富士 X-T20'),
+                              const SizedBox(width: 8),
+                              const Icon(Icons.chevron_right, size: 20),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: TextButton(
+                          onPressed: () => wifiGuide(context),
+                          child: const Text(
+                            '查看 Wi-Fi 连接指引',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ),
                       ),
                       if (ios)
                         Padding(
@@ -480,7 +477,9 @@ class CameraConnectionView extends StatelessWidget {
                         child: const Text('取消连接'),
                       ),
                     )
-                  else if (connected || !usb)
+                  else if (usb && !connected)
+                    usbPrimaryAction
+                  else
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton(
@@ -491,12 +490,10 @@ class CameraConnectionView extends StatelessWidget {
                             ? onReturn
                             : onConnect,
                         style: FilledButton.styleFrom(
-                          minimumSize: const Size(48, 50),
+                          minimumSize: const Size(48, 54),
                           backgroundColor: p.action,
                           foregroundColor: p.onAction,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
+                          shape: const StadiumBorder(),
                         ),
                         child: Text(
                           busy
@@ -504,12 +501,12 @@ class CameraConnectionView extends StatelessWidget {
                               : connected
                               ? '返回继续操作'
                               : error == null
-                              ? '开始连接'
+                              ? '连接相机'
                               : '重新连接',
                         ),
                       ),
                     ),
-                  if (connected && !request.busy) ...[
+                  if (connected && !usb && !request.busy) ...[
                     const SizedBox(height: 10),
                     SizedBox(
                       width: double.infinity,
@@ -526,7 +523,7 @@ class CameraConnectionView extends StatelessWidget {
                         ? '取消后停止本次连接，保留连接方式。'
                         : connected
                         ? '重新连接会结束当前接收，已保存的照片会保留。'
-                        : '连接成功后，直接返回上一页。',
+                        : '连接成功后返回当前功能',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 11,

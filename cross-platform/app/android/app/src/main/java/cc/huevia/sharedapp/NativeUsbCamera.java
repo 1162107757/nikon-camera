@@ -6,6 +6,7 @@ import android.hardware.usb.*;
 import android.mtp.*;
 import android.os.*;
 import cc.huevia.album.PhotoCameraClient;
+import cc.huevia.album.ConnectionTrace;
 import cc.huevia.library.SharedJson;
 import cc.huevia.ptp.*;
 import cc.huevia.shared.*;
@@ -83,6 +84,39 @@ final class NativeUsbCamera implements SharedCamera.WiredConnections {
             open=true;info=next.getDeviceInfo();if(info==null){close();throw new IOException("无法读取 USB 相机身份。");}return deviceInfo();
         }
         private MtpDevice require()throws IOException{MtpDevice current=mtp;if(!open||current==null)throw new IOException("USB 相机已断开，请重新连接。");return current;}
+        private UsbPhotoDirectory directory(MtpDevice expected){
+            return new UsbPhotoDirectory(new UsbPhotoDirectory.Reader(){
+                @Override public void checkCurrent()throws IOException{
+                    if(!open||mtp!=expected||active!=Client.this||manager==null||!manager.getDeviceList().containsKey(id))throw new IOException("USB 相机连接已改变，请重新连接。");
+                }
+                @Override public int[] getStorageIds(){
+                    ConnectionTrace.mark("USB_STORAGE_IDS_QUERY");
+                    int[] values=expected.getStorageIds();
+                    ConnectionTrace.diagnosticReason(values==null?"USB_STORAGE_IDS_NULL":"USB_STORAGE_IDS_RESULT",values==null?-1:values.length,-1);
+                    return values;
+                }
+                @Override public int[] getObjectHandles(int storage,int format,int parent){
+                    ConnectionTrace.diagnosticReason("USB_HANDLES_STORAGE_FORMAT",Integer.toUnsignedLong(storage),Integer.toUnsignedLong(format));
+                    ConnectionTrace.diagnosticReason("USB_HANDLES_PARENT",Integer.toUnsignedLong(parent),-1);
+                    ConnectionTrace.mark("USB_OBJECT_HANDLES_QUERY");
+                    int[] values=expected.getObjectHandles(storage,format,parent);
+                    ConnectionTrace.diagnosticReason(values==null?"USB_OBJECT_HANDLES_NULL":"USB_OBJECT_HANDLES_RESULT",values==null?-1:values.length,-1);
+                    return values;
+                }
+            });
+        }
+        private int[] readDirectory(MtpDevice current,int operation,long[] parameters)throws IOException{
+            String stage=operation==0x1004?"USB_STORAGE_IDS":"USB_OBJECT_HANDLES";
+            long started=ConnectionTrace.diagnosticStarted(stage);
+            try{
+                int[] values=operation==0x1004?directory(current).storageIds():directory(current).objectHandles((int)parameters[0],(int)parameters[1],(int)parameters[2]);
+                ConnectionTrace.diagnosticFinished(stage,started,values.length,-1,null);
+                return values;
+            }catch(IOException|RuntimeException failure){
+                ConnectionTrace.diagnosticFinished(stage,started,-1,-1,failure);
+                throw failure;
+            }
+        }
         @Override public boolean isOpen(){return open&&manager.getDeviceList().containsKey(id);}
         @Override public boolean isProtocolUnconfirmed(){return false;}
         @Override public String closeReason(){return open?"":"USB 相机已断开";}
@@ -95,8 +129,8 @@ final class NativeUsbCamera implements SharedCamera.WiredConnections {
         private byte[] deviceInfo(){return describeDevice(info.getManufacturer(),info.getModel(),info.getVersion(),info.getSerialNumber(),info.getOperationsSupported(),info.getEventsSupported());}
         @Override public byte[] getData(int operation,int max,long... p)throws IOException{
             MtpDevice current=require();byte[] bytes;
-            if(operation==0x1004&&p.length==0){bytes=array(current.getStorageIds());}
-            else if(operation==0x1007&&p.length==3){int[] handles=current.getObjectHandles((int)p[0],(int)p[1],(int)p[2]);if(handles==null&&p[1]!=0)handles=current.getObjectHandles((int)p[0],0,(int)p[2]);bytes=array(handles);}
+            if(operation==0x1004&&p.length==0){bytes=array(readDirectory(current,operation,p));}
+            else if(operation==0x1007&&p.length==3){bytes=array(readDirectory(current,operation,p));}
             else if(operation==0x1008&&p.length==1){MtpObjectInfo row=current.getObjectInfo((int)p[0]);if(row==null)throw new IOException("USB 照片信息读取失败，请刷新目录。");bytes=new PtpObjectInfo.Builder().storageId(Integer.toUnsignedLong(row.getStorageId())).objectFormat(row.getFormat()).protectionStatus(row.getProtectionStatus()).compressedSize(row.getCompressedSizeLong()).thumbFormat(row.getThumbFormat()).thumbCompressedSize(row.getThumbCompressedSizeLong()).thumbPixWidth(row.getThumbPixWidth()).thumbPixHeight(row.getThumbPixHeight()).imagePixWidth(row.getImagePixWidth()).imagePixHeight(row.getImagePixHeight()).imageBitDepth(row.getImagePixDepth()).parentObject(Integer.toUnsignedLong(row.getParent())).associationType(row.getAssociationType()).associationDescription(row.getAssociationDesc()).sequenceNumber(row.getSequenceNumber()).filename(row.getName()).captureDate(date(row.getDateCreated())).modificationDate(date(row.getDateModified())).build().toBytes();}
             else if(operation==0x100a&&p.length==1){bytes=current.getThumbnail((int)p[0]);}
             else throw new IOException("USB 照片连接只允许读取目录、信息及缩略图。");

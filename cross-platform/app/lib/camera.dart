@@ -63,6 +63,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       port = TextEditingController(text: '15740');
   String protocol = 'nikon', session = '', model = '', job = '';
   String connectionMode = 'none';
+  bool connectedUsb = false;
   bool inventoryReady = false;
   bool busy = false, connected = false, hasMore = false;
   bool loadingMore = false;
@@ -124,12 +125,18 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   }
 
   void acceptCameraStatus(Json value) {
+    final wasConnected = connected;
+    final previousUsb = connectedUsb;
     connected = value['connected'] == true;
     session = value['session'] as String? ?? '';
     model = value['model'] as String? ?? '';
     connectionMode =
         value['mode'] as String? ?? (connected ? 'photos' : 'none');
     inventoryReady = value['inventoryReady'] == true;
+    connectedUsb = value['transport'] == 'usb';
+    if (connected && (!wasConnected || connectedUsb != previousUsb)) {
+      connectionUsb = connectedUsb;
+    }
     final notice = value['connectionNotice'];
     if (connected) {
       connectionNotice = null;
@@ -600,6 +607,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       loadingMore = false;
       job = 'camera-connect-${DateTime.now().microsecondsSinceEpoch}';
     });
+    var connectionSent = false;
     try {
       // This is an explicit reconnect request. Retire old local producers by
       // their own session; do not send a late stop to the new camera session.
@@ -628,6 +636,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       if (widget.state.cameraManualTransferActive) {
         throw const AppFailure('另一项照片传输仍在结束，请稍后重新连接。');
       }
+      connectionSent = true;
       final result = await connectionRequest.run(
         'camera.connect',
         {
@@ -659,7 +668,36 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         await page(refresh: false);
       }
     } catch (failure) {
-      if (mounted && request == epoch) setState(() => error = '$failure');
+      if (mounted && request == epoch) {
+        if (connectionSent) {
+          // A replacement attempt may already have closed the old transport.
+          // Inspect the native session rather than resurrecting its old badge.
+          final revision = ++statusRevision;
+          Json? actual;
+          try {
+            actual = await widget.state.core
+                .call('camera.status')
+                .timeout(const Duration(seconds: 3));
+          } catch (_) {
+            // An unavailable status cannot certify the old session as usable.
+          }
+          if (!mounted || request != epoch || revision != statusRevision) {
+            return;
+          }
+          final previousSession = session;
+          setState(() {
+            acceptCameraStatus(actual ?? {'connected': false, 'session': ''});
+            connectionNotice = null;
+            error = '$failure';
+          });
+          if (!connected || session != previousSession) {
+            retireSessionWork(previousSession);
+          }
+          previews.setSession(session);
+        } else {
+          setState(() => error = '$failure');
+        }
+      }
     } finally {
       if (mounted && request == epoch) {
         setState(() {
@@ -897,49 +935,53 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     ),
   );
 
-  Widget connectionView(BuildContext context) => CameraConnectionView(
-    usb: connectionUsb,
-    busy: busy,
-    usbBusy: usbBusy,
-    connected: connected && session.isNotEmpty,
-    model: model,
-    protocol: protocol,
-    request: connectionRequest,
-    error: visibleError,
-    settingsExpanded: settingsExpanded,
-    host: host,
-    port: port,
-    transferCard: CameraTransferCard(transfer: transfer),
-    usbPicker: WiredCameraPicker(
-      core: widget.state.core,
-      enabled: !busy,
-      compact: true,
-      onBusyChanged: (value) {
-        if (mounted) setState(() => usbBusy = value);
-      },
-      onConnect: connectWired,
-    ),
-    onTransportChanged: (value) => setState(() {
-      connectionUsb = value;
-      error = null;
-      connectionNotice = null;
-    }),
-    onProtocol: chooseProtocol,
-    onConnect: connect,
-    onCancel: cancelCameraRequest,
-    onSettings: () => setState(() => settingsExpanded = !settingsExpanded),
-    onPermissionSettings: () async {
-      try {
-        await widget.state.core.openCameraSettings();
-      } catch (failure) {
-        if (context.mounted) report(context, failure);
-      }
+  Widget connectionView(BuildContext context) => WiredCameraPicker(
+    core: widget.state.core,
+    enabled: !busy,
+    compact: true,
+    active: connectionUsb && !(connected && connectedUsb),
+    onBusyChanged: (value) {
+      if (mounted) setState(() => usbBusy = value);
     },
-    onReturn: finishConnection,
-    onDisconnect: disconnect,
-    onDiagnostics: () => hueRootPage<void>(
-      context,
-      MaterialPageRoute(builder: (_) => DiagnosticsPage(state: widget.state)),
+    onConnect: connectWired,
+    builder: (context, picker, primary) => CameraConnectionView(
+      usb: connectionUsb,
+      busy: busy,
+      usbBusy: usbBusy,
+      connected:
+          connected && session.isNotEmpty && connectionUsb == connectedUsb,
+      model: model,
+      protocol: protocol,
+      request: connectionRequest,
+      error: visibleError,
+      settingsExpanded: settingsExpanded,
+      host: host,
+      port: port,
+      transferCard: CameraTransferCard(transfer: transfer),
+      usbPicker: picker,
+      usbPrimaryAction: primary,
+      onTransportChanged: (value) => setState(() {
+        connectionUsb = value;
+        error = null;
+        connectionNotice = null;
+      }),
+      onProtocol: chooseProtocol,
+      onConnect: connect,
+      onCancel: cancelCameraRequest,
+      onSettings: () => setState(() => settingsExpanded = !settingsExpanded),
+      onPermissionSettings: () async {
+        try {
+          await widget.state.core.openCameraSettings();
+        } catch (failure) {
+          if (context.mounted) report(context, failure);
+        }
+      },
+      onReturn: finishConnection,
+      onDisconnect: disconnect,
+      onDiagnostics: () => hueRootPage<void>(
+        context,
+        MaterialPageRoute(builder: (_) => DiagnosticsPage(state: widget.state)),
+      ),
     ),
   );
 

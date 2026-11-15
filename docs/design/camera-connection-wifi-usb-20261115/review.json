@@ -1,0 +1,42 @@
+{
+  "status": "approved-A-implemented",
+  "generatedWith": "built-in image_gen",
+  "recommended": "A",
+  "wifiDefault": true,
+  "usbVisibleAndSelectable": true,
+  "switchInPlace": true,
+  "allConnectionEntryPointsUnified": true,
+  "returnToCallingFeature": true,
+  "designOnly": false,
+  "productCodeChanged": true,
+  "artifacts": [
+    {
+      "variant": "A",
+      "path": "docs/design/camera-connection-wifi-usb-20261115/variant-a.png",
+      "bytes": 1341129,
+      "sha256": "a7b31d6ac33cb4a9e377a8fe68c953826e5f37714f767a02b07a689c51787543",
+      "sourceFile": "C:\\Users\\11621\\.codex\\generated_images\\01a1d049-3904-7680-aca1-130a3db744c0\\exec-66de1edb-3b21-4456-9bee-e2eed22284d5.png",
+      "byteExact": true
+    },
+    {
+      "variant": "B",
+      "path": "docs/design/camera-connection-wifi-usb-20261115/variant-b.png",
+      "bytes": 1294549,
+      "sha256": "72bef5c5e248e0bffe224a04d61a4c4efb821e457a14e373af9d5193a2ff60f0",
+      "sourceFile": "C:\\Users\\11621\\.codex\\generated_images\\01a1d049-3904-7680-aca1-130a3db744c0\\exec-f19738aa-3135-480b-ad1f-03ddd0f89f7f.png",
+      "byteExact": true
+    },
+    {
+      "variant": "C",
+      "path": "docs/design/camera-connection-wifi-usb-20261115/variant-c.png",
+      "bytes": 1358651,
+      "sha256": "1f4718c0c80950ee5d73ec1e0883bb2a648f908bc9e794f64e81d0be9d082b4f",
+      "sourceFile": "C:\\Users\\11621\\.codex\\generated_images\\01a1d049-3904-7680-aca1-130a3db744c0\\exec-f635b733-c6c7-4804-9ed6-0894e2e69f42.png",
+      "byteExact": true
+    }
+  ],
+  "approvedVariant": "A",
+  "approval": "User selected A 顶部双标签（推荐，贴近现有界面）",
+  "usbDirectoryFixImplemented": true,
+  "usbHardwareVerified": false
+}
