@@ -1,0 +1,6 @@
+{
+  "exit": 1,
+  "actualProductFailureEstablished": false,
+  "failedExpectation": "USB 有线传输 was the retired connection layout. Actual A connection page exposes Wi-Fi/USB segmented choice, 开始连接 and correct header. Two preceding UI paths passed; final result file not produced.",
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555"
+}

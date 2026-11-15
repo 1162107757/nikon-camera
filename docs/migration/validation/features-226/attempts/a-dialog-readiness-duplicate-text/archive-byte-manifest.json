@@ -1,0 +1,59 @@
+{
+  "copiedFiles": 7,
+  "copiedBytes": 64390,
+  "allByteExact": true,
+  "copyOnly": true,
+  "testRerunPerformed": false,
+  "acceptedAsFullFile": false,
+  "files": [
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-duplicate-text/a-dialog-readiness-analyze.log",
+      "path": "a-dialog-readiness-analyze.log",
+      "bytes": 96,
+      "sha256": "f88aadaa352a8f1785194ebec8efc882d4f269ba0ed81f20cf66b5d6cca48fdc",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-duplicate-text/a-dialog-readiness-format.log",
+      "path": "a-dialog-readiness-format.log",
+      "bytes": 47,
+      "sha256": "496e595f1c6c48775fe87dc8f716b26746dc64a8405f3168ac13bf5d14248b1a",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-duplicate-text/a-dialog-readiness-result.json",
+      "path": "a-dialog-readiness-result.json",
+      "bytes": 207,
+      "sha256": "fa7444368d3a3983b03d58a0ba8ca5beae27644d88fabdefa006fab5dab0202e",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-duplicate-text/a-dialog-readiness-tests.log",
+      "path": "a-dialog-readiness-tests.log",
+      "bytes": 44640,
+      "sha256": "47dc293d59f9cfd30cde8f50e6c43356efc1c9b8968d5df5ca46bf2ca69c622c",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-duplicate-text/camera_live_panel_226_test.dart",
+      "path": "camera_live_panel_226_test.dart",
+      "bytes": 18001,
+      "sha256": "242c0d7b0ada2c6d7c5ede2f77ae964ef5029d95b0edbe7b76103c8629ee2c4a",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-duplicate-text/qualification.json",
+      "path": "qualification.json",
+      "bytes": 297,
+      "sha256": "f00c2554d5eaeceacb3a783a30cd5c05d190722e86cab5573ae1879721f749f6",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-duplicate-text/test_a_dialog_readiness.py",
+      "path": "test_a_dialog_readiness.py",
+      "bytes": 1102,
+      "sha256": "c9d83227bca96aec0a0797ff57d47d13d4a07ecf719ca44d72b3b4f366892afa",
+      "byteExact": true
+    }
+  ]
+}

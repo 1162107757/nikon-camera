@@ -1,0 +1,151 @@
+{
+  "runId": 43659369969,
+  "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+  "files": [
+    {
+      "path": "workflow-logs.zip",
+      "bytes": 20166,
+      "sha256": "2e2d9c7b45cc0a14d3c35a3b59d2f3478ecebf052b3d748775fbf2a5e1ad12a1"
+    },
+    {
+      "path": "diagnostic-artifact.zip",
+      "bytes": 2486,
+      "sha256": "44ee0f90a9ca5790f37f565c8e24f558b29bf31f9ffcdaae2c0d70eb3d543ba6"
+    },
+    {
+      "path": "diagnostic-artifacts-api.json",
+      "bytes": 955,
+      "sha256": "3d640286b208c7d611a80a4f7518c61a9d01b72c491edd63d8c195892dba749a"
+    },
+    {
+      "path": "diagnostic-artifact-receipt.json",
+      "bytes": 700,
+      "sha256": "5d0fcbb2e7b207b4196484ecb74414711ff3a2721bc134acbd5a629a2d8092d1"
+    },
+    {
+      "path": "diagnostic-download.json",
+      "bytes": 599,
+      "sha256": "aa081e50fe8e08d03f3e69a8d9800aba0e1f258d8d7dad2bde5bf028320018c5"
+    },
+    {
+      "path": "frozen-source-evidence.json",
+      "bytes": 1736,
+      "sha256": "6b7750b4264bd03d7f87209008a9fd50c19ef6cde430029cc590034c993510b4"
+    },
+    {
+      "path": "DIAGNOSIS.md",
+      "bytes": 4338,
+      "sha256": "5af224fb9ef508e968d78c6bb5362aec2226e8a6b0e10251e5e3c0099fd1547a"
+    },
+    {
+      "path": "diagnosis-result.json",
+      "bytes": 2150,
+      "sha256": "e9f3f2163c48084d1dd97ad3ef0df73c8f2281001570c7bb428e43be4877b098"
+    },
+    {
+      "path": "latest-run.json",
+      "bytes": 14082,
+      "sha256": "50ad6448881a8de25ab7ec1ab883f9286f41e3a50f81255a21f18b4d12fd6395"
+    },
+    {
+      "path": "latest-jobs.json",
+      "bytes": 7458,
+      "sha256": "af931638f26cbb64ba071aaecea670f19a449e36f7af4105780b42c3fa77643d"
+    },
+    {
+      "path": "workflow-logs/0_apple-app.txt",
+      "bytes": 29267,
+      "sha256": "db85fd103988e0abc736d089377a709369a94c633ac512731fe5b31a18fbbbd5"
+    },
+    {
+      "path": "workflow-logs/apple-app/11_Show actionable build errors.txt",
+      "bytes": 2815,
+      "sha256": "e1257296f169575f3dad44c8e63076eabdcb3ac41c551ceaa9e2b1e307bafd72"
+    },
+    {
+      "path": "workflow-logs/apple-app/12_Preserve development IPA and exact build evidence.txt",
+      "bytes": 2560,
+      "sha256": "7e08e39a46a3c05a40c47fb39ae197bee2e1b5442161ba833bd7014fbbe8a168"
+    },
+    {
+      "path": "workflow-logs/apple-app/1_Set up job.txt",
+      "bytes": 2287,
+      "sha256": "a11327819df862c6062d203e7f54ee3f8008db97ab079eda516cb2742654cedf"
+    },
+    {
+      "path": "workflow-logs/apple-app/24_Post Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "bytes": 1944,
+      "sha256": "8781050688bb651033a00180e62c937b8b50d41b0fc3e64472a8f1ca014d00f5"
+    },
+    {
+      "path": "workflow-logs/apple-app/25_Complete job.txt",
+      "bytes": 516,
+      "sha256": "cb0b17ca935da6dc6c2ab601f0667eee95a0caf2ebfa5382638ab1cabdb32c3b"
+    },
+    {
+      "path": "workflow-logs/apple-app/2_Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "bytes": 13105,
+      "sha256": "8504a89af3629ffa4a4481d2386a027c35e6b37ae75adc27576f4aa930b6a475"
+    },
+    {
+      "path": "workflow-logs/apple-app/3_Identify the exact Apple compiler.txt",
+      "bytes": 324,
+      "sha256": "5ff632e4dfd9df7c757af41f8e216af726193bb139e5d6fc059c3bb6bb3f8471"
+    },
+    {
+      "path": "workflow-logs/apple-app/4_Restore pinned native runtime outputs.txt",
+      "bytes": 2164,
+      "sha256": "c4e7c7f99b4bbac6c8dabff702f2ef8eed1edba79384dcebdbc35a8a251ad63a"
+    },
+    {
+      "path": "workflow-logs/apple-app/5_Restore pinned official Apple SDK and model downloads.txt",
+      "bytes": 1821,
+      "sha256": "4f2689ea03fd0b707cced98a62b2562a9585e620c9a6402525d0831b01d17b6c"
+    },
+    {
+      "path": "workflow-logs/apple-app/6_Verify core parity and prepare native runtimes.txt",
+      "bytes": 1758,
+      "sha256": "374c7db869f6955c8cfa7f60f13108ea8f8e52e52bdf4283abdf693d9a823dfb"
+    },
+    {
+      "path": "workflow-logs/apple-app/system.txt",
+      "bytes": 819,
+      "sha256": "740cad54d25027cc782055a1cddc3d1c7f717403e18962efb1f7ae53285974c0"
+    },
+    {
+      "path": "diagnostic-artifact/mobile-apple/flutter-bootstrap.log",
+      "bytes": 4297,
+      "sha256": "bb51d348f08a222f54fc5d64839434552ffa99d9c370b8d7b9588506608709d6"
+    },
+    {
+      "path": "diagnostic-artifact/mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "path": "frozen-source-evidence/cross-platform/tool/core_check.py",
+      "bytes": 2425,
+      "sha256": "9debbaa00974cf9db30170f7dfc2feb34b75578b392117ec03a6b65a1dac83a6"
+    },
+    {
+      "path": "frozen-source-evidence/cross-platform/tool/core_ios.sh",
+      "bytes": 5303,
+      "sha256": "47507d7727bab014118ec406706494d59a7ed0916edd9ee3505ae93d0d789f67"
+    },
+    {
+      "path": "frozen-source-evidence/cross-platform/core/test/cc/huevia/shared/LiveIngestBoundaryTest.java",
+      "bytes": 37802,
+      "sha256": "9d88f156767a45193eb8c5d324021ee24f4a8e2c8e954f3e6d9f677cf7f890d2"
+    },
+    {
+      "path": "frozen-source-evidence/cross-platform/core/java/cc/huevia/shared/SharedProjects.java",
+      "bytes": 18323,
+      "sha256": "1c713eec09fdad1fcaf242b4473f977fedeca4227f97dff72c4aeb4190a2f856"
+    },
+    {
+      "path": "frozen-source-evidence/app/src/main/java/cc/huevia/album/PhotoLiveProjectStore.java",
+      "bytes": 17982,
+      "sha256": "f463cdb1a832d3f9181ebb4545d302090fad6bfa671ca239503e61bb25f33a86"
+    }
+  ]
+}

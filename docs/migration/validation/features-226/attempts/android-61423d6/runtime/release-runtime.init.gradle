@@ -1,0 +1,7 @@
+gradle.beforeProject { p ->
+    p.pluginManager.withPlugin('com.android.application') {
+        p.extensions.getByName('androidComponents').finalizeDsl { androidDsl ->
+            androidDsl.defaultConfig.testInstrumentationRunner = 'cc.huevia.sharedapp.ReleaseRuntimeInstrumentation'
+        }
+    }
+}

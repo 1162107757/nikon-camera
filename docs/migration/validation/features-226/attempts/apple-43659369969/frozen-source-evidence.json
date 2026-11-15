@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+  "apiOperations": "GET only",
+  "files": [
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/LiveIngestBoundaryTest.java",
+      "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+      "gitBlobSha": "b57a428b73d26b2ea0f543343f4382a761343a38",
+      "bytes": 37802,
+      "sha256": "9d88f156767a45193eb8c5d324021ee24f4a8e2c8e954f3e6d9f677cf7f890d2"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedProjects.java",
+      "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+      "gitBlobSha": "5af5c9f2c3298d6e94529c3ad43e98f6361518d7",
+      "bytes": 18323,
+      "sha256": "1c713eec09fdad1fcaf242b4473f977fedeca4227f97dff72c4aeb4190a2f856"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveProjectStore.java",
+      "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+      "gitBlobSha": "3389c77d1844dbf49a250c00799f6a1593552bb8",
+      "bytes": 17982,
+      "sha256": "f463cdb1a832d3f9181ebb4545d302090fad6bfa671ca239503e61bb25f33a86"
+    },
+    {
+      "path": "cross-platform/tool/core_check.py",
+      "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+      "gitBlobSha": "b2e7c3a63b73441908a53b99fc748591caa306ea",
+      "bytes": 2425,
+      "sha256": "9debbaa00974cf9db30170f7dfc2feb34b75578b392117ec03a6b65a1dac83a6"
+    },
+    {
+      "path": "cross-platform/tool/core_ios.sh",
+      "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+      "gitBlobSha": "912cd3d1371d4b937e0944c73b8bc4f565dccf01",
+      "bytes": 5303,
+      "sha256": "47507d7727bab014118ec406706494d59a7ed0916edd9ee3505ae93d0d789f67"
+    }
+  ]
+}

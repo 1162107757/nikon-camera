@@ -1,0 +1,9 @@
+﻿2026-11-15T01:05:11.6502030Z ##[group]Run bash cross-platform/tool/mobile_apple.sh build
+2026-11-15T01:05:11.6502660Z [36;1mbash cross-platform/tool/mobile_apple.sh build[0m
+2026-11-15T01:05:11.8333730Z shell: /bin/bash -e {0}
+2026-11-15T01:05:11.8343330Z ##[endgroup]
+2026-11-15T01:05:12.8444250Z Valid UTF-8 text and platform configuration: 1540 files
+2026-11-15T01:05:12.8445600Z Read-only detail render source boundary: 43 checks passed
+2026-11-15T01:05:12.8446570Z Readonly HueviaTask cancellation API: 60 Apple sources checked; 1 independently typed fixture setter retained
+2026-11-15T01:16:52.0717370Z Flutter tests exit: 1; device build exit: 0
+2026-11-15T01:16:52.1076070Z ##[error]Process completed with exit code 1.

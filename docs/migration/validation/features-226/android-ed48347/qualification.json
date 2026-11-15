@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "sourceCommit": "ed48347f1b3e6c92492207259cf24d1613ea12e3",
+  "build": 226,
+  "published": false,
+  "scope": "Original Android build/gate/runtime/UI receipts for final sourceed48347; not package promotion or physical-camera transport acceptance.",
+  "gateSummary": {
+    "androidBuildExit": 0,
+    "verifyAndroidExit": 0,
+    "presetPhotoExit": 0,
+    "r8Checks": 123,
+    "rootBackCases": 4,
+    "childBackCases": 2,
+    "guiCases": 3,
+    "guiExit": 0
+  },
+  "failedGuiAttempts": {
+    "count": 0,
+    "countedAsPass": false,
+    "paths": [],
+    "reason": "The two earlier 614 GUI fixture attempts remain preserved in the prior 614 Android history archive. They are intentionally not duplicated or counted as passes here."
+  },
+  "backFinalScreen": {
+    "raw": "我的预设",
+    "rawModified": false,
+    "observedHeader": "预设",
+    "snapshot": "ui/back226-resumed-presets.xml",
+    "note": "The old helper finalScreen literal is 我的预设; the captured root header/tab is 预设 and the page also contains a 我的预设 filter. This naming discrepancy does not change four root same-process/activity cases or two child-return assertions."
+  },
+  "screenshots": {
+    "container": "ui-screenshots.tar.xz",
+    "originalPngMembers": 12,
+    "supportingProbePrefix": null,
+    "supportingProbesCountedAsGate": false,
+    "verification": "Every member decompressed and byte-compared to the original PNG; XML copied byte-for-byte."
+  },
+  "mappings": {
+    "container": "r8-mappings.tar.xz",
+    "members": 2,
+    "verification": "Both original mappings decompressed and compared byte-for-byte; original bytes/SHA listed separately per member in archive-manifest.json."
+  },
+  "reconnectReview": {
+    "path": "receipts/reconnect-independent-review.json",
+    "qualification": "Original independent review is retained unchanged. It records the former base source and bounded owner-reply fix pending parent validation at that time; it is not a runtime pass receipt."
+  },
+  "sourceSnapshot": {
+    "path": "receipts/source.json",
+    "qualification": "Raw source metadata copied at archive time; its pending/platform acceptance flags are preserved without upgrading them. Parent owns final package promotion."
+  },
+  "excluded": [
+    "APK payloads",
+    "classes trees",
+    "uncompressed mapping files",
+    "old-source 0bf8da5 attempt tree",
+    "prior 614 GUI failure attempts",
+    "exploratory live226 UI snapshots"
+  ],
+  "packages": [
+    {
+      "path": ".tooling/next226/package-candidates/huevia-0.31.0-dev-226-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "d865892f649d1e505678ec71cfdcf485adad95c8823823951e2d060694d10301",
+      "copied": false
+    },
+    {
+      "path": ".tooling/next226/package-candidates/huevia-0.31.0-dev-226-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "f9783d7b55015922ee4d27a26c535caf41f74820c1396d1e28c84e1a185fdd53",
+      "copied": false
+    }
+  ],
+  "sdkAdbGitExecutedByArchiver": false
+}

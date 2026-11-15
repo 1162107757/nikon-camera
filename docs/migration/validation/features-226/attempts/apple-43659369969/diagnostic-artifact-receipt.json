@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+  "runId": 43659369969,
+  "artifactId": 14139531598,
+  "name": "huevia-cross-platform-ios-development",
+  "bytes": 2486,
+  "sha256": "44ee0f90a9ca5790f37f565c8e24f558b29bf31f9ffcdaae2c0d70eb3d543ba6",
+  "apiDigestMatched": true,
+  "apiOperations": "GET only",
+  "files": [
+    {
+      "path": "mobile-apple/flutter-bootstrap.log",
+      "bytes": 4297,
+      "sha256": "bb51d348f08a222f54fc5d64839434552ffa99d9c370b8d7b9588506608709d6"
+    },
+    {
+      "path": "mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    }
+  ]
+}

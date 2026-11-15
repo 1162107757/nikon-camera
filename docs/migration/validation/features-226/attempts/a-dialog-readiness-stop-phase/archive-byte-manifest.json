@@ -1,0 +1,59 @@
+{
+  "copiedFiles": 7,
+  "copiedBytes": 63332,
+  "allByteExact": true,
+  "copyOnly": true,
+  "testRerunPerformed": false,
+  "acceptedAsFullFile": false,
+  "files": [
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-stop-phase/a-dialog-readiness-analyze.log",
+      "path": "a-dialog-readiness-analyze.log",
+      "bytes": 96,
+      "sha256": "5e8c84d27c5845f832539f1aa2d1b515d0af04a179a97e321589cdc2a6685fc9",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-stop-phase/a-dialog-readiness-format.log",
+      "path": "a-dialog-readiness-format.log",
+      "bytes": 47,
+      "sha256": "496e595f1c6c48775fe87dc8f716b26746dc64a8405f3168ac13bf5d14248b1a",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-stop-phase/a-dialog-readiness-result.json",
+      "path": "a-dialog-readiness-result.json",
+      "bytes": 207,
+      "sha256": "fa7444368d3a3983b03d58a0ba8ca5beae27644d88fabdefa006fab5dab0202e",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-stop-phase/a-dialog-readiness-tests.log",
+      "path": "a-dialog-readiness-tests.log",
+      "bytes": 43188,
+      "sha256": "5a18ec90486640384f14f1909ed48e2491e64c8b0a6b0b100961e7ea6c306f24",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-stop-phase/camera_live_panel_226_test.dart",
+      "path": "camera_live_panel_226_test.dart",
+      "bytes": 18296,
+      "sha256": "553da6d81324d7e503da8e9d78152d845d6f1767a95fcef2690c334d38c7fd82",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-stop-phase/qualification.json",
+      "path": "qualification.json",
+      "bytes": 396,
+      "sha256": "528c9125760c76700d9368016c19152d54475d705b3eefd487c2c5a03477bdfa",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/attempts/a-dialog-readiness-stop-phase/test_a_dialog_readiness.py",
+      "path": "test_a_dialog_readiness.py",
+      "bytes": 1102,
+      "sha256": "c9d83227bca96aec0a0797ff57d47d13d4a07ecf719ca44d72b3b4f366892afa",
+      "byteExact": true
+    }
+  ]
+}

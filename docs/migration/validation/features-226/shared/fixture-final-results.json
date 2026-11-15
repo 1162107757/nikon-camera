@@ -1,0 +1,140 @@
+[
+  {
+    "label": "format",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\dart.bat",
+      "format",
+      "test/camera_reconnect_226_test.dart",
+      "test/camera_live_panel_226_test.dart"
+    ],
+    "exitCode": 0,
+    "log": ".tooling\\next226\\fixture-final-format.log",
+    "logSha256": "8559e189c76ff0cd263e9e29d5b918ee8b86c4a8593f24f764dad26701a17483",
+    "summary": [
+      "Formatted test/camera_reconnect_226_test.dart",
+      "Formatted test/camera_live_panel_226_test.dart",
+      "Formatted 2 files (2 changed) in 0.02 seconds."
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  },
+  {
+    "label": "analyze",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+      "analyze",
+      "test/camera_reconnect_226_test.dart",
+      "test/camera_live_panel_226_test.dart"
+    ],
+    "exitCode": 0,
+    "log": ".tooling\\next226\\fixture-final-analyze.log",
+    "logSha256": "89fc3dbc5cd09ab64c759fc0c0a227bf5affebdf43ecf2af1f6a5126f844bdc1",
+    "summary": [
+      "No issues found! (ran in 1.8s)"
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  },
+  {
+    "label": "reconnect5",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+      "test",
+      "test/camera_reconnect_226_test.dart",
+      "--reporter",
+      "expanded",
+      "--verbose",
+      "--concurrency=1"
+    ],
+    "exitCode": 0,
+    "log": ".tooling\\next226\\fixture-final-reconnect5.log",
+    "logSha256": "b7490e95ccea73e29fbd01b14ab133c783c63b16c7ddda046533a0d520a1e4b2",
+    "summary": [
+      "00:02 +5: All tests passed!"
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  },
+  {
+    "label": "records",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+      "test",
+      "test/camera_live_panel_226_test.dart",
+      "--reporter",
+      "expanded",
+      "--verbose",
+      "--concurrency=1",
+      "--plain-name",
+      "Live records use the root shell overlay and the last row is clickable where the tabs used to cover it"
+    ],
+    "exitCode": 0,
+    "log": ".tooling\\next226\\fixture-final-records.log",
+    "logSha256": "63228546088341e252defe28c218a2a78f81221217ce399eee1972e7b3aa2d41",
+    "summary": [
+      "00:02 +1: All tests passed!"
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  },
+  {
+    "label": "ui1",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+      "test",
+      "test/camera_live_panel_226_test.dart",
+      "--reporter",
+      "expanded",
+      "--verbose",
+      "--concurrency=1",
+      "--plain-name",
+      "A central start keeps the same preview bounds and freezes the mutually exclusive format"
+    ],
+    "exitCode": 79,
+    "log": ".tooling\\next226\\fixture-final-ui1.log",
+    "logSha256": "ac94395b6d94e1e4dd4b9ebd055f243cb8091853b3a52aa7db6ea3ce43f808a3",
+    "summary": [
+      "00:12 +0: A central start keeps the same preview bounds and freezes the mutually exclusive format - did not complete [E]",
+      "  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_panel_226_test.dart: A central start keeps the same preview bounds and freezes the mutually exclusive format (did not complete)",
+      "[   +5 ms] test 0: flutter_tester process at pid 24952 exited with code=-1073741819"
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  },
+  {
+    "label": "ui2",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+      "test",
+      "test/camera_live_panel_226_test.dart",
+      "--reporter",
+      "expanded",
+      "--verbose",
+      "--concurrency=1",
+      "--plain-name",
+      "A committed photograph keeps the preview frame and never carries a large action over its pixels"
+    ],
+    "exitCode": 79,
+    "log": ".tooling\\next226\\fixture-final-ui2.log",
+    "logSha256": "3a5fe5fb15a657f7f9371607d276280edbd55bfe975a47722d14dcc1771a2c86",
+    "summary": [
+      "00:04 +0: A committed photograph keeps the preview frame and never carries a large action over its pixels - did not complete [E]",
+      "  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_panel_226_test.dart: A committed photograph keeps the preview frame and never carries a large action over its pixels (did not complete)",
+      "[   +8 ms] test 0: flutter_tester process at pid 17456 exited with code=-1073741819"
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  }
+]

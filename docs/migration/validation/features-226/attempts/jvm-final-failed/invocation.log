@@ -1,0 +1,16 @@
+Exception in thread "main" java.io.IOException: 项目照片文件名无效。
+	at cc.huevia.album.PhotoLiveProjectStore.checkedFilename(PhotoLiveProjectStore.java:254)
+	at cc.huevia.album.PhotoLiveProjectStore.ownedFile(PhotoLiveProjectStore.java:229)
+	at cc.huevia.album.PhotoLiveProjectStore.record(PhotoLiveProjectStore.java:79)
+	at cc.huevia.shared.SharedProjects$1.apply(SharedProjects.java:163)
+	at cc.huevia.shared.SharedLiveIngest.finish(SharedLiveIngest.java:133)
+	at cc.huevia.shared.SharedLiveIngest.request(SharedLiveIngest.java:125)
+	at cc.huevia.shared.SharedProjects.live(SharedProjects.java:152)
+	at cc.huevia.shared.SharedProjects.request(SharedProjects.java:68)
+	at cc.huevia.shared.LiveIngestBoundaryTest.call(LiveIngestBoundaryTest.java:25)
+	at cc.huevia.shared.LiveIngestBoundaryTest.rawOriginals(LiveIngestBoundaryTest.java:104)
+	at cc.huevia.shared.LiveIngestBoundaryTest.run(LiveIngestBoundaryTest.java:89)
+	at cc.huevia.shared.CoreBoundary.run(CoreBoundary.java:128)
+	at cc.huevia.shared.CoreParity.run(CoreParity.java:16)
+	at cc.huevia.shared.CoreParity.main(CoreParity.java:38)
+

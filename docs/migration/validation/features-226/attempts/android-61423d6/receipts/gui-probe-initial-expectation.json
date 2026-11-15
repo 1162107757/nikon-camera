@@ -1,0 +1,7 @@
+{
+  "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+  "case": "start-with-no-session",
+  "assertionExit": 1,
+  "reason": "Probe incorrectly expected navigation; actual existing action shows explicit 请先连接相机，再开启边拍边传 toast. No native camera was attached.",
+  "productFailureEstablished": false
+}

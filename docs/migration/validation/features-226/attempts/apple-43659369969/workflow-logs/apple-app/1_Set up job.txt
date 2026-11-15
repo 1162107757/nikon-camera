@@ -1,0 +1,34 @@
+﻿2026-11-15T00:40:51.4825940Z Current runner version: '2.338.2'
+2026-11-15T00:40:51.4850380Z ##[group]Runner Image Provisioner
+2026-11-15T00:40:51.4851130Z Hosted Compute Agent
+2026-11-15T00:40:51.4851620Z Version: 20261028.624
+2026-11-15T00:40:51.4852090Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-15T00:40:51.4852650Z Build Date: 2026-10-28T21:51:42Z
+2026-11-15T00:40:51.4853100Z Worker ID: {4e50ca48-3f7f-444f-8ac8-5af323b3e279}
+2026-11-15T00:40:51.4853690Z Region: westus
+2026-11-15T00:40:51.4854180Z Cloud: MacCloud
+2026-11-15T00:40:51.4854540Z ##[endgroup]
+2026-11-15T00:40:51.4855930Z ##[group]Operating System
+2026-11-15T00:40:51.4856360Z macOS
+2026-11-15T00:40:51.4856700Z 26.7.2
+2026-11-15T00:40:51.4857050Z 25G332
+2026-11-15T00:40:51.4857500Z ##[endgroup]
+2026-11-15T00:40:51.4857870Z ##[group]Runner Image
+2026-11-15T00:40:51.4858320Z Image: macos-26-arm64
+2026-11-15T00:40:51.4859930Z Version: 20261102.0473.1
+2026-11-15T00:40:51.4861180Z Included Software: https://github.com/actions/runner-images/blob/macos-26-arm64/20261102.0473/images/macos/macos-26-arm64-Readme.md
+2026-11-15T00:40:51.4862700Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-26-arm64%2F20261102.0473
+2026-11-15T00:40:51.4863450Z ##[endgroup]
+2026-11-15T00:40:51.4864730Z ##[group]GITHUB_TOKEN Permissions
+2026-11-15T00:40:51.4866560Z Contents: read
+2026-11-15T00:40:51.4866940Z Metadata: read
+2026-11-15T00:40:51.4867330Z ##[endgroup]
+2026-11-15T00:40:51.4872560Z Secret source: Actions
+2026-11-15T00:40:51.4874390Z Cache mode: write
+2026-11-15T00:40:51.4876180Z Prepare workflow directory
+2026-11-15T00:40:51.5304340Z Prepare all required actions
+2026-11-15T00:40:51.5373400Z Getting action download info
+2026-11-15T00:40:51.7369520Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-15T00:40:52.2000800Z Download action repository 'actions/cache@5a3ec84eff668545956fd18022155c47e93e2684' (SHA:5a3ec84eff668545956fd18022155c47e93e2684)
+2026-11-15T00:40:52.3578200Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-15T00:40:52.6316190Z Complete job name: apple-app

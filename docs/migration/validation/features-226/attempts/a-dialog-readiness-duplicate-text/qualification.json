@@ -1,0 +1,9 @@
+{
+  "source": "post-614 fixture-only worktree",
+  "realFailure": "Confirm RAW text finder matched both dialog and underlying panel; scope exact-one assertion to Dialog.",
+  "passed": 0,
+  "failed": 1,
+  "remainingUncompleted": 5,
+  "hostNativeExit": -1073741819,
+  "countedAsPass": false
+}

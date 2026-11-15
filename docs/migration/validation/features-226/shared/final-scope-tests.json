@@ -1,0 +1,14 @@
+[
+  {
+    "file": "camera_live_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_transfer_retirement_226_test.dart",
+    "exit": 0
+  },
+  {
+    "file": "camera_reconnect_226_test.dart",
+    "exit": 1
+  }
+]

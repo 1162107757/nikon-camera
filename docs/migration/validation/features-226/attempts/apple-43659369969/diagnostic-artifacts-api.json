@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 14139531598,
+      "node_id": "MDg6QXJ0aWZhY3QxNDEzOTUzMTU5OA==",
+      "name": "huevia-cross-platform-ios-development",
+      "size_in_bytes": 2486,
+      "url": "https://api.github.com/repos/1162107757/nikon-camera/actions/artifacts/14139531598",
+      "archive_download_url": "https://api.github.com/repos/1162107757/nikon-camera/actions/artifacts/14139531598/zip",
+      "expired": false,
+      "digest": "sha256:44ee0f90a9ca5790f37f565c8e24f558b29bf31f9ffcdaae2c0d70eb3d543ba6",
+      "created_at": "2026-11-15T00:42:52Z",
+      "updated_at": "2026-11-15T00:42:52Z",
+      "expires_at": "2026-11-22T00:42:51Z",
+      "workflow_run": {
+        "id": 43659369969,
+        "repository_id": 1436382697,
+        "head_repository_id": 1436382697,
+        "head_branch": "codex/features215",
+        "head_sha": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b"
+      }
+    }
+  ]
+}

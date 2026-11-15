@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "apkSha256": "aa011513fbb9e0a69774afc9b2e8e5ff5e2a880a0ef5b417d6e4e785da709cab",
+  "device": "emulator-5584",
+  "api": 31,
+  "abi": "x86_64",
+  "cases": [
+    {
+      "case": "A-center-start-and-JPEG-RAW-choice",
+      "exit": 0
+    },
+    {
+      "case": "records-root-modal-excludes-four-tabs-and-opens-existing-photo",
+      "exit": 0
+    },
+    {
+      "case": "explicit-connect-entry-opens-and-Back-returns-to-sync",
+      "exit": 0
+    }
+  ],
+  "physicalCameraTested": false,
+  "connectedThenDisconnectedTransportProvenByThisGui": false,
+  "actualTransportRaceCoverage": "controller widget tests, not physical camera",
+  "exit": 0
+}

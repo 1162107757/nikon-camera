@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": 43660752971,
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "conclusion": "failure",
+  "nativePreparationStep": "success",
+  "failedStep": "Build and test the unsigned device app",
+  "flutter": {
+    "passed": 695,
+    "failed": 2,
+    "wholeSuiteAccepted": false,
+    "testFile": "test/camera_live_panel_226_test.dart",
+    "failures": [
+      {
+        "case": "A central start keeps the same preview bounds and freezes the mutually exclusive format",
+        "line": 172,
+        "firstError": "pumpAndSettle timed out"
+      },
+      {
+        "case": "A committed photograph keeps the preview frame and never carries a large action over its pixels",
+        "line": 225,
+        "firstError": "pumpAndSettle timed out"
+      }
+    ],
+    "rootCause": "Fixture waits for global animation quiescence after opening a confirmation dialog while the checking spinner remains active until user confirmation",
+    "minimalSuggestedFix": "Replace only the two post-Start settle waits with bounded waiting for the real confirmation FilledButton to be hit-testable; preserve all subsequent business assertions"
+  },
+  "observedIndividualReceipts": {
+    "unsignedRunnerAppBuilt": true,
+    "analyzeExitZero": true,
+    "objectiveCParityPass": true,
+    "parityBoundaryChecks": 1865,
+    "publicInternetSchema": 2,
+    "publicInternetCompileExit": 0,
+    "publicInternetExecutionExit": 0,
+    "independentFinalPackageVerificationPerformed": false
+  },
+  "successfulUIKitOrNativeIntegrationClaimed": false,
+  "sourceChanged": false,
+  "testRerunPerformed": false,
+  "gateOrPinChanged": false,
+  "dispatchPerformed": false,
+  "apiOperations": "GET only",
+  "packageAccepted": false,
+  "published": false
+}

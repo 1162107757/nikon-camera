@@ -1,0 +1,8 @@
+Exception in thread "main" java.lang.AssertionError: Camera live discovery 87
+	at cc.huevia.shared.CameraLiveDiscoveryBoundaryTest.yes(CameraLiveDiscoveryBoundaryTest.java:25)
+	at cc.huevia.shared.CameraLiveDiscoveryBoundaryTest.rawSelection(CameraLiveDiscoveryBoundaryTest.java:121)
+	at cc.huevia.shared.CameraLiveDiscoveryBoundaryTest.run(CameraLiveDiscoveryBoundaryTest.java:105)
+	at cc.huevia.shared.CoreBoundary.run(CoreBoundary.java:125)
+	at cc.huevia.shared.CoreParity.run(CoreParity.java:16)
+	at cc.huevia.shared.CoreParity.main(CoreParity.java:38)
+

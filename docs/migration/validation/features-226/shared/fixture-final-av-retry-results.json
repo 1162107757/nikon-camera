@@ -1,0 +1,54 @@
+[
+  {
+    "label": "ui1-av-retry1",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+      "test",
+      "test/camera_live_panel_226_test.dart",
+      "--reporter",
+      "expanded",
+      "--verbose",
+      "--concurrency=1",
+      "--plain-name",
+      "A central start keeps the same preview bounds and freezes the mutually exclusive format"
+    ],
+    "exitCode": 79,
+    "log": ".tooling\\next226\\fixture-final-ui1-av-retry1.log",
+    "logSha256": "3795a87e2f6b01cfb6db7e8eef26b30f008d2606399d558575d7dd5e432f6e1d",
+    "summary": [
+      "00:05 +0: A central start keeps the same preview bounds and freezes the mutually exclusive format - did not complete [E]",
+      "  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_panel_226_test.dart: A central start keeps the same preview bounds and freezes the mutually exclusive format (did not complete)",
+      "[   +6 ms] test 0: flutter_tester process at pid 12300 exited with code=-1073741819"
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  },
+  {
+    "label": "ui2-av-retry1",
+    "command": [
+      "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+      "test",
+      "test/camera_live_panel_226_test.dart",
+      "--reporter",
+      "expanded",
+      "--verbose",
+      "--concurrency=1",
+      "--plain-name",
+      "A committed photograph keeps the preview frame and never carries a large action over its pixels"
+    ],
+    "exitCode": 79,
+    "log": ".tooling\\next226\\fixture-final-ui2-av-retry1.log",
+    "logSha256": "fef5d7402a11e81eee81b25c4ddb8ce567640b0dae6b53d52e8a35cc1b122426",
+    "summary": [
+      "00:09 +0: A committed photograph keeps the preview frame and never carries a large action over its pixels - did not complete [E]",
+      "  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_panel_226_test.dart: A committed photograph keeps the preview frame and never carries a large action over its pixels (did not complete)",
+      "[   +9 ms] test 0: flutter_tester process at pid 43356 exited with code=-1073741819"
+    ],
+    "testSources": {
+      "test/camera_reconnect_226_test.dart": "f385b35074742b75f754b286e3a70f325d2ab056ca9c81a466c6811e3e7ea5ad",
+      "test/camera_live_panel_226_test.dart": "786e1f75ca6302cf6626b35871d20fb98811f68af55e45c3bf91ff2fc27b3bdf"
+    }
+  }
+]

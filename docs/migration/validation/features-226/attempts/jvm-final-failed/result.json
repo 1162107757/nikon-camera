@@ -1,0 +1,52 @@
+{
+  "attempt": "final",
+  "accepted": false,
+  "exitCode": 1,
+  "label": "Failed earlier 226 JVM attempt; not included in accepted 1865 checks",
+  "sourceFrozen": false,
+  "sourceCommit": null,
+  "files": [
+    {
+      "source": ".tooling/next226/core-check-final.log",
+      "path": "invocation.log",
+      "bytes": 1123,
+      "sha256": "5b6edb9988682d90ad979d7d43c0610d80e23f957b422e995550062ce8590c10",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/core-check-final.exit",
+      "path": "invocation.exit",
+      "bytes": 1,
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/core_check_final_attempt.py",
+      "path": "invocation.py",
+      "bytes": 2453,
+      "sha256": "8bb96f9240a055ffa9900eb789b9e91c8c94eb79b6831cfc1703e5e93e83ca8d",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/core-jvm-final/compile.log",
+      "path": "compile.log",
+      "bytes": 189,
+      "sha256": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/core-jvm-final/run.log",
+      "path": "run.log",
+      "bytes": 3981,
+      "sha256": "62db30c34877852672b9bf4d41639b7f6d16c7743a853c628334b557d745dc3c",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/core-jvm-final/javac.args",
+      "path": "javac.args",
+      "bytes": 24983,
+      "sha256": "d6141f7a6ada6a4150514b801eb0057807b82c033e239a5a890ad217b8892de0",
+      "byteExact": true
+    }
+  ]
+}

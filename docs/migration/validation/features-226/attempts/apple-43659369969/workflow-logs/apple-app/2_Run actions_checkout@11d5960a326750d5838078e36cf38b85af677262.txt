@@ -1,0 +1,178 @@
+﻿2026-11-15T00:40:52.7143450Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-15T00:40:52.7144970Z with:
+2026-11-15T00:40:52.7145350Z   fetch-depth: 0
+2026-11-15T00:40:52.7145730Z   repository: 1162107757/nikon-camera
+2026-11-15T00:40:52.7148810Z   token: ***
+2026-11-15T00:40:52.7149170Z   ssh-strict: true
+2026-11-15T00:40:52.7149520Z   ssh-user: git
+2026-11-15T00:40:52.7149900Z   persist-credentials: true
+2026-11-15T00:40:52.7150440Z   clean: true
+2026-11-15T00:40:52.7150900Z   sparse-checkout-cone-mode: true
+2026-11-15T00:40:52.7151340Z   fetch-tags: false
+2026-11-15T00:40:52.7151710Z   show-progress: true
+2026-11-15T00:40:52.7152090Z   lfs: false
+2026-11-15T00:40:52.7152460Z   submodules: false
+2026-11-15T00:40:52.7152830Z   set-safe-directory: true
+2026-11-15T00:40:52.7153390Z   allow-unsafe-pr-checkout: false
+2026-11-15T00:40:52.7154360Z ##[endgroup]
+2026-11-15T00:40:53.3392480Z Syncing repository: 1162107757/nikon-camera
+2026-11-15T00:40:53.3394820Z ##[group]Getting Git version info
+2026-11-15T00:40:53.3400420Z Working directory is '/Users/runner/work/nikon-camera/nikon-camera'
+2026-11-15T00:40:53.3406050Z [command]/opt/homebrew/bin/git version
+2026-11-15T00:40:53.4056200Z git version 2.56.0
+2026-11-15T00:40:53.4133500Z ##[endgroup]
+2026-11-15T00:40:53.4151330Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/a32a1a03-ca0f-44b0-a89e-6017af7a56c6/.gitconfig'
+2026-11-15T00:40:53.4162810Z Temporarily overriding HOME='/Users/runner/work/_temp/a32a1a03-ca0f-44b0-a89e-6017af7a56c6' before making global git config changes
+2026-11-15T00:40:53.4165190Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-15T00:40:53.4173100Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/nikon-camera/nikon-camera
+2026-11-15T00:40:53.4349500Z Deleting the contents of '/Users/runner/work/nikon-camera/nikon-camera'
+2026-11-15T00:40:53.4361750Z ##[group]Initializing the repository
+2026-11-15T00:40:53.4372760Z [command]/opt/homebrew/bin/git init /Users/runner/work/nikon-camera/nikon-camera
+2026-11-15T00:40:53.4852600Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-15T00:40:53.4856410Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-15T00:40:53.4858720Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-15T00:40:53.4860550Z hint: call:
+2026-11-15T00:40:53.4862210Z hint:
+2026-11-15T00:40:53.4863610Z hint: 	git config --global init.defaultBranch <name>
+2026-11-15T00:40:53.4867100Z hint:
+2026-11-15T00:40:53.4868530Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-15T00:40:53.4872260Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-15T00:40:53.4878050Z hint:
+2026-11-15T00:40:53.4881180Z hint: 	git branch -m <name>
+2026-11-15T00:40:53.4882500Z hint:
+2026-11-15T00:40:53.4884030Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-15T00:40:53.4899330Z Initialized empty Git repository in /Users/runner/work/nikon-camera/nikon-camera/.git/
+2026-11-15T00:40:53.4922630Z [command]/opt/homebrew/bin/git remote add origin https://github.com/1162107757/nikon-camera
+2026-11-15T00:40:53.5023390Z ##[endgroup]
+2026-11-15T00:40:53.5025130Z ##[group]Disabling automatic garbage collection
+2026-11-15T00:40:53.5027360Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-15T00:40:53.5105480Z ##[endgroup]
+2026-11-15T00:40:53.5107910Z ##[group]Setting up auth
+2026-11-15T00:40:53.5114950Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-15T00:40:53.5292170Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-15T00:40:53.7171350Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-15T00:40:53.7392090Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-15T00:40:53.9410050Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-15T00:40:53.9723510Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-15T00:40:54.2279060Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-15T00:40:54.2600270Z ##[endgroup]
+2026-11-15T00:40:54.2615520Z ##[group]Fetching the repository
+2026-11-15T00:40:54.2622450Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-15T00:41:08.0384570Z From https://github.com/1162107757/nikon-camera
+2026-11-15T00:41:08.0389410Z  * [new branch]      codex/cross-platform-200 -> origin/codex/cross-platform-200
+2026-11-15T00:41:08.0390180Z  * [new branch]      codex/cross-platform-migration -> origin/codex/cross-platform-migration
+2026-11-15T00:41:08.0390980Z  * [new branch]      codex/features212 -> origin/codex/features212
+2026-11-15T00:41:08.0391560Z  * [new branch]      codex/features213 -> origin/codex/features213
+2026-11-15T00:41:08.0392230Z  * [new branch]      codex/features215 -> origin/codex/features215
+2026-11-15T00:41:08.0396620Z  * [new branch]      codex/ios-unsigned-20261108t055033 -> origin/codex/ios-unsigned-20261108t055033
+2026-11-15T00:41:08.0397580Z  * [new branch]      feature/detail-on-demand -> origin/feature/detail-on-demand
+2026-11-15T00:41:08.0404560Z  * [new branch]      feature/phase1-wb-picker-dehaze -> origin/feature/phase1-wb-picker-dehaze
+2026-11-15T00:41:08.0405700Z  * [new branch]      master            -> origin/master
+2026-11-15T00:41:08.0447160Z [command]/opt/homebrew/bin/git branch --list --remote origin/codex/features215
+2026-11-15T00:41:08.0555990Z   origin/codex/features215
+2026-11-15T00:41:08.0564320Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/codex/features215
+2026-11-15T00:41:08.0647710Z 0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b
+2026-11-15T00:41:08.0658390Z ##[endgroup]
+2026-11-15T00:41:08.0659180Z ##[group]Determining the checkout info
+2026-11-15T00:41:08.0659770Z ##[endgroup]
+2026-11-15T00:41:08.0666120Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-15T00:41:08.0803470Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-15T00:41:08.0893960Z ##[group]Checking out the ref
+2026-11-15T00:41:08.0896940Z [command]/opt/homebrew/bin/git checkout --progress --force -B codex/features215 refs/remotes/origin/codex/features215
+2026-11-15T00:41:09.4157170Z Updating files:  16% (1599/9795)
+2026-11-15T00:41:09.7292370Z Updating files:  17% (1666/9795)
+2026-11-15T00:41:09.9058700Z Updating files:  18% (1764/9795)
+2026-11-15T00:41:10.0271720Z Updating files:  19% (1862/9795)
+2026-11-15T00:41:10.1258570Z Updating files:  20% (1959/9795)
+2026-11-15T00:41:10.2490330Z Updating files:  20% (1986/9795)
+2026-11-15T00:41:10.5951070Z Updating files:  21% (2057/9795)
+2026-11-15T00:41:10.7035640Z Updating files:  22% (2155/9795)
+2026-11-15T00:41:10.9780370Z Updating files:  23% (2253/9795)
+2026-11-15T00:41:11.1430800Z Updating files:  24% (2351/9795)
+2026-11-15T00:41:11.2324410Z Updating files:  24% (2438/9795)
+2026-11-15T00:41:11.3956930Z Updating files:  25% (2449/9795)
+2026-11-15T00:41:11.6944910Z Updating files:  26% (2547/9795)
+2026-11-15T00:41:11.7159850Z Updating files:  27% (2645/9795)
+2026-11-15T00:41:11.7489150Z Updating files:  28% (2743/9795)
+2026-11-15T00:41:11.7771510Z Updating files:  29% (2841/9795)
+2026-11-15T00:41:11.8086000Z Updating files:  30% (2939/9795)
+2026-11-15T00:41:11.8331890Z Updating files:  31% (3037/9795)
+2026-11-15T00:41:11.9851980Z Updating files:  32% (3135/9795)
+2026-11-15T00:41:12.0025670Z Updating files:  33% (3233/9795)
+2026-11-15T00:41:12.1521840Z Updating files:  34% (3331/9795)
+2026-11-15T00:41:12.5508710Z Updating files:  34% (3363/9795)
+2026-11-15T00:41:12.5727630Z Updating files:  35% (3429/9795)
+2026-11-15T00:41:12.9048670Z Updating files:  36% (3527/9795)
+2026-11-15T00:41:13.1394840Z Updating files:  37% (3625/9795)
+2026-11-15T00:41:13.2504760Z Updating files:  37% (3681/9795)
+2026-11-15T00:41:13.4573300Z Updating files:  38% (3723/9795)
+2026-11-15T00:41:13.6102610Z Updating files:  39% (3821/9795)
+2026-11-15T00:41:13.6979960Z Updating files:  40% (3918/9795)
+2026-11-15T00:41:13.7233040Z Updating files:  41% (4016/9795)
+2026-11-15T00:41:13.7578490Z Updating files:  42% (4114/9795)
+2026-11-15T00:41:13.8265210Z Updating files:  43% (4212/9795)
+2026-11-15T00:41:13.8699770Z Updating files:  44% (4310/9795)
+2026-11-15T00:41:13.8951300Z Updating files:  45% (4408/9795)
+2026-11-15T00:41:13.9247970Z Updating files:  46% (4506/9795)
+2026-11-15T00:41:13.9450080Z Updating files:  47% (4604/9795)
+2026-11-15T00:41:13.9773560Z Updating files:  48% (4702/9795)
+2026-11-15T00:41:14.0199610Z Updating files:  49% (4800/9795)
+2026-11-15T00:41:14.0541510Z Updating files:  50% (4898/9795)
+2026-11-15T00:41:14.0792500Z Updating files:  51% (4996/9795)
+2026-11-15T00:41:14.1169780Z Updating files:  52% (5094/9795)
+2026-11-15T00:41:14.1247240Z Updating files:  53% (5192/9795)
+2026-11-15T00:41:14.1361570Z Updating files:  53% (5222/9795)
+2026-11-15T00:41:14.1610320Z Updating files:  54% (5290/9795)
+2026-11-15T00:41:14.1915680Z Updating files:  55% (5388/9795)
+2026-11-15T00:41:14.2196730Z Updating files:  56% (5486/9795)
+2026-11-15T00:41:14.2488200Z Updating files:  57% (5584/9795)
+2026-11-15T00:41:14.2766420Z Updating files:  58% (5682/9795)
+2026-11-15T00:41:14.3107180Z Updating files:  59% (5780/9795)
+2026-11-15T00:41:14.3373610Z Updating files:  60% (5877/9795)
+2026-11-15T00:41:14.3570770Z Updating files:  61% (5975/9795)
+2026-11-15T00:41:14.3770210Z Updating files:  62% (6073/9795)
+2026-11-15T00:41:14.4119770Z Updating files:  63% (6171/9795)
+2026-11-15T00:41:14.4415710Z Updating files:  64% (6269/9795)
+2026-11-15T00:41:14.4578620Z Updating files:  65% (6367/9795)
+2026-11-15T00:41:14.4767590Z Updating files:  66% (6465/9795)
+2026-11-15T00:41:14.4963380Z Updating files:  67% (6563/9795)
+2026-11-15T00:41:14.5150320Z Updating files:  68% (6661/9795)
+2026-11-15T00:41:14.5286560Z Updating files:  69% (6759/9795)
+2026-11-15T00:41:14.5445140Z Updating files:  70% (6857/9795)
+2026-11-15T00:41:14.5730830Z Updating files:  71% (6955/9795)
+2026-11-15T00:41:14.6025540Z Updating files:  72% (7053/9795)
+2026-11-15T00:41:14.6371040Z Updating files:  73% (7151/9795)
+2026-11-15T00:41:14.6740350Z Updating files:  74% (7249/9795)
+2026-11-15T00:41:14.6969980Z Updating files:  75% (7347/9795)
+2026-11-15T00:41:14.7207820Z Updating files:  76% (7445/9795)
+2026-11-15T00:41:14.7416430Z Updating files:  77% (7543/9795)
+2026-11-15T00:41:14.7592630Z Updating files:  78% (7641/9795)
+2026-11-15T00:41:14.7868800Z Updating files:  79% (7739/9795)
+2026-11-15T00:41:14.8077020Z Updating files:  80% (7836/9795)
+2026-11-15T00:41:14.8328400Z Updating files:  81% (7934/9795)
+2026-11-15T00:41:14.8523640Z Updating files:  82% (8032/9795)
+2026-11-15T00:41:14.8661950Z Updating files:  83% (8130/9795)
+2026-11-15T00:41:14.8819420Z Updating files:  84% (8228/9795)
+2026-11-15T00:41:14.8970940Z Updating files:  85% (8326/9795)
+2026-11-15T00:41:14.9096350Z Updating files:  86% (8424/9795)
+2026-11-15T00:41:14.9549740Z Updating files:  87% (8522/9795)
+2026-11-15T00:41:15.0142420Z Updating files:  88% (8620/9795)
+2026-11-15T00:41:15.1260500Z Updating files:  89% (8718/9795)
+2026-11-15T00:41:15.1289270Z Updating files:  89% (8802/9795)
+2026-11-15T00:41:15.1646490Z Updating files:  90% (8816/9795)
+2026-11-15T00:41:15.1985540Z Updating files:  91% (8914/9795)
+2026-11-15T00:41:15.2279710Z Updating files:  92% (9012/9795)
+2026-11-15T00:41:15.2719120Z Updating files:  93% (9110/9795)
+2026-11-15T00:41:15.3647070Z Updating files:  94% (9208/9795)
+2026-11-15T00:41:15.4021920Z Updating files:  95% (9306/9795)
+2026-11-15T00:41:15.4248790Z Updating files:  96% (9404/9795)
+2026-11-15T00:41:15.4734680Z Updating files:  97% (9502/9795)
+2026-11-15T00:41:15.5550660Z Updating files:  98% (9600/9795)
+2026-11-15T00:41:15.6264860Z Updating files:  99% (9698/9795)
+2026-11-15T00:41:15.6265860Z Updating files: 100% (9795/9795)
+2026-11-15T00:41:15.6266520Z Updating files: 100% (9795/9795), done.
+2026-11-15T00:41:15.6709890Z Switched to a new branch 'codex/features215'
+2026-11-15T00:41:15.6724960Z branch 'codex/features215' set up to track 'origin/codex/features215'.
+2026-11-15T00:41:15.6801290Z ##[endgroup]
+2026-11-15T00:41:15.7221680Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-15T00:41:15.7382040Z 0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b

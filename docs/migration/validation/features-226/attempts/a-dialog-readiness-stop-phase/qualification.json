@@ -1,0 +1,9 @@
+{
+  "source": "post-614 fixture-only worktree",
+  "passed": 5,
+  "failed": 1,
+  "remainingUncompleted": 0,
+  "nativeAV": false,
+  "realFailure": "Fixture active=false/working=false becomes true while async stop is still phase stopping, whose format selector is correctly locked. Await actual stopped phase before retaining original unlocked assertion.",
+  "countedAsFullFilePass": false
+}

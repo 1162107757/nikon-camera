@@ -1,0 +1,22 @@
+﻿2026-11-15T00:41:16.6621020Z ##[group]Run actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684
+2026-11-15T00:41:16.6621670Z with:
+2026-11-15T00:41:16.6622290Z   path: .tooling/cross-platform187/j2objc-3.1/dist
+.tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1
+cross-platform/.build/raw-apple
+
+2026-11-15T00:41:16.6623400Z   key: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--4ce07af3291abe3f00a6bb6a2f34ed178b9a6de90e41024d5ac3a776d2e77ae4
+2026-11-15T00:41:16.6624180Z   enableCrossOsArchive: false
+2026-11-15T00:41:16.6624570Z   fail-on-cache-miss: false
+2026-11-15T00:41:16.6624900Z   lookup-only: false
+2026-11-15T00:41:16.6625170Z ##[endgroup]
+2026-11-15T00:41:16.8431480Z (node:1362) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T00:41:16.8432530Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T00:41:16.9680420Z Cache hit for: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--4ce07af3291abe3f00a6bb6a2f34ed178b9a6de90e41024d5ac3a776d2e77ae4
+2026-11-15T00:41:16.9782200Z (node:1362) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-15T00:41:18.0318660Z Received 83886080 of 215279549 (39.0%), 80.0 MBs/sec
+2026-11-15T00:41:19.0365330Z Received 155189248 of 215279549 (72.1%), 73.9 MBs/sec
+2026-11-15T00:41:19.7379430Z Received 215279549 of 215279549 (100.0%), 75.8 MBs/sec
+2026-11-15T00:41:19.7483520Z Cache Size: ~205 MB (215279549 B)
+2026-11-15T00:41:19.7525250Z [command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/78f1160f-7351-435e-aa7d-e1d856d12f0c/cache.tzst -P -C /Users/runner/work/nikon-camera/nikon-camera --delay-directory-restore --use-compress-program unzstd
+2026-11-15T00:41:24.9654370Z Cache restored successfully
+2026-11-15T00:41:25.0164110Z Cache restored from key: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--4ce07af3291abe3f00a6bb6a2f34ed178b9a6de90e41024d5ac3a776d2e77ae4

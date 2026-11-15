@@ -1,0 +1,107 @@
+{
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "runId": 43660752971,
+  "artifactId": 14140966261,
+  "name": "huevia-cross-platform-ios-development",
+  "bytes": 36984,
+  "sha256": "5c625d887cf26d41c54d0f03e9b92a9d9d004cfe9ee0c66413b1d52453c701e0",
+  "apiDigestMatched": true,
+  "apiOperations": "GET only",
+  "files": [
+    {
+      "path": "core-ios/avatar-build.log",
+      "bytes": 51,
+      "sha256": "ea4090f75f622fb03e64dffcdf8ee0ea79fdd5f11d3163ab1ca96a582531a60b"
+    },
+    {
+      "path": "core-ios/avatar.log",
+      "bytes": 133,
+      "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4"
+    },
+    {
+      "path": "core-ios/parity.json",
+      "bytes": 885,
+      "sha256": "4b848537c97a6cf2039f0516d59fa061109872f783c9bc4ed45dac926e60c8a7"
+    },
+    {
+      "path": "core-ios/translation.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mobile-apple/analyze.log",
+      "bytes": 97,
+      "sha256": "6ecc6b55d118c9e6e60251fc26645423f14612e4e606ff877acb5c250762bd43"
+    },
+    {
+      "path": "mobile-apple/device-build.log",
+      "bytes": 894,
+      "sha256": "b1f4110680334f9e78d1fb90c4b9d8fd10b5cfe59322c6ceaad91e239642bdf0"
+    },
+    {
+      "path": "mobile-apple/flutter-bootstrap.log",
+      "bytes": 319,
+      "sha256": "5b3efc8f23261efe12efa048ae701d57d0299246c86afb604f48f73edbd92af7"
+    },
+    {
+      "path": "mobile-apple/flutter-tests.log",
+      "bytes": 164524,
+      "sha256": "1277fa1892bc1ed2f65307832557a599504804894067aa9c1681b8b82d76e9bc"
+    },
+    {
+      "path": "mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "path": "mobile-apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "3c4d87c2454860918f07b6230c482b53015aec7163852f082deae799e7e51d8d"
+    },
+    {
+      "path": "mobile-apple/portrait-models.log",
+      "bytes": 424,
+      "sha256": "2ced8d43108e1c408ffa94ff5020c6c36e3f7c68eb3999290cc84f1ed9132e68"
+    },
+    {
+      "path": "mobile-apple/pub-get.log",
+      "bytes": 1748,
+      "sha256": "8e13a30ee3d0768c607c8ebb11f50579ef40c665fa56e5ced298889ef385ec09"
+    },
+    {
+      "path": "mobile-apple/qq-sdk.log",
+      "bytes": 362,
+      "sha256": "26f0089e9c64eef1157e735644cbdee892402b92f296df7a8029f30c03faa3d4"
+    },
+    {
+      "path": "mobile-apple/raw-build.log",
+      "bytes": 886,
+      "sha256": "c27296de7136f0effac26561bf421eb89e81120155e7b80bf9e1e6f6b73eac49"
+    },
+    {
+      "path": "mobile-apple/public-internet/build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mobile-apple/public-internet/compiler.log",
+      "bytes": 207,
+      "sha256": "6c263f4a0b378193483e8853193204a89db0eacf407199d789fb7e3125b8148b"
+    },
+    {
+      "path": "mobile-apple/public-internet/result.json",
+      "bytes": 1415,
+      "sha256": "59f0705288631138a8a3bfa38fa5da5468c1cf40638f1bbf9af0bb719b284924"
+    },
+    {
+      "path": "mobile-apple/public-internet/source-check.log",
+      "bytes": 143,
+      "sha256": "abe0003008041566715c8b92697936631cf52cd2cda9e566c9a7926c3de75ff7"
+    },
+    {
+      "path": "mobile-apple/public-internet/stdout.log",
+      "bytes": 123,
+      "sha256": "6227a5f208fe0a9342af3ee3738afcd08b5fc29b6137527d3d9c6454f04d357f"
+    }
+  ]
+}

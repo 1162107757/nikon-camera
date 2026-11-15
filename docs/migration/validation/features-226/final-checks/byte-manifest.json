@@ -1,0 +1,104 @@
+{
+  "sourceCommit": "ed48347f1b3e6c92492207259cf24d1613ea12e3",
+  "allByteExact": true,
+  "actualIndependentVerifierExit": 0,
+  "syntheticHelperTestsAreNotMacRuntime": true,
+  "files": [
+    {
+      "source": ".tooling/next226/verify_apple.py",
+      "path": "verify_apple.py",
+      "bytes": 12840,
+      "sha256": "f124dbce5b88016e438895232682560645ae8eb6aff480fa76f7251b4e9c7930"
+    },
+    {
+      "source": ".tooling/next226/apple_full_source_evidence226.py",
+      "path": "apple_full_source_evidence226.py",
+      "bytes": 2410,
+      "sha256": "7ca3ed92c42a44836c7ccc603daec71fbc50c86d061dbcdf40af8b9ce528ed03"
+    },
+    {
+      "source": ".tooling/next226/foreground_evidence226.py",
+      "path": "foreground_evidence226.py",
+      "bytes": 5188,
+      "sha256": "631e11fe6a7ac22d4a99a9a3e94bb321237f47f5a2a3dd9a6fe3fa396e29e121"
+    },
+    {
+      "source": ".tooling/next226/public_internet_evidence226.py",
+      "path": "public_internet_evidence226.py",
+      "bytes": 3398,
+      "sha256": "eaed2622b0a8ffd032767f19ac230576556a4814fbc76a57365140c31ace8ebc"
+    },
+    {
+      "source": ".tooling/next226/test_apple_full_source_evidence226.py",
+      "path": "test_apple_full_source_evidence226.py",
+      "bytes": 2786,
+      "sha256": "c5e448fce497131d8dcb27203d9dbb7886b594af03a5cbfd22b751648eb5b27b"
+    },
+    {
+      "source": ".tooling/next226/test_public_internet_evidence226.py",
+      "path": "test_public_internet_evidence226.py",
+      "bytes": 2824,
+      "sha256": "da1717d764e6dc45f2175e956bdb229aedbb33edc1d7f356b9a814c996282ff8"
+    },
+    {
+      "source": ".tooling/next226/apple-independent-final.log",
+      "path": "apple-independent-final.log",
+      "bytes": 338,
+      "sha256": "ae4d3de5ec26e52df625769aee2d14a26a1f5a1c437fb28fb14b16fb3bac434a"
+    },
+    {
+      "source": ".tooling/next226/apple-independent-confirmed.log",
+      "path": "apple-independent-confirmed.log",
+      "bytes": 338,
+      "sha256": "ae4d3de5ec26e52df625769aee2d14a26a1f5a1c437fb28fb14b16fb3bac434a"
+    },
+    {
+      "source": ".tooling/next226/apple-independent-confirmed.exit",
+      "path": "apple-independent-confirmed.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "source": ".tooling/next226/fixture-only-source-proof.json",
+      "path": "fixture-only-source-proof.json",
+      "bytes": 462,
+      "sha256": "7ca167819ee335562d2d0bb41451771581b0564ef4769f452c10e777d44e57cd"
+    },
+    {
+      "source": ".tooling/next226/preservation-final.log",
+      "path": "preservation-final.log",
+      "bytes": 123,
+      "sha256": "4c870c04c85f1ae1d02524c3d00a5ea0090bd60c36e557f24c7019864f605fb0"
+    },
+    {
+      "source": ".tooling/next226/preservation-final.exit",
+      "path": "preservation-final.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "source": ".tooling/next226/source.json",
+      "path": "source.json",
+      "bytes": 5317,
+      "sha256": "c3727c1e33305df31afadb602b41305049022d6453450ae1f1362f04757f187f"
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43663233293/watch-result.json",
+      "path": "apple-watch-result.json",
+      "bytes": 306,
+      "sha256": "70a418936c76be6b568239f5354777fc7f1c1f19c8f6117e8fac881b256963a9"
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43663233293/latest-run.json",
+      "path": "apple-latest-run.json",
+      "bytes": 14071,
+      "sha256": "c913b5f1460ccf33e7591285bafa3a882e6d9290bd2bf1c4ba8f13b7989b718d"
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43663233293/latest-jobs.json",
+      "path": "apple-latest-jobs.json",
+      "bytes": 7458,
+      "sha256": "fde333b373dfb2432e23f6d897395fda55c6e606a556019461b2a1c5151f8380"
+    }
+  ]
+}

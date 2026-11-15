@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "build": 226,
+  "published": false,
+  "scope": "Original Android build/gate/runtime/UI receipts for source614; not package promotion or physical-camera transport acceptance.",
+  "gateSummary": {
+    "androidBuildExit": 0,
+    "verifyAndroidExit": 0,
+    "presetPhotoExit": 0,
+    "r8Checks": 123,
+    "rootBackCases": 4,
+    "childBackCases": 2,
+    "guiCases": 3,
+    "guiExit": 0
+  },
+  "failedGuiAttempts": {
+    "count": 2,
+    "countedAsPass": false,
+    "paths": [
+      "attempts/61423d6-gui-old-label",
+      "attempts/61423d6-gui-existing-raw-choice"
+    ],
+    "reason": "Raw script/log/qualification preserved. First used a retired connection label, second did not initialize the existing JPEG/RAW selection. Neither establishes product failure."
+  },
+  "backFinalScreen": {
+    "raw": "我的预设",
+    "rawModified": false,
+    "observedHeader": "预设",
+    "snapshot": "ui/back226-resumed-presets.xml",
+    "note": "The old helper finalScreen literal is 我的预设; the captured root header/tab is 预设 and the page also contains a 我的预设 filter. This naming discrepancy does not change four root same-process/activity cases or two child-return assertions."
+  },
+  "screenshots": {
+    "container": "ui-screenshots.tar.xz",
+    "originalPngMembers": 25,
+    "supportingProbePrefix": "ui/live226-",
+    "supportingProbesCountedAsGate": false,
+    "verification": "Every member decompressed and byte-compared to the original PNG; XML copied byte-for-byte."
+  },
+  "mappings": {
+    "container": "r8-mappings.tar.xz",
+    "members": 2,
+    "verification": "Both original mappings decompressed and compared byte-for-byte; original bytes/SHA listed separately per member in archive-manifest.json."
+  },
+  "reconnectReview": {
+    "path": "receipts/reconnect-independent-review.json",
+    "qualification": "Original independent review is retained unchanged. It records the former base source and bounded owner-reply fix pending parent validation at that time; it is not a runtime pass receipt."
+  },
+  "sourceSnapshot": {
+    "path": "receipts/source.json",
+    "qualification": "Raw source metadata copied at archive time; its pending/platform acceptance flags are preserved without upgrading them. Parent owns final package promotion."
+  },
+  "excluded": [
+    "APK payloads",
+    "classes trees",
+    "uncompressed mapping files",
+    "old-source 0bf8da5 attempt tree"
+  ],
+  "packages": [
+    {
+      "path": ".tooling/next226/package-candidates/huevia-0.31.0-dev-226-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "9e5052161530883c55d3b6fe656b57f398b80a475f8d84b735fd64de3b62b7d3",
+      "copied": false
+    },
+    {
+      "path": ".tooling/next226/package-candidates/huevia-0.31.0-dev-226-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "aa011513fbb9e0a69774afc9b2e8e5ff5e2a880a0ef5b417d6e4e785da709cab",
+      "copied": false
+    }
+  ],
+  "sdkAdbGitExecutedByArchiver": false
+}

@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "runId": 43660752971,
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "conclusion": "failure",
+  "historicalAttemptOnly": true,
+  "flutter": {
+    "passed": 695,
+    "failed": 2,
+    "wholeSuiteAccepted": false
+  },
+  "accepted": false,
+  "published": false,
+  "actualRerunForArchive": false,
+  "apiCallsForArchive": 0,
+  "packageCopied": false,
+  "candidateDocsOrAndroidDirectoriesModified": false,
+  "qualification": "Old 614 source failed its full Flutter gate despite successful preparation and a built Runner.app. The two confirmation-wait fixtures must pass separately and in a later exact-source full run; individual successes here do not accept an IPA.",
+  "copiedFiles": 42,
+  "copiedBytes": 363192,
+  "allByteExact": true,
+  "files": [
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs.zip",
+      "path": "workflow-logs.zip",
+      "bytes": 27376,
+      "sha256": "a53f6b69239b74ac565ce8df2056eb7ecb3e663c3b1ade573913472ce3416e9b",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact.zip",
+      "path": "diagnostic-artifact.zip",
+      "bytes": 36984,
+      "sha256": "5c625d887cf26d41c54d0f03e9b92a9d9d004cfe9ee0c66413b1d52453c701e0",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifacts-api.json",
+      "path": "diagnostic-artifacts-api.json",
+      "bytes": 956,
+      "sha256": "ef6605afb5dfa4fdb0cf03f01e67e53a87e9fb3dd52bf4cd33b5214ba14499df",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact-receipt.json",
+      "path": "diagnostic-artifact-receipt.json",
+      "bytes": 3573,
+      "sha256": "8fd483ad76817834449c25488abad1c28320534a1abc8235ce5b154552a63051",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-download.json",
+      "path": "diagnostic-download.json",
+      "bytes": 600,
+      "sha256": "10ae35b607d1331240b3d93b8ae8885ac174fd1de9ec3c5ada1e7f4917faaae7",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/DIAGNOSIS.md",
+      "path": "DIAGNOSIS.md",
+      "bytes": 3733,
+      "sha256": "58556dacd520b8f9906e271d2b9a1de44c7c3c28de135a4b2e736161f43b3330",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnosis-result.json",
+      "path": "diagnosis-result.json",
+      "bytes": 1749,
+      "sha256": "5d8916344a07a91b1426714d01285cb9f932e1a6ab13933fff298d25cd047806",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/latest-run.json",
+      "path": "latest-run.json",
+      "bytes": 14074,
+      "sha256": "bc7ce00460676d3434ebb10add382424719e14808cfb2c0e1a7b445c2021fe4e",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/latest-jobs.json",
+      "path": "latest-jobs.json",
+      "bytes": 7458,
+      "sha256": "b70b34e222bf334ebe6d4a0438396feca77d87225f1e322c3a8b3d93c9b3c1d0",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/1_apple-app.txt",
+      "path": "workflow-logs/1_apple-app.txt",
+      "bytes": 42136,
+      "sha256": "2bb14fcd5a9e2b65c656d3e07e3798b0393b85931025af76fc9fb387f8ab12d4",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/11_Show actionable build errors.txt",
+      "path": "workflow-logs/apple-app/11_Show actionable build errors.txt",
+      "bytes": 14890,
+      "sha256": "4762b50f0fc8951a7f584185668a1f9923c6c40d504fc99cbb60edc205895659",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/12_Preserve development IPA and exact build evidence.txt",
+      "path": "workflow-logs/apple-app/12_Preserve development IPA and exact build evidence.txt",
+      "bytes": 2565,
+      "sha256": "ff00235e3ebe3aa83014cd610a0d362014daefde8404b1171e3d4d8dd3d71dec",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/1_Set up job.txt",
+      "path": "workflow-logs/apple-app/1_Set up job.txt",
+      "bytes": 2287,
+      "sha256": "dbbf965e6a33449d0c0ff32458605b3f8a248c45d90bae13e8afb5ae6693f43a",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/24_Post Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "path": "workflow-logs/apple-app/24_Post Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "bytes": 1944,
+      "sha256": "8fef45e6d616e3e03bc05bb9623667d744379bc9f6be2eeed774a7dc91d3e18f",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/25_Complete job.txt",
+      "path": "workflow-logs/apple-app/25_Complete job.txt",
+      "bytes": 747,
+      "sha256": "4ab038db085bd07c414202e3055832a7f8abfe0468556184b08e3f37e31e6013",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/2_Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "path": "workflow-logs/apple-app/2_Run actions_checkout@11d5960a326750d5838078e36cf38b85af677262.txt",
+      "bytes": 12547,
+      "sha256": "1bde41ba4b785df347f1707c82d748906bb92f8ba058f187a44f9d517dfc51e4",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/3_Identify the exact Apple compiler.txt",
+      "path": "workflow-logs/apple-app/3_Identify the exact Apple compiler.txt",
+      "bytes": 324,
+      "sha256": "7ccbcaf518d934d545e1517fd045250fa1e5166b17f0fe9ac76301b56910d5b2",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/4_Restore pinned native runtime outputs.txt",
+      "path": "workflow-logs/apple-app/4_Restore pinned native runtime outputs.txt",
+      "bytes": 2084,
+      "sha256": "2415a190f6d2a3dcdf332f8096f70c6e25f55b728e2b5ec406faae87d6a02167",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/5_Restore pinned official Apple SDK and model downloads.txt",
+      "path": "workflow-logs/apple-app/5_Restore pinned official Apple SDK and model downloads.txt",
+      "bytes": 1822,
+      "sha256": "27e699942b401c89336dd0400180482e02d13970baea1d1eddae154fa87c0e90",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/6_Verify core parity and prepare native runtimes.txt",
+      "path": "workflow-logs/apple-app/6_Verify core parity and prepare native runtimes.txt",
+      "bytes": 2224,
+      "sha256": "6e12d1c3a4ea9c7e88f4e455f4c3e74d51cff147e42e71d1d1596f91167dccff",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/9_Build and test the unsigned device app.txt",
+      "path": "workflow-logs/apple-app/9_Build and test the unsigned device app.txt",
+      "bytes": 732,
+      "sha256": "4a69375901aff82ac5c88353ff987d19f512bcf66aeed4adbc4d07c75b98de2d",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/workflow-logs/apple-app/system.txt",
+      "path": "workflow-logs/apple-app/system.txt",
+      "bytes": 819,
+      "sha256": "a01e89a83d74199f9dfe60b063d50f6d909511c46691ad5cf8eb30bc0df23f71",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/core-ios/avatar-build.log",
+      "path": "diagnostic-artifact/core-ios/avatar-build.log",
+      "bytes": 51,
+      "sha256": "ea4090f75f622fb03e64dffcdf8ee0ea79fdd5f11d3163ab1ca96a582531a60b",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/core-ios/avatar.log",
+      "path": "diagnostic-artifact/core-ios/avatar.log",
+      "bytes": 133,
+      "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/core-ios/parity.json",
+      "path": "diagnostic-artifact/core-ios/parity.json",
+      "bytes": 885,
+      "sha256": "4b848537c97a6cf2039f0516d59fa061109872f783c9bc4ed45dac926e60c8a7",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/core-ios/translation.log",
+      "path": "diagnostic-artifact/core-ios/translation.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/analyze.log",
+      "path": "diagnostic-artifact/mobile-apple/analyze.log",
+      "bytes": 97,
+      "sha256": "6ecc6b55d118c9e6e60251fc26645423f14612e4e606ff877acb5c250762bd43",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/device-build.log",
+      "path": "diagnostic-artifact/mobile-apple/device-build.log",
+      "bytes": 894,
+      "sha256": "b1f4110680334f9e78d1fb90c4b9d8fd10b5cfe59322c6ceaad91e239642bdf0",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/flutter-bootstrap.log",
+      "path": "diagnostic-artifact/mobile-apple/flutter-bootstrap.log",
+      "bytes": 319,
+      "sha256": "5b3efc8f23261efe12efa048ae701d57d0299246c86afb604f48f73edbd92af7",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/flutter-tests.log",
+      "path": "diagnostic-artifact/mobile-apple/flutter-tests.log",
+      "bytes": 164524,
+      "sha256": "1277fa1892bc1ed2f65307832557a599504804894067aa9c1681b8b82d76e9bc",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/flutter-version.json",
+      "path": "diagnostic-artifact/mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/native-runtime.json",
+      "path": "diagnostic-artifact/mobile-apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "3c4d87c2454860918f07b6230c482b53015aec7163852f082deae799e7e51d8d",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/portrait-models.log",
+      "path": "diagnostic-artifact/mobile-apple/portrait-models.log",
+      "bytes": 424,
+      "sha256": "2ced8d43108e1c408ffa94ff5020c6c36e3f7c68eb3999290cc84f1ed9132e68",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/pub-get.log",
+      "path": "diagnostic-artifact/mobile-apple/pub-get.log",
+      "bytes": 1748,
+      "sha256": "8e13a30ee3d0768c607c8ebb11f50579ef40c665fa56e5ced298889ef385ec09",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/qq-sdk.log",
+      "path": "diagnostic-artifact/mobile-apple/qq-sdk.log",
+      "bytes": 362,
+      "sha256": "26f0089e9c64eef1157e735644cbdee892402b92f296df7a8029f30c03faa3d4",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/raw-build.log",
+      "path": "diagnostic-artifact/mobile-apple/raw-build.log",
+      "bytes": 886,
+      "sha256": "c27296de7136f0effac26561bf421eb89e81120155e7b80bf9e1e6f6b73eac49",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/public-internet/build.log",
+      "path": "diagnostic-artifact/mobile-apple/public-internet/build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/public-internet/compiler.log",
+      "path": "diagnostic-artifact/mobile-apple/public-internet/compiler.log",
+      "bytes": 207,
+      "sha256": "6c263f4a0b378193483e8853193204a89db0eacf407199d789fb7e3125b8148b",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/public-internet/result.json",
+      "path": "diagnostic-artifact/mobile-apple/public-internet/result.json",
+      "bytes": 1415,
+      "sha256": "59f0705288631138a8a3bfa38fa5da5468c1cf40638f1bbf9af0bb719b284924",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/public-internet/source-check.log",
+      "path": "diagnostic-artifact/mobile-apple/public-internet/source-check.log",
+      "bytes": 143,
+      "sha256": "abe0003008041566715c8b92697936631cf52cd2cda9e566c9a7926c3de75ff7",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnostic-artifact/mobile-apple/public-internet/stdout.log",
+      "path": "diagnostic-artifact/mobile-apple/public-internet/stdout.log",
+      "bytes": 123,
+      "sha256": "6227a5f208fe0a9342af3ee3738afcd08b5fc29b6137527d3d9c6454f04d357f",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/apple-watch-43660752971/diagnosis-byte-manifest.json",
+      "path": "diagnosis-byte-manifest.json",
+      "bytes": 7809,
+      "sha256": "261946375ce21179422c52ffe8bef9ed8939eb3d9e35f59c34527a307c698949",
+      "byteExact": true
+    }
+  ]
+}

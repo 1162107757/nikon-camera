@@ -1,0 +1,35 @@
+{
+  "rawFiles": 4,
+  "rawBytes": 2917,
+  "allByteExact": true,
+  "files": [
+    {
+      "source": ".tooling/next226/core_check_canonical.py",
+      "path": "core_check_canonical.py",
+      "bytes": 2457,
+      "sha256": "c4f8d5a10276c9e0e9368b797d7c13c4c46f1c698b220e99d10886d8c849144d",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/run_canonical_core.py",
+      "path": "run_canonical_core.py",
+      "bytes": 341,
+      "sha256": "c51069b48acbaab78279d77d6137dc2885a2ee022a9f4ba29685fab517be1520",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/core-check-canonical.log",
+      "path": "core-check-canonical.log",
+      "bytes": 118,
+      "sha256": "f01c837045697fac5fe2db6b966bceef0ed70122783be3bbe181b5f915aa74e3",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next226/core-check-canonical.exit",
+      "path": "core-check-canonical.exit",
+      "bytes": 1,
+      "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "byteExact": true
+    }
+  ]
+}

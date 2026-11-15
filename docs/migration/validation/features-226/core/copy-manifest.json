@@ -1,0 +1,54 @@
+{
+  "sourceAttempt": "canonical17",
+  "allEightByteExact": true,
+  "files": [
+    {
+      "source": ".tooling/next226/core-jvm-canonical17/compile.log",
+      "destination": "compile.log",
+      "bytes": 189,
+      "sha256": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6"
+    },
+    {
+      "source": ".tooling/next226/core-jvm-canonical17/run.log",
+      "destination": "run.log",
+      "bytes": 4293,
+      "sha256": "36a9e8b2105ba913ea3d597dbc9b60e7ebc6b7810f4e09e9788e3f73692d9272"
+    },
+    {
+      "source": ".tooling/next226/core-jvm-canonical17/sources.json",
+      "destination": "sources.json",
+      "bytes": 17561,
+      "sha256": "b644740c3a06a72a5cc7a02bf01b096da41b8c7b5b0523f51c2a0e17fe36d65a"
+    },
+    {
+      "source": ".tooling/next226/core-jvm-canonical17/golden.json",
+      "destination": "golden.json",
+      "bytes": 760,
+      "sha256": "179028b66cee3033d1ff558dd63d0799c3399f22c57e6a8f6d0540e8ab3a25d5"
+    },
+    {
+      "source": ".tooling/next226/core-jvm-canonical17/javac.args",
+      "destination": "javac.args",
+      "bytes": 24989,
+      "sha256": "398c2e4d047ac50f95d49b7e7019dd0d1174ebe7b0950d7a36719c194e812c36"
+    },
+    {
+      "source": ".tooling/next226/core_check_canonical17.py",
+      "destination": "invocation.py",
+      "bytes": 2459,
+      "sha256": "3acf568a85a8f703f3372df3dfbfc6fde88c3b23305bed8c9bcd5019ca0c6e35"
+    },
+    {
+      "source": ".tooling/next226/core-check-canonical17.log",
+      "destination": "invocation.log",
+      "bytes": 3693,
+      "sha256": "d14fcb0e10633367f283194d02e3c0c4c6cf3e5c9341ee3b970f231ed824a24d"
+    },
+    {
+      "source": ".tooling/next226/core-check-canonical17.exit",
+      "destination": "invocation.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    }
+  ]
+}

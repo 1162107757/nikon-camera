@@ -1,0 +1,1492 @@
+{
+  "actualFreshExecution": true,
+  "executionSourceFrozen": false,
+  "finalSourceBindingPending": true,
+  "invocation": "python .tooling/next226/core_check_canonical17.py",
+  "canonicalToolSha256": "9debbaa00974cf9db30170f7dfc2feb34b75578b392117ec03a6b65a1dac83a6",
+  "onlyToolChange": "Isolated OUT directory",
+  "javaRelease": 11,
+  "inputCount": 261,
+  "uniqueInputCount": 246,
+  "boundaryChecks": 1859,
+  "atmosphereChecks": 6,
+  "javaHome": "D:/dev/Java/jdk-17.0.19",
+  "files": [
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountException.java",
+      "bytes": 433,
+      "rawSha256": "7243fe67296b7704040d1acf8e6a6f0f928833de8745b4b7f74b899e789daf9e",
+      "gitLfSha256": "7243fe67296b7704040d1acf8e6a6f0f928833de8745b4b7f74b899e789daf9e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountHttpTransport.java",
+      "bytes": 10146,
+      "rawSha256": "175760e87acdd70fef819195fb979894ee37bcc151c9d290b8b4a9c4d3b9ca5a",
+      "gitLfSha256": "175760e87acdd70fef819195fb979894ee37bcc151c9d290b8b4a9c4d3b9ca5a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountJson.java",
+      "bytes": 9131,
+      "rawSha256": "70ddaaff6b8a10c8aba3fcd3ee94205528bb391940170decff0b34da6c4dbedc",
+      "gitLfSha256": "e829b9081ea72da160ccab96fbb77134e5074d75f686dd0d3673f83256cdb2e7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountRepository.java",
+      "bytes": 29823,
+      "rawSha256": "08dc95f69ea91c084ac2d3348005618ebc506436fdc6bd03c6bca567bf86049a",
+      "gitLfSha256": "08dc95f69ea91c084ac2d3348005618ebc506436fdc6bd03c6bca567bf86049a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountRepositoryProvider.java",
+      "bytes": 424,
+      "rawSha256": "2e4ba7bdf65f0642024ff32ca8c0af13de96e412b75c97a40c7e64a9ef8044e3",
+      "gitLfSha256": "2e4ba7bdf65f0642024ff32ca8c0af13de96e412b75c97a40c7e64a9ef8044e3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AvatarUrlPolicy.java",
+      "bytes": 1420,
+      "rawSha256": "d4aa68ef6c011342c2711d10bda1a1dd35d9eb73e191f1509885041844c631ac",
+      "gitLfSha256": "d4aa68ef6c011342c2711d10bda1a1dd35d9eb73e191f1509885041844c631ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/QqAuthorizationGate.java",
+      "bytes": 1129,
+      "rawSha256": "89dc16c0efd004501c9fca2cfbb52f06b3a29457934dc18a1d4363c06d37897d",
+      "gitLfSha256": "89dc16c0efd004501c9fca2cfbb52f06b3a29457934dc18a1d4363c06d37897d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/CameraProtocol.java",
+      "bytes": 814,
+      "rawSha256": "5df55e1b6e78c79de2ae240bb522bafca9f38bc336d6f3cdfc6ce46aea22701f",
+      "gitLfSha256": "5df55e1b6e78c79de2ae240bb522bafca9f38bc336d6f3cdfc6ce46aea22701f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/ConnectionInfo.java",
+      "bytes": 1145,
+      "rawSha256": "414a722706a7bbd4df9cb498d10a0c89061c9243b6abb1bf65ab709d64c3cc41",
+      "gitLfSha256": "3a33f2d104c504eb0391ae917733ac3b6810e56de2c71ffea7c094e6c6fc1924"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/ConnectionTrace.java",
+      "bytes": 19713,
+      "rawSha256": "3369ef6fd4f4cb76dd47ac9193df3c5fc7df983da895121444f4981d082a908a",
+      "gitLfSha256": "3369ef6fd4f4cb76dd47ac9193df3c5fc7df983da895121444f4981d082a908a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/DownloadedPhoto.java",
+      "bytes": 1947,
+      "rawSha256": "78279779455a8b2e928a9c37b63b53b5335f25683e05f523c3d658183f51857a",
+      "gitLfSha256": "8efaaaa19f35f7a25cf41fda2406a39c2229b21fae8a658e54ce0c60c00e2da7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/FujifilmPhotoClient.java",
+      "bytes": 32448,
+      "rawSha256": "0594716c728553259e54114f1614345013562e9026fbf062ac1f4e57ba53c9b6",
+      "gitLfSha256": "0594716c728553259e54114f1614345013562e9026fbf062ac1f4e57ba53c9b6"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+      "bytes": 3879,
+      "rawSha256": "5ae2cc4927c37f0c7c01d2ef4ec928f187d682942ace7c57cc41a4dd59caab63",
+      "gitLfSha256": "5ae2cc4927c37f0c7c01d2ef4ec928f187d682942ace7c57cc41a4dd59caab63"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoCameraClient.java",
+      "bytes": 1640,
+      "rawSha256": "fdd717a02a30b844037f15567d5239b40d04f02dc0a305bd5a08dff2d9cc195b",
+      "gitLfSha256": "fdd717a02a30b844037f15567d5239b40d04f02dc0a305bd5a08dff2d9cc195b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDateGroups.java",
+      "bytes": 5379,
+      "rawSha256": "95ce1520cd39f38323a249d9ed8f4f521a8f79b514ec7190247ec626fb9e5308",
+      "gitLfSha256": "95ce1520cd39f38323a249d9ed8f4f521a8f79b514ec7190247ec626fb9e5308"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDeleteResult.java",
+      "bytes": 964,
+      "rawSha256": "8b7874ac64343d276a8198a36efaa19e38945b0dbbf3570af3a8acd4a6d6bf77",
+      "gitLfSha256": "8b7874ac64343d276a8198a36efaa19e38945b0dbbf3570af3a8acd4a6d6bf77"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDownloadRecovery.java",
+      "bytes": 1501,
+      "rawSha256": "7b5997c19650763fce0a9e0af675bdcc33497350b63b93bde49d57db73c90bdd",
+      "gitLfSha256": "7b5997c19650763fce0a9e0af675bdcc33497350b63b93bde49d57db73c90bdd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "bytes": 14761,
+      "rawSha256": "648287eeb0e6976cd6025f453908b81e40e748d7fb66eb78d35295032b7a924f",
+      "gitLfSha256": "1846f504f654a17d867ab321cc042c32b6a3c39acbcd4ead419aca20b5789c68"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExifRationals.java",
+      "bytes": 3169,
+      "rawSha256": "b9731ec145fe142d725f97d688f21c91728aebf712b6f4d025cdb73598476925",
+      "gitLfSha256": "b9731ec145fe142d725f97d688f21c91728aebf712b6f4d025cdb73598476925"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExportQuality.java",
+      "bytes": 691,
+      "rawSha256": "37b711a0a1acc74d5bc6ef7e125848942950d8ae71d9236fdea1f1a40f44d55e",
+      "gitLfSha256": "37b711a0a1acc74d5bc6ef7e125848942950d8ae71d9236fdea1f1a40f44d55e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExportSpec.java",
+      "bytes": 2902,
+      "rawSha256": "c22c03cdd2368000b5690e310c89a126691badb6f5cfa4602dda0eca5558552f",
+      "gitLfSha256": "c22c03cdd2368000b5690e310c89a126691badb6f5cfa4602dda0eca5558552f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoFormat.java",
+      "bytes": 8421,
+      "rawSha256": "68147b8c15af41b6a4f0956dab2f6ad1970a44b5a3db9fee3982512443631a20",
+      "gitLfSha256": "68147b8c15af41b6a4f0956dab2f6ad1970a44b5a3db9fee3982512443631a20"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoGroupSelection.java",
+      "bytes": 1391,
+      "rawSha256": "108c5bb81d36de8483be49b6a250aedb5eb3b3cdb7e8e64a347c495e0f2a326a",
+      "gitLfSha256": "108c5bb81d36de8483be49b6a250aedb5eb3b3cdb7e8e64a347c495e0f2a326a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoItem.java",
+      "bytes": 1324,
+      "rawSha256": "1407b375fcc0df8744b7d9547bac90944d20845f736cdfd40c942ffb61e5fd6f",
+      "gitLfSha256": "12de5d09b8bc4c723586520414ecb395ac15f82b1e813eafc9adfd8d3adfbfc0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveLedger.java",
+      "bytes": 7045,
+      "rawSha256": "b9a48c22de2a87678da87454c9260d4e0bc5a5e54de0da5ed4bf4d48cd519644",
+      "gitLfSha256": "b9a48c22de2a87678da87454c9260d4e0bc5a5e54de0da5ed4bf4d48cd519644"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveProject.java",
+      "bytes": 749,
+      "rawSha256": "3a689e4302282b0eb24732a17da2453e50b05c37b109327e507b5205b80c4899",
+      "gitLfSha256": "3a689e4302282b0eb24732a17da2453e50b05c37b109327e507b5205b80c4899"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveProjectFolders.java",
+      "bytes": 6687,
+      "rawSha256": "860f140d3e1af7cea10bfe432e51494bc646703dd71a55c319da7d51495193ac",
+      "gitLfSha256": "860f140d3e1af7cea10bfe432e51494bc646703dd71a55c319da7d51495193ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveProjectStore.java",
+      "bytes": 17982,
+      "rawSha256": "f463cdb1a832d3f9181ebb4545d302090fad6bfa671ca239503e61bb25f33a86",
+      "gitLfSha256": "f463cdb1a832d3f9181ebb4545d302090fad6bfa671ca239503e61bb25f33a86"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveReceipt.java",
+      "bytes": 1890,
+      "rawSha256": "2306977c6374eb6d6215183413195e7f02074c7374d05bbe54470663c069fa81",
+      "gitLfSha256": "2306977c6374eb6d6215183413195e7f02074c7374d05bbe54470663c069fa81"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveState.java",
+      "bytes": 4512,
+      "rawSha256": "f1c8a4e70df9a178b90b821ea96d2eb2ba695d8170e755f1883e1a90280152b8",
+      "gitLfSha256": "f1c8a4e70df9a178b90b821ea96d2eb2ba695d8170e755f1883e1a90280152b8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLocalTasks.java",
+      "bytes": 1197,
+      "rawSha256": "e75e9f14cb68ee508f49c8ffc11ad9cf725d00c59974c5a8437cbeea0fe03eca",
+      "gitLfSha256": "e75e9f14cb68ee508f49c8ffc11ad9cf725d00c59974c5a8437cbeea0fe03eca"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPage.java",
+      "bytes": 755,
+      "rawSha256": "85d2f9544b8f522dd615849e994787b462093dae1a9a34978cf54f8ecb90ba1c",
+      "gitLfSha256": "35647d08efd8cb6c3eab1cf66ee87b5d0eb2b5112fd66cfc29c06102afa4d623"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetBatchState.java",
+      "bytes": 4416,
+      "rawSha256": "72e5e91f8d2152220c9efdb275d9e5687913229dc9b7963e16761dd23d4e69ca",
+      "gitLfSha256": "72e5e91f8d2152220c9efdb275d9e5687913229dc9b7963e16761dd23d4e69ca"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPreview.java",
+      "bytes": 1115,
+      "rawSha256": "ce5c0a1c4f6c7b1c6c825da61e5eaa0962cbf5940665a01d075a4bc63c77794e",
+      "gitLfSha256": "ce5c0a1c4f6c7b1c6c825da61e5eaa0962cbf5940665a01d075a4bc63c77794e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPreviewCache.java",
+      "bytes": 11575,
+      "rawSha256": "db1bed3aa6dc4b71ba933584c19a047ee657dfe90f1e80e3e6ba662fdfc7f2e4",
+      "gitLfSha256": "db1bed3aa6dc4b71ba933584c19a047ee657dfe90f1e80e3e6ba662fdfc7f2e4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoProjectPresetStore.java",
+      "bytes": 24200,
+      "rawSha256": "b58212f54781d1ea400544e8cdb837db895169d776c8677fbee2b51dfa8961ae",
+      "gitLfSha256": "b58212f54781d1ea400544e8cdb837db895169d776c8677fbee2b51dfa8961ae"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+      "bytes": 8067,
+      "rawSha256": "0a2b373acd19476fdd7f9453e7c907cde1658ffa5c043029fee333115b55661a",
+      "gitLfSha256": "0a2b373acd19476fdd7f9453e7c907cde1658ffa5c043029fee333115b55661a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSaveTarget.java",
+      "bytes": 271,
+      "rawSha256": "7a1b35ce163a6713d5cb96e2fdf561f221f2bd5e5ea70b7f7cfd06eb0f895efa",
+      "gitLfSha256": "7a1b35ce163a6713d5cb96e2fdf561f221f2bd5e5ea70b7f7cfd06eb0f895efa"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSort.java",
+      "bytes": 1807,
+      "rawSha256": "8ff7601222f82330a3db91737893be5f1e51072c0be81a62bc714294c33f0f4a",
+      "gitLfSha256": "23f8cae508eb3a9fcfc8352679bf4078477957ad946bc8e9320bf060328c27ae"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSourceFormat.java",
+      "bytes": 2246,
+      "rawSha256": "20457e7e8b15ccfe1dca433d3a7ddb9cf0fbf74498aeac6e09edf501c5bae3ca",
+      "gitLfSha256": "20457e7e8b15ccfe1dca433d3a7ddb9cf0fbf74498aeac6e09edf501c5bae3ca"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoStarStore.java",
+      "bytes": 14890,
+      "rawSha256": "0c84a132c4fc45ef1d561ff9361dc3661aea4530a822ff61278f1f6c3a6a0338",
+      "gitLfSha256": "0c84a132c4fc45ef1d561ff9361dc3661aea4530a822ff61278f1f6c3a6a0338"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoTransferProgress.java",
+      "bytes": 5241,
+      "rawSha256": "04d529c5f5ebdb1ba35278c55fcdd19316cda1f598d5ef0f3c1e4b82a632d884",
+      "gitLfSha256": "04d529c5f5ebdb1ba35278c55fcdd19316cda1f598d5ef0f3c1e4b82a632d884"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+      "bytes": 59048,
+      "rawSha256": "b1355ddb951df1cc6b10ebfc5ec2c04429110807b681200936a0a97cfcb6514c",
+      "gitLfSha256": "706c6d1b329d69d6114604a6c7bef9dc025d0880bb553c6bf35dc50f85192c62"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawPhotoDownload.java",
+      "bytes": 889,
+      "rawSha256": "2e664d1f89c8f4dbc4720e3e91e976a5c2bcf02ea8e2b9f20a905ed6e5a9e92b",
+      "gitLfSha256": "2e664d1f89c8f4dbc4720e3e91e976a5c2bcf02ea8e2b9f20a905ed6e5a9e92b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawPhotoPairing.java",
+      "bytes": 4018,
+      "rawSha256": "927a1d97586f70cddc5739b52982da20e1e941d9b815c3fcd6568490fe18ad35",
+      "gitLfSha256": "927a1d97586f70cddc5739b52982da20e1e941d9b815c3fcd6568490fe18ad35"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawPhotoStore.java",
+      "bytes": 18007,
+      "rawSha256": "5e8706a7e7422222911ea7388370e5783f761042a0e8c3b7cf208fd1db596068",
+      "gitLfSha256": "5e8706a7e7422222911ea7388370e5783f761042a0e8c3b7cf208fd1db596068"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommentReplyPages.java",
+      "bytes": 2352,
+      "rawSha256": "8c62295c01f47612ae7c361519a8a026f9347c00a44152d9514f285581288257",
+      "gitLfSha256": "8c62295c01f47612ae7c361519a8a026f9347c00a44152d9514f285581288257"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommentReplyTarget.java",
+      "bytes": 1160,
+      "rawSha256": "53a5740a568da7cc762630b2a6096fb1f8e5e44f886b9032b47ea13a9aa650f9",
+      "gitLfSha256": "53a5740a568da7cc762630b2a6096fb1f8e5e44f886b9032b47ea13a9aa650f9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityException.java",
+      "bytes": 307,
+      "rawSha256": "7c3e5d06e595dbb3467c97361b9463cfdcbd6a5b8b5cfd7ab3a7aa4b82cce9de",
+      "gitLfSha256": "7c3e5d06e595dbb3467c97361b9463cfdcbd6a5b8b5cfd7ab3a7aa4b82cce9de"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityHttpTransport.java",
+      "bytes": 4979,
+      "rawSha256": "05d92fb800b600b8f0397141afe24120f5e2983f32b4d58c3e4c3df70c6cb606",
+      "gitLfSha256": "05d92fb800b600b8f0397141afe24120f5e2983f32b4d58c3e4c3df70c6cb606"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityRepository.java",
+      "bytes": 6532,
+      "rawSha256": "f9750767aa165b8a6bca2755ad3f9941c26d77c3d1ae324274d1eb9d9f9cbd2a",
+      "gitLfSha256": "f9750767aa165b8a6bca2755ad3f9941c26d77c3d1ae324274d1eb9d9f9cbd2a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/SubmissionDraftStore.java",
+      "bytes": 4582,
+      "rawSha256": "8e1e637106dc99a408ff9ede822f003be17dc9e2d84844aa2e2508daee009113",
+      "gitLfSha256": "8e1e637106dc99a408ff9ede822f003be17dc9e2d84844aa2e2508daee009113"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/SubmissionFlow.java",
+      "bytes": 3622,
+      "rawSha256": "d9131b479a2079e8756f9fe9cf6a6f25c1ea631aa45f2f5d2a9dc08391a050d5",
+      "gitLfSha256": "d9131b479a2079e8756f9fe9cf6a6f25c1ea631aa45f2f5d2a9dc08391a050d5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/PhotoLiveContinuation.java",
+      "bytes": 1656,
+      "rawSha256": "8b343e9073b4874c76fa6ba44579255c2a898403d1614d25713b006b4fff2161",
+      "gitLfSha256": "8b343e9073b4874c76fa6ba44579255c2a898403d1614d25713b006b4fff2161"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/EditorPresetCatalog.java",
+      "bytes": 2107,
+      "rawSha256": "db27357d63ba75f22a684913573f96a585231f9baf769dbadc8235be1709fdfa",
+      "gitLfSha256": "db27357d63ba75f22a684913573f96a585231f9baf769dbadc8235be1709fdfa"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/LibraryFiles.java",
+      "bytes": 3258,
+      "rawSha256": "f5808acb857c5ff78f2076a5fb87c97bf9ee46421ff64dc4434db13666ddff36",
+      "gitLfSha256": "e2acea259bab85ba48ae97e73ae354422d413ca94412ea0af9805c55605dc950"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/LibraryJson.java",
+      "bytes": 9085,
+      "rawSha256": "57702d1c3db2409873a12600ce1428001056b61765f569d1c5cf23e2b659ea80",
+      "gitLfSha256": "7895f03297bf6e5fd54d8e1779d7714b44a302fda58134273d224bee4c31bde7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePreset.java",
+      "bytes": 3942,
+      "rawSha256": "60472f63950269fbb4554083a49e36a9108b0b49f39e0a005ba0d4072e296c51",
+      "gitLfSha256": "7a2c619220409ec8b6eca62ab4f52b0db0a733b1ba300e51a56407917290aa43"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+      "bytes": 22974,
+      "rawSha256": "a8b3bfe2042cb187258235b869c49ff09d71f803835c9b6ba5cafb89c8e6572d",
+      "gitLfSha256": "1376f821fe1eb06e8340de780d3e9a88d76da2b7c0fe9b533b1ccfbc6221f8cb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetSearch.java",
+      "bytes": 3720,
+      "rawSha256": "ba5f8b9f77e06f4da9cf3e7012de576a8e86940387c4566c541575bf6d7c1f47",
+      "gitLfSha256": "ba5f8b9f77e06f4da9cf3e7012de576a8e86940387c4566c541575bf6d7c1f47"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PersonalPresetApi.java",
+      "bytes": 3396,
+      "rawSha256": "45360d588734d8e678b9b57f9df8ec0403968696150e8d490ab7c6e6d7acfbd5",
+      "gitLfSha256": "45360d588734d8e678b9b57f9df8ec0403968696150e8d490ab7c6e6d7acfbd5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PersonalPresetSync.java",
+      "bytes": 9631,
+      "rawSha256": "bbd904d96d5bf154000857dfddfdb4071d546404fb932a6d2a822d4884ea1c1f",
+      "gitLfSha256": "bbd904d96d5bf154000857dfddfdb4071d546404fb932a6d2a822d4884ea1c1f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetCategories.java",
+      "bytes": 3007,
+      "rawSha256": "c8096106c927f95b64794d9d17a228f47b81441b4ca64fb349d3c7fca8fd7df5",
+      "gitLfSha256": "c8096106c927f95b64794d9d17a228f47b81441b4ca64fb349d3c7fca8fd7df5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetDownloadTasks.java",
+      "bytes": 7105,
+      "rawSha256": "737974b7159b8a2d8e707bbec2abb7a0faced0505135df45cca162181862f8d2",
+      "gitLfSha256": "737974b7159b8a2d8e707bbec2abb7a0faced0505135df45cca162181862f8d2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetFile.java",
+      "bytes": 5244,
+      "rawSha256": "be8a5759c89c0ac990f7290102a1968c9a5463720cf4087ac115adc3a80f1d96",
+      "gitLfSha256": "be8a5759c89c0ac990f7290102a1968c9a5463720cf4087ac115adc3a80f1d96"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetHomeFilter.java",
+      "bytes": 2248,
+      "rawSha256": "5b427313f8c6e5981a13eb40132d4cb30e228de5ac79cc5e17e4a3ed33ccc0f0",
+      "gitLfSha256": "5b427313f8c6e5981a13eb40132d4cb30e228de5ac79cc5e17e4a3ed33ccc0f0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetLibrary.java",
+      "bytes": 22687,
+      "rawSha256": "0efae8f66251ff9b279b77a59b6ab57ad7a00616c6d449c4323064dd7c634920",
+      "gitLfSha256": "5e2f7b9911773633f3a090fb17f1f3db5eec6ced17cf24142ac0fef513a16c8f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetRecord.java",
+      "bytes": 3452,
+      "rawSha256": "679d9d734b61764b9d9fcdfb0f83394ede0f59795b49cad59065473449f217d8",
+      "gitLfSha256": "8bfca8831dfab05b756bd66a27c3c354cd20c441fda9adc0c3670c21313ffd46"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PreviewImageCache.java",
+      "bytes": 5132,
+      "rawSha256": "e5a627a73d1b9a21e5ef33474e1da9d939bcfad19974ba9e65f8b71cfda4bdff",
+      "gitLfSha256": "e5a627a73d1b9a21e5ef33474e1da9d939bcfad19974ba9e65f8b71cfda4bdff"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/SecureHttpClient.java",
+      "bytes": 5954,
+      "rawSha256": "15cfbe2fb54a10b8a789e3f01d6c576982eb03f2295166290e03a2ec0c98ffb6",
+      "gitLfSha256": "2770a1e78d038d8b5849ff0b2f35f50de694ecec42f510167ef1a9d297c8630b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "bytes": 8235,
+      "rawSha256": "c4fdee844edcf57f254abcc13d9a78ab7feda68597f51d6e2e38f986e95945e1",
+      "gitLfSha256": "91d3a4e73c64443bf28ce421e96768f8821592fdb56384ce11b006c672bf0c9b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+      "bytes": 16416,
+      "rawSha256": "be30c06ea219d74fb9ea87166b864033ce2b2d554ad175663fe1f9dddeb1d2c2",
+      "gitLfSha256": "be30c06ea219d74fb9ea87166b864033ce2b2d554ad175663fe1f9dddeb1d2c2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+      "bytes": 11753,
+      "rawSha256": "26cb78cf31401103b57f7c992b84e0b1a422233dd4cf8c1163d9ec7c2dfa15f0",
+      "gitLfSha256": "cc79f49aad6d672e6999fb3eeb8a9392ec8450730bb5b20f2d35772d17ac4ded"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/BorderPreviewProfile.java",
+      "bytes": 1294,
+      "rawSha256": "422d46aa86bd2e4e51cc479100ebe44983ec0727b7eafec4dabc6c803bed524f",
+      "gitLfSha256": "422d46aa86bd2e4e51cc479100ebe44983ec0727b7eafec4dabc6c803bed524f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/CameraPresetAdapter.java",
+      "bytes": 6605,
+      "rawSha256": "9a8fd72f08d4c5a4997f95d5064e90305571c6cc00e41fc645c0e2a89b8e4c6b",
+      "gitLfSha256": "9a8fd72f08d4c5a4997f95d5064e90305571c6cc00e41fc645c0e2a89b8e4c6b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/GeometryPreviewProfile.java",
+      "bytes": 1621,
+      "rawSha256": "28f4a7087f732ec1079e0b9eac13975f5b3e1015c2af14f614ba07013b142a36",
+      "gitLfSha256": "28f4a7087f732ec1079e0b9eac13975f5b3e1015c2af14f614ba07013b142a36"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "bytes": 14825,
+      "rawSha256": "6ddcdf27294a9f80c39182818770f060f4da0cf7df7f455aee9b6afc5a1f7933",
+      "gitLfSha256": "55c531dfb74e8f70318132ee6e5b950ae9cdb1e1805cbcbfb3102e887e311b98"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpFile.java",
+      "bytes": 2388,
+      "rawSha256": "26cc16d1b87303333ad6a79d00242e6b8a436ddd99fd956907224bb5ffd16b48",
+      "gitLfSha256": "192f3ec435360c5de9b8adbe75d4d94e4e69aa9595fd48297b7831a802d62c94"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpMonochromePreviewProfile.java",
+      "bytes": 7123,
+      "rawSha256": "25df5362a6a18ac62ef1d89362fea1854f227d396b0d839034bcb3968534cab3",
+      "gitLfSha256": "25df5362a6a18ac62ef1d89362fea1854f227d396b0d839034bcb3968534cab3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPictureControlConverter.java",
+      "bytes": 12523,
+      "rawSha256": "7817465332e22143d0077dda0380a55a6af522753b663f6b903501d8ad1e618d",
+      "gitLfSha256": "e96060025fbdc13ea2796ea584186f5baf211c08c86a7056533dd8e7c92a3bda"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPreviewProfile.java",
+      "bytes": 10695,
+      "rawSha256": "130c21b2717847c1c980d7499618858b58f7540ada47b46dcfe1b2593c7ae056",
+      "gitLfSha256": "130c21b2717847c1c980d7499618858b58f7540ada47b46dcfe1b2593c7ae056"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+      "bytes": 14213,
+      "rawSha256": "47087569a97eeb09ec8cd0c6e8387f226260b567845b530ccb50981c95bf65f4",
+      "gitLfSha256": "47087569a97eeb09ec8cd0c6e8387f226260b567845b530ccb50981c95bf65f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3PresetDetails.java",
+      "bytes": 7832,
+      "rawSha256": "96b9e0d6ff03e0e970b3a0c65b6a2c56a2e78c068517aecaa11c394ecf0ed8d4",
+      "gitLfSha256": "96b9e0d6ff03e0e970b3a0c65b6a2c56a2e78c068517aecaa11c394ecf0ed8d4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+      "bytes": 22667,
+      "rawSha256": "c2dbb17b5cf83f23b8d539dc6e3cefca58da39d184aa453cb9d5c2397471c788",
+      "gitLfSha256": "c2dbb17b5cf83f23b8d539dc6e3cefca58da39d184aa453cb9d5c2397471c788"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "bytes": 8610,
+      "rawSha256": "11110782c4c8772b38989fc0824e3aa70a6e328e6c3548d4ef076097caf43f9c",
+      "gitLfSha256": "de0647bc60d7bf08a7b4807b6f5671edddeca1f2d21038811a2b9ce54d0b7efd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBodyShape.java",
+      "bytes": 4694,
+      "rawSha256": "d4673803d351b0c9fd56762079b786a9570374a5dca3139d23cd61102a65f1ea",
+      "gitLfSha256": "8e42d9b072fa4f18c935e5613fe2dc74feda29ab59df53fbbd998c183039102e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBodyWarp.java",
+      "bytes": 7360,
+      "rawSha256": "7360a72901e79ad58914ca3f67f19ad49381529f7c02ab330e271a6bb4aac106",
+      "gitLfSha256": "54e864a5b9ae30c47510dde88e3430c7aa519d11a061c080d48dba49b1f21ac0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+      "bytes": 5153,
+      "rawSha256": "b8dd48f3a3d923a017e6cb26102133ae835bdec6ae7c640218ee10415a5af06d",
+      "gitLfSha256": "b8dd48f3a3d923a017e6cb26102133ae835bdec6ae7c640218ee10415a5af06d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCleanup.java",
+      "bytes": 6921,
+      "rawSha256": "5e45eb10fb628195b5997fdebe668319238373b9d6ec4d4e8db7cda15a95cc7a",
+      "gitLfSha256": "5e45eb10fb628195b5997fdebe668319238373b9d6ec4d4e8db7cda15a95cc7a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCleanupEstimator.java",
+      "bytes": 6137,
+      "rawSha256": "9d85458c2fe812ac9ad2c96ac51761f7d050d6d029ec45ce917a31e57e080cc3",
+      "gitLfSha256": "9d85458c2fe812ac9ad2c96ac51761f7d050d6d029ec45ce917a31e57e080cc3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCleanupRenderer.java",
+      "bytes": 1782,
+      "rawSha256": "75a6b8715daa9b5ad31b0f4dee63e1acb18044aa7ba3504dbd231b8022119321",
+      "gitLfSha256": "75a6b8715daa9b5ad31b0f4dee63e1acb18044aa7ba3504dbd231b8022119321"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoColorPalette.java",
+      "bytes": 4129,
+      "rawSha256": "15938e1dd8592960dad70feb4a9f3a2a29089425d41febb586604fbfd010ddcb",
+      "gitLfSha256": "15938e1dd8592960dad70feb4a9f3a2a29089425d41febb586604fbfd010ddcb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+      "bytes": 4010,
+      "rawSha256": "26dc2552fa7d6f1981687e418005366584054102d8473984306202601b5d0b61",
+      "gitLfSha256": "26dc2552fa7d6f1981687e418005366584054102d8473984306202601b5d0b61"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+      "bytes": 8763,
+      "rawSha256": "8fab6efeada313399292c141c68d644add31275e5f0e499944a7bf8b32337646",
+      "gitLfSha256": "8fab6efeada313399292c141c68d644add31275e5f0e499944a7bf8b32337646"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "bytes": 8647,
+      "rawSha256": "b8bc0ed1a283549d3e71d99a6a6d16f63be6f87422e10ab4e032e166699d09d4",
+      "gitLfSha256": "b8bc0ed1a283549d3e71d99a6a6d16f63be6f87422e10ab4e032e166699d09d4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHistogram.java",
+      "bytes": 4198,
+      "rawSha256": "cec35aeceb2344b7d4e17f4656001c619102d5352e9ab863763ad3c40f907943",
+      "gitLfSha256": "cec35aeceb2344b7d4e17f4656001c619102d5352e9ab863763ad3c40f907943"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+      "bytes": 3908,
+      "rawSha256": "d3ce185673b5ac0339e7223162fb6795d4d73310490d62141d6cbe1a91ff36ad",
+      "gitLfSha256": "d3ce185673b5ac0339e7223162fb6795d4d73310490d62141d6cbe1a91ff36ad"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "bytes": 18574,
+      "rawSha256": "8cfe27140bfc14191a0fd97f2e4117ad1087e095153da524f9a2016baa4791e7",
+      "gitLfSha256": "3770b4b39af0065bbc59550eaae994a71412a5ef4d2184336c132bef4f7db974"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+      "bytes": 4018,
+      "rawSha256": "d0fce69a3e99f32b5751088d6e028e599480e4f3b473275737e47da83c3282f6",
+      "gitLfSha256": "3eed0d477d1e5db623d585d8404bd43954f9f9d8e8ad2e927f7e19f03d660c75"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+      "bytes": 12661,
+      "rawSha256": "82b9d416a2c8ac3d99932935468345fe19b8c12bf9e2644382e1db7cf323ec00",
+      "gitLfSha256": "82b9d416a2c8ac3d99932935468345fe19b8c12bf9e2644382e1db7cf323ec00"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java",
+      "bytes": 7503,
+      "rawSha256": "39eb589f553976e50ad897fded89dcda350a1265eece17b2d92e06c178234c4e",
+      "gitLfSha256": "39eb589f553976e50ad897fded89dcda350a1265eece17b2d92e06c178234c4e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "bytes": 33563,
+      "rawSha256": "7d749d19835b9cb63fa8ccedece3f2e27242957328b60c8d40c4793b077cb1e7",
+      "gitLfSha256": "a02900ebece8353285b156bf9e43141de42f8cc4010ebdc0e59e45fd12bc04c2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoQuickPreset.java",
+      "bytes": 2369,
+      "rawSha256": "1d136b2323992c5b4405048d6e632436342139e5600b652eb4116a931f330515",
+      "gitLfSha256": "1d136b2323992c5b4405048d6e632436342139e5600b652eb4116a931f330515"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+      "bytes": 43772,
+      "rawSha256": "e89f2dbdf946713cc47ffd6cdf2d1a651ecd491fc1de300e0161c5fb2134f46b",
+      "gitLfSha256": "1c48b74a073fdb91a5f0571a20b3442b9d9a7ff0b99c5c7e366a766c1f01049e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PortraitRetouch.java",
+      "bytes": 2981,
+      "rawSha256": "6bfceb7b4f95e33824b2f6388c4e0a5cb03f910cd80dedffd8c017e50950cb38",
+      "gitLfSha256": "6bfceb7b4f95e33824b2f6388c4e0a5cb03f910cd80dedffd8c017e50950cb38"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PortraitRetouchFilter.java",
+      "bytes": 9670,
+      "rawSha256": "8de628c1729267b036431d6fcf6b1a9e69adb4a11cc49d110e82650dd32286c6",
+      "gitLfSha256": "8bee41f404a9f378d35f8fecbcb914777ed54692e2bf5593c110a9efdba934f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+      "bytes": 2286,
+      "rawSha256": "516a1a969196b1056949ef962cd6a91ea5b9e423aacf36751aa04d8579239983",
+      "gitLfSha256": "516a1a969196b1056949ef962cd6a91ea5b9e423aacf36751aa04d8579239983"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+      "bytes": 2692,
+      "rawSha256": "65e74d4c3e367b4d586ad678c8f74751d312d3540256a32ce65bbfe59f401894",
+      "gitLfSha256": "65e74d4c3e367b4d586ad678c8f74751d312d3540256a32ce65bbfe59f401894"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+      "bytes": 5204,
+      "rawSha256": "4ddddad38c1523c936e905ffb5ceaf3c5462691f814ebd28d61d11024a9542e9",
+      "gitLfSha256": "4ddddad38c1523c936e905ffb5ceaf3c5462691f814ebd28d61d11024a9542e9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/RawJpegColorMatch.java",
+      "bytes": 13738,
+      "rawSha256": "dc41bfde6e506b2bebf6d7e0d54cd721af832eb6e557ff2f35dc3bf2068884ab",
+      "gitLfSha256": "dc41bfde6e506b2bebf6d7e0d54cd721af832eb6e557ff2f35dc3bf2068884ab"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SelectionShape.java",
+      "bytes": 2295,
+      "rawSha256": "5d1b9cedb58e415c2c2b3ca7e249b3f4dfee6ccb031e9bbfb6ae6660c4bd3608",
+      "gitLfSha256": "5d1b9cedb58e415c2c2b3ca7e249b3f4dfee6ccb031e9bbfb6ae6660c4bd3608"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+      "bytes": 2673,
+      "rawSha256": "a3c16eaaf4389387f782840d74822805963f0eb6ab390a31e255f3992c366fa5",
+      "gitLfSha256": "a3c16eaaf4389387f782840d74822805963f0eb6ab390a31e255f3992c366fa5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinSmoothingFilter.java",
+      "bytes": 5515,
+      "rawSha256": "cfda292e4d53aa975139f3620d6eac1f59d4d461955b41df5878a4924c423e03",
+      "gitLfSha256": "cfda292e4d53aa975139f3620d6eac1f59d4d461955b41df5878a4924c423e03"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+      "bytes": 6407,
+      "rawSha256": "33bb84e4dfdba1b11dccb68247537cca9702d4418f78b10c0d451e5188959e7a",
+      "gitLfSha256": "33bb84e4dfdba1b11dccb68247537cca9702d4418f78b10c0d451e5188959e7a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "bytes": 18311,
+      "rawSha256": "331c608ce86d9c38b1df40228a8a860c6d8293dee73a8539ea692fd516bae7fe",
+      "gitLfSha256": "331c608ce86d9c38b1df40228a8a860c6d8293dee73a8539ea692fd516bae7fe"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/StrengthPreviewProfile.java",
+      "bytes": 3146,
+      "rawSha256": "e5ec8500a6e51f3bd42c95d13abe60244913a02939fbe1c6027329af12a0b537",
+      "gitLfSha256": "e5ec8500a6e51f3bd42c95d13abe60244913a02939fbe1c6027329af12a0b537"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/picturecontrol/CameraParameterWriteGuard.java",
+      "bytes": 1872,
+      "rawSha256": "2598a6dfb8cfbcd29258df5a44ee3623a2ff3cedd85443ecb564689ab51c6a52",
+      "gitLfSha256": "2598a6dfb8cfbcd29258df5a44ee3623a2ff3cedd85443ecb564689ab51c6a52"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/picturecontrol/PictureControlCapability.java",
+      "bytes": 2971,
+      "rawSha256": "de24317a13c8684dfece33ccc1d5e93dcdfa056c8d1ea5076468baa0a55e16f3",
+      "gitLfSha256": "3364783fde91426963edb16ef036552583fda220ff0dfa7348f85ef060153ce7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/picturecontrol/PictureControlData.java",
+      "bytes": 4596,
+      "rawSha256": "db1288ea5af2dac9b0d5d4b676593e28dc71af7fd435149b1ee56ccd9d5b9d2e",
+      "gitLfSha256": "e65a84b21f5086d9b1c34b0155cefc56875a3303abd5c20d50b594fca8093e1c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/picturecontrol/PictureControlWriteValidation.java",
+      "bytes": 3153,
+      "rawSha256": "88edd36326df22170034a6e073e76b1fb63e32007dab8e30890097d2e19e5d9b",
+      "gitLfSha256": "bf34cbca4b3dd4a40614693d620e259dcdbc936d4cc384017da7a3e568cc9153"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpConstants.java",
+      "bytes": 3116,
+      "rawSha256": "e41f154027f4b2a212285a029e453ecb89797ee6d529fa3daa78a0f41a799cc5",
+      "gitLfSha256": "6009be3a36a72735e3305040dbb58eb521238704182021dd08086807c05e802f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpContainer.java",
+      "bytes": 4685,
+      "rawSha256": "ee610de3e590e4a742b114c82093b30a2742c845cc4f67b142a49455c388971a",
+      "gitLfSha256": "7751175164a88d4293ef45db65eba6322d680798ddef8e9282fb1d331d960b0b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpContainerReader.java",
+      "bytes": 3833,
+      "rawSha256": "d2c8a7210a23ee85a732cf9f5a52410cbb58771371cbc503ace5f2bad52098d1",
+      "gitLfSha256": "ceb2d51ac0566476a4c5333c412ab58d86e70ae90214b09e5c57484b49666376"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpDatasetReader.java",
+      "bytes": 5131,
+      "rawSha256": "36b063d3c5a940c60520796a8488442132b10dc473973ffac34f7309438be890",
+      "gitLfSha256": "4d9f156f33c77486e04d070bab2782ed5515fc49647f9eac5f7175d4963702aa"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpDeviceInfo.java",
+      "bytes": 4390,
+      "rawSha256": "39d27f2593bab61d7f88a50a466be301a61429e3274e8ec46ae67e04106a5b17",
+      "gitLfSha256": "5a195129fb0e7eb39332ec6d0ee3f5ac793073c7fb5b9b79ffcc192bd3929455"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpObjectHandles.java",
+      "bytes": 311,
+      "rawSha256": "49c381396b75c4aecb4136e0681af5641b2f81a65d33d36acf7b717713044072",
+      "gitLfSha256": "fb86d6b6126aa84457b9be66eeaa518e77d8f755e5615485e0b4dbe5fcc5a317"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpObjectInfo.java",
+      "bytes": 11915,
+      "rawSha256": "8522a709851cbb8ba749ebf1b3ac4be18bb9469b71dce9ff715caf3631bb8595",
+      "gitLfSha256": "0cb4d55d6b26c1c5b6ea345014d9889f56347d7d06f27b60db55ce22f7289897"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpProtocolException.java",
+      "bytes": 387,
+      "rawSha256": "c8b9547d46479c8f05c077d92d476b325913eb544c19711d0fb334968803a1c8",
+      "gitLfSha256": "4db82db7c576cd179a812282950b649e44d72f4ee72a393c2b0299189c4ee457"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpResponseException.java",
+      "bytes": 689,
+      "rawSha256": "5a3fa31bc51f3591b6850fe7c85cb33b4bc6e297694101a98619da16ec4902f4",
+      "gitLfSha256": "e45ad2e58d4b12d427be7c167461b6b11b0b34e4f2bbb8b95ae161cc41bb164d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpStorageIds.java",
+      "bytes": 423,
+      "rawSha256": "d7724761abeda3aa95f098461e3f53a06e0232dea4c84ec059cc2a730de84e91",
+      "gitLfSha256": "b1ea162ac68a3d8aa652b68f4fdd0c6929225a043830a150e2611423d2f429ea"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpStorageInfo.java",
+      "bytes": 1964,
+      "rawSha256": "f018a791f8a81d533084dd9d15fcc29f2e5629bb6ba1d7919cfc20e7ddc3765d",
+      "gitLfSha256": "dfadec2b6e5ece8d9aa685537e02298fa2b184630e1e83a0a1280b53c4eea840"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpValidation.java",
+      "bytes": 2268,
+      "rawSha256": "5f25adbe508920f6d61c8afc216dbc5afe981423c0daea9192f36b0979663e7c",
+      "gitLfSha256": "1c96727d107089070dc8d8170267106dd4a5c167c6c19328fcae87bb166590dd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/NikonRemoteCamera.java",
+      "bytes": 7394,
+      "rawSha256": "7ff81f02ada20239953aaa6f664dfdf45868e476bcdefc56d24e76d4f33c356d",
+      "gitLfSha256": "7ff81f02ada20239953aaa6f664dfdf45868e476bcdefc56d24e76d4f33c356d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/RemoteLiveFrame.java",
+      "bytes": 3673,
+      "rawSha256": "f84cd171b58bdc3093523c8bcf4b596f798dd4c8a2f37468fb6d762f06bb1e95",
+      "gitLfSha256": "f84cd171b58bdc3093523c8bcf4b596f798dd4c8a2f37468fb6d762f06bb1e95"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/RemoteProperty.java",
+      "bytes": 2932,
+      "rawSha256": "638ef43656e93ea9d353745a9768cfb6f1e52e72df30607ad39639279abef3c2",
+      "gitLfSha256": "638ef43656e93ea9d353745a9768cfb6f1e52e72df30607ad39639279abef3c2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/RemoteTransport.java",
+      "bytes": 359,
+      "rawSha256": "e775570ff69207296dc5f3c5ffa30de6f89b9f31dfeef67c43f9cc3cae5d8858",
+      "gitLfSha256": "e775570ff69207296dc5f3c5ffa30de6f89b9f31dfeef67c43f9cc3cae5d8858"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPaging.java",
+      "bytes": 2224,
+      "rawSha256": "c5542a027f77444217488e6b162c7041ae775a324939a897271438b31d32c0f7",
+      "gitLfSha256": "c5542a027f77444217488e6b162c7041ae775a324939a897271438b31d32c0f7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/LatestPreviewQueue.java",
+      "bytes": 2648,
+      "rawSha256": "633d4cdbd450b56f24a475e0206e2a46d3b04f2f93a2aebe39a6097adb02e0c8",
+      "gitLfSha256": "633d4cdbd450b56f24a475e0206e2a46d3b04f2f93a2aebe39a6097adb02e0c8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoDetailViewport.java",
+      "bytes": 2145,
+      "rawSha256": "7fe6a635d083f3bcf0576182a065103010ef18a148c0b8666979b81da37582f4",
+      "gitLfSha256": "7fe6a635d083f3bcf0576182a065103010ef18a148c0b8666979b81da37582f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPagerMotion.java",
+      "bytes": 3574,
+      "rawSha256": "fc30af906648057ab00227dfed03cb8cc935cbd3e97dffc0b34077bc419cb1b5",
+      "gitLfSha256": "fc30af906648057ab00227dfed03cb8cc935cbd3e97dffc0b34077bc419cb1b5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoSwipeGesture.java",
+      "bytes": 2469,
+      "rawSha256": "ea6a7125733e35988da3d9797c20e0869346f82d5fe5aa7945959d3f10fa9c0d",
+      "gitLfSha256": "ea6a7125733e35988da3d9797c20e0869346f82d5fe5aa7945959d3f10fa9c0d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/updates/UpdatePolicy.java",
+      "bytes": 3226,
+      "rawSha256": "d6a5e10944d60259097064f32084ea7cda1dad05fa60b9ea72d8a2cdd8d1da33",
+      "gitLfSha256": "d6a5e10944d60259097064f32084ea7cda1dad05fa60b9ea72d8a2cdd8d1da33"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/CameraParameterController.java",
+      "bytes": 7775,
+      "rawSha256": "a87be34f3620c37cc98e03face5d9e657435eecb1caff7d66e176b0ec3a1b72c",
+      "gitLfSha256": "a87be34f3620c37cc98e03face5d9e657435eecb1caff7d66e176b0ec3a1b72c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/CameraParameterDescriptor.java",
+      "bytes": 3768,
+      "rawSha256": "ef16a1541b65b7f76f6952983c3fc270e827426f36d4060b708859634684a9f9",
+      "gitLfSha256": "ef16a1541b65b7f76f6952983c3fc270e827426f36d4060b708859634684a9f9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/CameraParameterRequest.java",
+      "bytes": 3615,
+      "rawSha256": "b5f8ca9f288a03eecec44f1caa594d0058a8548899fd084a76d1931114d59388",
+      "gitLfSha256": "b5f8ca9f288a03eecec44f1caa594d0058a8548899fd084a76d1931114d59388"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PresetImportOptions.java",
+      "bytes": 1476,
+      "rawSha256": "0f2e9a806776fac631135e1e4f56ad6eb9191dd2124d557b59a57f0f3a89e1a2",
+      "gitLfSha256": "0f2e9a806776fac631135e1e4f56ad6eb9191dd2124d557b59a57f0f3a89e1a2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PtpDirectorySurvey.java",
+      "bytes": 17091,
+      "rawSha256": "4b4eaa618cfdc7d3ba620b2084ceb6c3d07a2c470baec2ab4b03b2cb1dbccef3",
+      "gitLfSha256": "053d2379fbd20c613b1aff4c86c9a1ae5cf6e2d474599cdaa30304e353c0f226"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/StorageAssessment.java",
+      "bytes": 6605,
+      "rawSha256": "2d7e674a7e09bbb4cae688a023a592fb95777f118c5a6b43f1ca9fc9afdcf3ef",
+      "gitLfSha256": "33149296913247c3d2f1b07a5ce3b51f4bfb5ed61bb8739e105efd53e770aeaa"
+    },
+    {
+      "path": "cross-platform/core/adapters/cc/huevia/library/PreviewImages.java",
+      "bytes": 343,
+      "rawSha256": "a821398ceb0913377a6e9e14a9cee990694ac1a5660e2032207748fbee913b49",
+      "gitLfSha256": "a821398ceb0913377a6e9e14a9cee990694ac1a5660e2032207748fbee913b49"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/album/SharedAlbumOperations.java",
+      "bytes": 6462,
+      "rawSha256": "c3251711d942eb537b8e9497cf627e06fadbce69915f789220df5e2f110f7984",
+      "gitLfSha256": "c3251711d942eb537b8e9497cf627e06fadbce69915f789220df5e2f110f7984"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/album/SharedProjectPhoto.java",
+      "bytes": 652,
+      "rawSha256": "0a8782ef222cb9cd1cd3197104ed1261e962ea8e764a805813a0377262d25642",
+      "gitLfSha256": "0a8782ef222cb9cd1cd3197104ed1261e962ea8e764a805813a0377262d25642"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/album/SharedRawPairing.java",
+      "bytes": 734,
+      "rawSha256": "d7e881af468967325f5f650fc4ce676ed58df6c5c3a406c73bccecdd97f76920",
+      "gitLfSha256": "d7e881af468967325f5f650fc4ce676ed58df6c5c3a406c73bccecdd97f76920"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/library/SharedJson.java",
+      "bytes": 550,
+      "rawSha256": "3617e7570d429088225a5f5b6c3e7996ccadaded273050855d47bc0e8b2e3eb2",
+      "gitLfSha256": "3617e7570d429088225a5f5b6c3e7996ccadaded273050855d47bc0e8b2e3eb2"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/CoreEngine.java",
+      "bytes": 3690,
+      "rawSha256": "775493cba4a6505a5d4f0f9cfb5584680d88e4fcbbf65792a0688c2a101d2dfa",
+      "gitLfSha256": "775493cba4a6505a5d4f0f9cfb5584680d88e4fcbbf65792a0688c2a101d2dfa"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/LegacyArchive.java",
+      "bytes": 15775,
+      "rawSha256": "c5653aee3e6887fcdcae60817946629d6d5193e96500912b73e00af3092c5032",
+      "gitLfSha256": "c5653aee3e6887fcdcae60817946629d6d5193e96500912b73e00af3092c5032"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/MediaValidation.java",
+      "bytes": 825,
+      "rawSha256": "69d5fab753d09a13f6195344bdd438cef2c04e27bda676850257afc5a4e73e00",
+      "gitLfSha256": "69d5fab753d09a13f6195344bdd438cef2c04e27bda676850257afc5a4e73e00"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedAtmosphere.java",
+      "bytes": 1121,
+      "rawSha256": "cb7b461be2c685c7d6992f96bdd600ad299f7fd731dea36902de64cb8ede7072",
+      "gitLfSha256": "cb7b461be2c685c7d6992f96bdd600ad299f7fd731dea36902de64cb8ede7072"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedAutoBlemishes.java",
+      "bytes": 5855,
+      "rawSha256": "514067a1f6de5cc4ea600092f1bbb0fd8860ddd6c7f48687aa3494adca638048",
+      "gitLfSha256": "514067a1f6de5cc4ea600092f1bbb0fd8860ddd6c7f48687aa3494adca638048"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCamera.java",
+      "bytes": 43708,
+      "rawSha256": "8fca6cde675dc74b55637f0e376671230a80b229204d0f2528831c1b7cf8c790",
+      "gitLfSha256": "8fca6cde675dc74b55637f0e376671230a80b229204d0f2528831c1b7cf8c790"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraLiveDiscovery.java",
+      "bytes": 22679,
+      "rawSha256": "954da20e5ff6bcf884a30250dc4c65c2eda2ba56849dcd0bca893969fe89339e",
+      "gitLfSha256": "954da20e5ff6bcf884a30250dc4c65c2eda2ba56849dcd0bca893969fe89339e"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraMaintenance.java",
+      "bytes": 2395,
+      "rawSha256": "ba0fa1b985fdc1eab824afb492dba97154dfe861f6c330318446a3b4da86e6e9",
+      "gitLfSha256": "ba0fa1b985fdc1eab824afb492dba97154dfe861f6c330318446a3b4da86e6e9"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraMutationStore.java",
+      "bytes": 2010,
+      "rawSha256": "856a4f699c784b7cee07f87c2d7e2cb753d8a0f577f9a0286629688a557d5533",
+      "gitLfSha256": "856a4f699c784b7cee07f87c2d7e2cb753d8a0f577f9a0286629688a557d5533"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraPreviews.java",
+      "bytes": 4260,
+      "rawSha256": "a563f97e24d3c8361a7a437e579910b83b5a7cb8d0455d300a6642f7375bd38e",
+      "gitLfSha256": "a563f97e24d3c8361a7a437e579910b83b5a7cb8d0455d300a6642f7375bd38e"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraRawPairing.java",
+      "bytes": 6055,
+      "rawSha256": "86feef9640dc4a0460f5d1819fc865d45966e0e59b17fa60d88b86e072375707",
+      "gitLfSha256": "86feef9640dc4a0460f5d1819fc865d45966e0e59b17fa60d88b86e072375707"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCaptureInfo.java",
+      "bytes": 2732,
+      "rawSha256": "b98ca70ed80c058a9fe2aa011146a32dae1a12ebe88dbc1a6613f64e53c266bd",
+      "gitLfSha256": "b98ca70ed80c058a9fe2aa011146a32dae1a12ebe88dbc1a6613f64e53c266bd"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCleanup.java",
+      "bytes": 5176,
+      "rawSha256": "28a03d89fc21f063756b6e0662954d607feb816afa5a25fbccfc9db91c44882d",
+      "gitLfSha256": "28a03d89fc21f063756b6e0662954d607feb816afa5a25fbccfc9db91c44882d"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCommunityLinks.java",
+      "bytes": 4116,
+      "rawSha256": "9c6745bc4b6d912013b03734aa20553f56a62250b070ff7a59fbcc4fdce41971",
+      "gitLfSha256": "9c6745bc4b6d912013b03734aa20553f56a62250b070ff7a59fbcc4fdce41971"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedDetailTiles.java",
+      "bytes": 7102,
+      "rawSha256": "121ecb0fc9b33fedfd98455538f6cb4069aeec86797ec5f6ea03aa3c93909fce",
+      "gitLfSha256": "121ecb0fc9b33fedfd98455538f6cb4069aeec86797ec5f6ea03aa3c93909fce"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedDownloads.java",
+      "bytes": 18274,
+      "rawSha256": "47e5e6cabe68534e283207d37971d14dc7c5c6b8c741489d551294dd258cb5ee",
+      "gitLfSha256": "47e5e6cabe68534e283207d37971d14dc7c5c6b8c741489d551294dd258cb5ee"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedEdits.java",
+      "bytes": 7294,
+      "rawSha256": "39a1b8e404454fc598975a1224ce9cbfe4a9a533a6a7a82cb9b66f6d5685a032",
+      "gitLfSha256": "39a1b8e404454fc598975a1224ce9cbfe4a9a533a6a7a82cb9b66f6d5685a032"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedExportModel.java",
+      "bytes": 764,
+      "rawSha256": "d3d610d7f2b28b24b938116853dc8ca41d3632df24e9705953c764d46d7b89cd",
+      "gitLfSha256": "d3d610d7f2b28b24b938116853dc8ca41d3632df24e9705953c764d46d7b89cd"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedExportSpecs.java",
+      "bytes": 4035,
+      "rawSha256": "2b6281ac62f1bda715c60636bf43f0d7398af4f7a8bdb656c98f3918fb21ef00",
+      "gitLfSha256": "2b6281ac62f1bda715c60636bf43f0d7398af4f7a8bdb656c98f3918fb21ef00"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedImport.java",
+      "bytes": 5542,
+      "rawSha256": "f512c057919966e644bfa0c88f01a83b8d23b9cbfb0ad49413a8d2b2c61ed4a7",
+      "gitLfSha256": "f512c057919966e644bfa0c88f01a83b8d23b9cbfb0ad49413a8d2b2c61ed4a7"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedLegacyMigration.java",
+      "bytes": 23632,
+      "rawSha256": "7349ac4ff0084a88f8569d5bf85792eb8b368c823f5f8756fc4bd6f139b65c0e",
+      "gitLfSha256": "7349ac4ff0084a88f8569d5bf85792eb8b368c823f5f8756fc4bd6f139b65c0e"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedLiveIngest.java",
+      "bytes": 26018,
+      "rawSha256": "f96dd2611cc1d66aa6a225c7da994c2420f182f559ed76621e3a299166d45472",
+      "gitLfSha256": "f96dd2611cc1d66aa6a225c7da994c2420f182f559ed76621e3a299166d45472"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedLocalEdits.java",
+      "bytes": 15884,
+      "rawSha256": "f7a99fe460147f3f76b05a8b7212c7324b8e4616c51c37887097861211603b17",
+      "gitLfSha256": "f7a99fe460147f3f76b05a8b7212c7324b8e4616c51c37887097861211603b17"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedOriginalPublication.java",
+      "bytes": 7344,
+      "rawSha256": "a199f8191ecf87d15070a5d0cceefb5ca15163239120f09b445bb2261822d513",
+      "gitLfSha256": "a199f8191ecf87d15070a5d0cceefb5ca15163239120f09b445bb2261822d513"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPersonal.java",
+      "bytes": 3925,
+      "rawSha256": "31f79dcae77b5aac8e3962e3a5ae8f4cfeb8c04a9ec334fb8ecebfdecb598ac8",
+      "gitLfSha256": "31f79dcae77b5aac8e3962e3a5ae8f4cfeb8c04a9ec334fb8ecebfdecb598ac8"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPortraitInference.java",
+      "bytes": 19864,
+      "rawSha256": "b892ced656775f2a2b4961f0c20d142703906dc76b1d2aa6f90696f9ed980ac2",
+      "gitLfSha256": "d8ffefef442663c4f9b9d2093cd3feb58477ff1cf9626576eaafd7a7dbf3e2b8"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPortraitOverlay.java",
+      "bytes": 4589,
+      "rawSha256": "0778b79d221adaef90a64ace791a82f2d2f62c4cb972baf6a1585018fd4117cb",
+      "gitLfSha256": "0778b79d221adaef90a64ace791a82f2d2f62c4cb972baf6a1585018fd4117cb"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPortraitToneCards.java",
+      "bytes": 8386,
+      "rawSha256": "a5eaa1079444ee6f0dd587eec5e126706cd21f10fb0e2db5f3ae421bbfd4adad",
+      "gitLfSha256": "a5eaa1079444ee6f0dd587eec5e126706cd21f10fb0e2db5f3ae421bbfd4adad"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPresetPins.java",
+      "bytes": 3415,
+      "rawSha256": "72f6c86eaddea8037b924b33983232a9e151544e067119016de1237d37eaa479",
+      "gitLfSha256": "72f6c86eaddea8037b924b33983232a9e151544e067119016de1237d37eaa479"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedProfile.java",
+      "bytes": 7775,
+      "rawSha256": "e7c3e28081252bd47cbd1c743bf9924f21b4518788b82d8448f4970283cae3dd",
+      "gitLfSha256": "e7c3e28081252bd47cbd1c743bf9924f21b4518788b82d8448f4970283cae3dd"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedProjects.java",
+      "bytes": 18323,
+      "rawSha256": "1c713eec09fdad1fcaf242b4473f977fedeca4227f97dff72c4aeb4190a2f856",
+      "gitLfSha256": "1c713eec09fdad1fcaf242b4473f977fedeca4227f97dff72c4aeb4190a2f856"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedQqLoginTransport.java",
+      "bytes": 1972,
+      "rawSha256": "3220b5b8eb1f3ed0beb9bb0a4f9644ebc64335d059f1308f27494432aad38e41",
+      "gitLfSha256": "3220b5b8eb1f3ed0beb9bb0a4f9644ebc64335d059f1308f27494432aad38e41"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRawReference.java",
+      "bytes": 4502,
+      "rawSha256": "eff1b344ea605219c2dae24172c825ee8e46e3971fcc4f17ac1f5693f34cb2d0",
+      "gitLfSha256": "eff1b344ea605219c2dae24172c825ee8e46e3971fcc4f17ac1f5693f34cb2d0"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRawSettings.java",
+      "bytes": 1622,
+      "rawSha256": "03144dc633f8cd7ecaacd66fee8b2820b86a1786b180e2a6ccf7f4f028bb482d",
+      "gitLfSha256": "03144dc633f8cd7ecaacd66fee8b2820b86a1786b180e2a6ccf7f4f028bb482d"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRecipe.java",
+      "bytes": 5005,
+      "rawSha256": "4a53971f66af5f616994b7a7a4c43f1ed66a15b9d72ed633e2f6623b81a0b789",
+      "gitLfSha256": "4a53971f66af5f616994b7a7a4c43f1ed66a15b9d72ed633e2f6623b81a0b789"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRemote.java",
+      "bytes": 8973,
+      "rawSha256": "f759041dfa9ff165f154a83d6412eff0532bfe1f5326d8a964e5104fae168336",
+      "gitLfSha256": "f759041dfa9ff165f154a83d6412eff0532bfe1f5326d8a964e5104fae168336"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRetouch.java",
+      "bytes": 20111,
+      "rawSha256": "61c4079975411b63840af75f3180ba95850dcf10c4d4de4d0877127fb3c02ac7",
+      "gitLfSha256": "911499aa5ea230ef369189d145efd1fbbaa48018ca3fffc6fde62c4332bd75ec"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRuntime.java",
+      "bytes": 36174,
+      "rawSha256": "b06bef6083b8baa235209ecf99ddd7aeeeca6896fe307d55b3c0f6d7ab9e4bcd",
+      "gitLfSha256": "b06bef6083b8baa235209ecf99ddd7aeeeca6896fe307d55b3c0f6d7ab9e4bcd"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSelectionOverlay.java",
+      "bytes": 3584,
+      "rawSha256": "097ecda3f0920db8a0b6e7db6d790498efcbd9272d4d68e32a71a3a9949e1a2c",
+      "gitLfSha256": "097ecda3f0920db8a0b6e7db6d790498efcbd9272d4d68e32a71a3a9949e1a2c"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSlotParameters.java",
+      "bytes": 2077,
+      "rawSha256": "252bd489478ba04c792827f7b8b3d66877edbceac847f99921dc6caafeddd20d",
+      "gitLfSha256": "252bd489478ba04c792827f7b8b3d66877edbceac847f99921dc6caafeddd20d"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSlotTransportGuard.java",
+      "bytes": 3970,
+      "rawSha256": "b5d0c622ea9cc123ad6c4ca45ee9137320524eb85d5ab472e10688859cc215e6",
+      "gitLfSha256": "b5d0c622ea9cc123ad6c4ca45ee9137320524eb85d5ab472e10688859cc215e6"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSlots.java",
+      "bytes": 25661,
+      "rawSha256": "d5d28a118e22bd0c1f31226ccc17a0c82735c47020446fccc32b5674fc41e882",
+      "gitLfSha256": "d5d28a118e22bd0c1f31226ccc17a0c82735c47020446fccc32b5674fc41e882"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSubmissions.java",
+      "bytes": 18662,
+      "rawSha256": "94cf4b2a61c975ac138ab9dbfdba9553e25d1aa17d08176f656c8fbfcd935dd4",
+      "gitLfSha256": "94cf4b2a61c975ac138ab9dbfdba9553e25d1aa17d08176f656c8fbfcd935dd4"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedUiState.java",
+      "bytes": 4033,
+      "rawSha256": "695abad95618a1cc383263dff1af1b5d4fbd79b70ad88dc2f4831c5e29de6ec3",
+      "gitLfSha256": "695abad95618a1cc383263dff1af1b5d4fbd79b70ad88dc2f4831c5e29de6ec3"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedVersions.java",
+      "bytes": 12269,
+      "rawSha256": "147e1166530fe3489f63550bb2441abc3781142e050d65f71ff3d25e403809e2",
+      "gitLfSha256": "147e1166530fe3489f63550bb2441abc3781142e050d65f71ff3d25e403809e2"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/AtmosphereChecks.java",
+      "bytes": 1240,
+      "rawSha256": "0a3f70931b5064750919504d07f051dc334e7fafd80f25935e3ff38d5d6a48be",
+      "gitLfSha256": "0a3f70931b5064750919504d07f051dc334e7fafd80f25935e3ff38d5d6a48be"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraBoundaryTest.java",
+      "bytes": 7929,
+      "rawSha256": "0441af84dd318d72eb577ccb2a93ab022fe6d7e7f2cda345a3a6d70b38e8599d",
+      "gitLfSha256": "9f956eff0488ab420499f71e66339fe63a8f8aeab2f6db87b8d74b326276c967"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraControlsBoundaryTest.java",
+      "bytes": 18324,
+      "rawSha256": "8abc258b04d3d6c6d383c1251453286a880e05f4b769d496aaaf3d864993dd5f",
+      "gitLfSha256": "8abc258b04d3d6c6d383c1251453286a880e05f4b769d496aaaf3d864993dd5f"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraLiveDiscoveryBoundaryTest.java",
+      "bytes": 26781,
+      "rawSha256": "5997a40a42170def2873c6290051ab927bd542698efe4904108207b546f499ae",
+      "gitLfSha256": "6761615cf4a2a502ed7c27faaa93711d0630edef5c4f077b54e93b51d43d54c7"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraMaintenanceBoundaryTest.java",
+      "bytes": 11289,
+      "rawSha256": "8e3700d530f3a6dd6605aa0fccd43a847fd2e439c84c646c868f92396c6b95c0",
+      "gitLfSha256": "8e3700d530f3a6dd6605aa0fccd43a847fd2e439c84c646c868f92396c6b95c0"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraRawBoundaryTest.java",
+      "bytes": 8236,
+      "rawSha256": "f29adec386d9274b141fa052b2354efab6772c24ddcc28c561e7c01211a06fe4",
+      "gitLfSha256": "f29adec386d9274b141fa052b2354efab6772c24ddcc28c561e7c01211a06fe4"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraResolveBoundaryTest.java",
+      "bytes": 7115,
+      "rawSha256": "99e9b783412223f907cb57358d07edbfe515a2f2ea9e04602f4d393fa83fd56b",
+      "gitLfSha256": "99e9b783412223f907cb57358d07edbfe515a2f2ea9e04602f4d393fa83fd56b"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraSessionBoundaryTest.java",
+      "bytes": 28177,
+      "rawSha256": "f1e7ec235b3ed49041b313cec3c4e6b517ce5f17dbeae26899b05c0f18fd6f1b",
+      "gitLfSha256": "f1e7ec235b3ed49041b313cec3c4e6b517ce5f17dbeae26899b05c0f18fd6f1b"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraTransferBoundaryTest.java",
+      "bytes": 7507,
+      "rawSha256": "ccb6c1e7dc1706fe8a4400dd59ed5e1e42f335999fa2da0f437baec79b62801f",
+      "gitLfSha256": "ccb6c1e7dc1706fe8a4400dd59ed5e1e42f335999fa2da0f437baec79b62801f"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CleanupBoundaryTest.java",
+      "bytes": 3309,
+      "rawSha256": "d7b502c3b2cc10fb2504e757a844c84cba617d04837f298e114016d8efd0bd9e",
+      "gitLfSha256": "d7b502c3b2cc10fb2504e757a844c84cba617d04837f298e114016d8efd0bd9e"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CommunityBoundaryTest.java",
+      "bytes": 3699,
+      "rawSha256": "2e57630f006aca7704e2ca3ccf5195f11f8038ead96903ca0082c30d2ee6e1d1",
+      "gitLfSha256": "2e57630f006aca7704e2ca3ccf5195f11f8038ead96903ca0082c30d2ee6e1d1"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CopyBoundaryTest.java",
+      "bytes": 6660,
+      "rawSha256": "32336eb09e334b02ebe38850b3d7f10fc81394174bb1d5f90c1555e4c335aaef",
+      "gitLfSha256": "32336eb09e334b02ebe38850b3d7f10fc81394174bb1d5f90c1555e4c335aaef"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CoreBoundary.java",
+      "bytes": 13155,
+      "rawSha256": "84044dab2dc343c6b481f04be0d27376d3d2ef2cc9d53e7f2ecfa4dd53f4bf2b",
+      "gitLfSha256": "84044dab2dc343c6b481f04be0d27376d3d2ef2cc9d53e7f2ecfa4dd53f4bf2b"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CoreParity.java",
+      "bytes": 3786,
+      "rawSha256": "28109d6af01a7d52797c2c29f79ff8b6922452311c11be52540ee93a48f99265",
+      "gitLfSha256": "28109d6af01a7d52797c2c29f79ff8b6922452311c11be52540ee93a48f99265"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/DetailTilesBoundaryTest.java",
+      "bytes": 6463,
+      "rawSha256": "986cc289cd7c0a6ddb6371d24e24bb785f2fa9891b0b934b0cc020028a4eb979",
+      "gitLfSha256": "986cc289cd7c0a6ddb6371d24e24bb785f2fa9891b0b934b0cc020028a4eb979"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/ExportBoundaryTest.java",
+      "bytes": 8185,
+      "rawSha256": "830718b39d4616dd0a2feb09b6c7be0d37105b77b981d425e913b19cb7344ccb",
+      "gitLfSha256": "830718b39d4616dd0a2feb09b6c7be0d37105b77b981d425e913b19cb7344ccb"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/ImportBoundaryTest.java",
+      "bytes": 3474,
+      "rawSha256": "bcb50b1b774ec34d4100ab6b600467f853e2fe5a5c208766674622d5066e44bd",
+      "gitLfSha256": "bcb50b1b774ec34d4100ab6b600467f853e2fe5a5c208766674622d5066e44bd"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/LegacyMigrationBoundaryTest.java",
+      "bytes": 11227,
+      "rawSha256": "7704bce9a1cc9c3014f14954daf1f5a9204b5d6257a6ff4dadf3265b9ee7e9eb",
+      "gitLfSha256": "926b495383f3cfa0617f7d9e6ebb7d3bd26ec4828526275c2a9afed4faeb6ad8"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/LiveIngestBoundaryTest.java",
+      "bytes": 37836,
+      "rawSha256": "48d49c7fe0d7fd04cd7b2031e5ca8941393233cc0e1032eebe271e227ac7c8b9",
+      "gitLfSha256": "48d49c7fe0d7fd04cd7b2031e5ca8941393233cc0e1032eebe271e227ac7c8b9"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/LocalEditsBoundaryTest.java",
+      "bytes": 23890,
+      "rawSha256": "6066f8b3a3c8628c5a0139d5d28fd1f534fd4562de7c121082a81fb85c42d51e",
+      "gitLfSha256": "6066f8b3a3c8628c5a0139d5d28fd1f534fd4562de7c121082a81fb85c42d51e"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/LocalSelectionReferenceTest.java",
+      "bytes": 3828,
+      "rawSha256": "23ab197c5c358dbab3790eff5077d291487b0eb023f2db542f8440b2d13a40cd",
+      "gitLfSha256": "23ab197c5c358dbab3790eff5077d291487b0eb023f2db542f8440b2d13a40cd"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/OriginalPublicationBoundaryTest.java",
+      "bytes": 6281,
+      "rawSha256": "1fd718e6f2e23092f2372501291559331f14d2960c98f60708a3e2f76c178e7d",
+      "gitLfSha256": "1fd718e6f2e23092f2372501291559331f14d2960c98f60708a3e2f76c178e7d"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/PersonalSyncBoundaryTest.java",
+      "bytes": 4489,
+      "rawSha256": "cdd82834884cd2ca9ae6b9139cdc446e0f45900f569a1e83cfbc7293e4da5031",
+      "gitLfSha256": "cdd82834884cd2ca9ae6b9139cdc446e0f45900f569a1e83cfbc7293e4da5031"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/PhotoBoundaryTest.java",
+      "bytes": 2678,
+      "rawSha256": "aec3b0b08fd6af485a2a54e1eadbc0e9619487e9ebb0e6d44b31b15c2570ffa8",
+      "gitLfSha256": "aec3b0b08fd6af485a2a54e1eadbc0e9619487e9ebb0e6d44b31b15c2570ffa8"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/PresetPinsBoundaryTest.java",
+      "bytes": 2284,
+      "rawSha256": "ce08b3a3b0ec63fce191c05f829a320c8a67781dfd964da37140d468b699c55a",
+      "gitLfSha256": "ce08b3a3b0ec63fce191c05f829a320c8a67781dfd964da37140d468b699c55a"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/ProfileBoundaryTest.java",
+      "bytes": 8693,
+      "rawSha256": "fa91390324416b26598336be2ee5e7a5adbf8b0b3430800afa10a6e4918b0de3",
+      "gitLfSha256": "fa91390324416b26598336be2ee5e7a5adbf8b0b3430800afa10a6e4918b0de3"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/ProjectBoundaryTest.java",
+      "bytes": 10709,
+      "rawSha256": "5328f1e3973d8b5377ba5012f21a300df1fa14cc43bd597d97292cbbff4496a8",
+      "gitLfSha256": "5328f1e3973d8b5377ba5012f21a300df1fa14cc43bd597d97292cbbff4496a8"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/PublicInternetBoundaryTest.java",
+      "bytes": 5984,
+      "rawSha256": "6ca7caf037700ffcb18d12fe958d6a2b8e599c3aeed6b28c002c57e6b752ea78",
+      "gitLfSha256": "6ca7caf037700ffcb18d12fe958d6a2b8e599c3aeed6b28c002c57e6b752ea78"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/QqLoginBoundaryTest.java",
+      "bytes": 7159,
+      "rawSha256": "82e136ae7a3315ded66db9848adb18657119f0710bd905609e394f5dfa7a6e46",
+      "gitLfSha256": "82e136ae7a3315ded66db9848adb18657119f0710bd905609e394f5dfa7a6e46"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/RecipeBoundaryTest.java",
+      "bytes": 5439,
+      "rawSha256": "28dedf26eeab8343c94f9df3ae241a69c273d7fa7b17f51493f18c7a3645b0af",
+      "gitLfSha256": "28dedf26eeab8343c94f9df3ae241a69c273d7fa7b17f51493f18c7a3645b0af"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/RegistrationBoundaryTest.java",
+      "bytes": 4195,
+      "rawSha256": "cf2ed6a67db0245af56eb5812c86f8a587db9b40d3a6add9a6ce48da31b13a0c",
+      "gitLfSha256": "cf2ed6a67db0245af56eb5812c86f8a587db9b40d3a6add9a6ce48da31b13a0c"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/RetouchBoundaryTest.java",
+      "bytes": 9558,
+      "rawSha256": "81bb16c7c4945bab4d33b23e8514d93fecdf2a5b05d1537b276672bee67cdb00",
+      "gitLfSha256": "591c4c0415c377d928043b3d297f867f2a066730ef5e4e13df28a36f32a3e3c4"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/RetouchMenuBoundaryTest.java",
+      "bytes": 23421,
+      "rawSha256": "3aacb475c19a0f157227861602e317923ff79fab9ea450e6e4bb9e6e18f398fa",
+      "gitLfSha256": "3aacb475c19a0f157227861602e317923ff79fab9ea450e6e4bb9e6e18f398fa"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/SharedAutoBlemishesBoundaryTest.java",
+      "bytes": 6031,
+      "rawSha256": "7e0b1bced9854072ee801a498d25cd62df4eb17f8737ccbf4803f62e27b01285",
+      "gitLfSha256": "7e0b1bced9854072ee801a498d25cd62df4eb17f8737ccbf4803f62e27b01285"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/SharedCameraConnectBoundaryTest.java",
+      "bytes": 14015,
+      "rawSha256": "b862e0fe44980a0db9874eac11b1044754a0607add5990b6bde7b3c8947384c1",
+      "gitLfSha256": "b862e0fe44980a0db9874eac11b1044754a0607add5990b6bde7b3c8947384c1"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/SharedDownloadsBoundaryTest.java",
+      "bytes": 12422,
+      "rawSha256": "9b4f7766a9108540b67fab5c4f1143c8373b42dc6da4a5b655e25af1f18d691d",
+      "gitLfSha256": "9b4f7766a9108540b67fab5c4f1143c8373b42dc6da4a5b655e25af1f18d691d"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/SharedPortraitToneCardsBoundaryTest.java",
+      "bytes": 5795,
+      "rawSha256": "bbf6c1ff6fd80c7b797aaa83ae7b22acb34fb4156aff5b864255c240138508ee",
+      "gitLfSha256": "bbf6c1ff6fd80c7b797aaa83ae7b22acb34fb4156aff5b864255c240138508ee"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/SharedRawReferenceBoundaryTest.java",
+      "bytes": 3761,
+      "rawSha256": "f91e9a0760a154018316578dc887078e500aed3e77b81f1dd9a76b83596d060f",
+      "gitLfSha256": "f91e9a0760a154018316578dc887078e500aed3e77b81f1dd9a76b83596d060f"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/SlotParametersBoundaryTest.java",
+      "bytes": 10667,
+      "rawSha256": "bbc968285249723eb9a3cc0083b45a194d920529c18a85338e51161853bb2bba",
+      "gitLfSha256": "bbc968285249723eb9a3cc0083b45a194d920529c18a85338e51161853bb2bba"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/SubmissionBoundaryTest.java",
+      "bytes": 8555,
+      "rawSha256": "099e57719d28db1912407925ccd05f5d1f921f87229ea671e7a70218b62e7518",
+      "gitLfSha256": "099e57719d28db1912407925ccd05f5d1f921f87229ea671e7a70218b62e7518"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/UiStateBoundaryTest.java",
+      "bytes": 2504,
+      "rawSha256": "390aaf8febf21a6f882371e48fedaa1ad76aa23f4266beca8b8292153ee5d2ab",
+      "gitLfSha256": "390aaf8febf21a6f882371e48fedaa1ad76aa23f4266beca8b8292153ee5d2ab"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/VersionBoundaryTest.java",
+      "bytes": 9930,
+      "rawSha256": "4058da51a69717ea6f62d264131a722ca60f878c6749a1f75e67cd10f358b8ea",
+      "gitLfSha256": "4058da51a69717ea6f62d264131a722ca60f878c6749a1f75e67cd10f358b8ea"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/WiredCameraBoundaryTest.java",
+      "bytes": 5775,
+      "rawSha256": "d6f0bef496599a4962e701458644888dd3f2f8834861fe0bfed2ad6284e93dba",
+      "gitLfSha256": "d6f0bef496599a4962e701458644888dd3f2f8834861fe0bfed2ad6284e93dba"
+    },
+    {
+      "path": "tests/java/cc/huevia/ncp/NcpCompatibilityFixtures.java",
+      "bytes": 2306,
+      "rawSha256": "c4fcaf7ea278db349db71648c1fa81d4f71ce8254879e7f97394f930b2bbc7cc",
+      "gitLfSha256": "07f3c7033fd5be215df17e7a81b0fe74b27c0a2db5d24d0a39f2e7f9bba5393f"
+    },
+    {
+      "path": "tests/java/cc/huevia/ncp/NcpPreviewProfileTest.java",
+      "bytes": 10910,
+      "rawSha256": "2e396d38ad78b24bec9ce421acd5bfd87309a02c5d7d804b27d743794a7d2dd8",
+      "gitLfSha256": "2e396d38ad78b24bec9ce421acd5bfd87309a02c5d7d804b27d743794a7d2dd8"
+    },
+    {
+      "path": "tests/local-edits-java/cc/huevia/ncp/PhotoLocalEditsTest.java",
+      "bytes": 12816,
+      "rawSha256": "81c8a0b7b3054eb9e2c94e1a74f4090c5468a5d88b099f6391df90b7e0766f55",
+      "gitLfSha256": "81c8a0b7b3054eb9e2c94e1a74f4090c5468a5d88b099f6391df90b7e0766f55"
+    },
+    {
+      "path": "tests/raw-development-java/cc/huevia/ncp/RawHighlightColorTest.java",
+      "bytes": 3161,
+      "rawSha256": "16a2eac4078b0d7bdbf8545aba66e0e5c6608e27f92d26af759d224f01dd6eda",
+      "gitLfSha256": "16a2eac4078b0d7bdbf8545aba66e0e5c6608e27f92d26af759d224f01dd6eda"
+    },
+    {
+      "path": "tests/raw-development-java/cc/huevia/ncp/RawJpegColorMatchTest.java",
+      "bytes": 7789,
+      "rawSha256": "4fd6318558d6ec61821e0ac4ae0e69d255510b302701a05c31fafa8322a1c7ba",
+      "gitLfSha256": "4fd6318558d6ec61821e0ac4ae0e69d255510b302701a05c31fafa8322a1c7ba"
+    }
+  ]
+}

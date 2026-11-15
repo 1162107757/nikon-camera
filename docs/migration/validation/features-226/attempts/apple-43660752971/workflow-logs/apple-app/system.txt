@@ -1,0 +1,9 @@
+2026-11-15T00:57:33.8710000Z Job is waiting for a hosted runner to come online.
+2026-11-15T00:57:33.8710000Z Job is about to start running on the hosted runner: GitHub Actions 1000000183
+2026-11-15T00:57:33.8660000Z Evaluating apple-app.if
+2026-11-15T00:57:33.8660000Z Evaluating: (success() && (((inputs.verification != 'portrait-pixels') && (inputs.verification != 'portrait-geometry'))))
+2026-11-15T00:57:33.8660000Z Expanded: (true && (('full' != 'portrait-pixels') && ('full' != 'portrait-geometry')))
+2026-11-15T00:57:33.8660000Z Result: true
+2026-11-15T00:57:33.8680000Z Requested labels: macos-26
+2026-11-15T00:57:33.8680000Z Job defined at: 1162107757/nikon-camera/.github/workflows/cross-platform-mobile.yml@refs/heads/codex/features215
+2026-11-15T00:57:33.8680000Z Waiting for a runner to pick up this job...

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "runId": 43659369969,
+  "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+  "conclusion": "failure",
+  "failedStep": "Verify core parity and prepare native runtimes",
+  "actualWorkflowCommand": "bash cross-platform/tool/mobile_apple.sh prepare",
+  "nestedFailedCommand": "$JAVA_HOME/bin/java -Xmx256m -Dfile.encoding=UTF-8 -cp <ROOT>/cross-platform/.build/core-jvm/classes cc.huevia.shared.CoreParity",
+  "firstError": "java.lang.AssertionError: Live ingest boundary 120",
+  "sourceFile": "cross-platform/core/test/cc/huevia/shared/LiveIngestBoundaryTest.java",
+  "sourceLine": 108,
+  "exactFailingAssertion": "yes(rows(opened,\"photos\").get(0).get(\"path\").equals(source.toString()));",
+  "staticCheckpointMapping": {
+    "mainBeforeSubroutines": 52,
+    "intentRecovery": 9,
+    "largeCursor": 20,
+    "noDefaultOriginals": 27,
+    "checksBeforeRawOriginals": 108,
+    "rawPhotoCountCheckpoint": 119,
+    "rawReturnedPathCheckpoint": 120,
+    "runtimeRerunPerformed": false
+  },
+  "pathContract": {
+    "actualReturnedPath": "Canonical owned file from PhotoLiveProjectStore and SharedProjects.open",
+    "fixtureExpectedPath": "Noncanonical source.toString() beneath Files.createTempDirectory",
+    "macTempAliasMechanism": "/var versus /private/var resolves to the same file but differs literally",
+    "actualComparedStringsLogged": false,
+    "aliasDiagnosisIsSourceBasedInference": true
+  },
+  "minimalSuggestedFix": {
+    "scope": "Test fixture only; preserve every assertion and production ownership guard",
+    "line108Expected": "source.toFile().getCanonicalPath()",
+    "line131Expected": "secondSource.toFile().getCanonicalPath()",
+    "verificationRequiredAfterFix": "Fresh JVM and full/macOS26 run at the new exact source"
+  },
+  "frozenSourceEvidence": "frozen-source-evidence.json",
+  "rawWorkflowLogReceipt": "diagnostic-download.json",
+  "rawArtifactReceipt": "diagnostic-artifact-receipt.json",
+  "apiOperations": "GET only",
+  "sourceChanged": false,
+  "gateOrPinChanged": false,
+  "testRerunPerformed": false,
+  "dispatchPerformed": false,
+  "packageAccepted": false,
+  "published": false
+}

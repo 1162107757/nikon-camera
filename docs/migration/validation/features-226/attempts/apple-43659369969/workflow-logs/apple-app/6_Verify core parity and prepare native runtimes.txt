@@ -1,0 +1,21 @@
+﻿2026-11-15T00:41:27.2130930Z ##[group]Run bash cross-platform/tool/mobile_apple.sh prepare
+2026-11-15T00:41:27.2133400Z [36;1mbash cross-platform/tool/mobile_apple.sh prepare[0m
+2026-11-15T00:41:27.2273020Z shell: /bin/bash -e {0}
+2026-11-15T00:41:27.2273290Z ##[endgroup]
+2026-11-15T00:41:28.7985290Z Valid UTF-8 text and platform configuration: 1540 files
+2026-11-15T00:41:28.7987690Z Read-only detail render source boundary: 43 checks passed
+2026-11-15T00:41:28.7989740Z Readonly HueviaTask cancellation API: 60 Apple sources checked; 1 independently typed fixture setter retained
+2026-11-15T00:41:35.9938950Z From https://github.com/flutter/flutter
+2026-11-15T00:41:35.9945050Z  * branch              c197ca5199e9ee5661e865596c9c07294dfab51c -> FETCH_HEAD
+2026-11-15T00:41:41.0551100Z From https://github.com/flutter/flutter
+2026-11-15T00:41:41.0556220Z  * [new tag]           3.47.9     -> 3.47.9
+2026-11-15T00:42:49.7358270Z Log: jvm.log
+2026-11-15T00:42:49.7560070Z Exception in thread "main" java.lang.AssertionError: Live ingest boundary 120
+2026-11-15T00:42:49.7684350Z 	at cc.huevia.shared.LiveIngestBoundaryTest.yes(LiveIngestBoundaryTest.java:23)
+2026-11-15T00:42:49.8514930Z 	at cc.huevia.shared.LiveIngestBoundaryTest.rawOriginals(LiveIngestBoundaryTest.java:108)
+2026-11-15T00:42:49.8619580Z 	at cc.huevia.shared.LiveIngestBoundaryTest.run(LiveIngestBoundaryTest.java:92)
+2026-11-15T00:42:49.8720480Z 	at cc.huevia.shared.CoreBoundary.run(CoreBoundary.java:128)
+2026-11-15T00:42:49.8822510Z 	at cc.huevia.shared.CoreParity.run(CoreParity.java:16)
+2026-11-15T00:42:49.8924160Z 	at cc.huevia.shared.CoreParity.main(CoreParity.java:38)
+2026-11-15T00:42:49.9023880Z 
+2026-11-15T00:42:49.9065470Z ##[error]Process completed with exit code 1.

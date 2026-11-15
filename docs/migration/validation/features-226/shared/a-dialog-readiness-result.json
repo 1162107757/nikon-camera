@@ -1,0 +1,14 @@
+[
+  {
+    "step": "a-dialog-readiness-format",
+    "exit": 0
+  },
+  {
+    "step": "a-dialog-readiness-analyze",
+    "exit": 0
+  },
+  {
+    "step": "a-dialog-readiness-tests",
+    "exit": 0
+  }
+]

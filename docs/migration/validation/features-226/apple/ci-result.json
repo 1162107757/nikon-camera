@@ -1,0 +1,70 @@
+{
+  "run": 43663233293,
+  "url": "https://github.com/1162107757/nikon-camera/actions/runs/43663233293",
+  "sourceCommit": "ed48347f1b3e6c92492207259cf24d1613ea12e3",
+  "conclusion": "success",
+  "flutterTestsPassed": 697,
+  "photoKitXCTestPassed": true,
+  "nativeScenariosPassed": 1,
+  "uiKitTestsPassed": 5,
+  "cameraPresentationUIKitTestsPassed": 3,
+  "nativeTaskCancellationUIKitTestsPassed": 1,
+  "nativeForegroundSnapshotFixturePassed": true,
+  "nativeForegroundSnapshot": null,
+  "nativeForegroundSnapshotEvidence": "machine-test",
+  "nativeForegroundSourceProof": [
+    {
+      "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+      "gitBlobSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543"
+    },
+    {
+      "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+      "gitBlobSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e"
+    }
+  ],
+  "androidSourceCommit": "ed48347f1b3e6c92492207259cf24d1613ea12e3",
+  "publicInternetAppleIsolationPassed": true,
+  "publicInternetAppleSourceProof": [
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.h",
+      "gitBlobSha256": "7fdddfb2d8f10a187808d878ce870ef7c41df911cf44224c1f954bb323dd977e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.m",
+      "gitBlobSha256": "b87ed7603f70d966e99b799d30f5e7a27791c7653b519f9c506451f35e1a0b8e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+      "gitBlobSha256": "af8b855533a73e1a925d6435913d546df3f309cf933c0e47219630c623b68d92"
+    },
+    {
+      "path": "cross-platform/native/tests/public_internet_queue_apple.m",
+      "gitBlobSha256": "3c046c5885426fe1f8a87d9d7464d2ca39a31efe705806988508e1e0b25b557a"
+    },
+    {
+      "path": "cross-platform/tool/public_internet_queue_source_check.py",
+      "gitBlobSha256": "92606b3b2e6982418f846017fd3d7d0954c1d72e44212957518ddfa3a4d1d9da"
+    },
+    {
+      "path": "cross-platform/tool/public_internet_apple.sh",
+      "gitBlobSha256": "e480b75f03673802f83d4b487df457c20b11d79e6964079027353db2c6376a3a"
+    }
+  ],
+  "publicInternetAppleCompileExitCode": 0,
+  "publicInternetAppleExecutionExitCode": 0,
+  "fullMacSourceProof": {
+    "passed": true,
+    "sourceCommit": "ed48347f1b3e6c92492207259cf24d1613ea12e3",
+    "runId": 43663233293,
+    "jobId": 132656936069,
+    "jobName": "apple-app",
+    "runnerLabels": [
+      "macos-26"
+    ],
+    "workflowPath": ".github/workflows/cross-platform-mobile.yml",
+    "fullPreparationAndBuildStepsSucceeded": true,
+    "artifactId": 14141862993,
+    "published": false
+  },
+  "changesFromAndroidSource": []
+}

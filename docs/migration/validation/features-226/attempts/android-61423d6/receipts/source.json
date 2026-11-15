@@ -1,0 +1,73 @@
+{
+  "build": 226,
+  "versionCode": 226,
+  "versionName": "0.31.0-dev",
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "sourceFrozen": true,
+  "published": false,
+  "status": "android-accepted-ios-validation-running",
+  "packageStage": ".tooling/next226/package-candidates",
+  "acceptedForDelivery": false,
+  "acceptedForLocalTesting": false,
+  "androidAcceptedForLocalTesting": true,
+  "iosAcceptedForLocalTesting": false,
+  "previousAcceptedBaseline": {
+    "versionCode": 225,
+    "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "appleFullRun": 43615396238,
+    "flutterTestsPassed": 661,
+    "uiKitTestsPassed": 5,
+    "nativeScenariosPassed": 1,
+    "acceptedForLocalTesting": true,
+    "acceptedForDelivery": false,
+    "published": false,
+    "qualification": "Previous accepted local-testing baseline only; not 226 acceptance"
+  },
+  "appleFullRun": 43660752971,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-226-android-arm64.apk",
+      "bytes": 53264170,
+      "sha256": "9e5052161530883c55d3b6fe656b57f398b80a475f8d84b735fd64de3b62b7d3",
+      "abi": "arm64",
+      "platform": "Android",
+      "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-226-android-x64.apk",
+      "bytes": 56766674,
+      "sha256": "aa011513fbb9e0a69774afc9b2e8e5ff5e2a880a0ef5b417d6e4e785da709cab",
+      "abi": "x64",
+      "platform": "Android",
+      "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+      "acceptedForLocalTesting": true,
+      "published": false
+    }
+  ],
+  "knownLimitations": [
+    "iOS full/macOS26 43660752971 is still running; no unsigned IPA is accepted yet.",
+    "Physical Z6II Wi-Fi/cellular fallback, USB, QQ, Android 16KiB-page devices and self-signed iPhone require physical testing.",
+    "iOS QQ requires an HTTPS Universal Link/AASA that is currently unconfigured; use account/password."
+  ],
+  "previous226Attempt": {
+    "sourceCommit": "0bf8da5d55996aa4aa0e3a70301f37a88f0eba7b",
+    "appleFullRun": 43659369969,
+    "status": "native-preparation-fixture-failed",
+    "androidGates": "passed-for-old-source-only",
+    "archive": "attempts/0bf8da5"
+  },
+  "finalSourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "appleFullRunAccepted": false,
+  "androidArtifactSourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "androidSameSourceRevalidationPending": false,
+  "androidGuiExecutionSourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "androidGuiReexecutedForCurrentSource": true,
+  "androidReceipt": "android/",
+  "androidGuiReceipt": "android/live-panel-gui-result.json",
+  "platformAcceptance": {
+    "android": "accepted-for-local-testing",
+    "ios": "full-run-in-progress"
+  }
+}

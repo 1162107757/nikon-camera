@@ -1,0 +1,50 @@
+[
+  {
+    "label": "reconnect-new",
+    "file": "camera_reconnect_226_test.dart",
+    "pattern": null,
+    "exit": 1
+  },
+  {
+    "label": "ui-isolated-1",
+    "file": "camera_live_panel_226_test.dart",
+    "pattern": "A central start keeps the same preview bounds and freezes the mutually exclusive format",
+    "exit": 79
+  },
+  {
+    "label": "ui-isolated-2",
+    "file": "camera_live_panel_226_test.dart",
+    "pattern": "A committed photograph keeps the preview frame and never carries a large action over its pixels",
+    "exit": 79
+  },
+  {
+    "label": "ui-isolated-3",
+    "file": "camera_live_panel_226_test.dart",
+    "pattern": "The central action and external stop remain usable at 320 wide with double text",
+    "exit": 0
+  },
+  {
+    "label": "ui-isolated-4",
+    "file": "camera_live_panel_226_test.dart",
+    "pattern": "A retired live transport reconnects once without hiding its retained photo: false",
+    "exit": 0
+  },
+  {
+    "label": "ui-isolated-5",
+    "file": "camera_live_panel_226_test.dart",
+    "pattern": "A retired live transport reconnects once without hiding its retained photo: true",
+    "exit": 0
+  },
+  {
+    "label": "ui-isolated-6",
+    "file": "camera_live_panel_226_test.dart",
+    "pattern": "Live records use the root shell overlay and the last row is clickable where the tabs used to cover it",
+    "exit": 1
+  },
+  {
+    "label": "intent-retry",
+    "file": "camera_intent_test.dart",
+    "pattern": null,
+    "exit": 0
+  }
+]

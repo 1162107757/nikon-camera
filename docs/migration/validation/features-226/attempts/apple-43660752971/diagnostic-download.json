@@ -1,0 +1,21 @@
+{
+  "runId": 43660752971,
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555",
+  "apiOperations": "GET only",
+  "workflowLogs": {
+    "path": "workflow-logs.zip",
+    "bytes": 27376,
+    "sha256": "a53f6b69239b74ac565ce8df2056eb7ecb3e663c3b1ade573913472ce3416e9b"
+  },
+  "artifacts": [
+    {
+      "id": 14140966261,
+      "name": "huevia-cross-platform-ios-development",
+      "bytes": 36984,
+      "digest": "sha256:5c625d887cf26d41c54d0f03e9b92a9d9d004cfe9ee0c66413b1d52453c701e0",
+      "expired": false
+    }
+  ],
+  "packageAccepted": false,
+  "published": false
+}

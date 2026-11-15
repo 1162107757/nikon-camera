@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "review": "226 independent reconnect review",
+  "createdAt": "2026-11-15T00:55:43.945Z",
+  "baseSourceCommit": "0bf8da5 (parent-provided frozen source; subsequent authorized bounded Dart repair noted below)",
+  "workspace": "D:/dev/ai-project/nikon-camera",
+  "scope": [
+    {
+      "path": "cross-platform/app/lib/camera.dart",
+      "sha256": "f428e10fd10b02d6cb0c99fb30192506debf311f6ee9fd3ce1f78d9e3e9d2b24"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_connection_view.dart",
+      "sha256": "089fa545d3bf57140e6dd44ffb898f82cf361887321ecccb1d6c3253a1e12bba"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_live.dart",
+      "sha256": "f114ba7cc27a6f7f8c986b01690e29989325159dcfb353664b5e5861b4561103"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "sha256": "bc25f5c3709be452fbb1480ed0d6cc6d3a28b9b2fcc4bef92bcb224be037d6d7"
+    },
+    {
+      "path": "cross-platform/app/lib/domain.dart",
+      "sha256": "7ebedf8e4c6566ad723b52c14f784b7ced3777a90f4da279e331d29fcac0ff56"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "sha256": "d037d3145484dd33aeb57711c84887a2830745f44d7712d5dfb643710a988a10"
+    }
+  ],
+  "method": {
+    "sourceReviewOnly": true,
+    "sdkExecuted": false,
+    "testsExecuted": false,
+    "gitInvoked": false,
+    "noDeviceValidationClaim": true,
+    "additionalReadOnlyEvidence": [
+      "app/src/main/java/cc/huevia/album/CameraWifiNetwork.java",
+      "app/src/main/java/cc/huevia/connection/CameraWifiSession.java",
+      "app/src/main/java/cc/huevia/connection/CameraWifiRetention.java",
+      "app/src/main/java/cc/huevia/connection/CameraConnectionService.java",
+      "docs/migration/approved-original-updates.json",
+      ".tooling/next226/preservation-final-source.log"
+    ]
+  },
+  "summary": {
+    "confirmedDefects": 1,
+    "newUnresolvedConfirmedDefects": 0,
+    "repairStatus": "bounded fix and regression sources complete; parent owns formatting/analyze/test execution and final freeze"
+  },
+  "findings": [
+    {
+      "id": "R226-RECONNECT-OWNER-01",
+      "severity": "P2",
+      "title": "Late bind/skip replies can repopulate the previous owner or selected queue",
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "baselineLines": {
+        "bindCurrent": [
+          399,
+          413
+        ],
+        "skip": [
+          430,
+          438
+        ],
+        "accountChanged": [
+          441,
+          450
+        ]
+      },
+      "trigger": [
+        "Owner A selects a queue and starts bindCurrent or skip.",
+        "Native completes its owner-scoped mutation and the Future response has not yet resumed Dart.",
+        "Account changes to B, so accountChanged clears current/queues/issues and increments generation.",
+        "The old Future then resumes and, before this repair, unconditionally assigns the A snapshot to current and notifies. Selecting another queue during the await causes the equivalent stale selection overwrite."
+      ],
+      "evidence": "Both old methods directly assigned await state.core.call(...) to current with no post-await owner/generation/alive/selected-id checks. This is an asynchronous state-write defect; no assumption of failed Native ownership validation is required.",
+      "impact": "Old queue names/items can reappear in the new owner controller, or replace the selected queue. No incorrect Native owner mutation or original deletion is claimed.",
+      "status": "fixed-awaiting-parent-validation",
+      "authorization": "Parent explicitly authorized only camera_downloads.dart bindCurrent/skip and corresponding controller regressions after the finding was reported.",
+      "repair": {
+        "bindCurrent": {
+          "lines": [
+            399,
+            427
+          ],
+          "behavior": "Capture owner/generation/selected-id; validate alive, not busy, same owner/generation/id and no logoutPending after status and bind reply; send captured owner/id."
+        },
+        "skip": {
+          "lines": [
+            443,
+            463
+          ],
+          "behavior": "Require selected id at admission, capture owner/generation, and discard stale results using the same ownership/lifecycle/selection checks before current/restore."
+        },
+        "nativeChecksPreserved": true,
+        "routeChanges": false
+      },
+      "regressions": {
+        "path": "cross-platform/app/test/camera_downloads_test.dart",
+        "sha256": "ce506e2fa77d4bd1ec8df4403b39cf12373fbf924fd28285df4fc9cf8b970faf",
+        "generatedCases": 7,
+        "coverage": [
+          "For bind and skip: hold an already-created mutation response, change owner, release and verify no old current/queues/issues reappear, no cancel, original bytes unchanged.",
+          "For bind and skip: change selected queue while reply is held; stale response must not replace current or alter its error/binding state.",
+          "For bind and skip: the unchanged current owner/selection still accepts the correct result.",
+          "Hold camera.status during binding, change owner, release; no downloads.bind may be dispatched."
+        ],
+        "execution": "Not run by this reviewer per SDK ownership instruction; parent will run."
+      }
+    }
+  ],
+  "reviewedInvariants": [
+    {
+      "path": "cross-platform/app/lib/camera.dart",
+      "lines": [
+        295,
+        318
+      ],
+      "conclusion": "Connection sheet admission uses childOpen navigation lease and is no longer silently blocked by Live/Downloads exclusive state."
+    },
+    {
+      "path": "cross-platform/app/lib/camera.dart",
+      "lines": [
+        568,
+        649
+      ],
+      "conclusion": "Explicit reconnect captures an old camera-only job before local retirement, cancels that exact id with a bounded wait, stops the global manual transfer lease, then runs a new epoch-scoped camera.connect. Mounted/epoch checks guard result/finally."
+    },
+    {
+      "path": "cross-platform/app/lib/camera_connection_view.dart",
+      "lines": [
+        475,
+        520
+      ],
+      "conclusion": "Pending requests expose cancel; a connected stale snapshot still has an explicit reconnect action, while running busy/USB work locks the action."
+    },
+    {
+      "path": "cross-platform/app/lib/camera_live.dart",
+      "lines": [
+        115,
+        154
+      ],
+      "conclusion": "Live RPCs carry owner/generation admission and completion checks; matching-job finally cannot clear a newer request; pendingCameraJob exposes only camera operations."
+    },
+    {
+      "path": "cross-platform/app/lib/camera_live.dart",
+      "lines": [
+        589,
+        668
+      ],
+      "conclusion": "Passive transport loss retires local state without Native cancel/stop/close; connectionRestored requires a verified distinct nonempty session and clears the retired state without auto-starting or attaching. Existing original/project lease boundaries remain."
+    },
+    {
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "lines": [
+        354,
+        397
+      ],
+      "conclusion": "Local queue retirement clears busy/job synchronously before generation-fenced old finally can be skipped, avoiding a lingering exclusive lock or new-run state clobber."
+    },
+    {
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "lines": [
+        105,
+        230
+      ],
+      "conclusion": "Manual receive has per-object busy admission, account/stopped checks around receive/import, and releases its global lease in finally. Reconnect respects the local publication boundary."
+    },
+    {
+      "path": "cross-platform/app/lib/domain.dart",
+      "lines": [
+        304,
+        365
+      ],
+      "conclusion": "Global manual transfer arbitration uses a unique lease; stop waits only for that lease to be released, with bounded failure feedback rather than silently connecting over unfinished publication."
+    }
+  ],
+  "androidRouting": {
+    "changedByThisRepair": false,
+    "scopeEvidence": "The six reviewed Dart files contain no process-network binding, socket binding, network request, or public-route mutation. Reconnect uses the existing camera.connect payload and exact-id cancellation APIs.",
+    "cameraSocketEvidence": {
+      "path": "app/src/main/java/cc/huevia/album/CameraWifiNetwork.java",
+      "line": 242,
+      "behavior": "Camera sockets continue to be created by the chosen Android Network.getSocketFactory(); this review/repair does not replace that selection or bind the whole process.",
+      "gitBlob": "231963e41f5cb82f7206b39896ba97eeb41c5916",
+      "matchesLatestApprovedLedger": true
+    },
+    "preservationEvidence": {
+      "path": ".tooling/next226/preservation-final-source.log",
+      "observed": "Frozen original Git reference preserved: 420; approved original repairs verified: 13; other original files unchanged: 407"
+    },
+    "conclusion": "No Android camera Wi-Fi/public-network routing implementation or routing policy changed. This is a source-level conclusion, not a new device connectivity measurement."
+  },
+  "limitations": [
+    "This reviewer did not run SDK, tests, device interactions, builds or Git.",
+    "No lack of device verification is classified as a code defect.",
+    "Line references refer to the current local Dart repair before parent formatting; baseline finding lines are separately retained."
+  ]
+}

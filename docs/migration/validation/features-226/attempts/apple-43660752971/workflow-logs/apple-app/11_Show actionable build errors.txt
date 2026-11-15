@@ -1,0 +1,117 @@
+﻿2026-11-15T01:16:52.1727900Z ##[group]Run shopt -s nullglob
+2026-11-15T01:16:52.1728620Z [36;1mshopt -s nullglob[0m
+2026-11-15T01:16:52.1735370Z [36;1mfor f in cross-platform/.build/mobile-apple/*.log; do[0m
+2026-11-15T01:16:52.1735840Z [36;1m  echo "Log: $f"[0m
+2026-11-15T01:16:52.1736110Z [36;1m  tail -n 35 "$f"[0m
+2026-11-15T01:16:52.1736450Z [36;1mdone[0m
+2026-11-15T01:16:52.4816190Z shell: /bin/bash -e {0}
+2026-11-15T01:16:52.4817100Z ##[endgroup]
+2026-11-15T01:16:52.6840520Z Log: cross-platform/.build/mobile-apple/analyze.log
+2026-11-15T01:16:52.7261480Z Analyzing app...                                                
+2026-11-15T01:16:52.7262650Z No issues found! (ran in 18.0s)
+2026-11-15T01:16:52.7263780Z Log: cross-platform/.build/mobile-apple/device-build.log
+2026-11-15T01:16:52.7319580Z [1/1] iOS SDK
+2026-11-15T01:16:52.7604350Z   ├─ [1/3] ios                                                      3.3s
+2026-11-15T01:16:52.7605800Z   ├─ [2/3] ios-profile                                           2,168ms
+2026-11-15T01:16:52.7606720Z   └─ [3/3] ios-release                                           2,957ms
+2026-11-15T01:16:52.7607400Z Warning: Building for device with codesigning disabled. You will have to manually codesign before deploying to device.
+2026-11-15T01:16:52.7608110Z Building cc.huevia.next for device (ios-release)...
+2026-11-15T01:16:52.7608670Z The following plugins do not support Swift Package Manager for ios:
+2026-11-15T01:16:52.7609050Z   - huevia_core
+2026-11-15T01:16:52.7609770Z This will become an error in a future version of Flutter. Please contact the plugin maintainers to request Swift Package Manager adoption.
+2026-11-15T01:16:52.7610530Z Running pod install...                                             32.7s
+2026-11-15T01:16:52.7611070Z Running Xcode build...                                          
+2026-11-15T01:16:52.7611460Z Xcode build done.                                           145.0s
+2026-11-15T01:16:52.7611940Z ✓ Built build/ios/iphoneos/Runner.app (112.3MB)
+2026-11-15T01:16:52.7612390Z Log: cross-platform/.build/mobile-apple/flutter-bootstrap.log
+2026-11-15T01:16:52.7612960Z Flutter 3.47.9 • channel stable • https://github.com/flutter/flutter.git
+2026-11-15T01:16:52.7617430Z Framework • revision c197ca5199 (2 weeks ago) • 2026-10-29 10:10:20 -0400
+2026-11-15T01:16:52.7618530Z Engine • hash 9e025265bef30b838c0c1b68cad19decf97048f2 (revision 89c39edfdf) (18 days ago) • 2026-10-27 19:51:20.000Z
+2026-11-15T01:16:52.7619210Z Tools • Dart 3.13.7 • DevTools 2.60.0
+2026-11-15T01:16:52.7619720Z Log: cross-platform/.build/mobile-apple/flutter-tests.log
+2026-11-15T01:16:52.7967280Z 07:06 +667 -2: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart
+2026-11-15T01:16:52.7970000Z 07:07 +667 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: sibling slider-first release cannot revive a disabled photo tap
+2026-11-15T01:16:52.7973220Z 07:07 +668 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: sibling photo-first then slider cannot revive its old tap even within one frame
+2026-11-15T01:16:52.7976500Z 07:07 +669 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: sibling slider interruption cancels a drawing stroke until all-up
+2026-11-15T01:16:52.7979610Z 07:07 +670 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: disabled editing freezes taps at down yet keeps pinch navigation available
+2026-11-15T01:16:52.7984070Z 07:07 +671 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: repair pinch cancels the whole stroke and residual fingers cannot submit or resume it
+2026-11-15T01:16:52.7987440Z 07:07 +672 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: repair after zoom and after fit commits the same original-image coordinates
+2026-11-15T01:16:52.7992410Z 07:07 +673 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: repair rotation cancellation retains held pointers until a genuinely new gesture
+2026-11-15T01:16:52.7999610Z 07:07 +674 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body assistive compare tap restores after 650ms while portrait keeps its toggle
+2026-11-15T01:16:52.8006290Z 07:07 +675 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body compare restores when dragged out or a second finger arrives
+2026-11-15T01:16:52.8011550Z 07:08 +676 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body hardware compare releases on key-up and focus loss
+2026-11-15T01:16:52.8016290Z 07:08 +677 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: viewport completes one accepted drawing stroke without also selecting a face
+2026-11-15T01:16:52.8018430Z 07:08 +678 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: second viewport finger cancels drawing and becomes bounded navigation
+2026-11-15T01:16:52.8021510Z 07:08 +679 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: viewport hit coordinates follow actual zoom and fit restores the centre
+2026-11-15T01:16:52.8024560Z 07:08 +680 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body viewport reserves its bars and only body permits one-finger pan
+2026-11-15T01:16:52.8028300Z 07:08 +681 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: viewport rotation cancels an unfinished stroke and preserves zoom
+2026-11-15T01:16:52.8030260Z 07:08 +682 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: slider pointer cancellation restores tentative state without a normal commit
+2026-11-15T01:16:52.8032700Z 07:08 +683 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad clamps a real drag to the source circle and commits once
+2026-11-15T01:16:52.8038800Z 07:08 +684 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad second pointer cancels tentative light without committing it
+2026-11-15T01:16:52.8042380Z 07:08 +685 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: slider drag remains editable and commits its actual signed value once
+2026-11-15T01:16:52.8044510Z 07:08 +686 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: disabled slider rejects input and rebuilding shows authoritative state
+2026-11-15T01:16:52.8048770Z 07:08 +687 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: face bar exposes actual selection, automatic, add and anchored more actions
+2026-11-15T01:16:52.8052050Z 07:08 +688 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: compare hold restores baseline on release and pointer cancellation
+2026-11-15T01:16:52.8055390Z 07:08 +689 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: disabled tool never invokes edit and selected tool remains actionable
+2026-11-15T01:16:52.8058980Z 07:08 +690 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: mode dock scrolls to live controls rather than clipping actions
+2026-11-15T01:16:52.8062750Z 07:08 +691 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: portrait to landscape rotation preserves reachable group actions and a photo stage
+2026-11-15T01:16:52.8067470Z 07:08 +692 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: large text group rail remains horizontally scrollable and usable in a short panel
+2026-11-15T01:16:52.8072010Z 07:08 +693 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: old choice and confirmation dialogs return cancellation and real selection
+2026-11-15T01:16:52.8074580Z 07:09 +694 -2: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photos_test.dart
+2026-11-15T01:16:52.8077090Z 07:10 +694 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photos_test.dart: Photo stars survive reload, combine with search, and keep stable editor links
+2026-11-15T01:16:52.8079610Z 07:11 +695 -2: Some tests failed.
+2026-11-15T01:16:52.8080080Z 
+2026-11-15T01:16:52.8080270Z Failing tests:
+2026-11-15T01:16:52.8081040Z   /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_panel_226_test.dart: A central start keeps the same preview bounds and freezes the mutually exclusive format
+2026-11-15T01:16:52.8082970Z   /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_panel_226_test.dart: A committed photograph keeps the preview frame and never carries a large action over its pixels
+2026-11-15T01:16:52.8084000Z Log: cross-platform/.build/mobile-apple/portrait-models.log
+2026-11-15T01:16:52.8086440Z {"prepared": [{"name": "face_landmarks_detector.tflite", "bytes": 2553590, "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5"}, {"name": "face_skin_multiclass.shuffle4.zlib", "bytes": 13881786, "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"}], "restoredSemanticSha256": "c6748b1253a99067ef71f7e26ca71096cd449baefa8f101900ea23016507e0e0", "originalAppTreeRead": false}
+2026-11-15T01:16:52.8088030Z Log: cross-platform/.build/mobile-apple/pub-get.log
+2026-11-15T01:16:52.8123800Z [1/10] Material Fonts                                              166ms
+2026-11-15T01:16:52.8124430Z [2/10] Gradle Wrapper                                                7ms
+2026-11-15T01:16:52.8124800Z [3/10] Flutter SDK
+2026-11-15T01:16:52.8125450Z   ├─ [1/5] sky_engine                                              101ms
+2026-11-15T01:16:52.8126000Z   ├─ [2/5] flutter_gpu                                              37ms
+2026-11-15T01:16:52.8127180Z   ├─ [3/5] flutter_patched_sdk                                     149ms
+2026-11-15T01:16:52.8127860Z   ├─ [4/5] flutter_patched_sdk_product                             163ms
+2026-11-15T01:16:52.8128420Z   └─ [5/5] darwin-arm64                                            880ms
+2026-11-15T01:16:52.8129040Z [4/10] iOS USB Artifact: libimobiledevice                           15ms
+2026-11-15T01:16:52.8129570Z [5/10] iOS USB Artifact: libusbmuxd                                  8ms
+2026-11-15T01:16:52.8130180Z [6/10] iOS USB Artifact: libplist                                   13ms
+2026-11-15T01:16:52.8130670Z [7/10] iOS USB Artifact: openssl                                    83ms
+2026-11-15T01:16:52.8131310Z [8/10] iOS USB Artifact: libimobiledeviceglue                        7ms
+2026-11-15T01:16:52.8131890Z [9/10] iOS USB Artifact: ios-deploy                                 10ms
+2026-11-15T01:16:52.8132510Z [10/10] darwin-arm64/font-subset                                    89ms
+2026-11-15T01:16:52.8132930Z Resolving dependencies...
+2026-11-15T01:16:52.8133320Z Downloading packages...
+2026-11-15T01:16:52.8133720Z   code_assets 1.2.1 (2.2.0 available)
+2026-11-15T01:16:52.8134020Z   cross_file 0.3.5+5 (0.4.0 available)
+2026-11-15T01:16:52.8139350Z   cupertino_icons 1.0.9 (2.0.0 available)
+2026-11-15T01:16:52.8140470Z   hooks 2.0.2 (2.2.0 available)
+2026-11-15T01:16:52.8143490Z   material_color_utilities 0.13.0 (0.13.1 available)
+2026-11-15T01:16:52.8146750Z   meta 1.18.3 (1.19.0 available)
+2026-11-15T01:16:52.8147620Z   objective_c 9.5.0 (9.6.4 available)
+2026-11-15T01:16:52.8148150Z   record_use 0.6.0 (1.1.1 available)
+2026-11-15T01:16:52.8149410Z   shared_preferences_android 2.5.4 (2.5.5 available)
+2026-11-15T01:16:52.8151300Z   shared_preferences_foundation 2.5.7 (2.6.2 available)
+2026-11-15T01:16:52.8156380Z   test_api 0.7.12 (0.7.15 available)
+2026-11-15T01:16:52.8157420Z   vector_math 2.4.0 (2.4.4 available)
+2026-11-15T01:16:52.8158520Z Got dependencies!
+2026-11-15T01:16:52.8159590Z 12 packages have newer versions incompatible with dependency constraints.
+2026-11-15T01:16:52.8160250Z Try `flutter pub outdated` for more information.
+2026-11-15T01:16:52.8161720Z Log: cross-platform/.build/mobile-apple/qq-sdk.log
+2026-11-15T01:16:52.8209740Z {"sdk": "TencentOpenAPI 3.6.22.459", "sha256": "38a2fb7f26d8de683b942e16c5c1e46aeb054810d193bab0292686f8e5c74ae1", "slices": [{"slice": "ios-arm64", "platform": 2, "architectures": ["arm64"], "objects": 49, "minimumIOS": "15.0"}, {"slice": "ios-arm64_x86_64-simulator", "platform": 7, "architectures": ["arm64", "x86_64"], "objects": 98, "minimumIOS": "15.0"}]}
+2026-11-15T01:16:52.8212210Z Log: cross-platform/.build/mobile-apple/raw-build.log
+2026-11-15T01:16:52.8271460Z libtool: warning: 'src_integration_rawspeed_glue.cpp.o' has no symbols
+2026-11-15T01:16:52.8272980Z libtool: warning: 'src_write_apply_profile.cpp.o' has no symbols
+2026-11-15T01:16:52.8274330Z libtool: warning: 'src_x3f_x3f_parse_process.cpp.o' has no symbols
+2026-11-15T01:16:52.8275540Z libtool: warning: 'src_x3f_x3f_utils_patched.cpp.o' has no symbols
+2026-11-15T01:16:52.8276610Z Verified LibRaw 0.22.3 and prepared 79 original sources
+2026-11-15T01:16:52.8277630Z Built LibRaw for arm64-apple-ios16.0
+2026-11-15T01:16:52.8278920Z libtool: warning: 'src_integration_rawspeed_glue.cpp.o' has no symbols
+2026-11-15T01:16:52.8280200Z libtool: warning: 'src_write_apply_profile.cpp.o' has no symbols
+2026-11-15T01:16:52.8281430Z libtool: warning: 'src_x3f_x3f_parse_process.cpp.o' has no symbols
+2026-11-15T01:16:52.8282680Z libtool: warning: 'src_x3f_x3f_utils_patched.cpp.o' has no symbols
+2026-11-15T01:16:52.8283640Z Built LibRaw for arm64-apple-ios16.0-simulator
+2026-11-15T01:16:52.8285360Z xcframework successfully written out to: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/native/ios/Frameworks/LibRaw.xcframework
+2026-11-15T01:16:52.8287210Z Prepared source, licences and both Apple LibRaw platform slices

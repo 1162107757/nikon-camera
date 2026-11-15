@@ -1,0 +1,6 @@
+{
+  "exit": 1,
+  "actualProductFailureEstablished": false,
+  "failedExpectation": "Test reused running application whose previous RAW selection was correctly retained. Select JPEG explicitly before checking its description; format choice test does not require resetting user state.",
+  "sourceCommit": "61423d6b144229e3113edd54da6597177efc0555"
+}

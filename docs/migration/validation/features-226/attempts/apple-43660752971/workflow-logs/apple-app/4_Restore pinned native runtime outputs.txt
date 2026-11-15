@@ -1,0 +1,21 @@
+﻿2026-11-15T00:57:56.2519080Z ##[group]Run actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684
+2026-11-15T00:57:56.2519500Z with:
+2026-11-15T00:57:56.2519950Z   path: .tooling/cross-platform187/j2objc-3.1/dist
+.tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1
+cross-platform/.build/raw-apple
+
+2026-11-15T00:57:56.2520850Z   key: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--4ce07af3291abe3f00a6bb6a2f34ed178b9a6de90e41024d5ac3a776d2e77ae4
+2026-11-15T00:57:56.2521390Z   enableCrossOsArchive: false
+2026-11-15T00:57:56.2521580Z   fail-on-cache-miss: false
+2026-11-15T00:57:56.2521770Z   lookup-only: false
+2026-11-15T00:57:56.2521940Z ##[endgroup]
+2026-11-15T00:57:56.3743860Z (node:2889) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-15T00:57:56.3745120Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-15T00:57:56.4597020Z Cache hit for: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--4ce07af3291abe3f00a6bb6a2f34ed178b9a6de90e41024d5ac3a776d2e77ae4
+2026-11-15T00:57:56.4713120Z (node:2889) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-15T00:57:57.5348990Z Received 180355072 of 215279549 (83.8%), 170.5 MBs/sec
+2026-11-15T00:57:57.7168370Z Received 215279549 of 215279549 (100.0%), 169.8 MBs/sec
+2026-11-15T00:57:57.7207160Z Cache Size: ~205 MB (215279549 B)
+2026-11-15T00:57:57.7224840Z [command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/7005a59c-8409-4816-873f-07accd013810/cache.tzst -P -C /Users/runner/work/nikon-camera/nikon-camera --delay-directory-restore --use-compress-program unzstd
+2026-11-15T00:57:59.5898350Z Cache restored successfully
+2026-11-15T00:57:59.6024420Z Cache restored from key: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--4ce07af3291abe3f00a6bb6a2f34ed178b9a6de90e41024d5ac3a776d2e77ae4
