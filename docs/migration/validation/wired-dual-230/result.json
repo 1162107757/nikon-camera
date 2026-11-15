@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "pathBase": "dist/migration230-ios",
+  "supplements": "../migration230/ARTIFACTS.json",
+  "published": false,
+  "sourceCommit": "d4276fb57918af3433cca6cc4d16e1c4445da9c6",
+  "camera": "Nikon Z6 II",
+  "androidReference": {
+    "path": "../migration230/huevia-0.31.0-dev-230-android-arm64.apk",
+    "sha256": "d9f71ece2806c684906905fe73664f9360bc1eb0a8cd87cd57940407eced0145",
+    "unchanged": true
+  },
+  "ios": {
+    "file": "huevia-0.31.0-230-unsigned.ipa",
+    "version": "0.31.0",
+    "build": 230,
+    "platform": "iPhoneOS",
+    "architecture": "arm64",
+    "minimumOS": "16.0",
+    "distribution": "unsigned-ipa",
+    "requiresUserSigning": true,
+    "bytes": 65281795,
+    "sha256": "0ba9408c5c9b90ba4a8adfcdb0bb380d5dd89f64fdec817d461e9781086bae9f",
+    "developmentBuild": true,
+    "fullParityComplete": false
+  },
+  "softwareVerification": {
+    "ciRun": 43766051626,
+    "ciUrl": "https://github.com/1162107757/nikon-camera/actions/runs/43766051626",
+    "conclusion": "success",
+    "productionSnapshotFilesMatched": 263,
+    "additionalTestFiles": 20,
+    "flutterAnalyze": "passed",
+    "flutterTests": 746,
+    "nativeXCTests": 5,
+    "nativeXCTestFailures": 0,
+    "sharedCoreParityChecks": 2009,
+    "nativeTaskCancellationChecks": 309,
+    "nativePhotoPipeline": "passed",
+    "deviceMachOArm64Verified": true,
+    "ipaIntegrityVerified": true
+  },
+  "physicalZ6IITesting": {
+    "android": "not-tested",
+    "iphone": "not-tested",
+    "reason": "No phone or camera recognized by local device discovery."
+  },
+  "evidence": "../../docs/migration/validation/wired-dual-230/"
+}

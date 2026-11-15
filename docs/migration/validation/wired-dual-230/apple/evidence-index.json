@@ -1,0 +1,83 @@
+{
+  "sourceCommit": "d4276fb57918af3433cca6cc4d16e1c4445da9c6",
+  "runId": 43766051626,
+  "artifactId": 14183701162,
+  "archiveSha256": "329620ae3fbd885b7b5392079865a9971069a3f2dda62a5194f1811341c5b260",
+  "archiveBytes": 65606779,
+  "localArchive": ".tooling/wired-dual230/ci-artifact-14183701162.zip",
+  "compilerExtractSource": "mobile-apple/simulator-build.log",
+  "compilerSourceSha256": "1ba2b0855a1192917dda0aec30a75aac44f618ba7dbc3327c7e5b8cbde37371d",
+  "files": [
+    {
+      "archivePath": "mobile-apple/analyze.log",
+      "bytes": 97,
+      "sha256": "d5b9edbb452bf2d160549d2f7e268f6cce94336bb664f88013aca1be26db6770"
+    },
+    {
+      "archivePath": "mobile-apple/device-build.log",
+      "bytes": 894,
+      "sha256": "6fceb97195463b9dec84f443976d451a8e78988fe115f07efb04fe4f6e2f4323"
+    },
+    {
+      "archivePath": "mobile-apple/flutter-tests.log",
+      "bytes": 168680,
+      "sha256": "471fcf64756f0ada153327c55935aaf404e8bb4f546ccc49bdfb1256e50b318a"
+    },
+    {
+      "archivePath": "mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "archivePath": "mobile-apple/ipa-verification.json",
+      "bytes": 447,
+      "sha256": "62d2579d4884454c4ab0b0bc48ec0ced224beabeb524b9b86b50fdd9bc0a05ef"
+    },
+    {
+      "archivePath": "mobile-apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "b487e04ca4aa85979645fbc0ab0c72022a9cff18cc831fbef072910062deb80e"
+    },
+    {
+      "archivePath": "mobile-apple/native-task-tests.log",
+      "bytes": 129,
+      "sha256": "30264464cea78e939a40148bcb3357262ebbb315dfe3ec1c8dd2daa27db53ab8"
+    },
+    {
+      "archivePath": "mobile-apple/simulator-result.json",
+      "bytes": 349,
+      "sha256": "42095415144b6597c4bae07076113f106ece77da8cff9da5bc90e940117021e6"
+    },
+    {
+      "archivePath": "mobile-apple/simulator-tests.log",
+      "bytes": 8646,
+      "sha256": "1278e880720ca78ede347f23efd1d6f85503d2049f6c773c9cf9acdac39d5db7"
+    },
+    {
+      "archivePath": "mobile-apple/raw-build.log",
+      "bytes": 886,
+      "sha256": "c27296de7136f0effac26561bf421eb89e81120155e7b80bf9e1e6f6b73eac49"
+    },
+    {
+      "archivePath": "mobile-apple/public-internet/result.json",
+      "bytes": 1415,
+      "sha256": "d86518f1ffa194bfed63b19f872dfb42386bcda91fd46d77a760034a3c9e0d11"
+    },
+    {
+      "archivePath": "core-ios/parity.json",
+      "bytes": 885,
+      "sha256": "0f87b141d41c2c06f777fc39e1d940ecd7ab7b5efae7794a25796bbd033d604c"
+    },
+    {
+      "archivePath": "core-ios/avatar.log",
+      "bytes": 133,
+      "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4"
+    }
+  ],
+  "apiCompatibility": {
+    "method": "ICCameraFile requestReadDataAtOffset:length:completion:",
+    "introducedInIOS": "13.0",
+    "applicationMinimumIOS": "16.0",
+    "source": "https://developer.apple.com/documentation/imagecapturecore/iccamerafile/requestreaddata(atoffset:length:completion:)"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 14183701162,
+      "node_id": "MDg6QXJ0aWZhY3QxNDE4MzcwMTE2Mg==",
+      "name": "huevia-cross-platform-ios-development",
+      "size_in_bytes": 65606779,
+      "url": "https://api.github.com/repos/1162107757/nikon-camera/actions/artifacts/14183701162",
+      "archive_download_url": "https://api.github.com/repos/1162107757/nikon-camera/actions/artifacts/14183701162/zip",
+      "expired": false,
+      "digest": "sha256:329620ae3fbd885b7b5392079865a9971069a3f2dda62a5194f1811341c5b260",
+      "created_at": "2026-11-15T22:27:53Z",
+      "updated_at": "2026-11-15T22:27:53Z",
+      "expires_at": "2026-11-22T22:27:49Z",
+      "workflow_run": {
+        "id": 43766051626,
+        "repository_id": 1436382697,
+        "head_repository_id": 1436382697,
+        "head_branch": "codex/wired-live-230-arm",
+        "head_sha": "d4276fb57918af3433cca6cc4d16e1c4445da9c6"
+      }
+    }
+  ]
+}
