@@ -1,0 +1,1 @@
+PASS 124 USB photo directory checks; bounded same-owner readiness, empty/null distinction, dual-card placeholders, format fallback, detach/cancel and slow-query budget

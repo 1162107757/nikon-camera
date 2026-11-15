@@ -1,0 +1,7 @@
+{
+  "udid": "F3418F00-8FA2-4E2A-8051-430110F2BDEE",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-5",
+  "version": "26.5",
+  "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro",
+  "freshDevice": true
+}

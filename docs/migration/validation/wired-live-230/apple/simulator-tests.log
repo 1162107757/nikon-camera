@@ -1,0 +1,101 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug -sdk iphonesimulator -destination id=F3418F00-8FA2-4E2A-8051-430110F2BDEE ARCHS=x86_64 ONLY_ACTIVE_ARCH=YES BUILD_DIR=/Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios -parallel-testing-enabled NO "-only-testing:RunnerTests/RunnerTests/testCameraPresenterRecoversFromMissingAndDetachedRegistration" "-only-testing:RunnerTests/RunnerTests/testCameraPresenterRejectsBackgroundAndHiddenWindows" "-only-testing:RunnerTests/RunnerTests/testCameraPresentationCancellationPreventsQueuedPresentation" "-only-testing:RunnerTests/RunnerTests/testNativeTaskCancellationRetiresBeforeDelivery" "-only-testing:RunnerTests/RunnerTests/testPhotoLibraryConsent" test-without-building
+
+Build settings from command line:
+    ARCHS = x86_64
+    BUILD_DIR = /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator26.5
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  FlutterGeneratedPluginSwiftPackage: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage
+
+2026-11-15 16:11:14.233926+0000 RunnerTests-Runner[94439:244632] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-15 16:11:40.450.
+Test Suite 'RunnerTests.xctest' started at 2026-11-15 16:11:40.452.
+Test Suite 'RunnerTests' started at 2026-11-15 16:11:40.453.
+Test Case '-[RunnerTests testCameraPresentationCancellationPreventsQueuedPresentation]' started.
+    t =     0.01s Start Test at 2026-11-15 16:11:40.459
+    t =     0.85s Set Up
+    t =     0.86s Tear Down
+Test Case '-[RunnerTests testCameraPresentationCancellationPreventsQueuedPresentation]' passed (1.485 seconds).
+Test Case '-[RunnerTests testCameraPresenterRecoversFromMissingAndDetachedRegistration]' started.
+    t =     0.00s Start Test at 2026-11-15 16:11:41.945
+    t =     0.03s Set Up
+2026-11-15 16:11:41.999059+0000 RunnerTests-Runner[94439:244632] [Window] Manually adding the rootViewController's view to the view hierarchy is no longer supported. Please allow UIWindow to add the rootViewController's view to the view hierarchy itself.
+2026-11-15 16:11:42.033913+0000 RunnerTests-Runner[94439:244632] [Window] Manually adding the rootViewController's view to the view hierarchy is no longer supported. Please allow UIWindow to add the rootViewController's view to the view hierarchy itself.
+    t =     0.11s Tear Down
+2026-11-15 16:11:42.061364+0000 RunnerTests-Runner[94439:244632] Unbalanced calls to begin/end appearance transitions for <UIViewController: 0x10359e6c0>.
+2026-11-15 16:11:42.064321+0000 RunnerTests-Runner[94439:244632] Unbalanced calls to begin/end appearance transitions for <UIViewController: 0x10363cce0>.
+Test Case '-[RunnerTests testCameraPresenterRecoversFromMissingAndDetachedRegistration]' passed (0.418 seconds).
+Test Case '-[RunnerTests testCameraPresenterRejectsBackgroundAndHiddenWindows]' started.
+    t =     0.00s Start Test at 2026-11-15 16:11:42.365
+    t =     0.03s Set Up
+2026-11-15 16:11:42.398931+0000 RunnerTests-Runner[94439:244632] [Window] Manually adding the rootViewController's view to the view hierarchy is no longer supported. Please allow UIWindow to add the rootViewController's view to the view hierarchy itself.
+    t =     0.05s Tear Down
+2026-11-15 16:11:42.426394+0000 RunnerTests-Runner[94439:244632] Unbalanced calls to begin/end appearance transitions for <UIViewController: 0x1035a27f0>.
+Test Case '-[RunnerTests testCameraPresenterRejectsBackgroundAndHiddenWindows]' passed (0.353 seconds).
+Test Case '-[RunnerTests testNativeTaskCancellationRetiresBeforeDelivery]' started.
+    t =     0.00s Start Test at 2026-11-15 16:11:42.720
+    t =     0.03s Set Up
+    t =     0.04s Tear Down
+Test Case '-[RunnerTests testNativeTaskCancellationRetiresBeforeDelivery]' passed (0.354 seconds).
+Test Case '-[RunnerTests testPhotoLibraryConsent]' started.
+    t =     0.00s Start Test at 2026-11-15 16:11:43.076
+    t =     0.03s Set Up
+    t =     0.06s Open cc.huevia.next
+    t =     0.06s     Launch cc.huevia.next
+2026-11-15 16:11:45.120 xcodebuild[93873:242997] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-15 16:11:45.120 xcodebuild[93873:242997] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    12.44s         Setting up automation session
+    t =    19.96s         Wait for cc.huevia.next to idle
+    t =    30.81s Waiting 60.0s for Button (First Match) to exist
+    t =    31.85s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    31.85s         Checking existence of `Button (First Match)`
+    t =    32.29s         Capturing element debug description
+    t =    32.90s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    32.90s         Checking existence of `Button (First Match)`
+    t =    33.17s         Capturing element debug description
+    t =    33.90s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    33.90s         Checking existence of `Button (First Match)`
+    t =    34.13s         Capturing element debug description
+    t =    34.85s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    34.85s         Checking existence of `Button (First Match)`
+    t =    35.18s         Capturing element debug description
+    t =    35.82s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    35.82s         Checking existence of `Button (First Match)`
+    t =    36.11s         Capturing element debug description
+    t =    36.82s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    36.82s         Checking existence of `Button (First Match)`
+    t =    37.17s         Capturing element debug description
+    t =    37.90s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    37.90s         Checking existence of `Button (First Match)`
+    t =    39.46s Tap Button (First Match)
+    t =    39.46s     Wait for com.apple.springboard to idle
+    t =    39.74s     Find the Button (First Match)
+    t =    40.07s     Check for interrupting elements affecting "Allow Full Access" Button
+    t =    40.47s     Synthesize event
+    t =    41.13s     Wait for com.apple.springboard to idle
+    t =    41.98s Wait for cc.huevia.next to become Running Foreground
+    t =    41.98s Tear Down
+Test Case '-[RunnerTests testPhotoLibraryConsent]' passed (44.972 seconds).
+Test Suite 'RunnerTests' passed at 2026-11-15 16:12:28.047.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 47.581 (47.595) seconds
+Test Suite 'RunnerTests.xctest' passed at 2026-11-15 16:12:28.049.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 47.581 (47.597) seconds
+Test Suite 'Selected tests' passed at 2026-11-15 16:12:28.050.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 47.581 (47.600) seconds
+2026-11-15 16:12:30.341 xcodebuild[93873:242997] [MT] IDETestOperationsObserverDebug: 88.051 elapsed -- Testing started completed.
+2026-11-15 16:12:30.341 xcodebuild[93873:242997] [MT] IDETestOperationsObserverDebug: 0.004 sec, +0.004 sec -- start
+2026-11-15 16:12:30.341 xcodebuild[93873:242997] [MT] IDETestOperationsObserverDebug: 88.051 sec, +88.047 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/Library/Developer/Xcode/DerivedData/Runner-bcwfnebhqpzxbcequummdswvslbl/Logs/Test/Test-Runner-2026.11.15_16-11-00-+0000.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "sourceCommit": "4544a3536ac5c06dabc8a5e9905eac1909e7da3b",
+  "runId": 43730163848,
+  "conclusion": "success",
+  "verification": "native-diagnostic",
+  "url": "https://github.com/1162107757/nikon-camera/actions/runs/43730163848",
+  "artifact": {
+    "id": 14169299913,
+    "sha256": "3db8d882c621c1c3e3dc886c1918a726b9e2326e49a88fc35a4ebc5437575386"
+  },
+  "modifiedWiredBridgeCompiled": true,
+  "nativePipelinePassed": true,
+  "coreParityPassed": true,
+  "installableIpaBuilt": false,
+  "integrated230IosAccepted": false,
+  "physicalCameraTested": false,
+  "scope": "Independent USB live branch, before the six-feature Android raw-PTP adapter integration. Simulator pipeline is a regression gate, not a physical USB camera test."
+}

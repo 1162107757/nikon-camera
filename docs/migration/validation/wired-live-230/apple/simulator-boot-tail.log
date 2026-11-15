@@ -1,0 +1,23 @@
+Full boot-log SHA256: 91c8992ab4e0c59ff211cc2e320541c0b3f59c0365c4fa14954330e7c83ffd17
+
+[2026-11-15 15:50:41 +0000] Status=4, isTerminal=NO, Elapsed=05:01.
+	Waiting on System App
+
+[2026-11-15 15:50:42 +0000] Status=4, isTerminal=NO, Elapsed=05:02.
+	Waiting on System App
+
+[2026-11-15 15:50:43 +0000] Status=4, isTerminal=NO, Elapsed=05:03.
+	Waiting on System App
+
+[2026-11-15 15:50:44 +0000] Status=4, isTerminal=NO, Elapsed=05:04.
+	Waiting on System App
+
+[2026-11-15 15:50:45 +0000] Status=4, isTerminal=NO, Elapsed=05:05.
+	Waiting on System App
+
+[2026-11-15 15:50:46 +0000] Status=4, isTerminal=NO, Elapsed=05:06.
+	Waiting on System App
+
+[2026-11-15 15:50:47 +0000] Status=4294967295, isTerminal=YES, Elapsed=05:07.
+	Finished
+

@@ -1,0 +1,4 @@
+# Keep receipt digests valid on both Windows and Apple checkouts.
+*.json -text whitespace=cr-at-eol
+# Captured stdout is evidence, including its original trailing whitespace.
+*.log -text -whitespace

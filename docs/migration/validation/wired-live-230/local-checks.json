@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "sourceCommit": "770bc38239111843c1acded0e3699e508dd5bb65",
+  "checkedAt": "2026-11-15T14:02:00.302127+00:00",
+  "isolatedCheckout": ".tooling/wl230",
+  "checks": {
+    "sharedJvmBoundary": 1983,
+    "wiredLiveBoundary": 97,
+    "flutterLiveTests": 36,
+    "flutterAnalyze": "No issues found",
+    "androidUsbJavac": {
+      "sdk": 35,
+      "java": 17,
+      "flutterEmbedding": true,
+      "exitCode": 0
+    },
+    "androidDirectoryBoundary": 124
+  },
+  "android229DirectoryAdaptersUnchanged": true,
+  "otherChatWipExcluded": true,
+  "deviceHardwareTested": false,
+  "newInstallablePackageBuilt": false,
+  "published": false,
+  "appleCi": {
+    "runId": 43730163848,
+    "sourceCommit": "4544a3536ac5c06dabc8a5e9905eac1909e7da3b",
+    "verification": "native-diagnostic",
+    "status": "completed",
+    "url": "https://github.com/1162107757/nikon-camera/actions/runs/43730163848",
+    "coreParityPassed": true,
+    "priorRuns": [
+      {
+        "id": 43721816339,
+        "conclusion": "failure",
+        "reason": "Missing pinned original-interface approval; corrected in 0150c48"
+      },
+      {
+        "id": 43722450074,
+        "conclusion": "cancelled",
+        "reason": "Superseded after Path.of test factory was replaced with existing portable Paths.get"
+      },
+      {
+        "id": 43722652459,
+        "conclusion": "cancelled",
+        "stage": "Fresh iOS 26.5 simulator data migration before app compilation",
+        "coreParityPassed": true,
+        "artifact": {
+          "id": 14168056721,
+          "sha256": "9bd78a1311442546c5603485aba2bccec3d76fc424724907b62609655f5413e7"
+        }
+      }
+    ],
+    "backup": {
+      "runId": 43728050320,
+      "conclusion": "cancelled",
+      "reason": "Duplicate runner stopped after primary runtime gate passed and cache was saved"
+    },
+    "runtimeCacheVerified": {
+      "id": 10557904757,
+      "bytes": 203325076,
+      "lastAccessedAt": "2026-11-15T15:30:07.293548Z"
+    },
+    "conclusion": "success",
+    "modifiedWiredBridgeCompiled": true,
+    "nativePipelinePassed": true,
+    "artifact": {
+      "id": 14169299913,
+      "sha256": "3db8d882c621c1c3e3dc886c1918a726b9e2326e49a88fc35a4ebc5437575386"
+    },
+    "backupRetries": [
+      {
+        "runId": 43733233175,
+        "status": "completed",
+        "reason": "Full primary native gate passed; redundant alternate runner stopped",
+        "conclusion": "cancelled"
+      }
+    ],
+    "overallRunVerified": true
+  },
+  "sources": [
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoCameraClient.java",
+      "bytes": 1847,
+      "sha256": "6039eac578af92a77c656c2e923d16327e2f1fd3012c9acc0b25c3a4066dfe27"
+    },
+    {
+      "path": "cross-platform/app/lib/help.dart",
+      "bytes": 13384,
+      "sha256": "e1aefebe5f47c332bd47e64685310ec8fe415ee8bb3b71e3fb0a8de012e80f93"
+    },
+    {
+      "path": "cross-platform/app/test/camera_live_test.dart",
+      "bytes": 50209,
+      "sha256": "28cc85af8793452ce328b8289dedbac0de31ec874708e55710a6200df93170ff"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCamera.java",
+      "bytes": 43997,
+      "sha256": "8fd49bd922aa0c9047a0b9afd249662e04fa57eccfe2435962f03082504911d3"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraLiveDiscovery.java",
+      "bytes": 23007,
+      "sha256": "4b8b6d64dcf941d9aa698aa9336f47d32df3691e55b6c2860c7da00cac2fc3d8"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraResolveBoundaryTest.java",
+      "bytes": 7161,
+      "sha256": "aaf25e3576430d0487b585e4215c1c8f5444f83a06ac62056961ef875796ffa4"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/WiredCameraBoundaryTest.java",
+      "bytes": 5951,
+      "sha256": "9454a0948707a3e83683aee3dba2627c4b0a3fdf1f04a3789086405b58d42cf3"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/WiredLiveBoundaryTest.java",
+      "bytes": 12720,
+      "sha256": "6a8087fe611b308048aa70be2425393ffc85c5bba11da2e9f05791f2d00aba68"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaWiredCameras.m",
+      "bytes": 21268,
+      "sha256": "3af74c45b480ec9fc274a995878fe9d377d66cf8dfac5f212049b4dba7bad942"
+    },
+    {
+      "path": "docs/migration/validation/wired-live-230/README.md",
+      "bytes": 2558,
+      "sha256": "a61daca82b14f7799b29409e1f37155caf92308d751af26745921aca1772d202"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "jvm.log",
+      "bytes": 3864,
+      "sha256": "56b03c730646e8114c88eeb18242ee74228716184c4f0f5c0ecdc9e3acb93c97"
+    },
+    {
+      "path": "flutter-live.log",
+      "bytes": 4939,
+      "sha256": "c7f67aab3f5ee27822d8ae93d0c7ef772f38d3edd16ba5e130f7ee503c104f50"
+    },
+    {
+      "path": "flutter-analyze.log",
+      "bytes": 98,
+      "sha256": "0ade16e947cc078d608d21d5481938f15db402a8933761f54c84b3bad0780e8c"
+    },
+    {
+      "path": "android-usb-compile.log",
+      "bytes": 229,
+      "sha256": "0cfe3d239f0273b36202efe401b0cdf6564dc8f47e770aeabec24d1fe93fc6b9"
+    },
+    {
+      "path": "android-directory.log",
+      "bytes": 169,
+      "sha256": "56d933aa28d0a2c47cecdd4c8f64627c1f091400d9556044dc4642ad47459be0"
+    },
+    {
+      "path": "inventory.log",
+      "bytes": 123,
+      "sha256": "ec4f5e3a0ac25bf593a92b0201a2c79dac5dec29a690a9aa1b9a696a348b5893"
+    },
+    {
+      "path": "apple-core-parity.json",
+      "bytes": 885,
+      "sha256": "139ebf37326ca085a47cd78bd5a774022cbae36618151fdbcf6d1489a66fd078"
+    },
+    {
+      "path": "apple-native-runtime.json",
+      "bytes": 889,
+      "sha256": "27592ed51317e23a897e5dd532793f07e5c93a08b582dc8e55aa641ec9658d88"
+    },
+    {
+      "path": "apple-interrupted-simulator.json",
+      "bytes": 228,
+      "sha256": "dfff49d6d692107e24ad585e7205503c914580f93d83a993608f715b92ee7e50"
+    },
+    {
+      "path": "apple-interrupted-boot.log",
+      "bytes": 69545,
+      "sha256": "4c91189d5e457fcfbeffbe8baaee388b09d6ca07c8b8dab24dd18a2753bd3f84"
+    },
+    {
+      "path": "apple/core-parity.json",
+      "bytes": 885,
+      "sha256": "139ebf37326ca085a47cd78bd5a774022cbae36618151fdbcf6d1489a66fd078"
+    },
+    {
+      "path": "apple/native-runtime.json",
+      "bytes": 889,
+      "sha256": "27592ed51317e23a897e5dd532793f07e5c93a08b582dc8e55aa641ec9658d88"
+    },
+    {
+      "path": "apple/receipt.json",
+      "bytes": 771,
+      "sha256": "8d4f3eb3459c95f28bc3440bbbce2698ca5db398c2526f996a18af855e105290"
+    },
+    {
+      "path": "apple/simulator-boot-tail.log",
+      "bytes": 752,
+      "sha256": "d5856c3ef7c1c4bb783ba85bb45c3caabd5b4ae3da0499b967ba3cdacd76ae48"
+    },
+    {
+      "path": "apple/simulator-result.json",
+      "bytes": 349,
+      "sha256": "2da903598988f3a81287c7255056b7c6aedf5e6e330e383f75dc97871623953d"
+    },
+    {
+      "path": "apple/simulator-selection.json",
+      "bytes": 228,
+      "sha256": "4523eee62fad79cd398a4778f7b4ba253589561ae123e09c11092f32f0a6743f"
+    },
+    {
+      "path": "apple/simulator-tests.log",
+      "bytes": 7913,
+      "sha256": "b7be55e71fb7a4d39075300181e00e35d27702bb75536383171a6c276001b0de"
+    },
+    {
+      "path": "apple/wired-bridge-compile.log",
+      "bytes": 8519,
+      "sha256": "2a82f126a61e731b0788f8c683997314e0184cac2ae56274c512b6cd01a57856"
+    }
+  ],
+  "originalApprovalCommit": "0150c48c04c2bf1b8e4ea54a36e5a4219085ac9a",
+  "inventory": {
+    "exitCode": 0,
+    "originalFiles": 420,
+    "approvedOriginalRepairs": 14,
+    "unchangedOtherOriginalFiles": 406
+  },
+  "portableBoundaryTestCommit": "4544a3536ac5c06dabc8a5e9905eac1909e7da3b",
+  "productionBlobsUnchangedSinceLocalChecks": true,
+  "integratedAndroid": {
+    "ownerChat": "01a1df75-09aa-7711-b729-54e32ff2ab72",
+    "path": "dist/migration230/huevia-0.31.0-dev-230-android-arm64.apk",
+    "bytes": 53526314,
+    "sha256": "d9f71ece2806c684906905fe73664f9360bc1eb0a8cd87cd57940407eced0145",
+    "sourceInputs": {
+      "path": "dist/migration230/SOURCE-INPUTS.json",
+      "sha256": "d7e3c06bf55882ad84db7e426c193cf06bcd4730cbc4854fc8c8f994e3baa886",
+      "workingTree": true,
+      "fileCount": 263
+    },
+    "acceptance": "docs/migration/validation/features-six-230/README.md",
+    "artifactMetadata": "dist/migration230/ARTIFACTS.json",
+    "published": false,
+    "integratedIosBuilt": false,
+    "physicalCameraTested": false,
+    "scope": "Six-feature integration with a new Android raw PTP adapter; separate from this branch old-MTP javac evidence. New adapter production wire checks 41, core boundaries 2003 plus 6 atmosphere. Combined device run 74 passed/1 test fixture startup-timing failure; focused fixed-fixture rerun 10 tests/3 registered scenarios passed; not a whole combined suite green claim."
+  },
+  "completedAt": "2026-11-15T16:18:19.986323+00:00"
+}
