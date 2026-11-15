@@ -283,7 +283,7 @@ class _BorderPanelState extends State<BorderPanel> {
       for (var i = 0; i < 4; i++) {
         activeJob = '$identity-$i';
         job = activeJob;
-        final result = await core.call('media.preview', {
+        final result = await core.call('media.reviewPreview', {
           'path': widget.photo.path,
           'owner': widget.owner,
           'maxEdge': 256,
@@ -605,6 +605,90 @@ class _BorderPanelState extends State<BorderPanel> {
     }
   }
 
+  Widget lensRow() {
+    final value = (border['lens'] as String? ?? '').isEmpty
+        ? capture['lens'] as String? ?? ''
+        : border['lens'] as String;
+    return Row(
+      children: [
+        Expanded(
+          child: TextButton(
+            key: const Key('border-lens-edit'),
+            onPressed: !ready
+                ? null
+                : () async {
+                    final initial = jsonEncode(border);
+                    final input = TextEditingController(
+                      text: border['lens'] as String? ?? '',
+                    );
+                    final result = await borderDialog<String>(
+                      (dialog) => AlertDialog(
+                        title: const Text('镜头信息'),
+                        scrollable: true,
+                        content: TextField(
+                          controller: input,
+                          maxLength: 96,
+                          decoration: inputDecoration(
+                            value.isEmpty ? '留空使用原图 EXIF' : value,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(dialog),
+                            child: const Text('取消'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              if (input.text.trim().length <= 96) {
+                                Navigator.pop(dialog, input.text.trim());
+                              }
+                            },
+                            child: const Text('应用'),
+                          ),
+                        ],
+                      ),
+                    );
+                    input.dispose();
+                    if (result != null && unchanged(initial)) {
+                      apply({...border, 'lens': result});
+                    }
+                  },
+            child: Row(
+              children: [
+                const Text(
+                  '镜头',
+                  style: TextStyle(color: _muted, fontSize: 11.5),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    value.isEmpty ? '未记录 · 可手动填写' : value,
+                    textAlign: TextAlign.end,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: _text, fontSize: 11.5),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 48,
+          height: 48,
+          child: Checkbox(
+            key: const Key('border-show-lens'),
+            semanticLabel: '显示镜头信息',
+            value: border['showLens'] == true,
+            onChanged: !ready
+                ? null
+                : (value) => apply({...border, 'showLens': value == true}),
+          ),
+        ),
+      ],
+    );
+  }
+
   Future<void> logo() async {
     final initial = jsonEncode(border);
     final result = await borderDialog<int>(
@@ -738,6 +822,7 @@ class _BorderPanelState extends State<BorderPanel> {
                             ? [
                                 for (var i = 0; i < 6; i++)
                                   row(i, checkbox: true),
+                                lensRow(),
                               ]
                             : [
                                 for (final entry in const [
@@ -1217,6 +1302,7 @@ class _BorderPanelState extends State<BorderPanel> {
                     ),
                     child: row(i),
                   ),
+                lensRow(),
                 InkWell(
                   onTap: ready ? settings : null,
                   child: SizedBox(

@@ -862,6 +862,40 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
   Future<void> disconnect() async {
     if (!mounted || busy || childOpen || session.isEmpty) return;
+    final confirmedSession = session;
+    setState(() => childOpen = true);
+    bool? confirmed;
+    try {
+      confirmed = await hueDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          title: const Text('断开相机连接？'),
+          content: Text(
+            widget.state.cameraLiveActive ||
+                    widget.state.cameraDownloadsActive ||
+                    widget.state.cameraManualTransferActive
+                ? '断开后将停止边拍边传和相机接收任务，已接收的照片会保留。'
+                : '断开后需要重新连接才能导入预设或接收相机照片。',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialog, false),
+              child: const Text('保持连接'),
+            ),
+            TextButton(
+              key: const Key('confirm-camera-disconnect'),
+              onPressed: () => Navigator.pop(dialog, true),
+              child: const Text('断开连接'),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => childOpen = false);
+    }
+    if (!mounted || confirmed != true || busy || session != confirmedSession) {
+      return;
+    }
     final request = ++epoch, expectedSession = session;
     setState(() {
       busy = true;

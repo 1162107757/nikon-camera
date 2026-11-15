@@ -22,6 +22,8 @@ public final class SharedSlots implements AutoCloseable {
         default void authorizeParameters(Map<Integer,byte[]> values)throws IOException{throw new IOException("此通道未提供拍摄参数授权。");}
         boolean isOpen();
         default boolean isSessionManaged(){return false;}
+        default long inheritedTransaction(){return 0;}
+        default PhotoCameraClient releaseAlbum(long next)throws IOException{return null;}
         @Override void close();
     }
     private final File root;
@@ -90,7 +92,7 @@ public final class SharedSlots implements AutoCloseable {
     private Object initialize(BooleanSupplier cancel,boolean retainHealthy)throws IOException {
         try{
             check(cancel);Transport connection=transport;if(connection==null)throw new InterruptedIOException("槽位会话已取消。");boolean managed=connection.isSessionManaged();
-            long inherited=connection instanceof WifiTransport?((WifiTransport)connection).inheritedTransaction:0;
+            long inherited=connection instanceof WifiTransport?((WifiTransport)connection).inheritedTransaction:connection.inheritedTransaction();
             if(inherited>0){next=inherited;owned=true;}
             else if(managed){command(0x1002,0,1);owned=true;}
             byte[] info=read(0x1001,owned?next++:0);device=PtpDeviceInfo.parseRedacted(info);PtpDeviceInfo identified=device;
@@ -100,7 +102,7 @@ public final class SharedSlots implements AutoCloseable {
             if(!serial.isEmpty())cameraId=SharedCameraMutationStore.sha(("huevia-slot-camera-v1\n"+identified.manufacturer()+"\n"+identified.model()+"\n"+serial).getBytes(java.nio.charset.StandardCharsets.UTF_8));
             requireReadCapabilities(device);
             if(!owned){command(0x1002,0,1);owned=true;}refresh(cancel);return state();
-        }catch(IOException|RuntimeException error){if(!retainHealthy||!(transport instanceof WifiTransport)||!isConnected()||cancel.getAsBoolean())close();throw error;}
+        }catch(IOException|RuntimeException error){if(!retainHealthy||!(transport instanceof WifiTransport)&&!(transport!=null&&transport.inheritedTransaction()>0)||!isConnected()||cancel.getAsBoolean())close();throw error;}
     }
     public boolean isConnected(){Transport current=transport;return current!=null&&current.isOpen();}
     /** Original prepared-session read-only heartbeat: built-in Picture Control1. */
@@ -123,8 +125,9 @@ public final class SharedSlots implements AutoCloseable {
     }
     PhotoCameraClient releaseAlbum(String expectedSession)throws IOException {
         if(!session.equals(expectedSession))throw new IOException("槽位会话已变化。");
-        Transport current=transport;if(!(current instanceof WifiTransport))return null;
-        PhotoCameraClient album=((WifiTransport)current).release(next);
+        Transport current=transport;if(current==null)return null;
+        if(!(current instanceof WifiTransport)&&consumed){Map<String,Object> record=journal.read();if(!"verified".equals(record.get("phase"))||Boolean.TRUE.equals(record.get("pending"))||Boolean.TRUE.equals(record.get("parametersPending")))return null;}
+        PhotoCameraClient album=current instanceof WifiTransport?((WifiTransport)current).release(next):current.releaseAlbum(next);
         if(album!=null){transport=null;owned=false;preparation=null;requested=null;confirmed=null;}
         return album;
     }

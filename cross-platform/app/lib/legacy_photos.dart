@@ -11,6 +11,7 @@ import 'legacy_glass_sheet.dart';
 import 'photo_grid.dart';
 import 'album_batch.dart';
 import 'album_operations.dart';
+import 'photo_collage.dart';
 
 class PhotosPage extends StatefulWidget {
   const PhotosPage({super.key, required this.state});
@@ -88,6 +89,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     List<Json> rows, {
     bool delete = false,
     bool export = false,
+    bool collage = false,
   }) async {
     if (!selecting ||
         selectionOwner != owner ||
@@ -96,6 +98,10 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     }
     final chosen = rows.where((row) => selected.contains(row['id'])).toList();
     if (chosen.isEmpty) return;
+    if (collage && (chosen.length < 2 || chosen.length > 9)) {
+      report(context, '一次请选择 2–9 张照片进行拼接。');
+      return;
+    }
     if (chosen.length != selected.length) {
       report(context, '部分所选照片已变化，请刷新后重新选择。');
       return;
@@ -103,7 +109,9 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     await hueRootPage<void>(
       context,
       MaterialPageRoute(
-        builder: (_) => delete
+        builder: (_) => collage
+            ? PhotoCollagePage(state: state, rows: chosen, phone: phone)
+            : delete
             ? AlbumDeletePage(
                 state: state,
                 rows: chosen,
@@ -552,7 +560,16 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                         ),
                       ),
                       onSelected: (value) {
-                        if (value == 'raw') {
+                        if (value == 'collage') {
+                          unawaited(
+                            hueRootPage<void>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PhotoCollagePage(state: state),
+                              ),
+                            ),
+                          );
+                        } else if (value == 'raw') {
                           unawaited(pick());
                         } else if (value == 'permission') {
                           unawaited(permission());
@@ -571,6 +588,10 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                         }
                       },
                       itemBuilder: (_) => [
+                        const PopupMenuItem(
+                          value: 'collage',
+                          child: Text('图片拼接'),
+                        ),
                         const PopupMenuItem(
                           value: 'refresh',
                           child: Text('刷新'),
@@ -835,6 +856,9 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                     onDelete: selected.isEmpty
                         ? null
                         : () => selectedAction(rows, delete: true),
+                    onCollage: selected.length < 2 || selected.length > 9
+                        ? null
+                        : () => selectedAction(rows, collage: true),
                   ),
                 ),
             ],

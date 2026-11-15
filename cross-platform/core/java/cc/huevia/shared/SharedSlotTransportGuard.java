@@ -18,6 +18,11 @@ public final class SharedSlotTransportGuard {
     private byte[] written;
     private long writtenTransaction;
     private boolean writeAcknowledged,verified;
+    /** Ownership transfer only: no OpenSession, CloseSession or counter reset on the wire. */
+    public void adoptSession(long next)throws IOException{
+        if(opened||closed||next<1||next>0xffffffffL)throw new IOException("USB 会话移交序列无效。");opened=true;last=next-1;
+    }
+    public boolean canReleaseSession(){return opened&&!closed&&(!attempted||verified);}
     public void read(int operation,long transaction,long[] p)throws IOException {
         boolean valid=p!=null&&(operation==0x1001&&p.length==0
                 ||operation==0x90cf&&p.length==1&&p[0]==1

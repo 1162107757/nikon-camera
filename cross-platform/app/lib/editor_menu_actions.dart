@@ -25,6 +25,7 @@ extension _EditorMenuActions on _EditorPageState {
     EditorMoreAction.optimize => HueIconKind.cleanup,
     EditorMoreAction.recipes || EditorMoreAction.copy => HueIconKind.recipe,
     EditorMoreAction.composition => HueIconKind.crop,
+    EditorMoreAction.lighting => HueIconKind.adjust,
     EditorMoreAction.undoCopy => HueIconKind.undo,
     EditorMoreAction.continueDraft => HueIconKind.receipts,
     EditorMoreAction.resetColour => HueIconKind.adjust,
@@ -76,6 +77,8 @@ extension _EditorMenuActions on _EditorPageState {
         await openTool();
       case EditorMoreAction.composition:
         await openCrop();
+      case EditorMoreAction.lighting:
+        await openLegacyTools(lighting: true);
       case EditorMoreAction.copy:
         await openTool(copying: true);
       case EditorMoreAction.undoCopy:

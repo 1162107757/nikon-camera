@@ -6,6 +6,7 @@ WORK=ROOT/'.tooling/cross-platform187/portable-closure'
 WORK.mkdir(parents=True,exist_ok=True)
 java=Path(r'D:/dev/Java/jdk-17.0.19/bin/javac.exe')
 sources=[p for p in (ROOT/'app/src/main/java').rglob('*.java') if not re.search(r'\bandroid\.',p.read_text(encoding='utf-8-sig'))]
+sources=[ROOT/'cross-platform/core/overrides'/p.relative_to(ROOT/'app/src/main/java') if (ROOT/'cross-platform/core/overrides'/p.relative_to(ROOT/'app/src/main/java')).is_file() else p for p in sources]
 adapters=list((ROOT/'cross-platform/core/adapters').rglob('*.java'))
 helpers=list((ROOT/'cross-platform/core/java').rglob('*.java'))
 excluded=[]

@@ -1,0 +1,1999 @@
+{
+  "schema": 1,
+  "baseCommit": "5ccba68071793a95fa978df7606f90e245b5d633",
+  "androidSnapshotBaseCommit": "cc013e7c8ab72dd00ae291ccd1d49b7f4b28897e",
+  "androidSnapshotSha256": "d7e3c06bf55882ad84db7e426c193cf06bcd4730cbc4854fc8c8f994e3baa886",
+  "androidApkSha256": "d9f71ece2806c684906905fe73664f9360bc1eb0a8cd87cd57940407eced0145",
+  "productionFileCount": 263,
+  "productionMatchesDeliveredAndroidSnapshot": true,
+  "canonicalization": "Only Git CRLF-to-LF normalization accepted; each source has a canonical Git blob and SHA-256.",
+  "excluded": [
+    "Unrelated design changes",
+    "Two pre-existing dirty inventory files",
+    "Build outputs and old packages",
+    "Mode-generated registrants"
+  ],
+  "files": [
+    {
+      "path": "cross-platform/app/android/app/build.gradle.kts",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a123f80834fcff43baec387a4baab53018b09c7fa20f166ae5181d210c08c836",
+      "gitBlob": "f1217e6717ed19b1f6ececa06f260aaeb56ed7d8",
+      "canonicalSha256": "05bb7ec76124355bc7a5b659004b4531fe0d977505f40cff377ebbccb2bc7741"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/AndroidManifest.xml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "9b79815d7fb709fa1f69e2e39c2b0d3260fe5767ac01a22d9035e9499470eaae",
+      "gitBlob": "60aa3a16ff4e68739860bd2d87031d3fcc21edb7",
+      "canonicalSha256": "9b79815d7fb709fa1f69e2e39c2b0d3260fe5767ac01a22d9035e9499470eaae"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/album/SharedGalleryCopies.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "23964695db0109aa09edde426acca3d5eba13618b36fda578f4bedd81109a4dc",
+      "gitBlob": "511b58cbf799b3098dbbf37684eddfe89b15517a",
+      "canonicalSha256": "23964695db0109aa09edde426acca3d5eba13618b36fda578f4bedd81109a4dc"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/album/SharedGalleryDeletion.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "8d6afb1c533498612b6b3b9157e027cf9d39903874dfe301664eb513a01d7de9",
+      "gitBlob": "b25d8aecc8c908f10e7695f25d103301d0f0d95b",
+      "canonicalSha256": "8d6afb1c533498612b6b3b9157e027cf9d39903874dfe301664eb513a01d7de9"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/album/SharedGalleryPublication.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1e9b68a42beafcd63ac3aa5e212276b42cfdbc78533be43bc41a01b5a23d3b2c",
+      "gitBlob": "33d0ed2de54b46e9f8c536ebf7919a9e07680792",
+      "canonicalSha256": "1e9b68a42beafcd63ac3aa5e212276b42cfdbc78533be43bc41a01b5a23d3b2c"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/album/SharedRawGalleryPublication.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7323627c252b9dc643592b81779cb2013de63b61ef6fdad019fd6f654091bd9e",
+      "gitBlob": "8153307e7c88ebb333d1ea23726eb6e73c2d371d",
+      "canonicalSha256": "7323627c252b9dc643592b81779cb2013de63b61ef6fdad019fd6f654091bd9e"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/connection/SharedCameraWifiRetention.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "4a36e2fa2e2f78a16495527fd0d34e29f46ac0e5d56adbed97f75218803b854f",
+      "gitBlob": "0588eaaa0aceefd3fb6d45bff7465b2438b7387d",
+      "canonicalSha256": "4a36e2fa2e2f78a16495527fd0d34e29f46ac0e5d56adbed97f75218803b854f"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/CameraRetentionService.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "72f5eef5193e607362f7dc78b4a282f895f9de5e6e297d24574bb7c149d0a208",
+      "gitBlob": "5b318b677edf941dd3afabcc39fe88dc5c7b9fda",
+      "canonicalSha256": "72f5eef5193e607362f7dc78b4a282f895f9de5e6e297d24574bb7c149d0a208"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "18a81ad5373108fd356c42a85b7214c60b756d380b1f6442c73d1a4f43ac23e6",
+      "gitBlob": "b5b6aad7701a4e055ddc08ccaaf92dc0a287bc6a",
+      "canonicalSha256": "e946f7e1c25c29d4e2f9d9aaaab914bc4689b8e01afce990d79cd814c0ba9041"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeAlbumOperations.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c9503031e34d251cf687234667faabce40924284c0e98eee718b646c7b3e3aaa",
+      "gitBlob": "1882443dbbd9b9ea0ecce41eca6494ff965eb6c6",
+      "canonicalSha256": "c9503031e34d251cf687234667faabce40924284c0e98eee718b646c7b3e3aaa"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeAvatar.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e95446081e9f2a60983d98cdb96f044041905239891d6622214c6a8aef05c80c",
+      "gitBlob": "da6a22e0fb015acd76066415e850218f8a929c5f",
+      "canonicalSha256": "e95446081e9f2a60983d98cdb96f044041905239891d6622214c6a8aef05c80c"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeConnectionProtection.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5206b63c8d07e3469fa544f6d2f9b24df01f86213fc4c59235e2428b980726d8",
+      "gitBlob": "ca29f6c541c4afb5e699ba2f52c89aaffe627c33",
+      "canonicalSha256": "5206b63c8d07e3469fa544f6d2f9b24df01f86213fc4c59235e2428b980726d8"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeExportPreview.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ac22c4716c6132d0d5942dd60439ccaff1b897f3b48f18697d48140bd99a3554",
+      "gitBlob": "41705ddb1aae02d818121d68fa4f0ecbc4a09316",
+      "canonicalSha256": "9c51ba73c4124e4c59bbc169e910d3a917d0c2c0c2c9418ba398caaa4edded13"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeGallery.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7abb8cd539f36c696db5b9976d0815c16c7087d90953870cd4d24b9f662692cd",
+      "gitBlob": "819c1b27755748ab4a805cfc961243b328e328c9",
+      "canonicalSha256": "7abb8cd539f36c696db5b9976d0815c16c7087d90953870cd4d24b9f662692cd"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeImportPicker.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7ea3262900776a2c7de9029252f36c2863d4e657bb86ba259c132d274bbb58ca",
+      "gitBlob": "9abcf7de918516c8a0edd586a3f5a977c0697cf2",
+      "canonicalSha256": "7ea3262900776a2c7de9029252f36c2863d4e657bb86ba259c132d274bbb58ca"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeLegacyFiles.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "bba33c1d597849cd22ecf81982c3ca1f77528e92247a3b032a3609cdf597ee69",
+      "gitBlob": "7e4f86c7a231828725cee58f23bbea9061db7417",
+      "canonicalSha256": "bba33c1d597849cd22ecf81982c3ca1f77528e92247a3b032a3609cdf597ee69"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeMedia.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "dcf8c0c1b4672f5184c28f27333d8cf9983e9e850bc4ca3e46befa5536024576",
+      "gitBlob": "bad450496f73e7cc355689713d0ac967cb552dce",
+      "canonicalSha256": "12e198e43ab777eacf965d0e3190e6a79d8283b6190130748541796ee878f387"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeOriginalFiles.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "410175954b040526a623ec68d2e4b81596e4d34ae42d78164d283be97d4834de",
+      "gitBlob": "1134f3b50cac3a6681f3fac729ca8808acc455cf",
+      "canonicalSha256": "410175954b040526a623ec68d2e4b81596e4d34ae42d78164d283be97d4834de"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeQqAuthorization.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b7e47488df290631ccbf0b7d4b37daa45210ffd454a9228f65a8ba8aa127c06f",
+      "gitBlob": "3fcb2ea2da5e735a8b870b512cdeee3172946ec1",
+      "canonicalSha256": "b7e47488df290631ccbf0b7d4b37daa45210ffd454a9228f65a8ba8aa127c06f"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeRaster.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a4f4377a26b1cf456d9d17eba47af36cc388ad07bc45101be575e7c35e6d7173",
+      "gitBlob": "b14514c3e8f9ec8261a00c334aebc7dc80b3da32",
+      "canonicalSha256": "a4f4377a26b1cf456d9d17eba47af36cc388ad07bc45101be575e7c35e6d7173"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeRawReference.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f1f1ebc845c283480067b819c8975ccd12927273b21d92981586c8829e34db86",
+      "gitBlob": "1678c5f0aabb049487b501dd668b712877a41dc1",
+      "canonicalSha256": "f1f1ebc845c283480067b819c8975ccd12927273b21d92981586c8829e34db86"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeRawThumbnail.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d76ad8084b8fd91aa70a0141b3ad504b452b2756d5895eb1162ee1dfdc1f657b",
+      "gitBlob": "0c1b46b624e19e27507b47913997971c0ca2f04f",
+      "canonicalSha256": "d76ad8084b8fd91aa70a0141b3ad504b452b2756d5895eb1162ee1dfdc1f657b"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeRetouch.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "01f2465dab138b46ec9fe5d7b5864059c9e773d1928572313eb2d36f83e5c2ee",
+      "gitBlob": "d761e80406a91044efe8963df110a57a00547024",
+      "canonicalSha256": "be6da95770ad9b051746cf3302192f1b2c06253137c9937f471a5ffd979377e6"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeStability.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b3a12c353fc206d6d3c46e34a9f6abcbb14007d990b7d8c035719e87c3f9800f",
+      "gitBlob": "43071e0ea13a91e05b532a6ddd958c5cd9407ee1",
+      "canonicalSha256": "b3a12c353fc206d6d3c46e34a9f6abcbb14007d990b7d8c035719e87c3f9800f"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b",
+      "gitBlob": "c029a315f698c1247ddc1a43cde1f6c0be88d0f8",
+      "canonicalSha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeUpdates.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "054dd213ea7fac02a06f56b1530fc25396b2359c462087232ce8f21c1eb3cf79",
+      "gitBlob": "9888c7a00c42332556ae376b3debe89e2d44b5ad",
+      "canonicalSha256": "054dd213ea7fac02a06f56b1530fc25396b2359c462087232ce8f21c1eb3cf79"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeUsbCamera.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "86d8ff853dfbddfb24503597571797f5ac4e6369e381a3480b7ce4ece40d28c5",
+      "gitBlob": "557b399c3fe9d07a87f83e5711f7318610556541",
+      "canonicalSha256": "4313107774cd20aa0195cfc2ecf35967404bafa2182a347f60ceda9ee299c897"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeUsbPhotoClient.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "03c0619c00fbca0cb1ce44b88e624a0288affc2e90aa9a9142595ba6931b2487",
+      "gitBlob": "1638742f3782bcdbb84c74753283e5ebbc404444",
+      "canonicalSha256": "03c0619c00fbca0cb1ce44b88e624a0288affc2e90aa9a9142595ba6931b2487"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeUsbSlots.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1637c1568502a69114ccc1c74596ba6e1a6fb4d0ac8edc63b3e5f885f3e5b160",
+      "gitBlob": "58a8625a3bde50d1fdd6b2a91b94836fe0017a9d",
+      "canonicalSha256": "21d07809f608baacb4cb651867f5a08d8611395b5c58960b30b3efb0022daee3"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NextAppUpdateManager.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e6ad9c103b64cbd1f6726556900a8d03604744975a0dbe4454f508c72b3def96",
+      "gitBlob": "04ced12f0a08db4114452ba55f6feee917bf99b4",
+      "canonicalSha256": "74f0783738c77183c41a7775c0263ef47c26453c12635b1f5e9f0157d2c0d83e"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/PublicInternetConnections.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e66bf36e78a96e7f0bac41d8836715ef917475252ef1f522931acd2500e2382e",
+      "gitBlob": "3f92c3812e726a3e19a3fa6cad5acff66879ed75",
+      "canonicalSha256": "e66bf36e78a96e7f0bac41d8836715ef917475252ef1f522931acd2500e2382e"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/UsbPhotoDirectory.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d300b1e685c894ada3a87050283afb5a60675667282536ea19b1d62f691ddd44",
+      "gitBlob": "9993f4f069efedda44e120b85ac36a5bac983ccd",
+      "canonicalSha256": "d300b1e685c894ada3a87050283afb5a60675667282536ea19b1d62f691ddd44"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/res/drawable-v21/launch_background.xml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "dca312ec77de83e43ef70a825c299b51451247286c29167d62f19165750b8793",
+      "gitBlob": "f74085f3f6a2b995f8ad1f9ff7b2c46dc118a9e0",
+      "canonicalSha256": "7ca6d5cec2169c5a98661a119db23a6f3399c8fef2256ff04f3a642831282478"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/res/drawable/launch_background.xml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "2df60e2cfbee873ce2858088cf003e6b93498f2f568476da437610467ea1a9d7",
+      "gitBlob": "304732f8842013497e14bd02f67a55f2614fb8f7",
+      "canonicalSha256": "94433756fe10005ddd6fc55cc5c0b1e9f3c10b66a08ceac795ece6713d34e28a"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/res/values-night/styles.xml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ea763597dc1a84c8034251caee98d7753e0fbf57340ffc94677427de4b537516",
+      "gitBlob": "06952be745f9fa6fa75196e830d9578eb2ee631d",
+      "canonicalSha256": "8c5bad5152f217e837519f9c15211d19f39bd45f5f67faf6dd81cb4b299e518f"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/res/values-v33/renderer_compatibility.xml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "02429ff97724c819109f955c586b1302fa51c8c3c3ef6a9c90cff70246fc7360",
+      "gitBlob": "d34581b892a7830e05a54ba86f442859fc150706",
+      "canonicalSha256": "02429ff97724c819109f955c586b1302fa51c8c3c3ef6a9c90cff70246fc7360"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/res/values/renderer_compatibility.xml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7daf75e466ffccfc76cb13b09a5e448beef262f174de3f07f5803c14df66ed95",
+      "gitBlob": "5f5d4d9f28c97097e3ab4745cca3150cbe4ecc93",
+      "canonicalSha256": "7daf75e466ffccfc76cb13b09a5e448beef262f174de3f07f5803c14df66ed95"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/res/values/styles.xml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cca15a99b59380a548bf6a890f7ca5380ee509b1f9bbb2f5f9ec3589fa25c2f7",
+      "gitBlob": "cb1ef88056edd1caf99a935e434e7ff6943a0ef6",
+      "canonicalSha256": "937d7c82f539c72eb94fd3a3773f29b3d3fef1997213c92cb632298cedf4bda9"
+    },
+    {
+      "path": "cross-platform/app/integration_test/features_six_back_device_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "77da03f540cba26cbf0a547f2c61e8069ea98c196e4219a09e3202ba11bc005e",
+      "gitBlob": "4fb26ce96bf50a95ceb90f27e6891d177de7621b",
+      "canonicalSha256": "77da03f540cba26cbf0a547f2c61e8069ea98c196e4219a09e3202ba11bc005e"
+    },
+    {
+      "path": "cross-platform/app/integration_test/features_six_device_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "6895ccab75c1b04978e0ce9c2baf0d7b0d36d5f82abbee56b4ec0d0ddfdf5343",
+      "gitBlob": "2c1317fb7419d712036a2b70e400a3102b4e7639",
+      "canonicalSha256": "bb295e842fc255882019d6436f1c325f4da1d9c3b5624e7129cb3fb0b42c30b0"
+    },
+    {
+      "path": "cross-platform/app/lib/account_profile.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "07bf992d4ff0d5bad031207a1e5a1a59938af24f6b667cc935a31fab611b3252",
+      "gitBlob": "b6b2abf5f48f86d5e6e79ee9d6ee8f0a460cc643",
+      "canonicalSha256": "07bf992d4ff0d5bad031207a1e5a1a59938af24f6b667cc935a31fab611b3252"
+    },
+    {
+      "path": "cross-platform/app/lib/album_batch.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1956fbbd6dd7eda33f89666f32eacb5233394c4dcb897e35c781cd687fe1f3f2",
+      "gitBlob": "6326ef3112c99ddcdd344d96e7267d9146504d82",
+      "canonicalSha256": "efd327ad015eb07c7d3b3e5b2eeb31e01a617ebe014b028d6bd5d02de480ab96"
+    },
+    {
+      "path": "cross-platform/app/lib/album_operations.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "71c8909a3d27b5c6408f3e4ac3368e497fd402a3f4c9d9e7b9103658b11e1e9f",
+      "gitBlob": "e8ede698125c0a2e81c95aa50e53bc94c9e71567",
+      "canonicalSha256": "71c8909a3d27b5c6408f3e4ac3368e497fd402a3f4c9d9e7b9103658b11e1e9f"
+    },
+    {
+      "path": "cross-platform/app/lib/app_stability.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f0f431df289c1d32900c27666c73abfa7f60c4a390c9f7988b9f94cafcba5435",
+      "gitBlob": "2370b2bcc4f88c9303ff657214bd96fd56b10c92",
+      "canonicalSha256": "f0f431df289c1d32900c27666c73abfa7f60c4a390c9f7988b9f94cafcba5435"
+    },
+    {
+      "path": "cross-platform/app/lib/appearance.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "48d366a0cd82f07a3334849ac2ce1b07a7b117d4741394508320cdb277fd5fc4",
+      "gitBlob": "3fa8d227742d67c942c8bad78b9292eed5ff89da",
+      "canonicalSha256": "48d366a0cd82f07a3334849ac2ce1b07a7b117d4741394508320cdb277fd5fc4"
+    },
+    {
+      "path": "cross-platform/app/lib/batch_export.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e373a1e6ddfb6b6b120bcda3136957db267c38bf794a3c9aca652b4d6607d36d",
+      "gitBlob": "52aa6a79f559244ee45d480d5c70f919fe4b5694",
+      "canonicalSha256": "39a5a11faad2b816a90ce8e84da6adc9dddda5351e837a083662fc22b68b92fc"
+    },
+    {
+      "path": "cross-platform/app/lib/border_panel.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "68785fcf5c0f480e81f55346815db14e6cf38520731a51ce744a75c4367334d7",
+      "gitBlob": "9719cf45c1c1ad7de917aacc2b89e112a90a8875",
+      "canonicalSha256": "ffe66a1f7a80a7b05175f7c3fa69baddedc4e85339344b52042a9978f70bcaf7"
+    },
+    {
+      "path": "cross-platform/app/lib/camera.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5bc10d6eb3d2393b59561ec3901328c3a341b8bf0cabae3e68da7c6efdadc742",
+      "gitBlob": "07e64ddd63ae4a3f009191947bdc1738419489d4",
+      "canonicalSha256": "5bc10d6eb3d2393b59561ec3901328c3a341b8bf0cabae3e68da7c6efdadc742"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_connection.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f6fe686333a61716cf0371f483155174aa461cef94fb77646933dd6c2d18de5f",
+      "gitBlob": "4e94de0ed86bcddcda41ae3b0ab16b972d3486f7",
+      "canonicalSha256": "55146f63c3f23839f40e4002c23800300a033bb41287c1d1f505d37e82a142a3"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_connection_view.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a57f4b0e817f7a734f03d1bf25fc0bd99715566e92a45404d8227322543ba240",
+      "gitBlob": "613577171c054f8f00ad14f2148386264920f5d0",
+      "canonicalSha256": "a57f4b0e817f7a734f03d1bf25fc0bd99715566e92a45404d8227322543ba240"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e8dff9b85e9fed16fbdc5fa38b64888171daa8cfb8bf3ea8ebb461a60b54ce48",
+      "gitBlob": "186da112909ede728643f7e30b495e78c22ac61d",
+      "canonicalSha256": "84ff787680afab74dd701e4abcbb64e950b91e4ed5b0c9938c08985be5b0289d"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_grid.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cac49b571018d3c614decb96e757f70e542606bf73abf37ac34e816dbd90c8df",
+      "gitBlob": "9bed0c2f3d92655065e11c577f42ef7b84334fca",
+      "canonicalSha256": "a5b786f9362b355d6e4b4a97ee51b0fb5e079578deaa8e37c99dff510a86b2fe"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_live.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5e4e795ca4d33ca4951609a2ccf688b488f761869ff620850481f82f53b2bf87",
+      "gitBlob": "f341cbc2dad10f8919a54dbc78525645b47a18c1",
+      "canonicalSha256": "05f42d122f8e77045e3b016dc0e1a1d1420781b45222f7ddcc472ae367dc212b"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_live_card.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7f70fb66551e4259a0f54e2fbbbc9876672bd6cd087953d60013a24336bce208",
+      "gitBlob": "dbe89785b3347d085f2fb8d4ea03ea505d60947b",
+      "canonicalSha256": "df389acf481f3585b2c7fa5b5f64b1c6e8edc20009b180c0e5550b7c8f6b529b"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_photo_sort.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "221f7eb0b7f746fe9f2ebee23e4be7ed15db850ecef13fcf89d95fffe2c5187a",
+      "gitBlob": "156a862a15dbc5de448f767a81c8dd2d9cca518e",
+      "canonicalSha256": "d44b67c04eaa5050e1d41208d56ba032eabd9be4e5b8db7176365eb841cc21ef"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_photo_toolbar.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e0f7e764b9db4acec93c890594cd5445ca670db1b8029561fb47b44b45a8886d",
+      "gitBlob": "3d38076c8490e3057153f6b440f18be57b5e5b08",
+      "canonicalSha256": "3c3bf9b8a407bfccd9b3c9e777d97d56c86d08a5d7a807e626c6a57ce4ad54cd"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_previews.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7272c1875721a32a1f0d448d9da5ce5180923bdde5c87cb7e0bd6455945f2b28",
+      "gitBlob": "6869c98eadfa2100f332d2591a064d85a4ac6c07",
+      "canonicalSha256": "7272c1875721a32a1f0d448d9da5ce5180923bdde5c87cb7e0bd6455945f2b28"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_raw_pairing.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1689f84cb815a6f4e89a9439a2dee831a480cadd2ca5ef4a3b7fd808aa0b1e4c",
+      "gitBlob": "d66c90271fb21b79bd9e4f4ad907b9f9f8729ed5",
+      "canonicalSha256": "1689f84cb815a6f4e89a9439a2dee831a480cadd2ca5ef4a3b7fd808aa0b1e4c"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_remote.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "71dd4fffd12edd89932c48125a72b4572a3849a3262e06f4511b24c12f3bff3a",
+      "gitBlob": "82c90b6b522ae47905174105b035f5b50e0673fb",
+      "canonicalSha256": "7db5d88790c57163ee38bcdfe2200cf465aba840a186a015541b52214233978b"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_remote_preview.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "56890de07e799e4add91a7d085ca70381440e4fde69a0358fed01046d465111c",
+      "gitBlob": "92f6667c9270a0a1d2edb200bc8105303f6a9e21",
+      "canonicalSha256": "2ace6352eabe2cd7f5996a4d5288c0ebe3b1bd1e17c1ec7f4b791949499c8613"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_selection_download.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "969aed175cf55bd5a533991f3ad4766f4734529679aa7ca4b2f9067f06bd21dc",
+      "gitBlob": "9ca5363a697d1e206f650e66bc701eb4f9944a7e",
+      "canonicalSha256": "969aed175cf55bd5a533991f3ad4766f4734529679aa7ca4b2f9067f06bd21dc"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_slots.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b25200b75e1b1ee9be563874f614af42477340d5172ee374137e9aedb0d6846c",
+      "gitBlob": "f4d2fd447843897e111d45679e12ce721aa558b4",
+      "canonicalSha256": "2f74a255c04320c68a1007ca3261cc813826aaf5ebdf24235b99305073c1e634"
+    },
+    {
+      "path": "cross-platform/app/lib/camera_transfer.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cbfe2730b25f1fba772a295f209cab6d9e88e93362526c7380ebc16f28072a20",
+      "gitBlob": "d76423f208d64f9e5aeedaf6007497588212a579",
+      "canonicalSha256": "cbfe2730b25f1fba772a295f209cab6d9e88e93362526c7380ebc16f28072a20"
+    },
+    {
+      "path": "cross-platform/app/lib/community.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "4c390ddcedfa947d75e323ec83d6272df65b187bfb34e8b48182a653881b2d2c",
+      "gitBlob": "5ab67f791dad708ce91c5a314d10bf951dfd9b84",
+      "canonicalSha256": "4c390ddcedfa947d75e323ec83d6272df65b187bfb34e8b48182a653881b2d2c"
+    },
+    {
+      "path": "cross-platform/app/lib/community_activity.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "3cc4dc83dfbb31c5685d9e2f52315da8c306e3403be9a447ea3ae8d6ae4f03d4",
+      "gitBlob": "30b0288b3d2956ce38dc65e720ef524816077f41",
+      "canonicalSha256": "3cc4dc83dfbb31c5685d9e2f52315da8c306e3403be9a447ea3ae8d6ae4f03d4"
+    },
+    {
+      "path": "cross-platform/app/lib/community_state.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "8d5c5dc9203f5bbca3d8bce574835d91e3b675e20472ccb3bc1321588ac1428a",
+      "gitBlob": "676ff78feb02439e921e730cb88eb8478a8f5a3b",
+      "canonicalSha256": "8d5c5dc9203f5bbca3d8bce574835d91e3b675e20472ccb3bc1321588ac1428a"
+    },
+    {
+      "path": "cross-platform/app/lib/connection_protection.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "4b53debe0a6f07397b38a2b10a6823d5c317da9e63f48a66541ee2a81003db7c",
+      "gitBlob": "cf050b20aff4c937365d96d68455e9bb70b6312c",
+      "canonicalSha256": "7205931867f7af8f59df00469fa4c4589d863b3be1ab147ea673eee3864a9acf"
+    },
+    {
+      "path": "cross-platform/app/lib/copy_adjustments.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "9068d2325498905e54e1b0e6a2a7cead014653798b5287c3dadd08089ab38bd5",
+      "gitBlob": "040cd240b42953b2c11cb602aa93892d45222621",
+      "canonicalSha256": "9068d2325498905e54e1b0e6a2a7cead014653798b5287c3dadd08089ab38bd5"
+    },
+    {
+      "path": "cross-platform/app/lib/crop_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d1e404c3374997ab46f238032874e21c1f44d5826850a7b4a74b3d403d19bd70",
+      "gitBlob": "03fb2e89700730db1d563e4cde3069e8acd09bf5",
+      "canonicalSha256": "d1e404c3374997ab46f238032874e21c1f44d5826850a7b4a74b3d403d19bd70"
+    },
+    {
+      "path": "cross-platform/app/lib/curve_control.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c880ca6c0bef2d4633f627820748a86064cc31b407035ba13e8f7ff3425a4962",
+      "gitBlob": "2cb3a3330f7d6ed7dfbce2dce851a66c3af42a69",
+      "canonicalSha256": "c880ca6c0bef2d4633f627820748a86064cc31b407035ba13e8f7ff3425a4962"
+    },
+    {
+      "path": "cross-platform/app/lib/domain.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "468bc8c1831e6dfa092cfa22b5fcc845334576195f78f372bfcf800019bcad0b",
+      "gitBlob": "ca3f37ea30b134d0752015c1a38376c6fa3b1f3d",
+      "canonicalSha256": "4799c0901fc586716191ac0f489afac6a2add422ee00733c54779a4d0740b4cb"
+    },
+    {
+      "path": "cross-platform/app/lib/editing_detail_preview.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "9837532c05752ed410be095ded70337202b304ecd18b38b8ebd57d63528e8b12",
+      "gitBlob": "6b9a85b8f153fa6d64599f41662eb3ef880d50f8",
+      "canonicalSha256": "9837532c05752ed410be095ded70337202b304ecd18b38b8ebd57d63528e8b12"
+    },
+    {
+      "path": "cross-platform/app/lib/editing_viewport.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "19f77eef0a3d99954d2330708a46d22c01b1c61ea230e43e5b1032ba5eb3dbee",
+      "gitBlob": "79ba6a8f5cbd268657bac6acca7f7fe25b5d508d",
+      "canonicalSha256": "19f77eef0a3d99954d2330708a46d22c01b1c61ea230e43e5b1032ba5eb3dbee"
+    },
+    {
+      "path": "cross-platform/app/lib/editor.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "2ae845473dc77b653b5d47c0272c7f7cf048fea29a74d1388486c9e02928e84f",
+      "gitBlob": "8981f0820ba5f8a192aee30176a1cd6d0c649ed7",
+      "canonicalSha256": "e916bf450726ef830d80191d6ffcf5554712af7c704fe6284ac916389658144b"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_color_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f91a74109adc5439e0aab25a26fd7422a3a0fbd2c9601d05caacf643d256d780",
+      "gitBlob": "d20c93ec737f7a7c8f50b67c59e1d5eade6a3ecb",
+      "canonicalSha256": "c140dfaf8eaa47d06a195dc670a2124563944b8a4d5ea6697b956ddb6e56b6f7"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_detail_preview.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5ee43c3c360c61a6df4dece4686d17347fb90d724c3d10b670b9de585358860c",
+      "gitBlob": "b369d6cb4ec82590c5815a25447d0f72178191f8",
+      "canonicalSha256": "5ee43c3c360c61a6df4dece4686d17347fb90d724c3d10b670b9de585358860c"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_details.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "120bfd3554d9e83753d5124aaeaaffaa0a0592f16ce803a782f6aaaf17d455a1",
+      "gitBlob": "3d7511a0d015765696e83a8636b1244914b91b58",
+      "canonicalSha256": "97b321cdad30f476a21b806fafc51ab4711ec940167369b55c738e8441e3ad6b"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_filter_dock.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "880ce26ec91b42be39945b4ccc70494434030845b38b74f235610e791714d1f6",
+      "gitBlob": "de4856967f1d7717b8c32118cfa4af1c4b1510da",
+      "canonicalSha256": "880ce26ec91b42be39945b4ccc70494434030845b38b74f235610e791714d1f6"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_histogram.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f8280dd351f900ae326ef2fc122ad6dd1c0d3f84befe49fc65f81db5a20a982c",
+      "gitBlob": "c99c0be98bbf1db51ef903166050b03b68bca35d",
+      "canonicalSha256": "f8280dd351f900ae326ef2fc122ad6dd1c0d3f84befe49fc65f81db5a20a982c"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_histogram_controller.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e7c7362a154100eb2a182d0b5c18523106fbc550eaf122827902dba7f9c52b32",
+      "gitBlob": "af4c67401daeaa96716c2bd28346ceae408c6f62",
+      "canonicalSha256": "e7c7362a154100eb2a182d0b5c18523106fbc550eaf122827902dba7f9c52b32"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_menu_actions.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1c2aa51351fe66042fc48013a4f5c79fc5f4ba63b6829b451670615aa58a7afc",
+      "gitBlob": "cd42a5ca545241c77e31d217839dcd4260187893",
+      "canonicalSha256": "6fa9555a02fea22ae96116c4595547c269516ff2841b2b2d73686b54624b1347"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_more.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b433f947b3b8c8152c223cc404d3278add95776cc4dcfd71ea7cdf61db4ff204",
+      "gitBlob": "f8fa1a702f930935363fff9e8cb380853d6e3051",
+      "canonicalSha256": "989d0e936a17b0e3b535a1f835207da75dc2ba4d498446e2f96eacd80ba1a652"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_parameter_icons.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "872625b7ecc825fda21c80130fd0580634cee85b6d10cc9a0d5819bd278f453b",
+      "gitBlob": "8d0ceb0e790eb2055081c0a81e00afa3130f84ba",
+      "canonicalSha256": "872625b7ecc825fda21c80130fd0580634cee85b6d10cc9a0d5819bd278f453b"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_presets.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c18210c56c4ca161b4ac0e0ce96c2737fe22b3d018d5632af0c2d25727885a08",
+      "gitBlob": "f8e04940960d40866ed82a8a52313d80f816017f",
+      "canonicalSha256": "c18210c56c4ca161b4ac0e0ce96c2737fe22b3d018d5632af0c2d25727885a08"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_quick.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5dd493933de2b1521b177ea751c43e007207134b51de229d79deccb37c18a1c9",
+      "gitBlob": "88bbf40616d445e94387eb17010f741be36ff3ce",
+      "canonicalSha256": "5dd493933de2b1521b177ea751c43e007207134b51de229d79deccb37c18a1c9"
+    },
+    {
+      "path": "cross-platform/app/lib/editor_tool_host.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1c204402426080ffc7cb0274305bcf2a4133f6e710b77eb38f58be7ac56d2b8e",
+      "gitBlob": "70608bee9f910d1d4c16ce73394e3556b685f61d",
+      "canonicalSha256": "1c204402426080ffc7cb0274305bcf2a4133f6e710b77eb38f58be7ac56d2b8e"
+    },
+    {
+      "path": "cross-platform/app/lib/export_preview.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ab37e0f374fb52b419cb0daa29d60445431178d54491da07b378b8d864e11126",
+      "gitBlob": "d5d79405b400937e783992aa752bc8075ac299ad",
+      "canonicalSha256": "36ae9b1928b5611863fc95ee61b420829a92fb19b8b2f24dc9a2a6ed4d1c3842"
+    },
+    {
+      "path": "cross-platform/app/lib/export_save.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "9e46b19e2d5596638a494c2a1e12b8cac16f99f335f94922d0bad7a596992050",
+      "gitBlob": "91d44dde95d0326c362a5d515bafaf823ac08e9a",
+      "canonicalSha256": "9e46b19e2d5596638a494c2a1e12b8cac16f99f335f94922d0bad7a596992050"
+    },
+    {
+      "path": "cross-platform/app/lib/export_settings.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1a4d999ed691093384ac054a0f66a2d6110093a818a39f3c5d424ea66d6daea9",
+      "gitBlob": "db1bb66094bde437aaf44ea98ac5c7470be39b4c",
+      "canonicalSha256": "605c64e05158623bd34027fe261bec2827cd92de8e15948a89c03cc3314b5ee0"
+    },
+    {
+      "path": "cross-platform/app/lib/export_settings_model.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d2ec60861dc922b7382f9edc5bef32e0b8ad2d6960237ddd560350ea6a9873f0",
+      "gitBlob": "4baf437abde6a5fafcb8ac96d608efe745438b79",
+      "canonicalSha256": "d2ec60861dc922b7382f9edc5bef32e0b8ad2d6960237ddd560350ea6a9873f0"
+    },
+    {
+      "path": "cross-platform/app/lib/help.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "48283e55134748f3b5216d59062d55a22b93cc2147178f3aa4bd30dad43566e5",
+      "gitBlob": "56405023b853669f901712929615dd9ebb749c41",
+      "canonicalSha256": "e1aefebe5f47c332bd47e64685310ec8fe415ee8bb3b71e3fb0a8de012e80f93"
+    },
+    {
+      "path": "cross-platform/app/lib/hue_icons.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ea89992f6e11ea696b3a41995479be6e6f3b09358579a156ecb108322fefe41d",
+      "gitBlob": "cbc4283c2ea8d9109d910304ab3a43c0d06c4d6c",
+      "canonicalSha256": "896bc1b02a46f0e95265a8fba5a60b2efa56bcf647bd10767c4d9a291c5ddd4b"
+    },
+    {
+      "path": "cross-platform/app/lib/latest_preview_queue.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "4d58501dca0d25597e53f6181bd7ecb954fbed33bb5ea527ced5e14fb95cad98",
+      "gitBlob": "50f11356a74b85e23003c680766c65fed4ac3349",
+      "canonicalSha256": "4d58501dca0d25597e53f6181bd7ecb954fbed33bb5ea527ced5e14fb95cad98"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_account.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c5231111ba26493cc958a38a95320e5a54bb9d42d492d53354980823c97c57ca",
+      "gitBlob": "51f505f08dc69c3b1855f97d8008154ef1cb2fea",
+      "canonicalSha256": "c5231111ba26493cc958a38a95320e5a54bb9d42d492d53354980823c97c57ca"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_color_controls.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "0daea3a46859db71c8dc15d3c605f695a17d5a15282cf32e9ea4e45c2776b623",
+      "gitBlob": "889bf0a1db175d017971e31bacacbf54431f4357",
+      "canonicalSha256": "0daea3a46859db71c8dc15d3c605f695a17d5a15282cf32e9ea4e45c2776b623"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_dialog.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e02641464ba929961e7d3e1d75501eabd5670448448da8b77d0f491853a7cc27",
+      "gitBlob": "072d625e8ea118a64b0b75464093a7a4a6c70f24",
+      "canonicalSha256": "e02641464ba929961e7d3e1d75501eabd5670448448da8b77d0f491853a7cc27"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_editor.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "fa3419d810959692f6fc1f7058b6878f54125daf0f456095c67a8b774c298e04",
+      "gitBlob": "4b42db1901073dc39eb0c8d85364f4fe2d89c6c7",
+      "canonicalSha256": "1420c6010e0a81aacbe53fbe842697dfa8ff76ffb2ff1005f9fbd20f27ad5c96"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_glass_sheet.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "6fe656b86670dc07d8495991b34fa468a6dc8f20ac2594f84665813198d886de",
+      "gitBlob": "227fcd3b2e4256eaea41bbda6a3512496c494736",
+      "canonicalSha256": "6fe656b86670dc07d8495991b34fa468a6dc8f20ac2594f84665813198d886de"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_local_editor.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "14e547d5ecdcb179ff4a26411d030edf3ee1aa8efdeeca3c4b16927fb8e427ca",
+      "gitBlob": "7e91957544ea31e02b61a0d230c00615c63143de",
+      "canonicalSha256": "14e547d5ecdcb179ff4a26411d030edf3ee1aa8efdeeca3c4b16927fb8e427ca"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_local_preview.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "58cd9b2151bc23efc105d47cae67b6bf0a7a6bb27fd019fdac32545d999e38b2",
+      "gitBlob": "7c9136d3b39238e23b528e0b79cae51dc7edfd6b",
+      "canonicalSha256": "58cd9b2151bc23efc105d47cae67b6bf0a7a6bb27fd019fdac32545d999e38b2"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_local_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ec0f4f8bb268d2c836d3ab3b0f3bdc6a4248e0d6058ab6c404974d757405ea52",
+      "gitBlob": "67eb5aefc80b2a7832979aba083fe7aa03817f7f",
+      "canonicalSha256": "ec0f4f8bb268d2c836d3ab3b0f3bdc6a4248e0d6058ab6c404974d757405ea52"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_migration.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "04d0a39aaad0b758138a30b9dc46050fb77365ac55f899468ca3254eff7dd451",
+      "gitBlob": "c2291cc00254f79069abdb89f4c97a8685c954ec",
+      "canonicalSha256": "04d0a39aaad0b758138a30b9dc46050fb77365ac55f899468ca3254eff7dd451"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_photos.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1093f16b2e975b9f4c4c4d4b03646ec3c24ae46111370ec08f0a0c3adda45eec",
+      "gitBlob": "c3c01981565d7d3a907064026854d0ea12fda78b",
+      "canonicalSha256": "4a15293008e57640dc45deaa97d3dd4a5e85dc945b47dece57baa47ec40de028"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_preset_details.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ff088c44de7c97403be5b905091fc8f5734f9fa4cf3a34c496c50101b28117e7",
+      "gitBlob": "5a358a324537e25aaa24c602af519f7bf43b2e99",
+      "canonicalSha256": "ff088c44de7c97403be5b905091fc8f5734f9fa4cf3a34c496c50101b28117e7"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_presets.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "48d1ba0aff0aa59fc467151a955494a7d0bfe91faded7f31ae6f0023bb438ad5",
+      "gitBlob": "336f71b1361101e8489740a907ccf1f842e6e1c9",
+      "canonicalSha256": "48d1ba0aff0aa59fc467151a955494a7d0bfe91faded7f31ae6f0023bb438ad5"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_sheets.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5f2b75f4ee90cd3f00ea5bc50e08c0edfc1c7d85ee29293be4f7a8c5a23562cd",
+      "gitBlob": "7779843d207a9c56dae89fa6f0f77e0e236b9aeb",
+      "canonicalSha256": "5f2b75f4ee90cd3f00ea5bc50e08c0edfc1c7d85ee29293be4f7a8c5a23562cd"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_theme.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "01533cb804879deffc51fbcb94b2390164fca997b7abcc7635b32928df2d8a5f",
+      "gitBlob": "d95e44351ca7852e30441f256f44be3de4ff50b5",
+      "canonicalSha256": "0063cd46e702e541c518303668ca5ef20a7d1175b1b87e1adf2a877d4825055b"
+    },
+    {
+      "path": "cross-platform/app/lib/library.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d801d505cebcc7a937369ae4945d29d6d57f76058eec4a6cda0f9229c2ef6280",
+      "gitBlob": "dd572062ca17934501e0f5caf47265a426db2a28",
+      "canonicalSha256": "d801d505cebcc7a937369ae4945d29d6d57f76058eec4a6cda0f9229c2ef6280"
+    },
+    {
+      "path": "cross-platform/app/lib/light_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d3a19472246551eeb05499718a7ffa2a018ee330ae6979dede31e4dd9ad9b0c8",
+      "gitBlob": "8768e8f3fef9c60a3a5197cf2c401a07e0be96bb",
+      "canonicalSha256": "d3a19472246551eeb05499718a7ffa2a018ee330ae6979dede31e4dd9ad9b0c8"
+    },
+    {
+      "path": "cross-platform/app/lib/local_adjustments.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f00ce8144fd2fef628ae75406646802dd3be69f30029b1033ea2861e088e746c",
+      "gitBlob": "43f4f6a69285bd0c9e652b6d390dce41618e31a8",
+      "canonicalSha256": "f00ce8144fd2fef628ae75406646802dd3be69f30029b1033ea2861e088e746c"
+    },
+    {
+      "path": "cross-platform/app/lib/local_editor.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5029c388199cfe2c0e2ca8907ff060448885356a938ed3214ef1072e37ed3324",
+      "gitBlob": "6c7c7f8032f89c4f6535af6bddae7fed0809bd8c",
+      "canonicalSha256": "d40cdbf9851ad8276e28466d3e4161c55a0865665b50c6a17c7ff44941c251fc"
+    },
+    {
+      "path": "cross-platform/app/lib/main.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "80987b0ac7f924a38bb1605f8e0c9239baf5baf3b1f6f6483ab7de04a3e8f8e7",
+      "gitBlob": "dfbf42164bde5a8768830eeef7bf3e40e706aada",
+      "canonicalSha256": "80987b0ac7f924a38bb1605f8e0c9239baf5baf3b1f6f6483ab7de04a3e8f8e7"
+    },
+    {
+      "path": "cross-platform/app/lib/original_files.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "21ac58f9a2e7f70488e51e1a63947feb4a0d776b539569eeaf4b12b8f9b5ec22",
+      "gitBlob": "f3833f46651a8b593e10a5430adcd14a02074c08",
+      "canonicalSha256": "21ac58f9a2e7f70488e51e1a63947feb4a0d776b539569eeaf4b12b8f9b5ec22"
+    },
+    {
+      "path": "cross-platform/app/lib/original_save.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e728900c40c0732b811eeff40bf74a1e5331d5b62fd2d04c14a488295c725b6d",
+      "gitBlob": "43009d52071851faefa6fea0ffdc20b6ae13ecaa",
+      "canonicalSha256": "e728900c40c0732b811eeff40bf74a1e5331d5b62fd2d04c14a488295c725b6d"
+    },
+    {
+      "path": "cross-platform/app/lib/original_targets.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7e765b5e635d98e49351f6a3934c53bea5db46fbb57d979ed0caff561a0b2f0e",
+      "gitBlob": "d3dfc532035aee5af89cfd246e456aa8f2f9cea2",
+      "canonicalSha256": "7e765b5e635d98e49351f6a3934c53bea5db46fbb57d979ed0caff561a0b2f0e"
+    },
+    {
+      "path": "cross-platform/app/lib/personal_sync.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d7cebb99b849d5a0f980af23d98bfddb12e922c81266987244f174794e6726f4",
+      "gitBlob": "a0dad4a0316710b926fa4d0a88eda18771e8fa08",
+      "canonicalSha256": "d7cebb99b849d5a0f980af23d98bfddb12e922c81266987244f174794e6726f4"
+    },
+    {
+      "path": "cross-platform/app/lib/photo_collage.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "8e45836b66d3bcda5a6f87b9f4e1b50667c361133b1b9a47426b5759a19fa8db",
+      "gitBlob": "97161c78a782372ba67fba65b9c7e654dddc3e31",
+      "canonicalSha256": "8e45836b66d3bcda5a6f87b9f4e1b50667c361133b1b9a47426b5759a19fa8db"
+    },
+    {
+      "path": "cross-platform/app/lib/photo_format.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "453af43c21df12fa2f1331d4f14dee4ab4c23d45515ed3f94ad76b685990f839",
+      "gitBlob": "10d6d4588bd6c56eef121b5f4d48b51e780eb071",
+      "canonicalSha256": "453af43c21df12fa2f1331d4f14dee4ab4c23d45515ed3f94ad76b685990f839"
+    },
+    {
+      "path": "cross-platform/app/lib/photo_grid.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "579e0f87238c894b8090e4ea69ee3f2be2ca6ce2c2bd85546253bafc0b878d07",
+      "gitBlob": "c7d6964d9e627681b0446fa8db0b3c16e8af58b6",
+      "canonicalSha256": "f5288a4303cbdfa79eed33e15ac2bca58d8a2473ee122fced1fc8262af84a033"
+    },
+    {
+      "path": "cross-platform/app/lib/photo_workspace_chrome.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "57ce34a20137d5076aaaac4f0d18c5059fb7adedf81ccf55eb41ad24107a8821",
+      "gitBlob": "8271bb3a9718ab406ca9cf95d5f03d23396e579e",
+      "canonicalSha256": "57ce34a20137d5076aaaac4f0d18c5059fb7adedf81ccf55eb41ad24107a8821"
+    },
+    {
+      "path": "cross-platform/app/lib/photos.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "6e35be1cd06c335639f6da010ec0c51558d2b3811e5fc73934449f5b11d1dc05",
+      "gitBlob": "5a76a5f470c93f79ecc615f64e54c41d1007333a",
+      "canonicalSha256": "6e35be1cd06c335639f6da010ec0c51558d2b3811e5fc73934449f5b11d1dc05"
+    },
+    {
+      "path": "cross-platform/app/lib/preset_context_menu.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "dbfde2228bf18d24266c3930f16084e074c8890769cd0711cc836c0537099e60",
+      "gitBlob": "50b3a3ecbc462d50f619788b7884d456345f689f",
+      "canonicalSha256": "dbfde2228bf18d24266c3930f16084e074c8890769cd0711cc836c0537099e60"
+    },
+    {
+      "path": "cross-platform/app/lib/preview_templates.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f868a3c3e9476e7b1b29aa86de65c7b9b1a1091050197246bbb2ced43aab910a",
+      "gitBlob": "64ed0fa424027d726af568e6f2080b6e8b57b054",
+      "canonicalSha256": "d0a324c99c2702d18537a749a7bedcd86fc8ee462fe5a32794854e1d4effa374"
+    },
+    {
+      "path": "cross-platform/app/lib/profile.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1b71f3eff8fdcf305eecf4b780a5fcddf07ad6e8767fc2dbf32bbeac23ad2cca",
+      "gitBlob": "1edff9f4906d0655aa8f45db00a179a56a41d91d",
+      "canonicalSha256": "1b71f3eff8fdcf305eecf4b780a5fcddf07ad6e8767fc2dbf32bbeac23ad2cca"
+    },
+    {
+      "path": "cross-platform/app/lib/project_presets.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "23d3ef81ac81f5094e0d22bcf000a1f2a832de15c07cf0799b5a03eb6735f630",
+      "gitBlob": "3878664c00870f4f269199e751a6553e6f084342",
+      "canonicalSha256": "23d3ef81ac81f5094e0d22bcf000a1f2a832de15c07cf0799b5a03eb6735f630"
+    },
+    {
+      "path": "cross-platform/app/lib/project_presets_model.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "2fcfc4ed3689969fb6cc3054f70a8579124114e346d88b7095ffc5020b59db2c",
+      "gitBlob": "c852d61d3d033db3b3d67deb7876e3f1c93b2b05",
+      "canonicalSha256": "2fcfc4ed3689969fb6cc3054f70a8579124114e346d88b7095ffc5020b59db2c"
+    },
+    {
+      "path": "cross-platform/app/lib/qq_authorization.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "3fe4f322a54875ceb58dc0c17058efa6299ff784a0a3ba2304d8ae78a436c0f3",
+      "gitBlob": "cbe3c030db414623e9ba01134f739fc121a4a00e",
+      "canonicalSha256": "3fe4f322a54875ceb58dc0c17058efa6299ff784a0a3ba2304d8ae78a436c0f3"
+    },
+    {
+      "path": "cross-platform/app/lib/raw_develop.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "bcbaf6b853f8e583c1f9a2e39b254f2806e1cbb35d8aa3b310f4d3d226ea70ac",
+      "gitBlob": "8ae81cdb0e406edd8fb863332c8b8883b05abc51",
+      "canonicalSha256": "bcbaf6b853f8e583c1f9a2e39b254f2806e1cbb35d8aa3b310f4d3d226ea70ac"
+    },
+    {
+      "path": "cross-platform/app/lib/raw_reference.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "16043b90505933ecf754dc70773c07b3f0043ece7547c5b0c328662d6a7e2dba",
+      "gitBlob": "ea48c95e0ba733cf6d2088e8050966fd11c5082d",
+      "canonicalSha256": "16043b90505933ecf754dc70773c07b3f0043ece7547c5b0c328662d6a7e2dba"
+    },
+    {
+      "path": "cross-platform/app/lib/recipes.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "516b19b6a45c36799bb9764baf674c7ef2a0f2763bce5389834b607d642a38fd",
+      "gitBlob": "eb2a9f989c08e66bce1d5ea812ce166d33b7c420",
+      "canonicalSha256": "975b279d7ee63111e72b10fdcf78c9a92c73f4c482257ac379d1b02bfe1e795a"
+    },
+    {
+      "path": "cross-platform/app/lib/registration.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "51ba7aec287f8f5e920d16ed5b385e67360a30fd1bc207ed6d52d45fca32b593",
+      "gitBlob": "86476652f0b37cfb994ff27c80a8f3306ed2e453",
+      "canonicalSha256": "51ba7aec287f8f5e920d16ed5b385e67360a30fd1bc207ed6d52d45fca32b593"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_blemish_review.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "3dfbfa221f38dfe45207c0d066ed53e995109168ea473daa5d890eabbd8a00ac",
+      "gitBlob": "35e2f28b4230d9031de5d8b9717826719bc0fe08",
+      "canonicalSha256": "3dfbfa221f38dfe45207c0d066ed53e995109168ea473daa5d890eabbd8a00ac"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_brush_preview.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "084d3adbaaa154840c2e00df9b11c3e23af72f799b3f1cef2baae632e94162cc",
+      "gitBlob": "435f0ece81e55fab28116fae2b571e2a80b1b6eb",
+      "canonicalSha256": "084d3adbaaa154840c2e00df9b11c3e23af72f799b3f1cef2baae632e94162cc"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_detail_preview.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "06c38687c354eb95f468f3ea175d646d9169875b942d13558d327b7fbcd6fae4",
+      "gitBlob": "60b3794468715f877a64b3565a0818dae78ed0ed",
+      "canonicalSha256": "06c38687c354eb95f468f3ea175d646d9169875b942d13558d327b7fbcd6fae4"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_embedded_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "22a34affa6ca3cdc66b6fa71fc48d51d9b65aad826155e7cbb9396ddd7a77875",
+      "gitBlob": "6793e3c6e5963b2e702b1857f18b866fa891ea87",
+      "canonicalSha256": "a4483f59666a4445c81f65e1769d09708bc4f63104cfe8135bca19136c4f4140"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_more.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5bae3bc8162c9c48fd6e6be32df3dc00c08eb0e00cc6a4e8c9da1ef9c6c82749",
+      "gitBlob": "d3d3c054f09cbef02ca6b12e74054247a3530dd9",
+      "canonicalSha256": "5bae3bc8162c9c48fd6e6be32df3dc00c08eb0e00cc6a4e8c9da1ef9c6c82749"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_original_body.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "278e40097e8a4287f4245bb8e6a821cda1a8a0f834c247d0a486a809438d5d26",
+      "gitBlob": "388bd7d1308546b92ae11bc762ea02457e1bff63",
+      "canonicalSha256": "278e40097e8a4287f4245bb8e6a821cda1a8a0f834c247d0a486a809438d5d26"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_original_controls.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "659a3e39e03d67b417dc4ab8825353ac21c33474b2775fe878545808503dff2a",
+      "gitBlob": "86c38428198fbb55ffdfff8cd1a3652d870b1a59",
+      "canonicalSha256": "659a3e39e03d67b417dc4ab8825353ac21c33474b2775fe878545808503dff2a"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_original_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a5e9e6bead266c6a438135c4bfb99d0acdb8a6e35a36836f1dfbe9a9297030ae",
+      "gitBlob": "7d107713090ad49525bd78694215d7b9e160e56a",
+      "canonicalSha256": "ad383f5e914ce09965b15ecdc9844472a0571e917e7269ecf278f775a98852a4"
+    },
+    {
+      "path": "cross-platform/app/lib/retouch_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "bab47a2fe9b8582d3521efd5b843a5ae9de9a28b3104ca928a714fca26f035e5",
+      "gitBlob": "f86ad97eb9443250890be12c007b5f84c9634a63",
+      "canonicalSha256": "2f3094aa9a9b1b9be85e56d9a3920cb0296437ab4fec6b6e3e309759caf16b26"
+    },
+    {
+      "path": "cross-platform/app/lib/selection_editor.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7dd846cdca7a439760f94a661671e2a161c79de9c2a86bb99b0ae55213b924ef",
+      "gitBlob": "2dd3ce088f4df7dd0feb21872319ee672ae6ee4a",
+      "canonicalSha256": "7dd846cdca7a439760f94a661671e2a161c79de9c2a86bb99b0ae55213b924ef"
+    },
+    {
+      "path": "cross-platform/app/lib/selection_mask.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "0f2fcefc88255dee2f0f60b8221c13970d881de4b96a7a23a832662664cea578",
+      "gitBlob": "94017bdbe5bef2da6ad55219183345b80f246336",
+      "canonicalSha256": "0f2fcefc88255dee2f0f60b8221c13970d881de4b96a7a23a832662664cea578"
+    },
+    {
+      "path": "cross-platform/app/lib/selection_workspace.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "dd1337ea1ed407b4c04f83458a8bc5929c1ca07c570dc4009f483d1dc999e83c",
+      "gitBlob": "862a32ab04b28385cac9d7104970ca1d32f25165",
+      "canonicalSha256": "dd1337ea1ed407b4c04f83458a8bc5929c1ca07c570dc4009f483d1dc999e83c"
+    },
+    {
+      "path": "cross-platform/app/lib/settings.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+      "gitBlob": "ba13525024f95150eae7467097cfaf04898298b3",
+      "canonicalSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959"
+    },
+    {
+      "path": "cross-platform/app/lib/split_compare.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "056082171609a37bba32ba0c8a863640a564b3ec112fe52f955090cd229ba25c",
+      "gitBlob": "3c5bcb0038d7b6b9c30a13b0ab41c2f3781be159",
+      "canonicalSha256": "056082171609a37bba32ba0c8a863640a564b3ec112fe52f955090cd229ba25c"
+    },
+    {
+      "path": "cross-platform/app/lib/submission_editor.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cce1e814bac04f52ad6370f1e71a487788c9644d009cb6d1a79cda8989d84621",
+      "gitBlob": "527dc32aa4301e118505e834e9b26eca98730154",
+      "canonicalSha256": "cce1e814bac04f52ad6370f1e71a487788c9644d009cb6d1a79cda8989d84621"
+    },
+    {
+      "path": "cross-platform/app/lib/sync_content_viewport.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "da490479935002eb5d7bcdd863bded4745ad5568234685f6dce24d030d95d580",
+      "gitBlob": "074bb9f7ddfc69bb833211536fbb35af14b4f797",
+      "canonicalSha256": "da490479935002eb5d7bcdd863bded4745ad5568234685f6dce24d030d95d580"
+    },
+    {
+      "path": "cross-platform/app/lib/sync_tools_dock.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "3917b2afdb4b0381366467d956d9f26c6cbee8114ab4509b984e81244e2ab319",
+      "gitBlob": "18608fee2e872f35b5ad9df8cec4138cc65d9b57",
+      "canonicalSha256": "29f126402336f8e3694f45f8b6b5b0ef807584f4872dcb291d6d846648b4d62c"
+    },
+    {
+      "path": "cross-platform/app/lib/theme.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cfa2994284b1a3d1ddd8b29c6a26d1dab02dbf2a2e24af0d9c2c2a81432970d2",
+      "gitBlob": "64c22a8ea8237455362a50d5862a36d6bda73b39",
+      "canonicalSha256": "cfa2994284b1a3d1ddd8b29c6a26d1dab02dbf2a2e24af0d9c2c2a81432970d2"
+    },
+    {
+      "path": "cross-platform/app/lib/updates.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "743ce5f26ee16494d6eba333290b845aa36063808049ba1dd08f2f2e15d39f0e",
+      "gitBlob": "dbff17167651601ca9fba9d670c9e76872f8a397",
+      "canonicalSha256": "743ce5f26ee16494d6eba333290b845aa36063808049ba1dd08f2f2e15d39f0e"
+    },
+    {
+      "path": "cross-platform/app/lib/updates_ios.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "605eae8a0f96524be3af079d5bbe50c483e6a394fccee4f884a19411f08d55ee",
+      "gitBlob": "d39aa31adb3ed6fc8c2016787f72a34374aeb18f",
+      "canonicalSha256": "605eae8a0f96524be3af079d5bbe50c483e6a394fccee4f884a19411f08d55ee"
+    },
+    {
+      "path": "cross-platform/app/lib/versions.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "af9ce07563f0b2fb3a445d60fcfa44a7c255cc236672a18bdfa708c74b20af7b",
+      "gitBlob": "7666ca70f7185dc7ab1c93c5195629214b3aee45",
+      "canonicalSha256": "af9ce07563f0b2fb3a445d60fcfa44a7c255cc236672a18bdfa708c74b20af7b"
+    },
+    {
+      "path": "cross-platform/app/lib/widgets.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "01ea63e6a55bf53e63cc47550c6fb33186392c3776631e8208183341cbce7ad3",
+      "gitBlob": "3d9ead6068f95a02019e2dcd6e753f019dbaab77",
+      "canonicalSha256": "afaba6db607c06dda2df550eeeff8d1f968d188026d701fae18346f993e65a0a"
+    },
+    {
+      "path": "cross-platform/app/lib/wired_camera.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "2307cb61e6ced431e4e54d0b5eb4f5718d7b29f6e0f181186bef04b3640237c6",
+      "gitBlob": "ce2f068258342ace9985e68d297a73cde251ff97",
+      "canonicalSha256": "dc46c5799ead92dd01d315c860a6d0f52d24aa806e9d7d9d27da639cfbfa1f83"
+    },
+    {
+      "path": "cross-platform/app/lib/workspace_tools.dart",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a920d6ef2cde5b00c3b1b1b07ef5d52c9d797e1a0073b5d3577485d1feda43be",
+      "gitBlob": "d4e3093d1ead24839141051ef9d392802634bd06",
+      "canonicalSha256": "a920d6ef2cde5b00c3b1b1b07ef5d52c9d797e1a0073b5d3577485d1feda43be"
+    },
+    {
+      "path": "cross-platform/app/pubspec.lock",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b3c0243a153ede104f356f6ddae483157023332e77da4ad1b10cfcdb752aef06",
+      "gitBlob": "3a3126a41e403d8c5cd2022ecea91225b41586d3",
+      "canonicalSha256": "b3c0243a153ede104f356f6ddae483157023332e77da4ad1b10cfcdb752aef06"
+    },
+    {
+      "path": "cross-platform/app/pubspec.yaml",
+      "scope": "android-production-snapshot",
+      "inputSha256": "99c17893af54056a705e81137a704848bd56ff74163bbe4bf0ceb18a724f574c",
+      "gitBlob": "6662eb752ef92e6899a54d77f48c8aecac5e1eb0",
+      "canonicalSha256": "99c17893af54056a705e81137a704848bd56ff74163bbe4bf0ceb18a724f574c"
+    },
+    {
+      "path": "cross-platform/app/test/border_panel_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "e2e869a64f1234456f5cfb144612efad9a5ee66030f241ad6a943ea7b233cbda",
+      "gitBlob": "db121de037747962290806bceaa21166c48fa89c",
+      "canonicalSha256": "acdba1bc6e4308d25e6f4de8ff7bbe8e9f8c2ece44787e9d87efc7b7a4a02c2e"
+    },
+    {
+      "path": "cross-platform/app/test/camera_intent_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "a89c518b688f95fd8927efa08cc6287162a00b3ac87207fb20b45c851a82ae59",
+      "gitBlob": "6374382264a6f44f57b2929b5cc404d38002bfaa",
+      "canonicalSha256": "5a373792499b5ad4933892190c31528c6f4e9b88180c617787ec795ef667c74c"
+    },
+    {
+      "path": "cross-platform/app/test/editing_viewport_hosts_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "d9a15872a5e36feba844033a90a4a9ea86697385a7712fda543ebec3834b0411",
+      "gitBlob": "06c157edea870e2b2671242f7a1a34f34a238082",
+      "canonicalSha256": "d9a15872a5e36feba844033a90a4a9ea86697385a7712fda543ebec3834b0411"
+    },
+    {
+      "path": "cross-platform/app/test/editor_more_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "42f41a6139d39f45b94d449f96823452f2181ade220315ea8239953b6521c8cc",
+      "gitBlob": "68baa4c837a2a0ad54e44a6b836aa906ba9c919d",
+      "canonicalSha256": "65cd983e080824e406839081604598513d80047fb697019b8458b788a7aeb519"
+    },
+    {
+      "path": "cross-platform/app/test/editor_workspace_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "fa11d9fe03f6bf26161b553e170c6e2a8ca4d20a4f0afb14fedcd2c5b0b316ae",
+      "gitBlob": "d70f1dc4c83300dd4d37e56b804c4d5266151f73",
+      "canonicalSha256": "118f48faaded1d6020c5e0f1b541ca40a6e7f90e30c7ee93e540ae188c0a2903"
+    },
+    {
+      "path": "cross-platform/app/test/light_workspace_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "6e1d8a58243227e7bc65d72ff3ef8d4d596c7a65710c27e475045211ea5561e2",
+      "gitBlob": "fe62c6c60dfaa8071f911c3dd646d48fdad6ceba",
+      "canonicalSha256": "6e1d8a58243227e7bc65d72ff3ef8d4d596c7a65710c27e475045211ea5561e2"
+    },
+    {
+      "path": "cross-platform/app/test/photo_collage_test.dart",
+      "scope": "integration-test",
+      "inputSha256": "c11edd8f6bc90e4f8586e56061a46b6f4086ca289b2c5675cefe57e104ba2092",
+      "gitBlob": "c98224863434048d4da882614c0c0ac033c4d4d8",
+      "canonicalSha256": "3369564194673093a96c315dca51aa527b1eb1aa073ae3ec350097756ee81fee"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/album/SharedAlbumOperations.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c3251711d942eb537b8e9497cf627e06fadbce69915f789220df5e2f110f7984",
+      "gitBlob": "e1dfbdb87c5e6fe9fe66e5c7121e741b8f643b3d",
+      "canonicalSha256": "c3251711d942eb537b8e9497cf627e06fadbce69915f789220df5e2f110f7984"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/album/SharedProjectPhoto.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "0a8782ef222cb9cd1cd3197104ed1261e962ea8e764a805813a0377262d25642",
+      "gitBlob": "94bce13835797ed069a7acebfc964695197b61f1",
+      "canonicalSha256": "0a8782ef222cb9cd1cd3197104ed1261e962ea8e764a805813a0377262d25642"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/album/SharedRawPairing.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d7e881af468967325f5f650fc4ce676ed58df6c5c3a406c73bccecdd97f76920",
+      "gitBlob": "9fed92ce966da3e1c4adc29d78b5fd304aec09ae",
+      "canonicalSha256": "d7e881af468967325f5f650fc4ce676ed58df6c5c3a406c73bccecdd97f76920"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/library/SharedJson.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "3617e7570d429088225a5f5b6c3e7996ccadaded273050855d47bc0e8b2e3eb2",
+      "gitBlob": "c6387851897a98c981f8f52eb75fd4a9775469b0",
+      "canonicalSha256": "3617e7570d429088225a5f5b6c3e7996ccadaded273050855d47bc0e8b2e3eb2"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/CoreEngine.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "775493cba4a6505a5d4f0f9cfb5584680d88e4fcbbf65792a0688c2a101d2dfa",
+      "gitBlob": "ac373048803feb869fc5f86578836a2705ec00c5",
+      "canonicalSha256": "775493cba4a6505a5d4f0f9cfb5584680d88e4fcbbf65792a0688c2a101d2dfa"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/LegacyArchive.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c5653aee3e6887fcdcae60817946629d6d5193e96500912b73e00af3092c5032",
+      "gitBlob": "ecda9c408631bf7100ff24a8ec336bb8a4f38687",
+      "canonicalSha256": "c5653aee3e6887fcdcae60817946629d6d5193e96500912b73e00af3092c5032"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/MediaValidation.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "69d5fab753d09a13f6195344bdd438cef2c04e27bda676850257afc5a4e73e00",
+      "gitBlob": "53f0df431a06eef379cec8993d1afc15b97a4c1f",
+      "canonicalSha256": "69d5fab753d09a13f6195344bdd438cef2c04e27bda676850257afc5a4e73e00"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedAtmosphere.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cb7b461be2c685c7d6992f96bdd600ad299f7fd731dea36902de64cb8ede7072",
+      "gitBlob": "f82ce3601db53f5fbf451ed7f7954a1cf76dec0f",
+      "canonicalSha256": "cb7b461be2c685c7d6992f96bdd600ad299f7fd731dea36902de64cb8ede7072"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedAutoBlemishes.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "514067a1f6de5cc4ea600092f1bbb0fd8860ddd6c7f48687aa3494adca638048",
+      "gitBlob": "30a0a54b04d42a16cf3644a2da372db26a564908",
+      "canonicalSha256": "514067a1f6de5cc4ea600092f1bbb0fd8860ddd6c7f48687aa3494adca638048"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCamera.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "0de67d86816aaa3eaf2b0c4e3de86b424d211d58bad61e7c3cf8b52b4842c4aa",
+      "gitBlob": "e5406a2c622f85094c67babf3a9818d5440009a8",
+      "canonicalSha256": "15ad1a99a3fe80aa09df49a9b23d1309ae197748c23efa44784e0259aa1108e3"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraLiveDiscovery.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "4b8b6d64dcf941d9aa698aa9336f47d32df3691e55b6c2860c7da00cac2fc3d8",
+      "gitBlob": "988a492b4d9f8e39ec662b1a3f1ce31d7df78351",
+      "canonicalSha256": "4b8b6d64dcf941d9aa698aa9336f47d32df3691e55b6c2860c7da00cac2fc3d8"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraMaintenance.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ba0fa1b985fdc1eab824afb492dba97154dfe861f6c330318446a3b4da86e6e9",
+      "gitBlob": "30dba7348fb2eaf604253a55c2863ac43b8609cd",
+      "canonicalSha256": "ba0fa1b985fdc1eab824afb492dba97154dfe861f6c330318446a3b4da86e6e9"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraMutationStore.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "856a4f699c784b7cee07f87c2d7e2cb753d8a0f577f9a0286629688a557d5533",
+      "gitBlob": "81d8e4ac395298262d0621e0a00dc5bb828da0cf",
+      "canonicalSha256": "856a4f699c784b7cee07f87c2d7e2cb753d8a0f577f9a0286629688a557d5533"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraPreviews.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a563f97e24d3c8361a7a437e579910b83b5a7cb8d0455d300a6642f7375bd38e",
+      "gitBlob": "5a1af54d9fa40ac28f8aa09bef7145c0fb6c7b15",
+      "canonicalSha256": "a563f97e24d3c8361a7a437e579910b83b5a7cb8d0455d300a6642f7375bd38e"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraRawPairing.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "86feef9640dc4a0460f5d1819fc865d45966e0e59b17fa60d88b86e072375707",
+      "gitBlob": "2043f74eb749764036ff3805c0d31bf4b8c04dff",
+      "canonicalSha256": "86feef9640dc4a0460f5d1819fc865d45966e0e59b17fa60d88b86e072375707"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCaptureInfo.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "4191c22d609c8fd33777d0670133ed53abcae83d88447d1974736fed9745f289",
+      "gitBlob": "4c3dc5b187852faa7fab4b6b9e40be470b34d3cc",
+      "canonicalSha256": "308c224e1d98792068392cac595c0d285bab6d2400d7be6fbe225f9a53c2ed6c"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCleanup.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "28a03d89fc21f063756b6e0662954d607feb816afa5a25fbccfc9db91c44882d",
+      "gitBlob": "e696b1f00aca64e56425e0405be3fdb8baf77c2b",
+      "canonicalSha256": "28a03d89fc21f063756b6e0662954d607feb816afa5a25fbccfc9db91c44882d"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCommunityLinks.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "9c6745bc4b6d912013b03734aa20553f56a62250b070ff7a59fbcc4fdce41971",
+      "gitBlob": "8920c629bffd6fc296941837071a7adcef6f4b68",
+      "canonicalSha256": "9c6745bc4b6d912013b03734aa20553f56a62250b070ff7a59fbcc4fdce41971"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedDetailTiles.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "121ecb0fc9b33fedfd98455538f6cb4069aeec86797ec5f6ea03aa3c93909fce",
+      "gitBlob": "0f29521c6f587f5526ac5a10f63f267488309f80",
+      "canonicalSha256": "121ecb0fc9b33fedfd98455538f6cb4069aeec86797ec5f6ea03aa3c93909fce"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedDownloads.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "47e5e6cabe68534e283207d37971d14dc7c5c6b8c741489d551294dd258cb5ee",
+      "gitBlob": "10c3f11cb108776b01834ab62d46c1d165cd0b79",
+      "canonicalSha256": "47e5e6cabe68534e283207d37971d14dc7c5c6b8c741489d551294dd258cb5ee"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedEdits.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e0e70a188528300d9e1a7dd361c43203c28987eea1678fe03b07a76abb633254",
+      "gitBlob": "43104f6f319611e0bde6e796bac5005e31155ebd",
+      "canonicalSha256": "e0e70a188528300d9e1a7dd361c43203c28987eea1678fe03b07a76abb633254"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedExportModel.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d3d610d7f2b28b24b938116853dc8ca41d3632df24e9705953c764d46d7b89cd",
+      "gitBlob": "a1141b66def92fc106f3248dc5fccea502eda76d",
+      "canonicalSha256": "d3d610d7f2b28b24b938116853dc8ca41d3632df24e9705953c764d46d7b89cd"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedExportSpecs.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "2b6281ac62f1bda715c60636bf43f0d7398af4f7a8bdb656c98f3918fb21ef00",
+      "gitBlob": "c45c010c4c6104ceafa435480edf539f0be8e324",
+      "canonicalSha256": "2b6281ac62f1bda715c60636bf43f0d7398af4f7a8bdb656c98f3918fb21ef00"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedImport.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f512c057919966e644bfa0c88f01a83b8d23b9cbfb0ad49413a8d2b2c61ed4a7",
+      "gitBlob": "df3de7ee3b4706782b651c2c698b84971dd58aca",
+      "canonicalSha256": "f512c057919966e644bfa0c88f01a83b8d23b9cbfb0ad49413a8d2b2c61ed4a7"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedLegacyMigration.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7349ac4ff0084a88f8569d5bf85792eb8b368c823f5f8756fc4bd6f139b65c0e",
+      "gitBlob": "832eff76b4131652ba8fbe7644f19b13ece002bf",
+      "canonicalSha256": "7349ac4ff0084a88f8569d5bf85792eb8b368c823f5f8756fc4bd6f139b65c0e"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedLiveIngest.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f96dd2611cc1d66aa6a225c7da994c2420f182f559ed76621e3a299166d45472",
+      "gitBlob": "8c7918f69da49b52294d7815e2e6d67f44de331c",
+      "canonicalSha256": "f96dd2611cc1d66aa6a225c7da994c2420f182f559ed76621e3a299166d45472"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedLocalEdits.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f7a99fe460147f3f76b05a8b7212c7324b8e4616c51c37887097861211603b17",
+      "gitBlob": "2d06677fa96d77f73dc9be21b691c5b27f2889bf",
+      "canonicalSha256": "f7a99fe460147f3f76b05a8b7212c7324b8e4616c51c37887097861211603b17"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedOriginalPublication.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a199f8191ecf87d15070a5d0cceefb5ca15163239120f09b445bb2261822d513",
+      "gitBlob": "ed8f1d99e8c7d5fcdebcdeaefc74689b9bc45b64",
+      "canonicalSha256": "a199f8191ecf87d15070a5d0cceefb5ca15163239120f09b445bb2261822d513"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPersonal.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "31f79dcae77b5aac8e3962e3a5ae8f4cfeb8c04a9ec334fb8ecebfdecb598ac8",
+      "gitBlob": "4b75ce7b2c35c59d5996b9d4e5afe7bf0bfb181c",
+      "canonicalSha256": "31f79dcae77b5aac8e3962e3a5ae8f4cfeb8c04a9ec334fb8ecebfdecb598ac8"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPortraitInference.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b892ced656775f2a2b4961f0c20d142703906dc76b1d2aa6f90696f9ed980ac2",
+      "gitBlob": "662bce555fc11aeae7ee421ec0937d4b3dbd63c2",
+      "canonicalSha256": "d8ffefef442663c4f9b9d2093cd3feb58477ff1cf9626576eaafd7a7dbf3e2b8"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPortraitOverlay.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "0778b79d221adaef90a64ace791a82f2d2f62c4cb972baf6a1585018fd4117cb",
+      "gitBlob": "991a3fe699830bf4d058837b189cf4dc897c8a2a",
+      "canonicalSha256": "0778b79d221adaef90a64ace791a82f2d2f62c4cb972baf6a1585018fd4117cb"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPortraitToneCards.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a5eaa1079444ee6f0dd587eec5e126706cd21f10fb0e2db5f3ae421bbfd4adad",
+      "gitBlob": "75d89fd8a7663df050c57823b0970e32a089238d",
+      "canonicalSha256": "a5eaa1079444ee6f0dd587eec5e126706cd21f10fb0e2db5f3ae421bbfd4adad"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPresetPins.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "72f6c86eaddea8037b924b33983232a9e151544e067119016de1237d37eaa479",
+      "gitBlob": "fb54313bb15b45b2916a3f4a29c51c674b37fd68",
+      "canonicalSha256": "72f6c86eaddea8037b924b33983232a9e151544e067119016de1237d37eaa479"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedProfile.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e7c3e28081252bd47cbd1c743bf9924f21b4518788b82d8448f4970283cae3dd",
+      "gitBlob": "518b4cd8e757414fb5be9ffc236ad7b7a6ee5fb0",
+      "canonicalSha256": "e7c3e28081252bd47cbd1c743bf9924f21b4518788b82d8448f4970283cae3dd"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedProjects.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1c713eec09fdad1fcaf242b4473f977fedeca4227f97dff72c4aeb4190a2f856",
+      "gitBlob": "5af5c9f2c3298d6e94529c3ad43e98f6361518d7",
+      "canonicalSha256": "1c713eec09fdad1fcaf242b4473f977fedeca4227f97dff72c4aeb4190a2f856"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedQqLoginTransport.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "3220b5b8eb1f3ed0beb9bb0a4f9644ebc64335d059f1308f27494432aad38e41",
+      "gitBlob": "3d89a63037a81efa127c527e4cabaf56c839e410",
+      "canonicalSha256": "3220b5b8eb1f3ed0beb9bb0a4f9644ebc64335d059f1308f27494432aad38e41"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRawReference.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "eff1b344ea605219c2dae24172c825ee8e46e3971fcc4f17ac1f5693f34cb2d0",
+      "gitBlob": "cf1190c00f5ac669af9849968e2a13496ed2c35c",
+      "canonicalSha256": "eff1b344ea605219c2dae24172c825ee8e46e3971fcc4f17ac1f5693f34cb2d0"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRawSettings.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "03144dc633f8cd7ecaacd66fee8b2820b86a1786b180e2a6ccf7f4f028bb482d",
+      "gitBlob": "996a3aa61908b0d1abfbf92bf1e7c9bfe8790111",
+      "canonicalSha256": "03144dc633f8cd7ecaacd66fee8b2820b86a1786b180e2a6ccf7f4f028bb482d"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRecipe.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "450e7ed3ac18dc6544998385e9cd677897502877aa8c387409086e53fda4ea9a",
+      "gitBlob": "b9922a6bc344f8956762774d5916b799472e7ae0",
+      "canonicalSha256": "450e7ed3ac18dc6544998385e9cd677897502877aa8c387409086e53fda4ea9a"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRemote.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f759041dfa9ff165f154a83d6412eff0532bfe1f5326d8a964e5104fae168336",
+      "gitBlob": "220a3167b11177235effe85e90fa7314735ef0e3",
+      "canonicalSha256": "f759041dfa9ff165f154a83d6412eff0532bfe1f5326d8a964e5104fae168336"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRetouch.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "61c4079975411b63840af75f3180ba95850dcf10c4d4de4d0877127fb3c02ac7",
+      "gitBlob": "c16556b6945b1d3a45240dc59955967e1116f032",
+      "canonicalSha256": "911499aa5ea230ef369189d145efd1fbbaa48018ca3fffc6fde62c4332bd75ec"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRuntime.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b06bef6083b8baa235209ecf99ddd7aeeeca6896fe307d55b3c0f6d7ab9e4bcd",
+      "gitBlob": "6325d642ef742b7daf5a279a48386bdf64319ebe",
+      "canonicalSha256": "b06bef6083b8baa235209ecf99ddd7aeeeca6896fe307d55b3c0f6d7ab9e4bcd"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSelectionOverlay.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "097ecda3f0920db8a0b6e7db6d790498efcbd9272d4d68e32a71a3a9949e1a2c",
+      "gitBlob": "632a69f88d2c0b08ec8ce8c45eff906947516dd7",
+      "canonicalSha256": "097ecda3f0920db8a0b6e7db6d790498efcbd9272d4d68e32a71a3a9949e1a2c"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSlotParameters.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "252bd489478ba04c792827f7b8b3d66877edbceac847f99921dc6caafeddd20d",
+      "gitBlob": "da01b5c617038829454b367a43826abeddb0e299",
+      "canonicalSha256": "252bd489478ba04c792827f7b8b3d66877edbceac847f99921dc6caafeddd20d"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSlotTransportGuard.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1ca383ba69e1beac20deba28c17673c5c4d81cffc4dd97274ae7f87cb5b2ff0e",
+      "gitBlob": "b378c9bc79fa1e0a7fdd4838080d82ccb17ae10b",
+      "canonicalSha256": "1ca383ba69e1beac20deba28c17673c5c4d81cffc4dd97274ae7f87cb5b2ff0e"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSlots.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d3b73a0f97123f4368abca796fb047fe143499988ac8b72ff0eb0a5b8f6470a6",
+      "gitBlob": "449fa41b0fa27928e412795654315c192a23c008",
+      "canonicalSha256": "d3b73a0f97123f4368abca796fb047fe143499988ac8b72ff0eb0a5b8f6470a6"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedSubmissions.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "94cf4b2a61c975ac138ab9dbfdba9553e25d1aa17d08176f656c8fbfcd935dd4",
+      "gitBlob": "abab50b4696a1ebce26e4da8df90d3ad4ebdebb5",
+      "canonicalSha256": "94cf4b2a61c975ac138ab9dbfdba9553e25d1aa17d08176f656c8fbfcd935dd4"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedUiState.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "695abad95618a1cc383263dff1af1b5d4fbd79b70ad88dc2f4831c5e29de6ec3",
+      "gitBlob": "bd3354aac02d4e18ccc49b6c156ab4381cc7b9c4",
+      "canonicalSha256": "695abad95618a1cc383263dff1af1b5d4fbd79b70ad88dc2f4831c5e29de6ec3"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedVersions.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "147e1166530fe3489f63550bb2441abc3781142e050d65f71ff3d25e403809e2",
+      "gitBlob": "4822dfd92f6dc42c24bf1e72a2937c9681bc9bd7",
+      "canonicalSha256": "147e1166530fe3489f63550bb2441abc3781142e050d65f71ff3d25e403809e2"
+    },
+    {
+      "path": "cross-platform/core/overrides/cc/huevia/album/PhotoBorderRenderer.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "369a3512140fc84da39efbc45be029b7a4a337f048b4ee4ded3464866d6a5f61",
+      "gitBlob": "1250f19461356e479c41de4f1f533b9002f563e7",
+      "canonicalSha256": "9cb7ce6f388c73bda0aba90f6ba48c392f4d01866e7eb73ccb67df8f63772234"
+    },
+    {
+      "path": "cross-platform/core/overrides/cc/huevia/album/PhotoCaptureInfo.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b0ee0f65fbb422d9b7592e0d6ebd860b544fd835006039849b157a6838b6b7dc",
+      "gitBlob": "b29f523cfc1e9b69d454e0e46b19a7e86926f2ff",
+      "canonicalSha256": "188fa1c26438fdd6f114acd2cdfd818e29972d1c011b18e83d97ce1455982fb3"
+    },
+    {
+      "path": "cross-platform/core/overrides/cc/huevia/ncp/PhotoBorder.java",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c5ca2976c4d8ddebb7cfa9846ccbec974b8bd0edb2452b9bdc9239f2085180f2",
+      "gitBlob": "ccbf55cace2385a621c2f84334184127379cb7c7",
+      "canonicalSha256": "4b502b9f45b788660527ccd235f35e43fd0c260e4cebffe641f27e809049cab5"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CoreBoundary.java",
+      "scope": "integration-test",
+      "inputSha256": "40999bcfaba1f43a757556ea4f625e80f54295104e32a084d1d87ce7de0b7a60",
+      "gitBlob": "fc92587d54d702aad7674295b0c086d25803a070",
+      "canonicalSha256": "40999bcfaba1f43a757556ea4f625e80f54295104e32a084d1d87ce7de0b7a60"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/LensBorderBoundaryTest.java",
+      "scope": "integration-test",
+      "inputSha256": "31a6f5c377bf8871721c69c21384f645f851ee1117601e6acf57cfd68a55196b",
+      "gitBlob": "d5cd1b93f6566ed70aa432c0e42ccaebf51e139d",
+      "canonicalSha256": "dab4210a82af4a605598f26862f4398f5e2f6bc1390b8588a70963c39e94d855"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaAlbumOperations.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f0c8e0f8d0d4492f33b8daff8c2a2028251f7bf35658517320c85a405648f6bb",
+      "gitBlob": "e6f1099c5759f63820451ecac5599f151a5f6047",
+      "canonicalSha256": "f0c8e0f8d0d4492f33b8daff8c2a2028251f7bf35658517320c85a405648f6bb"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaAlbumOperations.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "60c284212fb357268a6ba7a03e1233fd83e78d6b456f6e1cc0f98029166c6238",
+      "gitBlob": "5452a96e73f15770eb132d6b402d7f0813dbce12",
+      "canonicalSha256": "60c284212fb357268a6ba7a03e1233fd83e78d6b456f6e1cc0f98029166c6238"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaAvatar.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "1c4a601d022e87820375bad6b8dafe30ff03f96b2d0d1322da6cd4a6800d2b3a",
+      "gitBlob": "aa27c0c15a68e61f210061ae74e32bceddd699c6",
+      "canonicalSha256": "1c4a601d022e87820375bad6b8dafe30ff03f96b2d0d1322da6cd4a6800d2b3a"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaAvatar.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "548da000c11d660ddd92eb8b21ad4e41592332c9ba75e436a3f1f4b26792e34e",
+      "gitBlob": "9fd1d6c1202c9564cf06dd62b9cc0e71152c7e7b",
+      "canonicalSha256": "548da000c11d660ddd92eb8b21ad4e41592332c9ba75e436a3f1f4b26792e34e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e",
+      "gitBlob": "73ef0e0998737020b5facd6274f45574166575c4",
+      "canonicalSha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13",
+      "gitBlob": "740f501a23c1f6195a65405b508ca24f8a407fb9",
+      "canonicalSha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraWait.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "94346ec307af42128487cf4deba49b2244c213f9213ae849a339088045bfda06",
+      "gitBlob": "bbeedc04748cd971b4a72c5959c02b9399de4686",
+      "canonicalSha256": "94346ec307af42128487cf4deba49b2244c213f9213ae849a339088045bfda06"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraWait.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "79e309572e45e0b9cf31c52e1b30473e1bdd3562dd5a6d1f95c5cefcff955b32",
+      "gitBlob": "d495e76a3b32c690647e24b5b2aa6a3be7c011f0",
+      "canonicalSha256": "79e309572e45e0b9cf31c52e1b30473e1bdd3562dd5a6d1f95c5cefcff955b32"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaConnectionProtection.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "d3a99a0db02d0fa45a5c16e1ac9a205b1c3bbf048efe2699947d59c2fdee458f",
+      "gitBlob": "efe22d542effa317b0f04fd9d11450decb04bdd2",
+      "canonicalSha256": "d3a99a0db02d0fa45a5c16e1ac9a205b1c3bbf048efe2699947d59c2fdee458f"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaConnectionProtection.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "45717b3681ff0ee72f71fbedf879650a6b8f12aab52c697549bde77fb9923ce0",
+      "gitBlob": "b17051fc928ed024910a383e7602c6c3160406e5",
+      "canonicalSha256": "45717b3681ff0ee72f71fbedf879650a6b8f12aab52c697549bde77fb9923ce0"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ccc3f4cd2611fda65d96b01e7b213777f8ad46049c839422ef3f6d52adaee65c",
+      "gitBlob": "a399df06cb0784d9cf047f202d5afe3216e9e6af",
+      "canonicalSha256": "ccc3f4cd2611fda65d96b01e7b213777f8ad46049c839422ef3f6d52adaee65c"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "af8b855533a73e1a925d6435913d546df3f309cf933c0e47219630c623b68d92",
+      "gitBlob": "3fed0d2fc61d7f3e9562fcc72ec97357c6f7ce2e",
+      "canonicalSha256": "af8b855533a73e1a925d6435913d546df3f309cf933c0e47219630c623b68d92"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaDistribution.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a85d1b61365d96803860cde40d7087b25a90c717f5ce349083fa8b1595729148",
+      "gitBlob": "fd29b6f31b7ec7d2b58be56cd75c7724228ba6c4",
+      "canonicalSha256": "a85d1b61365d96803860cde40d7087b25a90c717f5ce349083fa8b1595729148"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaDistribution.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "580b0fedae4b05ba9038fc32dc0be47b9abb15980e55d21c4aa39c97f4eec93d",
+      "gitBlob": "4fb040e925db8a7d431f882072fa8c8ef1ba47a1",
+      "canonicalSha256": "580b0fedae4b05ba9038fc32dc0be47b9abb15980e55d21c4aa39c97f4eec93d"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaFrames.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c1deead6e7c575d6ca12168b6f00a9bcfaa390fc1f0293690bbae4da5ef79306",
+      "gitBlob": "28baf1cbaaa0111880ba7c69a80043eeca7701bf",
+      "canonicalSha256": "c1deead6e7c575d6ca12168b6f00a9bcfaa390fc1f0293690bbae4da5ef79306"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaFrames.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cc2ab75e92e8f103aea7c149fcde8dbaf412b1d7b99000f54e54a03ca5a91f31",
+      "gitBlob": "ff8146efc58ae414c65a8912472b67db556815ed",
+      "canonicalSha256": "f853d861212a8f643579cab6334554e4f8a565e8cc0f034316c72df9f64712df"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaGallery.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "57f8f81b54a1449ecdd277b908f81379c881313ddc3d350788767e89e6822e0b",
+      "gitBlob": "6bf48ebeb5250db1379f9a8d758202fb1a71a4d1",
+      "canonicalSha256": "57f8f81b54a1449ecdd277b908f81379c881313ddc3d350788767e89e6822e0b"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaGallery.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "281ff451988935bf9ccef6cf34776d9690ca5ab8b2c0d31af1046eccf8b44b27",
+      "gitBlob": "4cca3ad1e8f99b226f73f071ffba560fa08f723a",
+      "canonicalSha256": "c7f659a5d69388154b1ec76ae24aa0996d94da7513502123087586784831732d"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaImportPicker.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "393264db849c0f3c5fa6839e3d89afc67364ae2ebfb4a4497fde6994c4f6d4c4",
+      "gitBlob": "5764912970301143e7d2f9de3bf01c5862fe28b0",
+      "canonicalSha256": "393264db849c0f3c5fa6839e3d89afc67364ae2ebfb4a4497fde6994c4f6d4c4"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "60a0a9642a171266752ee6c3a167b4bec47e158f809494e7497c6ca0fe7e63ea",
+      "gitBlob": "f37bc0466db6f20b03672792845986500ae3230f",
+      "canonicalSha256": "60a0a9642a171266752ee6c3a167b4bec47e158f809494e7497c6ca0fe7e63ea"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaKeychain.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "dcfc8d811257f1ed1a589685a4194089d9d372a04c68002f167de837adb179c2",
+      "gitBlob": "32a1ee394af173fbba3d9b2147c942ef8baf2da6",
+      "canonicalSha256": "dcfc8d811257f1ed1a589685a4194089d9d372a04c68002f167de837adb179c2"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaKeychain.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "72354f6d067e2650a1d1411605033e066c1c914e985eb95167efde94a6c44bcf",
+      "gitBlob": "06d6b8cdc266dbc333de0227496d2c7f0338a46b",
+      "canonicalSha256": "72354f6d067e2650a1d1411605033e066c1c914e985eb95167efde94a6c44bcf"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaLegacyFiles.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "4e0445e8b45073b6ebed10911ca20fb7437a8ca1f93e1c3b4362aba5b283ea04",
+      "gitBlob": "2441a4214851795fc25b95b86b292410d96e0f00",
+      "canonicalSha256": "4e0445e8b45073b6ebed10911ca20fb7437a8ca1f93e1c3b4362aba5b283ea04"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaLegacyFiles.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "dd85811f1839b6383984466b84035a69d498baa5c55ebddc32e96f08cc9698c9",
+      "gitBlob": "22131164ea3d567ffb0ecdc8fbe438fa8e167d2e",
+      "canonicalSha256": "dd85811f1839b6383984466b84035a69d498baa5c55ebddc32e96f08cc9698c9"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaMedia.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c2371668869b5db1a6ba413150db146397258718e41cdc2a4896211c5521b372",
+      "gitBlob": "872e1b9ee5d253ad14c7c16184c8c0e1ec2786d4",
+      "canonicalSha256": "c2371668869b5db1a6ba413150db146397258718e41cdc2a4896211c5521b372"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaMedia.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "0c91d13ba87247fcc41a1bc505d18f09b6e935edfe3e50146c2f3543309ee768",
+      "gitBlob": "6b656b5cf145ed394853e119132f439cee5062af",
+      "canonicalSha256": "0c91d13ba87247fcc41a1bc505d18f09b6e935edfe3e50146c2f3543309ee768"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaOriginalFiles.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "74d15a2c4a7882259863c83ccb7dc0608eecba666fce8f6f5b0f74b2de4e1cfe",
+      "gitBlob": "b9649f3b58d2c59713b0d7faccf0ba3e85335070",
+      "canonicalSha256": "74d15a2c4a7882259863c83ccb7dc0608eecba666fce8f6f5b0f74b2de4e1cfe"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "fb32baa0e48c79fa45a040c97fdd1ec5574d76e05ce0b8503246ae7867d1091a",
+      "gitBlob": "c673bfab4f77e313c1ccd0f3b0c53e7e6a38d0c1",
+      "canonicalSha256": "fb32baa0e48c79fa45a040c97fdd1ec5574d76e05ce0b8503246ae7867d1091a"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPortraitInference.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "97d3ad5e1d8b129a68d54a8bec26e48662ca80201cc083260dc2ff739a2eedea",
+      "gitBlob": "537e4eb81af76b946768741743b5ec3d61c770eb",
+      "canonicalSha256": "97d3ad5e1d8b129a68d54a8bec26e48662ca80201cc083260dc2ff739a2eedea"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPortraitInference.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cd8e8b959b32102f83222d15ce645bed60a25b61efe95edd36f294cdb583fab9",
+      "gitBlob": "fd92d4fe0e996e6be2471ce96737e3381f0e18f6",
+      "canonicalSha256": "02a79e1b41389f8f32fb623db3fc8104dddf4eb806c5a4aa97bc1aab2feda713"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7fdddfb2d8f10a187808d878ce870ef7c41df911cf44224c1f954bb323dd977e",
+      "gitBlob": "ecfb25d20afc38bf772b6f0da41ee0884182002b",
+      "canonicalSha256": "7fdddfb2d8f10a187808d878ce870ef7c41df911cf44224c1f954bb323dd977e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPublicInternetQueues.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b87ed7603f70d966e99b799d30f5e7a27791c7653b519f9c506451f35e1a0b8e",
+      "gitBlob": "16a0d919d4b0e095eccc3ee4f21800b7511361f2",
+      "canonicalSha256": "b87ed7603f70d966e99b799d30f5e7a27791c7653b519f9c506451f35e1a0b8e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPublication.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "18ecac3732a12e87e7747eb115d9b783189cba5ec15fb5497eb5917afaad8afe",
+      "gitBlob": "3bfb49122697d70f9e462a6f64509084b28dfadb",
+      "canonicalSha256": "18ecac3732a12e87e7747eb115d9b783189cba5ec15fb5497eb5917afaad8afe"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaPublication.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a4fc010bef614da80ee704f9779ac56d012d1283b3342e6750f9e50188505f0a",
+      "gitBlob": "73cd7df719208472ce3e303e666555e5438b00b6",
+      "canonicalSha256": "eb6ebe171f4ae242671ffacc6b5a9dcfe4ad756668b59bd657b4a889d9fe5125"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaQqAuthorization.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "42ee4fe66ab4ce5ef5169b49786babe56980e8ccbbd5152664578fafa94af850",
+      "gitBlob": "c5e85eaac7f1a213e06598917af92037d9ff11af",
+      "canonicalSha256": "42ee4fe66ab4ce5ef5169b49786babe56980e8ccbbd5152664578fafa94af850"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaQqAuthorization.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b51903234ae7ac27dcf88f266b7c37741ffa4d5cacdb42097eda9098c7b92c7c",
+      "gitBlob": "55d5d50682b52b1cc14dd3cf774c8c66fdc97cd5",
+      "canonicalSha256": "b51903234ae7ac27dcf88f266b7c37741ffa4d5cacdb42097eda9098c7b92c7c"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRaster.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "8e00af29f0f8076c024ce890338de205abeccd273e7a2624a87971cf49bae497",
+      "gitBlob": "e246d30d1dcdf5b0fcc0ed981a2f751781a8aee6",
+      "canonicalSha256": "8e00af29f0f8076c024ce890338de205abeccd273e7a2624a87971cf49bae497"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRaster.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "79b53156773faad996b802ac4d3b32b4fb76fde1ff16317d761caca875529e50",
+      "gitBlob": "29e560285490c2097ffada27c878b448c900b817",
+      "canonicalSha256": "79b53156773faad996b802ac4d3b32b4fb76fde1ff16317d761caca875529e50"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRaw.cpp",
+      "scope": "android-production-snapshot",
+      "inputSha256": "5678d2667242105147efd8bba6302954147fcc7626757800444a828cf258c74e",
+      "gitBlob": "62355625a3f004ae441323145b9e1e2be4d2c9a7",
+      "canonicalSha256": "5678d2667242105147efd8bba6302954147fcc7626757800444a828cf258c74e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRaw.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "ea1116a0985d21d56a3e07508be0f8d67bba3b400177ab2ba160ffa53ec2e7d4",
+      "gitBlob": "7895891a7269a1efcbb9d5e44dce9bf6a6edfbc0",
+      "canonicalSha256": "ea1116a0985d21d56a3e07508be0f8d67bba3b400177ab2ba160ffa53ec2e7d4"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRawSafety.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "a882261f39cbe0c1d688beee9392fee7532f9400d12856e40b159b042ad38e2d",
+      "gitBlob": "7e19d9b82c207b2a45297f338e9057a685810ad9",
+      "canonicalSha256": "a882261f39cbe0c1d688beee9392fee7532f9400d12856e40b159b042ad38e2d"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRetouch.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "2680905a3b77d8f9c3d5fa468afdc2bac5d02624d6640c982bcf703daff42fb1",
+      "gitBlob": "76165f4d3b036cb4468b09ea5941c983bee4b920",
+      "canonicalSha256": "2680905a3b77d8f9c3d5fa468afdc2bac5d02624d6640c982bcf703daff42fb1"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRetouch.mm",
+      "scope": "android-production-snapshot",
+      "inputSha256": "e1bac58f0756e378fac387ce06a566fa93014c4fc5c07fcf2d146d615b59841d",
+      "gitBlob": "3665ff97be9718d13ebce646e53ba381226b469c",
+      "canonicalSha256": "df6d55efdd847e9616c14c8d5984219dcfedbc3777556076cbbef414203e2dac"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaStability.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "8df348905d291d8317f8f2dd5ae47199313d6f95c65b3905ddf010bc79425b8d",
+      "gitBlob": "ecf104633a6539772ced22f8148b5d560e9d302c",
+      "canonicalSha256": "8df348905d291d8317f8f2dd5ae47199313d6f95c65b3905ddf010bc79425b8d"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaStability.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "c2391c5babe58b85a26123e95e72205a36421dab1c971086e74aae46549d348f",
+      "gitBlob": "34fd62d9964941470f9c68c205ed8802fb8375cb",
+      "canonicalSha256": "c2391c5babe58b85a26123e95e72205a36421dab1c971086e74aae46549d348f"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTask.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01",
+      "gitBlob": "4713accad9e92ee1480b280765f775af9db03b85",
+      "canonicalSha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTask.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb",
+      "gitBlob": "714abda45f72d397f2203f21ee2468616451338f",
+      "canonicalSha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd",
+      "gitBlob": "45e683192d7e55e88db7994534eb90cb3cbbc173",
+      "canonicalSha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c",
+      "gitBlob": "269064f730b1ce433fb57fc02776170edede2461",
+      "canonicalSha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaWifiSocket.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7c2decb8be842284e324528cf6581835aebce64bc9b2137fb7039eeb516be490",
+      "gitBlob": "6330d720db1781ea2cc03260e8ec9ba0d9581b8f",
+      "canonicalSha256": "7c2decb8be842284e324528cf6581835aebce64bc9b2137fb7039eeb516be490"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaWifiSocket.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "8b807329d84efe6ee22ac5a484d72bbd9196ebbc45da1a329ac41abd945d8ff6",
+      "gitBlob": "b4a1be6bcdd8c35639bfbafcade341c1e5069dfa",
+      "canonicalSha256": "8b807329d84efe6ee22ac5a484d72bbd9196ebbc45da1a329ac41abd945d8ff6"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaWiredCameras.h",
+      "scope": "android-production-snapshot",
+      "inputSha256": "b4bfc3d4b46bc1bfcc428f09757ede0d23bc40851759bbe7f63c4b32a4f405dd",
+      "gitBlob": "c4eec995e39e85629310f51e1a51d45a531366a7",
+      "canonicalSha256": "b4bfc3d4b46bc1bfcc428f09757ede0d23bc40851759bbe7f63c4b32a4f405dd"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaWiredCameras.m",
+      "scope": "android-production-snapshot",
+      "inputSha256": "7319b60ac82e2d38e7b0c354b8ee2bebb8404962fe9023fb03982ce00c1b44d1",
+      "gitBlob": "aa756336d952bd6e850c91124631586c8e2ceafa",
+      "canonicalSha256": "7319b60ac82e2d38e7b0c354b8ee2bebb8404962fe9023fb03982ce00c1b44d1"
+    },
+    {
+      "path": "cross-platform/native/tests/NativeUsbSessionBoundaryTest.java",
+      "scope": "integration-test",
+      "inputSha256": "5d07548aa0824b02595e13b0b7bcdba6a8cd79739d42e277125de5c70989442b",
+      "gitBlob": "228dceb5769bc019879ba443c9c8fdf3fb69f2e6",
+      "canonicalSha256": "5d07548aa0824b02595e13b0b7bcdba6a8cd79739d42e277125de5c70989442b"
+    },
+    {
+      "path": "cross-platform/native/tests/usb-session-stubs/android/hardware/usb/UsbConstants.java",
+      "scope": "integration-test",
+      "inputSha256": "bb8b6cf1058d95e4bf93d7c42603b74fec456b2f5970a83ee31aadc2cb30f51e",
+      "gitBlob": "685cede495b655cc3ef1e7b634539c05e9d3808e",
+      "canonicalSha256": "bb8b6cf1058d95e4bf93d7c42603b74fec456b2f5970a83ee31aadc2cb30f51e"
+    },
+    {
+      "path": "cross-platform/native/tests/usb-session-stubs/android/hardware/usb/UsbDevice.java",
+      "scope": "integration-test",
+      "inputSha256": "d893556bedbccc4b8462f8d6dcc277474661cf7404843da535208e4ec3605655",
+      "gitBlob": "d1d1d4b7dc4660e08426792cc6acf439000d01fb",
+      "canonicalSha256": "d893556bedbccc4b8462f8d6dcc277474661cf7404843da535208e4ec3605655"
+    },
+    {
+      "path": "cross-platform/native/tests/usb-session-stubs/android/hardware/usb/UsbDeviceConnection.java",
+      "scope": "integration-test",
+      "inputSha256": "2b616d93338f0338934b05d36c976e545deb3f987039d6ddc64965faff8f76a8",
+      "gitBlob": "69e8f9dec2a28b76f4ba5f0951879b6afe8d8fcb",
+      "canonicalSha256": "2b616d93338f0338934b05d36c976e545deb3f987039d6ddc64965faff8f76a8"
+    },
+    {
+      "path": "cross-platform/native/tests/usb-session-stubs/android/hardware/usb/UsbEndpoint.java",
+      "scope": "integration-test",
+      "inputSha256": "93942e5afa168205f6ebcc98bb972e3b7a63bb27d5345e83b42d14240be3980f",
+      "gitBlob": "a0a05974520e7c2b74f09c8c31e6183992630e18",
+      "canonicalSha256": "93942e5afa168205f6ebcc98bb972e3b7a63bb27d5345e83b42d14240be3980f"
+    },
+    {
+      "path": "cross-platform/native/tests/usb-session-stubs/android/hardware/usb/UsbInterface.java",
+      "scope": "integration-test",
+      "inputSha256": "8cc23481e7a8c7bd8c4443225a5d180c1b95fb4ebcb1047007393ea8d4515f51",
+      "gitBlob": "c5753b1fb01426f287440786dbeba42f49cb385e",
+      "canonicalSha256": "8cc23481e7a8c7bd8c4443225a5d180c1b95fb4ebcb1047007393ea8d4515f51"
+    },
+    {
+      "path": "cross-platform/native/tests/usb-session-stubs/android/hardware/usb/UsbManager.java",
+      "scope": "integration-test",
+      "inputSha256": "5dacb7f86f54e41daaed0c802f5772979affc1867c176a19e22f05658bfa2d74",
+      "gitBlob": "c45dbaa82218f3104122c667a454427bec1252b5",
+      "canonicalSha256": "5dacb7f86f54e41daaed0c802f5772979affc1867c176a19e22f05658bfa2d74"
+    },
+    {
+      "path": "cross-platform/native/tests/usb-session-stubs/android/os/SystemClock.java",
+      "scope": "integration-test",
+      "inputSha256": "609ad29d4e290055f876f90d7bb4b3112f28b58edef1d32008d4b805525e3fec",
+      "gitBlob": "160a146a5e7b20bc5ebf93f061f9fbf5720de420",
+      "canonicalSha256": "609ad29d4e290055f876f90d7bb4b3112f28b58edef1d32008d4b805525e3fec"
+    },
+    {
+      "path": "cross-platform/tool/android_build.py",
+      "scope": "android-production-snapshot",
+      "inputSha256": "da78a682fb96ae1b062767e4a40301e97da42e5403468f8fe09a0d96c2c98df5",
+      "gitBlob": "616c306a27c25e6e304d8b3bbde234767b2f0262",
+      "canonicalSha256": "96b5616aa6efa76517f87521e1d074f68e691c0cd307c8478a04b2cd9d7c9896"
+    },
+    {
+      "path": "cross-platform/tool/core_check.py",
+      "scope": "android-production-snapshot",
+      "inputSha256": "cc6bb50671fa5c4054dec01bd4dcf9cab5128290c73ee4dff26d6cdfed69ff39",
+      "gitBlob": "68a3e8f9524add480f1e51a48eda9709abb1a39b",
+      "canonicalSha256": "cc6bb50671fa5c4054dec01bd4dcf9cab5128290c73ee4dff26d6cdfed69ff39"
+    },
+    {
+      "path": "cross-platform/tool/portable_sources.py",
+      "scope": "android-production-snapshot",
+      "inputSha256": "9caaa1c59c6b07986615f3a8cbdc21d715a89ad58172ff9d8b9875092451ea41",
+      "gitBlob": "cd762144043581d3502579f1fd85f3a1b52676b2",
+      "canonicalSha256": "9caaa1c59c6b07986615f3a8cbdc21d715a89ad58172ff9d8b9875092451ea41"
+    },
+    {
+      "path": "cross-platform/tool/usb_session_check.py",
+      "scope": "integration-test",
+      "inputSha256": "18c1a7b0101eb78f1cea84cbd5c9a31cea190536d28545bdf2b2e0e55d756298",
+      "gitBlob": "cabee283273f0b50c0a476de614015a49e04790a",
+      "canonicalSha256": "18c1a7b0101eb78f1cea84cbd5c9a31cea190536d28545bdf2b2e0e55d756298"
+    }
+  ]
+}

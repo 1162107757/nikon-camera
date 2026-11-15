@@ -46,7 +46,7 @@ class WorkspaceCore extends HueviaCore {
     String? jobId,
   ]) async {
     calls.add((operation, object(jsonDecode(jsonEncode(payload)))));
-    if (operation == 'media.preview') {
+    if (operation == 'media.preview' || operation == 'media.reviewPreview') {
       final turns =
           object(object(payload['recipe'])['geometry'])['turns'] as int? ?? 0;
       return {

@@ -4,6 +4,7 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'cross-platform/.build/core-jvm'
 OUT.mkdir(parents=True,exist_ok=True)
 sources=json.loads((ROOT/'cross-platform/core/portable-sources.json').read_text())['sources']
+sources=[str((ROOT/'cross-platform/core/overrides'/Path(p).relative_to('app/src/main/java')).relative_to(ROOT)).replace('\\','/') if p.startswith('app/src/main/java/') and (ROOT/'cross-platform/core/overrides'/Path(p).relative_to('app/src/main/java')).is_file() else p for p in sources]
 sources += [str(p.relative_to(ROOT)).replace('\\','/') for p in (ROOT/'cross-platform/core/java').rglob('*.java')]
 sources += [str(p.relative_to(ROOT)).replace('\\','/') for p in (ROOT/'cross-platform/core/test').rglob('*.java')]
 sources += ['tests/java/cc/huevia/ncp/NcpPreviewProfileTest.java','tests/java/cc/huevia/ncp/NcpCompatibilityFixtures.java','tests/local-edits-java/cc/huevia/ncp/PhotoLocalEditsTest.java','tests/raw-development-java/cc/huevia/ncp/RawJpegColorMatchTest.java','tests/raw-development-java/cc/huevia/ncp/RawHighlightColorTest.java']

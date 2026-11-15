@@ -133,6 +133,7 @@ public final class CoreBoundary {
             checks+=SubmissionBoundaryTest.run(temporary);
             checks+=ProfileBoundaryTest.run(temporary);
             checks+=LocalEditsBoundaryTest.run(temporary);
+            checks+=LensBorderBoundaryTest.run(temporary);
             System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{

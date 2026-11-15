@@ -104,7 +104,7 @@ final class NativeMedia {
             PhotoCaptureInfo capture=PhotoCaptureInfo.read(source);List<String> fields=new ArrayList<>();
             for(int i=0;i<5;i++)fields.add(capture.field(PhotoBorder.NONE,i));
             runtime.guardOwner(owner);
-            return SharedJson.encode(SharedRuntime.map("brand",capture.brand,"model",capture.model,"fields",fields));
+            return SharedJson.encode(SharedRuntime.map("brand",capture.brand,"model",capture.model,"fields",fields,"lens",capture.lens));
         }
         if(operation.equals("media.rawReferenceInfo")){
             if(!raw(source))throw new IOException("请选择 RAW 原文件。");runtime.guardOwner(SharedRuntime.text(p,"owner",64));
