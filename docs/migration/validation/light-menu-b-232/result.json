@@ -1,0 +1,45 @@
+{
+  "sourceCommit": "742a5d83bcdcc3ec3cab9ae0e3741e6f9e90b373",
+  "versionCode": 232,
+  "published": false,
+  "android": {
+    "file": "dist/migration232/huevia-0.31.0-dev-232-android-arm64.apk",
+    "packageName": "cc.huevia.next",
+    "versionName": "0.31.0-dev",
+    "versionCode": 232,
+    "minSdk": 26,
+    "signerSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+    "signatureSchemes": [
+      2
+    ],
+    "abis": [
+      "arm64-v8a"
+    ],
+    "byteLength": 53526854,
+    "sha256": "4aa3c8ecf2c76fc489847e16845a3141eb0baf63b2afbd717836443bf1223fb1"
+  },
+  "validation": {
+    "androidEmulatorSdk": 37,
+    "androidWidgetScenarios": 11,
+    "ownedDartFilesAnalyzed": 5,
+    "ownedDartAnalysisIssues": 0,
+    "windowsWidgets": "incomplete; test host closed before loading suite",
+    "windowsPureLightMaskTests": 3,
+    "fullApplicationSuiteClaimed": false,
+    "portraitModelAssetsComplete": true,
+    "rawJniAndR8Verified": true,
+    "sourceFilesComparedTo231": 267,
+    "productionFilesChanged": [
+      "cross-platform/app/lib/light_workspace.dart",
+      "cross-platform/app/lib/hue_icons.dart"
+    ]
+  },
+  "frozenArtifactsUnchanged": {
+    "dist/migration230/huevia-0.31.0-dev-230-android-arm64.apk": "d9f71ece2806c684906905fe73664f9360bc1eb0a8cd87cd57940407eced0145",
+    "dist/migration230-ios/huevia-0.31.0-230-unsigned.ipa": "0ba9408c5c9b90ba4a8adfcdb0bb380d5dd89f64fdec817d461e9781086bae9f",
+    "dist/migration231/huevia-0.31.0-dev-231-android-arm64.apk": "f542777234512530ba0663f3fc0919e64bd954d8ab282e880352b1bdd2d82707"
+  },
+  "ios232Built": false,
+  "physicalCameraTested": false,
+  "gradleWindowReleased": true
+}

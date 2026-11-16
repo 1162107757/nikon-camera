@@ -1,0 +1,15 @@
+{
+  "models": [
+    {
+      "name": "face_landmarks_detector.tflite",
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "bytes": 2553590
+    },
+    {
+      "name": "face_skin_multiclass.shuffle4.zlib",
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "bytes": 13881786
+    }
+  ],
+  "originalAppSourceModified": false
+}

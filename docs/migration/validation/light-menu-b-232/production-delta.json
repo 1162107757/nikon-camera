@@ -1,0 +1,10 @@
+{
+  "baseline": 231,
+  "filesCompared": 267,
+  "normalization": "CRLF to LF only",
+  "changed": [
+    "cross-platform/app/lib/hue_icons.dart",
+    "cross-platform/app/lib/light_workspace.dart"
+  ],
+  "otherProductInputsUnchanged": 265
+}

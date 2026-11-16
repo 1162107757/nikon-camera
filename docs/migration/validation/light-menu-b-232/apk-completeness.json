@@ -1,0 +1,83 @@
+{
+  "comparedTo": 231,
+  "noMissingEntries": true,
+  "assetCount": 64,
+  "allAssetsEqualExceptCRLF": true,
+  "lineEndingOnlyAssets": [
+    "assets/preset-showcase/manifest.json",
+    "assets/third-party/libfuji-MIT.txt",
+    "assets/third-party/libraw/COPYRIGHT",
+    "assets/third-party/libraw/LICENSE.CDDL",
+    "assets/third-party/libraw/LICENSE.LGPL",
+    "assets/third-party/libraw/LLVM-NOTICE.txt",
+    "assets/third-party/libraw/NOTICE.txt",
+    "assets/third-party/libraw/RawDeveloper.java",
+    "assets/third-party/libraw/RawDevelopmentSettings.java",
+    "assets/third-party/libraw/RawJpegColorMatch.java",
+    "assets/third-party/libraw/build-raw-native.ps1",
+    "assets/third-party/libraw/huevia_raw.cpp",
+    "assets/third-party/litert/LICENSE-LiteRT.txt",
+    "assets/third-party/litert/LICENSE-MediaPipe.txt",
+    "assets/third-party/litert/README.md"
+  ],
+  "nativeRuntimeComparison": [
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "equal": true,
+      "beforeBytes": 1253544,
+      "afterBytes": 1253544
+    },
+    {
+      "path": "lib/arm64-v8a/libdartjni.so",
+      "equal": false,
+      "beforeBytes": 131400,
+      "afterBytes": 131400,
+      "changedSections": [
+        ".note.gnu.build-id"
+      ],
+      "codeTextEqual": true
+    },
+    {
+      "path": "lib/arm64-v8a/libdatastore_shared_counter.so",
+      "equal": true,
+      "beforeBytes": 7784,
+      "afterBytes": 7784
+    },
+    {
+      "path": "lib/arm64-v8a/libflutter.so",
+      "equal": true,
+      "beforeBytes": 11763360,
+      "afterBytes": 11763360
+    },
+    {
+      "path": "lib/arm64-v8a/libhuevia_raw.so",
+      "equal": true,
+      "beforeBytes": 64176,
+      "afterBytes": 64176
+    },
+    {
+      "path": "lib/arm64-v8a/libraw.so",
+      "equal": true,
+      "beforeBytes": 1207392,
+      "afterBytes": 1207392
+    },
+    {
+      "path": "lib/arm64-v8a/libtensorflowlite_jni.so",
+      "equal": true,
+      "beforeBytes": 4320520,
+      "afterBytes": 4320520
+    }
+  ],
+  "models": [
+    {
+      "path": "assets/portrait/face_landmarks_detector.tflite",
+      "bytes": 2553590,
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5"
+    },
+    {
+      "path": "assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "bytes": 13881786,
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+    }
+  ]
+}

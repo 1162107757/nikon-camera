@@ -1,0 +1,11 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_menu_b_test.dart
+00:00 +0 -1: loading D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_menu_b_test.dart [E]
+  Failed to load "D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_menu_b_test.dart": Connection closed before test suite loaded.
+00:00 +0 -1: loading D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_workspace_test.dart
+00:00 +0 -1: D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_workspace_test.dart: zero light strength leaves the original masks untouched
+00:00 +1 -1: D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_workspace_test.dart: light presets use bounded source coordinates and signed exposure
+00:00 +2 -1: D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_workspace_test.dart: side light direction rotates without changing intensity
+00:00 +3 -1: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_menu_b_test.dart: loading D:/dev/ai-project/nikon-camera/.tooling/lmb/cross-platform/app/test/light_menu_b_test.dart

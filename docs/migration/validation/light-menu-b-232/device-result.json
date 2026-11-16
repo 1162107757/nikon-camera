@@ -1,0 +1,13 @@
+{
+  "serial": "emulator-5584",
+  "beforeVersionCode": null,
+  "passed": true,
+  "screenshots": [
+    "phone.png",
+    "large-text.png",
+    "tablet.png"
+  ],
+  "adbExitCode": 0,
+  "restoredVersionCode": null,
+  "originalMainAppRestored": true
+}

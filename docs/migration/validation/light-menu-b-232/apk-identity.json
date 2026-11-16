@@ -1,0 +1,15 @@
+{
+  "packageName": "cc.huevia.next",
+  "versionName": "0.31.0-dev",
+  "versionCode": 232,
+  "minSdk": 26,
+  "signerSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+  "signatureSchemes": [
+    2
+  ],
+  "abis": [
+    "arm64-v8a"
+  ],
+  "byteLength": 53526854,
+  "sha256": "4aa3c8ecf2c76fc489847e16845a3141eb0baf63b2afbd717836443bf1223fb1"
+}

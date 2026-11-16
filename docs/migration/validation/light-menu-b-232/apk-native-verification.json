@@ -1,0 +1,14 @@
+{
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\lmb\\cross-platform\\app\\build\\app\\outputs\\apk\\release\\app-release.apk",
+  "bytes": 53526854,
+  "sha256": "4aa3c8ecf2c76fc489847e16845a3141eb0baf63b2afbd717836443bf1223fb1",
+  "abi": "arm64-v8a",
+  "mode": "release",
+  "nativeLibraries": 8,
+  "verified": true,
+  "rawJniCallbacksPreserved": true,
+  "rawJniInfoConstructorPreserved": true,
+  "rawThumbnailCallbacksPreserved": true,
+  "liteRtReflectedFactoryPreserved": true,
+  "r8MappingSha256": "c4ba9304a524268616c8afa4424669285495f6133bcc0ca9866148229afd3251"
+}
