@@ -8,10 +8,16 @@ export function renderReleaseDownloadError(req, res, { status, code, retryAfterS
     return type.trim().toLowerCase() === 'text/html' && !params.some(p => /^\s*q\s*=\s*0(?:\.0*)?\s*$/.test(p));
   });
   if (req.method !== 'GET' || !/\/releases\/[a-f0-9-]{36}\/file$/i.test(path) || !html) return false;
-  const ipLimited = status === 429 && code === 'RELEASE_IP_BUDGET';
-  const title = ipLimited ? '当前网络下载已达上限' : status === 429 ? '下载请求较多，请稍后再试' : '暂时无法下载安装包';
+  const ipLimited = status === 429 && ['RELEASE_IP_BUDGET', 'MOBILE_RELEASE_IP_BUDGET'].includes(code);
+  const globalLimited = status === 429 && code === 'MOBILE_RELEASE_GLOBAL_BUDGET';
+  const title = ipLimited ? '当前网络下载已达上限' : globalLimited ? '今日下载服务已达上限' : status === 429 ? '下载请求较多，请稍后再试' : '暂时无法下载安装包';
   if (ipLimited && Number.isInteger(retryAfterSeconds) && retryAfterSeconds >= 1 && retryAfterSeconds <= 3600) {
     message = `当前网络（IP）的下载次数或流量已达上限，约 ${Math.ceil(retryAfterSeconds / 60)} 分钟后可重试。`;
+  }
+  if (globalLimited && Number.isInteger(retryAfterSeconds) && retryAfterSeconds >= 1 && retryAfterSeconds <= 86400) {
+    const minutes = Math.ceil(retryAfterSeconds / 60), hours = Math.floor(minutes / 60);
+    const wait = hours ? `${hours} 小时${minutes % 60 ? ` ${minutes % 60} 分钟` : ''}` : `${minutes} 分钟`;
+    message = `下载服务的今日请求或流量已达上限，约 ${wait}后可重试。`;
   }
   const platform = /\/ios\/releases\//.test(path) ? '&platform=ios' : /\/next\/releases\//.test(path) ? '&platform=android&edition=next' : '';
   const returnUrl = `https://huevia.cc/?channel=beta${platform}`;

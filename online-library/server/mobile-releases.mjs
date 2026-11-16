@@ -26,9 +26,21 @@ export function createMobileReleaseRoutes({ store, storage, publicBaseUrl, baseP
     if (value?.error) throw new ServiceError(statuses[value.error] || 503, `MOBILE_RELEASE_${value.error}`, value.error === 'CONFIRMATION' ? '请先复核版本和 SHA-256，再确认发布操作。' : '版本操作未完成，请核对权限、版本、上传完整性和配额。');
     return value;
   }
-  async function budget(req, kind, bytes = 0) {
-    const value = await store.rpc('nikon_mobile_release_budget', { p_key: source.context(req).sourceHash, p_kind: kind, p_bytes: bytes });
-    if (value?.error) throw new ServiceError(value.error === 'BUDGET' ? 429 : 503, 'MOBILE_RELEASE_BUDGET', '更新请求或流量达到上限，请稍后重试。');
+  async function budget(req, kind, bytes = 0, sha256) {
+    const identity = { p_key: source.context(req).sourceHash, p_bytes: bytes };
+    const value = kind === 'download'
+      ? await store.rpc('nikon_mobile_release_download_budget', { ...identity, p_sha256: sha256 })
+      : await store.rpc('nikon_mobile_release_budget', { ...identity, p_kind: kind });
+    if (value?.error) {
+      const limited = value.error === 'BUDGET', scope = limited && ['ip', 'global'].includes(value.scope) ? value.scope : '';
+      const error = new ServiceError(limited ? 429 : 503,
+        scope ? `MOBILE_RELEASE_${scope.toUpperCase()}_BUDGET` : 'MOBILE_RELEASE_BUDGET',
+        scope === 'ip' ? '当前网络（IP）的下载次数或流量已达本小时上限，请稍后重试。'
+          : scope === 'global' ? '下载服务的今日请求或流量已达上限，请稍后重试。' : '更新请求或流量达到上限，请稍后重试。');
+      const maximum = scope === 'ip' ? 3600 : scope === 'global' ? 86400 : 0;
+      if (Number.isInteger(value.retryAfterSeconds) && value.retryAfterSeconds >= 1 && value.retryAfterSeconds <= maximum) error.retryAfterSeconds = value.retryAfterSeconds;
+      throw error;
+    }
   }
   async function row(id) { return (await store.rest(`nikon_mobile_releases?id=eq.${id}&select=*&limit=1`))[0] || null; }
   async function publicRoute(req, res, { path, url, json }) {
@@ -60,7 +72,7 @@ export function createMobileReleaseRoutes({ store, storage, publicBaseUrl, baseP
     const metadata = selected.metadata, key = `mobile-releases/${selected.platform}/${metadata.sha256}.bin`;
     if (!/^[a-f0-9]{64}$/.test(metadata.sha256) || selected.storage_path !== key || !Number.isInteger(metadata.byteLength) || metadata.byteLength < 1024 || metadata.byteLength > (selected.platform === 'ios' ? MAX_IPA_BYTES : MAX_NEXT_APK_BYTES)) throw new ServiceError(503, 'MOBILE_RELEASE_INVALID', '发布文件资料校验失败。');
     const etag = `"sha256-${metadata.sha256}"`, unchanged = req.headers['if-none-match'] === etag;
-    await budget(req, 'download', unchanged ? 0 : metadata.byteLength);res.setHeader('Cache-Control', 'no-store, max-age=0');
+    await budget(req, 'download', unchanged ? 0 : metadata.byteLength, metadata.sha256);res.setHeader('Cache-Control', 'no-store, max-age=0');
     if (unchanged) { res.writeHead(304, { ETag: etag });res.end();return true; }
     if (typeof storage.verify !== 'function' || typeof storage.signDownload !== 'function') throw new ServiceError(503, 'MOBILE_STORAGE_REQUIRED', '移动版大文件分发需要已配置的私有 COS 存储。');
     if (await storage.verify(key, metadata.byteLength, metadata.sha256) !== true) throw new ServiceError(503, 'MOBILE_RELEASE_CHANGED', '发布文件摘要校验失败。');

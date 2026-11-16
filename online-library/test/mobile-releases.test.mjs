@@ -38,8 +38,9 @@ class SqlStore extends ReleaseMemoryStore {
   constructor(db) { super();this.db = db;this.blockDownloads = false; }
   async rpc(name, body) {
     if (name === 'nikon_mobile_release_manage') return (await this.db.query('SELECT nikon_mobile_release_manage($1,$2,$3) AS value', [body.p_actor, body.p_action, body.p_body])).rows[0].value;
-    if (name === 'nikon_mobile_release_budget') {
+    if (name === 'nikon_mobile_release_budget' || name === 'nikon_mobile_release_download_budget') {
       if (this.blockDownloads) return { error: 'BUDGET' };
+      if (name === 'nikon_mobile_release_download_budget') return (await this.db.query('SELECT nikon_mobile_release_download_budget($1,$2,$3) AS value', [body.p_key, body.p_sha256, body.p_bytes])).rows[0].value;
       return (await this.db.query('SELECT nikon_mobile_release_budget($1,$2,$3) AS value', [body.p_key, body.p_kind, body.p_bytes])).rows[0].value;
     }
     return super.rpc(name, body);
@@ -60,6 +61,7 @@ test('real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-
   const db = new PGlite();t.after(() => db.close());
   await db.exec("CREATE ROLE anon;CREATE ROLE authenticated;CREATE ROLE service_role BYPASSRLS;CREATE TABLE nikon_admins(username text PRIMARY KEY,disabled boolean NOT NULL DEFAULT false);INSERT INTO nikon_admins VALUES('admin',false);CREATE FUNCTION nikon_app_admin_allowed(p_actor text) RETURNS boolean LANGUAGE sql AS $$SELECT EXISTS(SELECT 1 FROM nikon_admins WHERE username=p_actor AND NOT disabled)$$;");
   const sql = await readFile(new URL('../database/022-mobile-releases.sql', import.meta.url), 'utf8');await db.exec(sql);
+  await db.exec(await readFile(new URL('../database/024-mobile-download-retry.sql', import.meta.url), 'utf8'));
   const store = new SqlStore(db), objects = new Map(), password = 'Synthetic-mobile-release-test-password';
   store.admins.set('admin', { username: 'admin', password_hash: await hashPassword(password) });
   let withdrawDuringRead = false, mutableId;
