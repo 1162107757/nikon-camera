@@ -1,0 +1,190 @@
+[
+  {
+    "sha256": "d64de018e668077a350de019c7ae70fc55e173e0141d46a71a27a2b3ce5e65af",
+    "path": ".tooling/np3-native/build/ea86ed44b2e54ec9b8a34b59ac66525b/assets/supported.np3"
+  },
+  {
+    "sha256": "1cea7a90bfa80fdd3d68b7e6dbe371a5993447a12be85026eca4251f0a273999",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/c1.NP3"
+  },
+  {
+    "sha256": "886cc2b108050b2d7c27052cd17f005d6f98800bb577493971a0f221c247313d",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-dreamy-green-full16-nksc-customdata.np3"
+  },
+  {
+    "sha256": "d3774968a0c3919ba7e4ddabd876bb84d9a77c3d733d7cfad53fcdda937e26af",
+    "path": ".research/np3-calibration/other-bases-20261022/recipes/Premium Dreamy Peep.NP3"
+  },
+  {
+    "sha256": "ebaaf0af106c38bee6e7d34c2ec68d52c142102a0fb1fce45c6db8cee1e01935",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u1.NP3"
+  },
+  {
+    "sha256": "97ac746b1c47de892f304d10859d14b5ad8bf9a30b2757afaf39c3870d629ee7",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u2.NP3"
+  },
+  {
+    "sha256": "ff57c07d5c7df1b6f6ffe031ada0b987f6242043c28a2837dc40e3ebdd14561f",
+    "path": ".research/np3-calibration/ilford-20261022/evidence/6182-ilford-full16-nksc-customdata.np3"
+  },
+  {
+    "sha256": "b2e9fb949c32f3a4a93a2cb2e6acc68335246f782d922832f3f6d024dbdd5442",
+    "path": ".tooling/np3-vitality165/HV165_Bright.NP3"
+  },
+  {
+    "sha256": "07c5d8a0454a914b839fd376e93c59ca6784803cafa02c98aaab1dad10b7d782",
+    "path": ".tooling/np3-vitality165/HV165_NoGrade.NP3"
+  },
+  {
+    "sha256": "448299b52677b06a6df831e06c028f43caf8da71b5b5039f1bc8cf9ca56e01ea",
+    "path": "dist/presets-20261108/VitalityFilm_Pmango.NP3"
+  },
+  {
+    "sha256": "02c4bce43c24e6629ad7661ffe516a316cda08d02ba262d011119028af41c5ae",
+    "path": ".research/np3-calibration/other-bases-20261022/diagnostic/frozen-product-holdout-run1/green/derived-private-zero-spatial.NP3"
+  },
+  {
+    "sha256": "c9d9c31330946ee6c0bac1df56310ac9b64e6281594af9d6deb38807f6ce6ffe",
+    "path": ".research/np3-calibration/other-bases-20261022/diagnostic/frozen-product-holdout-run1/red/derived-private-zero-spatial.NP3"
+  },
+  {
+    "sha256": "6a2e78d6ec9efaffb4640e2cd269abed97c4a652f17e265293c2cb6f70005eaa",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u8.NP3"
+  },
+  {
+    "sha256": "4d67f8b69477e53032607c34e537194f79db2c1162bfa68c296aef19ddae1c51",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u7.NP3"
+  },
+  {
+    "sha256": "a4d48ce3b720b3de9e3b81e268c146a2f8c1ebfa776229d4edc1b4023ae39163",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u6.NP3"
+  },
+  {
+    "sha256": "589d588c8330d17609c35c0d48629d843b81fe956f76828fea92985328e5d4ba",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u5.NP3"
+  },
+  {
+    "sha256": "ee20588020efd14d40692957da461ecbcbe1a8437061a7bfbad2ea59a1c83fa1",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u4.NP3"
+  },
+  {
+    "sha256": "34dbec500bccabd891f94a15563194cccd695d246ddd36358fb48516983ef375",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/u3.NP3"
+  },
+  {
+    "sha256": "04f87965ea7067a00da91bddd46f53ad4a9d89d0d05a1d6fdc530762fb73fa89",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/contrast-validation/QOraP20.NP3"
+  },
+  {
+    "sha256": "46acde97d8955f267ca90d290c8e709c9c1c8d7f950a1ead6c7ae084ea99a2ea",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/contrast-validation/QConP25.NP3"
+  },
+  {
+    "sha256": "6a6952257fa611b6610c47a65a88c7672e8e251dde5dc627f2b673e3d5b72efd",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/contrast-validation/QConP100.NP3"
+  },
+  {
+    "sha256": "ac4c6e4dea4d00e16e4f4b3c80a7387adbcad22cd727253cd59ce4f9fb79519d",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QWhiP5.NP3"
+  },
+  {
+    "sha256": "819e8033178f98ef95f35d8c38e8f1d323d1e941d803c9bb4cf18f9edfaf4f6f",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QSunColor.NP3"
+  },
+  {
+    "sha256": "8e7ef8bb69b7017e8d2b6f0d6f28dd355660e377d7978345cc277d6374393688",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QShaP45.NP3"
+  },
+  {
+    "sha256": "0f5ad43b2f110a6808f0e071e89ebb5aa36827fd72df5ef660eb50a0340a4679",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QSatM25.NP3"
+  },
+  {
+    "sha256": "c7cad9f2092a33f7f7617c70e9969fb175438447156aebb345ff47ca11169531",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QCyaM74.NP3"
+  },
+  {
+    "sha256": "fb7ce2ab288d0a8bb2b959d96927f5a18fe08461cf6cf4b604ccf408d5ab2ff9",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QConP50.NP3"
+  },
+  {
+    "sha256": "48b75192b69cb12d846ac3e8a3c42c7f52d2e94b78c04ed1b3a0459612e4beae",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QConM50.NP3"
+  },
+  {
+    "sha256": "9ab36770b4181a79028204c983df9619dddc3e7ff871b8e1c2ea6fc77c946c38",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QBluM100.NP3"
+  },
+  {
+    "sha256": "65f210bc2bf6ebeb58a2e6c4ee96eb72dbf6236bbfb7815e73f1916ba71cc806",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/in/tone-controls/QBlkM20.NP3"
+  },
+  {
+    "sha256": "20fd75beddd478e1babb47e4a8829df4c12281ba85263e16e163405b0e75fb9d",
+    "path": ".research/np3-calibration/ilford-20261022/evidence/6182-ilford-full16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "c203d488f8c162a1f3776dfe7f924905ff37236f678e32fc0e30f4aec9252b42",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6184-flexible-zero-baseline16-nksc-customdata.np3"
+  },
+  {
+    "sha256": "18cc3cea253fcefe0845f88d82da0112949496a0fd29923fa0de62df685b1962",
+    "path": ".research/np3-calibration/ilford-20261022/evidence/6182-ilford-no-curve-zero-spatial16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "98d64c61f1f8be330a23640863d8b40234d4910e37396189f4aed173ad9127f3",
+    "path": ".research/np3-calibration/ilford-20261022/evidence/6182-ilford-curve-zero-spatial16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "dce5068ee3e800861c95492abbf0795176aadec392bc16aaf42484465205ca78",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/out/n0.NP3"
+  },
+  {
+    "sha256": "97fca4f3814158eeb6921016e34cc612da9feb1b691b9c7490db15b808ee79ad",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/out/m.NP3"
+  },
+  {
+    "sha256": "a73f00b3dd4a7fc2a95971e0af4abc3625196bda0ef3ed50cdffec322fdc6ecd",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/out/p.NP3"
+  },
+  {
+    "sha256": "322d3c97299b1be3f995f7dec59af1b77c0f518e899cadbb9df7708a58fe1660",
+    "path": ".research/np3-calibration/ilford-20261022/diagnostic/fixed-product-validation-run1/6182/private-derived-zero-spatial.NP3"
+  },
+  {
+    "sha256": "edee5126e8f95e3c9491301cfc706bade6bf9c29e47357382974ad7a4188d4e8",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/out/t.NP3"
+  },
+  {
+    "sha256": "1c6031dc97875a238a8235c26cd8573a105bcd6a41553cf646f33d1cb097bbd4",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-dreamy-red-control-full16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "13226763b6363ac0c38e89cef770cddf8fed61bdfc34b3f4f83dea47ae442d69",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-dreamy-green-full16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "a930f9b3f1648ca6c54bc55047ba40d1753b4d4828a53eef8d56eb3829c18f6b",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-red-no-curve-zero-spatial16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "a0f862be52caa2b787b645c3c2f19fe8a02dcfdc420e8652e97f1f9a1f56ea6f",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-red-curve-zero-spatial16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "7950e3236cd06f21a4fc258a6c6168383be90d0eaa7f508205edb7ee504803b8",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-green-no-curve-zero-spatial16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "9f48df56386ddbc0797af4a0c274da11261bb134c68ec2f4712091f069cf1fec",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-green-identity-curve-zero-spatial16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "e548101add3728a6e069ba5a644c81c020473ed618b17a805a7891f683b95ffa",
+    "path": ".research/np3-calibration/other-bases-20261022/evidence/6182-green-curve-zero-spatial16-nksc-exportdata.np3"
+  },
+  {
+    "sha256": "9ee2a8ea8ef1f3f8c7b1c52aa73638e76a5faeaa3f68be76ae0f4c398e22623a",
+    "path": ".research/np3-calibration/nx-1.11.0-DSC6182/diagnostic/contrast-private-jvm-run1/u7-contrast-zero-derived-not-NX.NP3"
+  }
+]

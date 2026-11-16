@@ -1,0 +1,15 @@
+{
+  "coreBoundaryChecks": 2073,
+  "atmosphereChecks": 6,
+  "np3ProjectionChecksWithinCore": 59,
+  "np3CorpusDistinct": 47,
+  "np3CorpusUnsupportedPhonePreview": 11,
+  "androidApi31Scenarios": 10,
+  "desktopFocusedPass": {
+    "editor_more": 4,
+    "editor_menu_actions": 7,
+    "light_workspace": 3
+  },
+  "windowsWholeSuitePassed": false,
+  "windowsWholeSuiteLimitation": "Native flutter_tester access violation (-1073741819); incomplete cases. One unchanged held-download timing assertion failed under full load and passed separately (7/7). Camera slots UI 9 cases passed on Android; the Windows camera test host was unstable."
+}
