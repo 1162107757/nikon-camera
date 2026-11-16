@@ -1,0 +1,57 @@
+[
+  {
+    "scope": "file:global",
+    "buckets": "2",
+    "requests": "111",
+    "max_requests": "94",
+    "bytes": "6257855796",
+    "max_bytes": "5340450311",
+    "earliest_expiry": "2026-11-17 17:55:54.148238+08",
+    "latest_expiry": "2026-11-18 08:00:16.999476+08",
+    "observed_at": "2026-11-16 08:52:32.231241+08"
+  },
+  {
+    "scope": "file:ip",
+    "buckets": "9",
+    "requests": "22",
+    "max_requests": "10",
+    "bytes": "1183726335",
+    "max_bytes": "532641700",
+    "earliest_expiry": "2026-11-16 09:58:23.871714+08",
+    "latest_expiry": "2026-11-16 10:47:43.092318+08",
+    "observed_at": "2026-11-16 08:52:32.231253+08"
+  },
+  {
+    "scope": "meta:global",
+    "buckets": "1",
+    "requests": "11",
+    "max_requests": "11",
+    "bytes": "0",
+    "max_bytes": "0",
+    "earliest_expiry": "2026-11-16 08:53:04.634864+08",
+    "latest_expiry": "2026-11-16 08:53:04.634864+08",
+    "observed_at": "2026-11-16 08:52:32.231257+08"
+  },
+  {
+    "scope": "meta:ip",
+    "buckets": "1",
+    "requests": "11",
+    "max_requests": "11",
+    "bytes": "0",
+    "max_bytes": "0",
+    "earliest_expiry": "2026-11-16 08:53:04.634864+08",
+    "latest_expiry": "2026-11-16 08:53:04.634864+08",
+    "observed_at": "2026-11-16 08:52:32.23126+08"
+  },
+  {
+    "scope": "upload:bytes",
+    "buckets": "1",
+    "requests": "0",
+    "max_requests": "0",
+    "bytes": "473772758",
+    "max_bytes": "473772758",
+    "earliest_expiry": "2026-11-17 17:51:52.017829+08",
+    "latest_expiry": "2026-11-17 17:51:52.017829+08",
+    "observed_at": "2026-11-16 08:52:32.231263+08"
+  }
+]

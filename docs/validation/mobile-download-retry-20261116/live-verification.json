@@ -1,0 +1,100 @@
+{
+  "at": "2026-11-16T01:09:06.035Z",
+  "versionCode": 229,
+  "releaseId": "207a5fb8-3824-49f8-b7c0-2d3a08f0b07c",
+  "requests": [
+    307,
+    307,
+    304
+  ],
+  "accounting": {
+    "requests": 3,
+    "chargedBytes": 53264170,
+    "fullPackagesCharged": 1,
+    "retryBytes": 0,
+    "conditionalBytes": 0
+  },
+  "actualDownload": {
+    "status": 200,
+    "bytes": 53264170,
+    "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+    "matchesPublished": true
+  },
+  "metadataChecks": [
+    {
+      "packageName": "cc.huevia",
+      "versionCode": 191,
+      "sdk": 35,
+      "selectedVersion": 197,
+      "updateRequired": true,
+      "reason": "available"
+    },
+    {
+      "packageName": "cc.huevia",
+      "versionCode": 193,
+      "sdk": 35,
+      "selectedVersion": 197,
+      "updateRequired": true,
+      "reason": "available"
+    },
+    {
+      "packageName": "cc.huevia",
+      "versionCode": 196,
+      "sdk": 35,
+      "selectedVersion": 197,
+      "updateRequired": true,
+      "reason": "available"
+    },
+    {
+      "packageName": "cc.huevia",
+      "versionCode": 197,
+      "sdk": 35,
+      "selectedVersion": 197,
+      "updateRequired": false,
+      "reason": "current"
+    },
+    {
+      "packageName": "cc.huevia",
+      "versionCode": 198,
+      "sdk": 35,
+      "selectedVersion": 197,
+      "updateRequired": false,
+      "reason": "client_newer"
+    },
+    {
+      "packageName": "cc.huevia",
+      "versionCode": 196,
+      "sdk": 25,
+      "selectedVersion": 197,
+      "updateRequired": false,
+      "reason": "incompatible"
+    },
+    {
+      "packageName": "cc.huevia.next",
+      "versionCode": 228,
+      "sdk": 35,
+      "selectedVersion": 229,
+      "updateRequired": false,
+      "reason": "available"
+    },
+    {
+      "packageName": "cc.huevia.next",
+      "versionCode": 229,
+      "sdk": 35,
+      "selectedVersion": 229,
+      "updateRequired": false,
+      "reason": "current"
+    },
+    {
+      "packageName": "com.nikonpreset.usbprobe",
+      "versionCode": 0,
+      "sdk": 35,
+      "updateRequired": false,
+      "reason": "withdrawn"
+    }
+  ],
+  "iosConditional": {
+    "version": 229,
+    "status": 304
+  }
+}

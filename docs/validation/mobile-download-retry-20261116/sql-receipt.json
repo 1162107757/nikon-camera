@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-16T01:05:09.548Z",
+  "sourceCommit": "9e37095",
+  "sqlSha256": "39a46f68fbe35c3c7a1f63c45af4b93bf4aba83868dfa4eec8fafedc4cc760d3",
+  "grants": {
+    "anon": false,
+    "authenticated": false,
+    "service": true
+  },
+  "releaseTablesUnchanged": true,
+  "existingBudgetFunctionsUnchanged": true,
+  "quotaCapsChanged": false,
+  "usageReset": false
+}

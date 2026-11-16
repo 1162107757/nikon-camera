@@ -1,0 +1,18 @@
+[
+  {
+    "packageName": "cc.huevia.next",
+    "metadataStatus": 200,
+    "versionCode": 229,
+    "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/next/releases/207a5fb8-3824-49f8-b7c0-2d3a08f0b07c/file",
+    "conditionalFileStatus": 304,
+    "retryAfter": null
+  },
+  {
+    "packageName": "cc.huevia",
+    "metadataStatus": 200,
+    "versionCode": 197,
+    "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/da8dff7d-f639-4a3e-839e-cfa3a5700da3/file",
+    "conditionalFileStatus": 304,
+    "retryAfter": null
+  }
+]

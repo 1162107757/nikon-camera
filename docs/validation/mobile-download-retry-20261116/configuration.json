@@ -1,0 +1,7 @@
+{
+  "status": "Active",
+  "modifiedAt": "2026-11-15 17:58:25",
+  "trustedProxyHops": "4",
+  "trustedProxyAddresses": "127.0.0.1,::1",
+  "trustedForwardedProxyAddresses": "118.24.164.117"
+}

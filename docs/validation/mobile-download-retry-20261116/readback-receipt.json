@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-16T01:06:06.045Z",
+  "status": "Active",
+  "configurationPreserved": true,
+  "readbackBytes": 30606754,
+  "readbackSha256": "4359ccefbf4b2b306c9e9d0a5151a84b1e41c39dcc71cca24fb5a8a4e5abc52e",
+  "releaseTablesUnchanged": true,
+  "existingBudgetFunctionsUnchanged": true
+}

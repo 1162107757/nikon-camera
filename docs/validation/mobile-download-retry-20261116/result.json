@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "sourceCommit": "9e370958b9545dc7357c8f64d886afc282679de7",
+  "deployed": true,
+  "deployedAtShanghai": "2026-11-16 09:05:46 +08:00",
+  "changes": [
+    "024 service-only download retry RPC",
+    "server/mobile-releases.mjs",
+    "server/release-download-error.mjs"
+  ],
+  "limits": {
+    "ipRequestsPerHour": 20,
+    "ipBytesPerHour": 536870912,
+    "globalRequestsPerUtcDay": 1000,
+    "globalBytesPerUtcDay": 5368709120,
+    "retryWindowSeconds": 600,
+    "retryWindowExtendedByRetries": false
+  },
+  "existingCountersReset": false,
+  "newClientArtifactsPublished": false,
+  "localTests": {
+    "tests": 258,
+    "passed": 250,
+    "failed": 0,
+    "skipped": 8,
+    "syntaxModules": 84
+  },
+  "production": {
+    "archiveEntries": 53,
+    "replacedEntries": 2,
+    "unchangedEntries": 51,
+    "configurationPreserved": true,
+    "releaseTablesUnchanged": true,
+    "existingBudgetFunctionsUnchanged": true,
+    "downloadAccounting": {
+      "requests": 3,
+      "chargedBytes": 53264170,
+      "fullPackagesCharged": 1,
+      "retryBytes": 0,
+      "conditionalBytes": 0
+    },
+    "actualDownload": {
+      "status": 200,
+      "bytes": 53264170,
+      "sha256": "357b1ecaadabf4a0009c3b568a6ae1402b8d0eb9db92c068e19d44506c0a4c18",
+      "matchesPublished": true
+    },
+    "metadataChecks": 9,
+    "iosConditional": {
+      "version": 229,
+      "status": 304
+    }
+  },
+  "limitsOfEvidence": [
+    "Screenshot cannot identify the exact source bucket of the reported failure.",
+    "Quota reserves signed download grants, not measured COS transfer bytes.",
+    "Existing hourly/day ceilings still apply; deployment does not refund old reservations.",
+    "Historical APK fixture tests skipped in the isolated worktree are retained as skips."
+  ]
+}

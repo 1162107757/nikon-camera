@@ -1,0 +1,20 @@
+{
+  "baselineSha256": "79338b49e05aa7349b20150a19049c86b340a46be9084a79478c3bb1c7b1c4fc",
+  "candidateSha256": "1a84754c88e0ea8b1d5a4739bc108bb60753319dffd3271dbee0eb08d507cc04",
+  "entries": 53,
+  "onlyChanged": [
+    "server/release-download-error.mjs",
+    "server/mobile-releases.mjs"
+  ],
+  "unchangedEntries": 51,
+  "replacements": [
+    {
+      "path": "server/mobile-releases.mjs",
+      "sha256": "aaaac2ad4f08b530042a6c005ae00f244d680cbbbe8d195baac390678b329bf9"
+    },
+    {
+      "path": "server/release-download-error.mjs",
+      "sha256": "38d23c2e15ef6309332c7da852a3141758fb98e3c8e669e8defaa4ca6a581eb7"
+    }
+  ]
+}
