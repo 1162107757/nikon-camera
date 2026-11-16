@@ -9,6 +9,8 @@ import 'package:huevia/theme.dart';
 class _SlotsCore extends HueviaCore {
   final calls = <(String, Json)>[];
   String phase = 'verified';
+  String explanation = '完整转换参数已核对';
+  String presetFormat = 'NCP';
   bool parametersUncertain = false;
   Completer<Json>? execution;
   Json get state => {
@@ -82,7 +84,7 @@ class _SlotsCore extends HueviaCore {
           'beforeName': '预设${(payload['target'] as int) - 200}',
           'overwrite': payload['target'] != 202,
           'name': '标准曲线',
-          'explanation': '完整转换参数已核对',
+          'explanation': explanation,
           'parameterSummary': '按所选参数处理',
         };
       case 'camera.slots.execute':
@@ -135,7 +137,7 @@ void main() {
               ? Preset({
                   'id': 'b' * 64,
                   'displayName': '标准曲线',
-                  'fileFormat': 'NCP',
+                  'fileFormat': core.presetFormat,
                 })
               : null,
         ),
@@ -158,6 +160,32 @@ void main() {
     if (doubleConfirm) button.onPressed!();
     await tester.pump(const Duration(milliseconds: 350));
   }
+
+  testWidgets(
+    'NP3 omitted parameters stay informative and allow explicit import',
+    (tester) async {
+      core.presetFormat = 'NP3';
+      core.explanation =
+          'NP3 已转换为兼容 NCP，原文件保留。\n保留：曲线与锐化\n不导入：色彩混合器、分区调色\n可继续导入以上兼容部分。';
+      await open(tester);
+      await tester.tap(find.byKey(const ValueKey('camera-slot-import')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('不导入：色彩混合器、分区调色'), findsOneWidget);
+      expect(core.calls.where((c) => c.$1 == 'camera.slots.execute'), isEmpty);
+      final button = tester.widget<FilledButton>(
+        find.widgetWithText(FilledButton, '确认写入此槽位'),
+      );
+      expect(button.onPressed, isNotNull);
+      button.onPressed!();
+      await tester.pumpAndSettle();
+      expect(
+        core.calls.where((c) => c.$1 == 'camera.slots.execute'),
+        hasLength(1),
+      );
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
 
   testWidgets(
     'Embedded import stays reachable in landscape with doubled system text',
@@ -261,6 +289,7 @@ void main() {
         'path': '/private/test.ncp',
         'middleQuarter': 4,
         'clarityQuarter': 0,
+        'detailOverride': false,
         'parameters': <String, dynamic>{},
       });
       expect(

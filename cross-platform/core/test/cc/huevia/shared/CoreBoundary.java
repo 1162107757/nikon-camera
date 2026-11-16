@@ -112,6 +112,7 @@ public final class CoreBoundary {
             checks+=CameraSessionBoundaryTest.run(temporary);
             checks+=CameraTransferBoundaryTest.run(temporary);
             checks+=CameraControlsBoundaryTest.run(temporary);
+            checks+=cc.huevia.ncp.CameraPresetProjectionTest.run();
             checks+=CameraMaintenanceBoundaryTest.run(temporary.resolve("camera-maintenance"));
             checks+=SlotParametersBoundaryTest.run(temporary.resolve("slot-parameters"));
             checks+=CameraRawBoundaryTest.run(temporary);

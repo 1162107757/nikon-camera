@@ -105,7 +105,6 @@ List<EditorMoreEntry> editorMoreEntries(
       item(EditorMoreAction.optimize, '快速优化', hint: '自然、通透与人像'),
       item(EditorMoreAction.recipes, '照片配方', hint: '保存与应用本机配方'),
       item(EditorMoreAction.composition, '精细构图', hint: '裁切、拉直与透视'),
-      item(EditorMoreAction.lighting, '光影', hint: '柔光、侧光、聚光与阴影'),
       item(
         EditorMoreAction.copy,
         '复制调色',

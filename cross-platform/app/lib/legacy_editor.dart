@@ -870,6 +870,10 @@ extension _LegacyWorkspace on _EditorPageState {
 
   void selectWorkspaceMode(int next) {
     if (!toolsEnabled) return;
+    if (next == 10) {
+      unawaited(openLegacyTools(lighting: true));
+      return;
+    }
     if (next == 8) {
       unawaited(openRetouch());
       return;
@@ -886,6 +890,7 @@ extension _LegacyWorkspace on _EditorPageState {
           for (final entry in [
             (0, '滤镜', HueIconKind.filter),
             (1, '调节', HueIconKind.adjust),
+            (10, '光影', HueIconKind.brightness),
             (3, '裁切', HueIconKind.crop),
             (8, '人像', HueIconKind.person),
             (4, '边框', HueIconKind.frame),

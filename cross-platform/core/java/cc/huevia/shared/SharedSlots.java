@@ -3,6 +3,9 @@ package cc.huevia.shared;
 import cc.huevia.album.PtpIpClient;
 import cc.huevia.album.PhotoCameraClient;
 import cc.huevia.ncp.NcpPictureControlConverter;
+import cc.huevia.ncp.CameraPresetProjection;
+import cc.huevia.ncp.NcpFile;
+import cc.huevia.ncp.Np3Container;
 import cc.huevia.picturecontrol.*;
 import cc.huevia.ptp.*;
 import cc.huevia.usb.CameraParameterController;
@@ -163,9 +166,12 @@ public final class SharedSlots implements AutoCloseable {
                 PictureControlWriteValidation.validateConvertedData(requested);explanation="将当前相机槽位复制到目标；不会选择或应用此预设。";
             }else{
                 String path=SharedRuntime.text(p,"path",4096);File file=new File(path).getCanonicalFile();
-                if(!file.toPath().startsWith(root.toPath())||!file.isFile()||file.length()!=638)throw new IOException("请选择已导入 App 的受支持 NCP 文件。");
+                if(!file.toPath().startsWith(root.toPath())||!file.isFile()||file.length()<8||file.length()>NcpFile.MAX_BYTES)throw new IOException("请选择已导入 App 的 NCP 或 NP3 文件。");
                 byte[] original=Files.readAllBytes(file.toPath());
-                NcpPictureControlConverter.Conversion conversion=NcpPictureControlConverter.convert(original,SharedRuntime.integer(p,"middleQuarter",0),SharedRuntime.integer(p,"clarityQuarter",0));
+                boolean tuning=!Np3Container.isNp3(original)||Boolean.TRUE.equals(p.get("detailOverride"));
+                CameraPresetProjection.Plan projection=CameraPresetProjection.plan(original,
+                        tuning?SharedRuntime.integer(p,"middleQuarter",4):null,tuning?SharedRuntime.integer(p,"clarityQuarter",0):null);
+                NcpPictureControlConverter.Conversion conversion=projection.conversion;
                 requested=conversion.dataBytes();PictureControlWriteValidation.validateConvertedData(requested);explanation=conversion.toDisplayText();
             }
         }else throw new IOException("请选择写入或删除。");

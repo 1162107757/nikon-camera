@@ -19,7 +19,6 @@ void main() {
       '快速优化',
       '照片配方',
       '精细构图',
-      '光影',
       '复制调色',
       '撤销复制',
       '继续编辑',
@@ -27,23 +26,7 @@ void main() {
       '还原原图',
       '删除照片',
     ]);
-    expect(all.map((e) => e.group), [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      1,
-      1,
-      1,
-      2,
-      2,
-      3,
-    ]);
+    expect(all.map((e) => e.group), [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]);
     final scope = rows(
       const EditorMoreState(
         showFavourite: false,
