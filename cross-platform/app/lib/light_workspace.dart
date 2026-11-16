@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'domain.dart';
 import 'legacy_local_preview.dart';
 import 'editing_viewport.dart';
+import 'hue_icons.dart';
 
 /// Source-coordinate relighting uses the same masks for preview, drafts and exports.
 List<Json> lightMasks({
@@ -69,6 +70,7 @@ class LightWorkspace extends StatefulWidget {
 }
 
 class _LightWorkspaceState extends State<LightWorkspace> {
+  static const yellow = Color(0xffffe335), white = Color(0xfff4f5f7);
   int style = 0;
   double amount = 0, angle = 0, size = .5, warmth = 0;
   Offset center = const Offset(.5, .5);
@@ -174,9 +176,13 @@ class _LightWorkspaceState extends State<LightWorkspace> {
     ValueChanged<double> change,
   ) => Row(
     children: [
-      SizedBox(width: 48, child: Text(label)),
+      SizedBox(
+        width: 48,
+        child: Text(label, style: const TextStyle(fontSize: 13)),
+      ),
       Expanded(
         child: Slider(
+          key: ValueKey('light-parameter-$label'),
           value: value,
           min: min,
           max: max,
@@ -188,13 +194,90 @@ class _LightWorkspaceState extends State<LightWorkspace> {
         ),
       ),
       SizedBox(
-        width: 42,
-        child: Text(value.round().toString(), textAlign: TextAlign.end),
+        width: 34,
+        child: Text(
+          value.round().toString(),
+          textAlign: TextAlign.end,
+          style: const TextStyle(fontSize: 13),
+        ),
       ),
     ],
   );
+
+  Widget styleStrip(double scale) => SizedBox(
+    height: 67 + 20 * (scale - 1),
+    child: Row(
+      children: [
+        for (final entry in const [
+          ('柔光', HueIconKind.brightness),
+          ('侧光', HueIconKind.sideLight),
+          ('聚光', HueIconKind.spotLight),
+          ('阴影', HueIconKind.shadowLight),
+        ].indexed)
+          Expanded(
+            child: Semantics(
+              key: ValueKey('light-style-${entry.$1}'),
+              container: true,
+              excludeSemantics: true,
+              button: true,
+              enabled: current,
+              selected: style == entry.$1,
+              label: entry.$2.$1,
+              onTap: current ? () => selectStyle(entry.$1) : null,
+              child: InkWell(
+                onTap: current ? () => selectStyle(entry.$1) : null,
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 39,
+                        height: 39,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: style == entry.$1
+                              ? const Color(0xe6111713)
+                              : const Color(0x9c101412),
+                        ),
+                        child: Center(
+                          child: HueIcon(
+                            entry.$2.$2,
+                            size: 21,
+                            color: style == entry.$1 ? yellow : white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        entry.$2.$1,
+                        style: TextStyle(
+                          fontSize: 11,
+                          height: 1.17,
+                          color: style == entry.$1 ? yellow : white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
+    ),
+  );
+
+  void selectStyle(int next) => adjust(() {
+    style = next;
+    if (amount == 0) amount = 50;
+  }, immediate: true);
+
   @override
   Widget build(BuildContext context) {
+    final scale = MediaQuery.textScalerOf(context)
+        .scale(1)
+        .clamp(1.0, 2.0)
+        .toDouble();
     final frame = original ? widget.frame : preview.frame ?? widget.frame;
     final photo = LayoutBuilder(
       builder: (context, bounds) {
@@ -236,21 +319,23 @@ class _LightWorkspaceState extends State<LightWorkspace> {
         );
       },
     );
-    final panel = SafeArea(
+    final controls = SafeArea(
       top: false,
+      minimum: const EdgeInsets.only(bottom: 4),
       child: Column(
         children: [
           Row(
             children: [
               IconButton(
-                tooltip: '取消光影',
+                key: const ValueKey('light-back'),
+                tooltip: '返回编辑工具',
                 onPressed: () => finish(),
-                icon: const Icon(Icons.close),
+                icon: const HueIcon(HueIconKind.back, size: 21),
               ),
               const Expanded(
                 child: Text(
                   '光影',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
               TextButton(
@@ -278,24 +363,15 @@ class _LightWorkspaceState extends State<LightWorkspace> {
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               children: [
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    for (var i = 0; i < 4; i++)
-                      ChoiceChip(
-                        label: Text(const ['柔光', '侧光', '聚光', '阴影'][i]),
-                        selected: style == i,
-                        onSelected: !current
-                            ? null
-                            : (_) => adjust(() {
-                                style = i;
-                                if (amount == 0) amount = 50;
-                              }, immediate: true),
-                      ),
-                  ],
+                styleStrip(scale),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    '轻点照片调整光影位置',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11, color: Color(0xffc8cdca)),
+                  ),
                 ),
-                const SizedBox(height: 8),
-                const Text('轻点照片调整光影位置', style: TextStyle(fontSize: 12)),
                 slider('强度', amount, 0, 100, (v) => adjust(() => amount = v)),
                 if (style == 1)
                   slider('方向', angle, 0, 360, (v) => adjust(() => angle = v))
@@ -314,20 +390,11 @@ class _LightWorkspaceState extends State<LightWorkspace> {
                   100,
                   (v) => adjust(() => warmth = v),
                 ),
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () => setState(() => original = !original),
-                      child: Text(original ? '查看效果' : '对比进入前'),
-                    ),
-                    const Spacer(),
-                    if (preview.error != null)
-                      TextButton(
-                        onPressed: preview.retry,
-                        child: const Text('重试预览'),
-                      ),
-                  ],
-                ),
+                if (preview.error != null)
+                  TextButton(
+                    onPressed: preview.retry,
+                    child: const Text('重试预览'),
+                  ),
                 if (preview.error != null)
                   Text(
                     '${preview.error}',
@@ -342,6 +409,49 @@ class _LightWorkspaceState extends State<LightWorkspace> {
         ],
       ),
     );
-    return widget.layoutBuilder(context, photo, panel);
+    final panel = EditingToolPanel(
+      preferredHeight:
+          292 + 28 * (scale - 1) + MediaQuery.paddingOf(context).bottom,
+      child: SliderTheme(
+        data: SliderTheme.of(context).copyWith(
+          trackHeight: 2,
+          activeTrackColor: yellow,
+          inactiveTrackColor: white.withValues(alpha: .28),
+          thumbColor: white,
+          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+        ),
+        child: controls,
+      ),
+    );
+    return widget.layoutBuilder(
+      context,
+      Stack(
+        key: const ValueKey('light-photo'),
+        fit: StackFit.expand,
+        children: [
+          photo,
+          Positioned(
+            right: 12,
+            bottom: 12,
+            child: Material(
+              color: const Color(0xe6111713),
+              shape: const CircleBorder(),
+              child: Semantics(
+                toggled: original,
+                child: IconButton(
+                  tooltip: original ? '查看光影效果' : '对比进入前',
+                  onPressed: () => setState(() => original = !original),
+                  icon: HueIcon(
+                    HueIconKind.splitCompare,
+                    color: original ? yellow : white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      panel,
+    );
   }
 }

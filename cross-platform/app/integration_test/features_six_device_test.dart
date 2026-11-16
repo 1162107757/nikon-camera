@@ -260,10 +260,10 @@ void main() {
           target.$2,
           dark: true,
           beforeCapture: () async {
-            await tester.tap(find.widgetWithText(ChoiceChip, '侧光'));
+            await tester.tap(find.byKey(const ValueKey('light-style-1')));
           },
         );
-        await tester.tap(find.widgetWithText(ChoiceChip, '侧光'));
+        await tester.tap(find.byKey(const ValueKey('light-style-1')));
         await settle();
         await tester.tap(find.byKey(const Key('apply-light')));
         await tester.pump();

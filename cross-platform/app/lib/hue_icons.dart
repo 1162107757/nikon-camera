@@ -69,6 +69,9 @@ enum HueIconKind {
   receipts,
   delete,
   moreVertical,
+  sideLight,
+  spotLight,
+  shadowLight,
 }
 
 class HueIcon extends StatelessWidget {
@@ -161,6 +164,26 @@ class _Painter extends CustomPainter {
           line([10, 12, 14, 12]);
           line([12, 10, 12, 14]);
         }
+      case HueIconKind.sideLight:
+        arc(5, 6, 17, 18, 90, 180);
+        line([12, 2, 12, 22]);
+        for (final degrees in [-60.0, -30.0, 0.0, 30.0, 60.0]) {
+          final a = degrees * math.pi / 180;
+          line([
+            12 + math.cos(a) * 8,
+            12 + math.sin(a) * 8,
+            12 + math.cos(a) * 10,
+            12 + math.sin(a) * 10,
+          ]);
+        }
+      case HueIconKind.spotLight:
+        arc(10, 2, 14, 6, 180, 180);
+        line([8, 8, 16, 8, 22, 21, 2, 21, 8, 8]);
+      case HueIconKind.shadowLight:
+        line([4, 12, 12, 4]);
+        line([4, 19, 19, 4]);
+        line([9, 21, 21, 9]);
+        line([16, 21, 21, 16]);
       case HueIconKind.contrast:
       case HueIconKind.blacks:
         circle(12, 12, 9);
