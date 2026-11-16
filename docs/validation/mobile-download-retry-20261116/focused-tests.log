@@ -1,0 +1,81 @@
+TAP version 13
+# Subtest: website and direct gateway use the same client IP, not the shared website proxy
+ok 1 - website and direct gateway use the same client IP, not the shared website proxy
+  ---
+  duration_ms: 1.976
+  ...
+# Subtest: spoofed leading IPs, trusted-proxy literals and Host cannot select the source
+ok 2 - spoofed leading IPs, trusted-proxy literals and Host cannot select the source
+  ---
+  duration_ms: 0.5416
+  ...
+# Subtest: proxy allowlist stays exact, validates addresses and preserves the socket trust boundary
+ok 3 - proxy allowlist stays exact, validates addresses and preserves the socket trust boundary
+  ---
+  duration_ms: 1.0681
+  ...
+# Subtest: full handler isolates website download quotas and explains IP limits with the actual wait
+ok 4 - full handler isolates website download quotas and explains IP limits with the actual wait
+  ---
+  duration_ms: 68.4447
+  ...
+# Subtest: mobile SQL preserves quotas, debits fixed retries once and isolates files and sources
+ok 5 - mobile SQL preserves quotas, debits fixed retries once and isolates files and sources
+  ---
+  duration_ms: 1537.2589
+  ...
+# Subtest: Android and iOS HTTP download routes bind retry accounting, preserve 304 and expose real retry times
+ok 6 - Android and iOS HTTP download routes bind retry accounting, preserve 304 and expose real retry times
+  ---
+  duration_ms: 81.2247
+  ...
+# Subtest: IPA parser accepts bounded unsigned device identity and rejects wrong platforms, signatures and paths
+ok 7 - IPA parser accepts bounded unsigned device identity and rejects wrong platforms, signatures and paths
+  ---
+  duration_ms: 6.4499
+  ...
+# Subtest: actual 212 APK has its own pinned signer; old and new package signers cannot cross
+ok 8 - actual 212 APK has its own pinned signer; old and new package signers cannot cross # SKIP
+  ---
+  duration_ms: 0.2952
+  ...
+# Subtest: real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-domain manifest, integrity and withdrawal
+ok 9 - real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-domain manifest, integrity and withdrawal
+  ---
+  duration_ms: 1840.5268
+  ...
+# Subtest: browser download errors render HTML without changing API errors or successful signed downloads
+ok 10 - browser download errors render HTML without changing API errors or successful signed downloads
+  ---
+  duration_ms: 69.9289
+  ...
+# Subtest: download error page escapes text and does not render for metadata, POST or HTML-excluding clients
+ok 11 - download error page escapes text and does not render for metadata, POST or HTML-excluding clients
+  ---
+  duration_ms: 0.5037
+  ...
+# Subtest: IPA and next Android error links return to the same platform
+ok 12 - IPA and next Android error links return to the same platform
+  ---
+  duration_ms: 0.2902
+  ...
+# Subtest: public release limits isolate IPs and ignore historical global totals without resetting usage
+ok 13 - public release limits isolate IPs and ignore historical global totals without resetting usage
+  ---
+  duration_ms: 1449.8108
+  ...
+# Subtest: download routes reserve per-IP retries, count 304 with zero bytes and propagate real retry time
+ok 14 - download routes reserve per-IP retries, count 304 with zero bytes and propagate real retry time
+  ---
+  duration_ms: 64.897
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 6085.5661
+
