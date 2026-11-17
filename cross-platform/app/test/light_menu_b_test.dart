@@ -174,7 +174,9 @@ void main() {
         imageCache.clear();
         imageCache.clearLiveImages();
         // FileImage can hold Windows handles until the test process exits.
-        if (!Platform.isWindows) await dir.delete(recursive: true);
+        if (!Platform.isWindows) {
+          await tester.runAsync(() => dir.delete(recursive: true));
+        }
       },
     );
   }

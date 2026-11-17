@@ -96,6 +96,20 @@ Future<(int, int, Uint8List)> decodeCollage(Uint8List png) async {
   return result;
 }
 
+Future<void> settleCollageImages(WidgetTester tester) async {
+  // Headless widget tests use a fake clock. Allow the real file and image
+  // decoding futures to finish before waiting for the loading animation.
+  for (var i = 0; i < 200; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 10)),
+    );
+    await tester.pump(const Duration(milliseconds: 25));
+    if (find.byType(CircularProgressIndicator).evaluate().isEmpty) break;
+  }
+  expect(find.byType(CircularProgressIndicator), findsNothing);
+  await tester.pumpAndSettle();
+}
+
 void main() {
   test('all reference partitions cover the canvas once and stay within the pixel budget', () {
     expect(collagePatterns(4), hasLength(19));
@@ -259,7 +273,7 @@ void main() {
           home: CollageHarness(key: key, paths: List.filled(4, file!.path)),
         ),
       );
-      await tester.pumpAndSettle();
+      await settleCollageImages(tester);
       expect(find.text('拼图'), findsOneWidget);
       expect(find.text('New'), findsNothing);
       final canvas = tester.renderObject<RenderBox>(
@@ -280,7 +294,8 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('collage-edit-photo')));
       await tester.pump();
       final cropPoint = canvas.localToGlobal(const Offset(50, 40));
-      await tester.dragFrom(cropPoint, const Offset(30, 12));
+      // Exceed the desktop scale recognizer's pan slop as well as mobile's.
+      await tester.dragFrom(cropPoint, const Offset(80, 24));
       await tester.pump();
       expect(key.currentState!.transforms.first.offset.dx, greaterThan(0));
       await tester.tap(find.byKey(const ValueKey('collage-edit-photo')));
@@ -293,8 +308,13 @@ void main() {
       expect(key.currentState!.style.pattern, 4);
       await tester.tap(find.byKey(const ValueKey('collage-mode-template')));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(
+      await tester.scrollUntilVisible(
         find.byKey(const ValueKey('collage-template-3')),
+        160,
+        scrollable: find.descendant(
+          of: find.byType(GridView),
+          matching: find.byType(Scrollable),
+        ),
       );
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('collage-template-3')));
