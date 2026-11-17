@@ -30,14 +30,16 @@ class VisualCore extends fixture.ActionsCore {
       File('$root/chart.png').copySync(output);
       return {'path': output, 'width': 360, 'height': 480};
     }
-    if (operation == 'camera.status')
+    if (operation == 'camera.status') {
       return {
         'connected': true,
         'session': 'photo',
         'transport': 'usb',
         'mode': 'photos',
       };
-    if (operation == 'camera.slots.open' || operation == 'camera.slots.refresh')
+    }
+    if (operation == 'camera.slots.open' ||
+        operation == 'camera.slots.refresh') {
       return {
         'session': 'slots',
         'connected': true,
@@ -55,8 +57,9 @@ class VisualCore extends fixture.ActionsCore {
             },
         ],
       };
+    }
     if (operation == 'library.export') return {'path': '$root/fixture.np3'};
-    if (operation == 'camera.slots.prepare')
+    if (operation == 'camera.slots.prepare') {
       return {
         'confirmationId': 'visual-only',
         'targetLabel': 'C1',
@@ -66,6 +69,7 @@ class VisualCore extends fixture.ActionsCore {
         'explanation': 'NP3 已转换为兼容 NCP，原文件保留。\n保留：登记名称、原始自定义明暗曲线与锐化\n近似转换：灵活色彩基底改为自然\n不导入：全局饱和度、色彩混合器与分区调色\n可继续导入以上兼容部分；机身效果请试拍确认。',
         'parameterSummary': '不调整',
       };
+    }
     if (operation == 'camera.slots.close') return {};
     return super.call(operation, payload, jobId);
   }
@@ -92,11 +96,12 @@ void main() {
         const Color(0xff57745d),
         const Color(0xff493c36),
       ];
-      for (var i = 0; i < colours.length; i++)
+      for (var i = 0; i < colours.length; i++) {
         chartCanvas.drawRect(
           Rect.fromLTWH(0, i * 120, 360, 120),
           Paint()..color = colours[i],
         );
+      }
       final chart = await recorder.endRecording().toImage(360, 480),
           bytes = await chart.toByteData(format: ui.ImageByteFormat.png);
       File('${dir.path}/chart.png')
@@ -152,8 +157,9 @@ void main() {
         expect(find.text('光影').hitTestable(), findsOneWidget);
         await tester.tap(find.text('光影').hitTestable());
         await save(key, 'light-workspace-${size.width.toInt()}');
-        for (final name in ['柔光', '侧光', '聚光', '阴影'])
+        for (final name in ['柔光', '侧光', '聚光', '阴影']) {
           expect(find.text(name), findsOneWidget);
+        }
         await tester.pumpWidget(const SizedBox());
         await settle();
       }
