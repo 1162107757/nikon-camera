@@ -12,6 +12,7 @@ import 'domain.dart';
 import 'photo_format.dart';
 import 'curve_control.dart';
 import 'legacy_color_controls.dart';
+import 'palette_workspace.dart';
 import 'editing_viewport.dart';
 import 'recipes.dart';
 import 'copy_adjustments.dart';
@@ -27,6 +28,7 @@ import 'photo_workspace_chrome.dart';
 import 'local_adjustments.dart';
 import 'selection_workspace.dart';
 import 'legacy_local_workspace.dart';
+import 'light_workspace.dart';
 import 'retouch_workspace.dart';
 import 'theme.dart';
 import 'workspace_tools.dart';
@@ -120,6 +122,7 @@ class _EditorPageState extends State<EditorPage> {
   StreamSubscription<dynamic>? progressEvents;
   String? preview, comparison, error, activeJob, atmosphere;
   int parameterIndex = 1;
+  final adjustmentToolsScroll = ScrollController();
   bool atmosphereLoading = false;
   int atmosphereGeneration = 0;
   final panelRevision = ValueNotifier<int>(0);
@@ -247,6 +250,7 @@ class _EditorPageState extends State<EditorPage> {
 
   @override
   void dispose() {
+    adjustmentToolsScroll.dispose();
     retireEmbeddedTool?.call();
     effectDetails?.dispose();
     comparisonDetails?.dispose();

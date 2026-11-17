@@ -588,7 +588,7 @@ extension _LocalWorkspace on _EditorPageState {
     }
   }
 
-  Future<void> openLegacyTools() async {
+  Future<void> openLegacyTools({bool lighting = false}) async {
     if (!toolsEnabled) return;
     debounce?.cancel();
     revision++;
@@ -631,6 +631,22 @@ extension _LocalWorkspace on _EditorPageState {
       );
       if (!mounted || !current()) return;
       final result = await openEmbeddedWorkspace<Json>((finish, backReady) {
+        if (lighting) {
+          final page = LightWorkspace(
+            state: widget.state,
+            photo: widget.photo,
+            owner: owner,
+            recipe: frozen,
+            localState: base,
+            frame: frame,
+            isCurrent: current,
+            onFinished: finish,
+            onBackReady: backReady,
+            layoutBuilder: embeddedWorkspaceLayout,
+          );
+          ownedFrame = null;
+          return page;
+        }
         final page = LegacyLocalWorkspace(
           state: widget.state,
           photo: widget.photo,

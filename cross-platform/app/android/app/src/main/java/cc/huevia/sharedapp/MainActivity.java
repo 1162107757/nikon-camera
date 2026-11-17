@@ -102,7 +102,7 @@ public final class MainActivity extends FlutterActivity {
                 if(galleryPermission!=null||gallerySavePermission!=null){reply.error("BUSY","请完成当前照片权限选择。",null);return;}
                 galleryPermission=reply;
                 String permission=android.os.Build.VERSION.SDK_INT>=33?android.Manifest.permission.READ_MEDIA_IMAGES:android.Manifest.permission.READ_EXTERNAL_STORAGE;
-                requestPermissions(android.os.Build.VERSION.SDK_INT>=34?new String[]{permission,android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}:new String[]{permission},49318);return;
+                requestPermissions(android.os.Build.VERSION.SDK_INT>=34?new String[]{permission,android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}:android.os.Build.VERSION.SDK_INT>=33?new String[]{permission}:new String[]{permission},49318);return;
             }
             if(call.method.equals("pickAvatar")){
                 Object owner=call.argument("owner"),updatedAt=call.argument("updatedAt");

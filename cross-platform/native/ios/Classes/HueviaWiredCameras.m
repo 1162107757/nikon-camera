@@ -86,6 +86,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   if(![client.device.capabilities containsObject:ICCameraDeviceCanAcceptPTPCommands])wiredFailure(@"此相机未提供系统 PTP 命令通道，未打开优化校准会话。");
   HueviaWiredSlots *slots=[[HueviaWiredSlots alloc] init];slots.client=client;slots.guard=[[CcHueviaSharedSharedSlotTransportGuard alloc] init];self.slots=slots;return slots;
 }
+- (id<CcHueviaSharedSharedSlots_Transport>)adoptSlotsWithNSString:(NSString *)identity withCcHueviaAlbumPhotoCameraClient:(id<CcHueviaAlbumPhotoCameraClient>)photo {return nil;}
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didAddDevice:(ICDevice *)device moreComing:(BOOL)moreComing {if(self.discovery&&supported(device))dispatch_semaphore_signal(self.discovery);}
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didRemoveDevice:(ICDevice *)device moreGoing:(BOOL)moreGoing {if(self.active.device==device)[self.active close];}
 - (void)dealloc {
@@ -213,6 +214,8 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 
 /** ICC owns the PTP session. Logical session operations map to actual, awaited OS operations. */
 @implementation HueviaWiredSlots
+- (jlong)inheritedTransaction {return 0;}
+- (id<CcHueviaAlbumPhotoCameraClient>)releaseAlbumWithLong:(jlong)next {return nil;}
 - (bool)isSessionManaged {return true;}
 - (bool)isOpen {return self.client!=nil&&self.client.open;}
 - (void)authorizeDeletionWithInt:(jint)target {[self.guard authorizeDeletionWithInt:target];}

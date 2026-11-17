@@ -74,7 +74,7 @@ HueviaRaster *compose(HueviaRaster *input,CcHueviaNcpPhotoGeometry *geometry,NSS
 NSDictionary *captureData(NSDictionary *props){
   NSDictionary *tiff=props[(__bridge id)kCGImagePropertyTIFFDictionary]?:@{},*exif=props[(__bridge id)kCGImagePropertyExifDictionary]?:@{};NSMutableDictionary *data=[NSMutableDictionary dictionary];
   for(NSString *key in @[@"Make",@"Model"]){id value=tiff[key];if(value)data[key]=[value description];}
-  for(NSString *key in @[@"FocalLength",@"FNumber",@"ExposureTime",@"PhotographicSensitivity",@"ISOSpeedRatings",@"DateTimeOriginal",@"DateTimeDigitized"]){id value=exif[key];if([value isKindOfClass:NSArray.class])value=[value firstObject];if(value)data[key]=[value description];}
+  for(NSString *key in @[@"FocalLength",@"FNumber",@"ExposureTime",@"PhotographicSensitivity",@"ISOSpeedRatings",@"DateTimeOriginal",@"DateTimeDigitized",@"LensModel"]){id value=exif[key];if([value isKindOfClass:NSArray.class])value=[value firstObject];if(value)data[key]=[value description];}
   return data;
 }
 NSDictionary *safeMetadata(NSDictionary *source,int width,int height,double quality){
@@ -425,7 +425,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];
     CcHueviaSharedSharedCaptureInfo *capture=[[CcHueviaSharedSharedCaptureInfo alloc] initWithNSString:json(captureData(metadata))];NSMutableArray *fields=[NSMutableArray array];
     for(int i=0;i<5;i++)[fields addObject:[capture fieldWithCcHueviaNcpPhotoBorder:CcHueviaNcpPhotoBorder_get_NONE() withInt:i]];
-    check(task);[_runtime guardOwnerWithNSString:owner];return @{@"brand":capture->brand_,@"model":capture->model_,@"fields":fields};
+    check(task);[_runtime guardOwnerWithNSString:owner];return @{@"brand":capture->brand_,@"model":capture->model_,@"fields":fields,@"lens":capture->lens_};
   }
   if([operation isEqualToString:@"media.rawReferenceInfo"]){
     if(!raw)fail(@"请选择 RAW 原文件。");NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];

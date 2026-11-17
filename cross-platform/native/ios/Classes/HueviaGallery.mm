@@ -1,6 +1,7 @@
 #import "HueviaGallery.h"
 #import "HueviaAlbumOperations.h"
 #import "HueviaPublication.h"
+#import "HueviaGalleryPreview.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
@@ -23,6 +24,7 @@ BOOL isRaw(PHAssetResource *r){
 PHAssetResource *originalResource(PHAsset *asset){
   PHAssetResource *photo=nil;
   for(PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:asset]){
+    if(asset.mediaType==PHAssetMediaTypeVideo&&(resource.type==PHAssetResourceTypeVideo||resource.type==PHAssetResourceTypeFullSizeVideo))return resource;
     if(resource.type!=PHAssetResourceTypePhoto&&resource.type!=PHAssetResourceTypeAlternatePhoto)continue;
     if(isRaw(resource))return resource;
     if(!photo||resource.type==PHAssetResourceTypePhoto)photo=resource;
@@ -40,12 +42,16 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
 @property(nonatomic,strong) HueviaAlbumOperations *albumOperations;
 @property(nonatomic,copy) NSString *root;
 @property(nonatomic,strong) PHFetchResult<PHAsset *> *index;
+@property(nonatomic,copy) NSString *indexCategory;
+@property(nonatomic,copy) NSString *indexOrder;
+@property(nonatomic,copy) NSString *indexAlbum;
 @property(nonatomic,strong) NSMutableOrderedSet<NSString *> *known;
 @property(atomic) BOOL dirty;
 @property(nonatomic) BOOL permissionPending;
 @property(nonatomic,strong) HueviaPublication *publication;
 - (NSDictionary *)thumbnail:(PHAsset *)asset resource:(PHAssetResource *)resource task:(HueviaTask *)task;
 - (NSDictionary *)importAsset:(PHAsset *)asset resource:(PHAssetResource *)resource task:(HueviaTask *)task;
+- (NSArray *)albumsForTask:(HueviaTask *)task;
 @end
 
 @implementation HueviaGallery
@@ -66,7 +72,8 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
 - (void)photoLibraryDidChange:(PHChange *)change {self.dirty=YES;void (^changed)(void)=self.changed;if(changed)changed();}
 - (NSDictionary *)access {
   PHAuthorizationStatus state=[PHPhotoLibrary authorizationStatusForAccessLevel:PHAccessLevelReadWrite];
-  return @{@"access":state==PHAuthorizationStatusAuthorized?@"full":state==PHAuthorizationStatusLimited?@"limited":@"none",@"canAsk":@(state==PHAuthorizationStatusNotDetermined),@"alternateBasis":@"modified"};
+  NSString *access=state==PHAuthorizationStatusAuthorized?@"full":state==PHAuthorizationStatusLimited?@"limited":@"none";
+  return @{@"access":access,@"imageAccess":access,@"videoAccess":@"none",@"canAsk":@(state==PHAuthorizationStatusNotDetermined),@"alternateBasis":@"modified"};
 }
 - (void)permissionReply:(FlutterResult)reply {
   self.permissionPending=NO;
@@ -103,29 +110,63 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
   if([operation isEqual:@"gallery.delete"]||[operation isEqual:@"gallery.publishedCopies"]){if(!self.albumOperations)galleryFail(@"应用尚未准备好。");return [self.albumOperations request:operation payload:p task:task];}
   if(!canRead()){self.index=nil;[self.known removeAllObjects];galleryFail(@"请允许访问照片，或选择指定照片。");}
   if([operation isEqualToString:@"gallery.page"]){
+    NSString *category=p[@"category"]?:@"all",*query=p[@"query"]?:@"",*album=p[@"album"]?:@"";
+    if(![album isKindOfClass:NSString.class]||album.length>256)galleryFail(@"相册位置无效。");
+    if(![category isKindOfClass:NSString.class]||![@[@"all",@"image",@"live",@"raw"] containsObject:category]||![query isKindOfClass:NSString.class]||query.length>256)galleryFail(@"相册分类或搜索内容无效。");
+    NSString *order=[NSString stringWithFormat:@"%d:%d",[p[@"added"] boolValue],[p[@"oldest"] boolValue]];
     id requested=p[@"offset"]?:@0;
     if(![requested isKindOfClass:NSNumber.class]||CFGetTypeID((__bridge CFTypeRef)requested)==CFBooleanGetTypeID()||[requested doubleValue]!=[requested longLongValue]||[requested longLongValue]<0||[requested longLongValue]>INT32_MAX)galleryFail(@"照片分页位置无效。");
-    if([p[@"refresh"] boolValue]||!self.index||self.dirty){
+    if([p[@"refresh"] boolValue]||!self.index||self.dirty||![self.indexCategory isEqual:category]||![self.indexOrder isEqual:order]||![self.indexAlbum isEqual:album]){
       PHFetchOptions *options=[PHFetchOptions new];options.includeHiddenAssets=NO;
+      options.predicate=[category isEqual:@"live"]?[NSPredicate predicateWithFormat:@"mediaType == %d AND (mediaSubtypes & %d) != 0",PHAssetMediaTypeImage,PHAssetMediaSubtypePhotoLive]:![category isEqual:@"all"]?[NSPredicate predicateWithFormat:@"mediaType == %d",PHAssetMediaTypeImage]:[NSPredicate predicateWithFormat:@"mediaType == %d",PHAssetMediaTypeImage];
       options.sortDescriptors=@[[NSSortDescriptor sortDescriptorWithKey:[p[@"added"] boolValue]?@"modificationDate":@"creationDate" ascending:[p[@"oldest"] boolValue]]];
-      self.index=[PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];self.dirty=NO;
+      if(album.length){PHAssetCollection *collection=[PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[album] options:nil].firstObject;if(!collection)galleryFail(@"此相册已变化，请重新选择相册。");self.index=[PHAsset fetchAssetsInAssetCollection:collection options:options];}
+      else self.index=[PHAsset fetchAssetsWithOptions:options];
+      self.indexCategory=category;self.indexOrder=order;self.indexAlbum=album;self.dirty=NO;
     }
     NSUInteger cursor=[requested unsignedIntegerValue];if(cursor>self.index.count)galleryFail(@"相册已变化，请重新加载。");
     NSMutableArray *rows=[NSMutableArray array];NSUInteger scanned=0;
     while(cursor<self.index.count&&rows.count<60&&scanned++<300){
       galleryCheck(task);PHAsset *asset=self.index[cursor++];PHAssetResource *resource=originalResource(asset);if(!resource)continue;
+      BOOL raw=isRaw(resource);
+      if(([category isEqual:@"raw"]&&!raw)||([category isEqual:@"image"]&&raw)||(query.length>0&&[(resource.originalFilename?:@"") rangeOfString:query options:NSCaseInsensitiveSearch].location==NSNotFound))continue;
       [self.known addObject:asset.localIdentifier];while(self.known.count>600)[self.known removeObjectAtIndex:0];
       NSDate *date=[p[@"added"] boolValue]?asset.modificationDate:asset.creationDate;
-      [rows addObject:@{@"id":asset.localIdentifier,@"name":resource.originalFilename?:@"photo",@"raw":@(isRaw(resource)),@"date":@((long long)((date?:asset.creationDate).timeIntervalSince1970*1000)),@"sizeUnknown":@YES}];
+      [rows addObject:@{@"id":asset.localIdentifier,@"name":resource.originalFilename?:@"photo",@"raw":@(raw),@"live":@((asset.mediaSubtypes&PHAssetMediaSubtypePhotoLive)!=0),@"mediaType":asset.mediaType==PHAssetMediaTypeVideo?@"video":@"image",@"duration":@((long long)(asset.duration*1000)),@"date":@((long long)((date?:asset.creationDate).timeIntervalSince1970*1000)),@"sizeUnknown":@YES}];
     }
     if(!canRead())galleryFail(@"照片权限已变化，请重新加载。");
-    return @{@"items":rows,@"nextOffset":@(cursor),@"hasMore":@(cursor<self.index.count),@"access":[self access][@"access"],@"alternateBasis":@"modified"};
+    NSMutableDictionary *result=[@{@"items":rows,@"nextOffset":@(cursor),@"hasMore":@(cursor<self.index.count),@"access":[self access][@"access"],@"alternateBasis":@"modified"} mutableCopy];
+    if(![category isEqual:@"raw"]&&![category isEqual:@"image"]&&!query.length)result[@"total"]=@(self.index.count);
+    if([requested unsignedIntegerValue]==0)result[@"albums"]=[self albumsForTask:task];
+    return result;
   }
   NSString *identifier=p[@"id"];if(![identifier isKindOfClass:NSString.class]||identifier.length>2048)galleryFail(@"照片标识无效。");
-  PHAsset *asset=([operation isEqual:@"gallery.import"]&&[p[@"batchSelection"] boolValue])?[PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil].firstObject:[self asset:identifier];if(!asset||asset.mediaType!=PHAssetMediaTypeImage)galleryFail(@"照片访问范围已变化，请重新选择。");PHAssetResource *resource=originalResource(asset);if(!resource)galleryFail(@"照片原文件暂不可用。");
+  PHAsset *asset=([operation isEqual:@"gallery.import"]&&[p[@"batchSelection"] boolValue])?[PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil].firstObject:[self asset:identifier];if(!asset)galleryFail(@"照片访问范围已变化，请重新选择。");PHAssetResource *resource=originalResource(asset);if(!resource)galleryFail(@"照片原文件暂不可用。");
+  if([operation isEqualToString:@"gallery.preview"])return HueviaPreviewGalleryAsset(asset,task);
   if([operation isEqualToString:@"gallery.thumbnail"])return [self thumbnail:asset resource:resource task:task];
-  if([operation isEqualToString:@"gallery.import"])return [self importAsset:asset resource:resource task:task];
+  if([operation isEqualToString:@"gallery.import"]){if(asset.mediaType!=PHAssetMediaTypeImage)galleryFail(@"视频可预览，修图和拼接请选择照片。");return [self importAsset:asset resource:resource task:task];}
   galleryFail(@"未知的系统相册操作。");return nil;
+}
+- (NSArray *)albumsForTask:(HueviaTask *)task {
+  PHFetchOptions *options=[PHFetchOptions new];options.includeHiddenAssets=NO;
+  options.predicate=[NSPredicate predicateWithFormat:@"mediaType == %d",PHAssetMediaTypeImage];
+  options.sortDescriptors=@[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
+  PHFetchResult<PHAsset *> *all=[PHAsset fetchAssetsWithOptions:options];
+  NSMutableArray *rows=[NSMutableArray array];
+  NSMutableDictionary *allRow=[@{@"id":@"",@"name":@"全部相册",@"count":@(all.count)} mutableCopy];
+  if(all.firstObject){allRow[@"cover"]=all.firstObject.localIdentifier;[self.known addObject:all.firstObject.localIdentifier];}
+  [rows addObject:allRow];
+  NSMutableArray<PHAssetCollection *> *collections=[NSMutableArray array];
+  for(PHAssetCollection *collection in [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:nil])[collections addObject:collection];
+  for(NSNumber *subtype in @[@(PHAssetCollectionSubtypeSmartAlbumFavorites),@(PHAssetCollectionSubtypeSmartAlbumScreenshots)])for(PHAssetCollection *collection in [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:(PHAssetCollectionSubtype)subtype.integerValue options:nil])[collections addObject:collection];
+  for(PHAssetCollection *collection in collections){
+    galleryCheck(task);PHFetchResult<PHAsset *> *assets=[PHAsset fetchAssetsInAssetCollection:collection options:options];if(!assets.count)continue;
+    [rows addObject:@{@"id":collection.localIdentifier,@"name":collection.localizedTitle?:@"相册",@"count":@(assets.count),@"cover":assets.firstObject.localIdentifier}];
+    [self.known addObject:assets.firstObject.localIdentifier];
+  }
+  while(self.known.count>600)[self.known removeObjectAtIndex:0];
+  if(!canRead())galleryFail(@"照片权限已变化，请重新加载。");
+  return rows;
 }
 - (NSDictionary *)thumbnail:(PHAsset *)asset resource:(PHAssetResource *)resource task:(HueviaTask *)task {
   NSString *directory=privateDirectory(self.root,@"gallery-thumbnails");NSError *error=nil;

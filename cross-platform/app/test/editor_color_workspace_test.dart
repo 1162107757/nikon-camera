@@ -128,6 +128,8 @@ Future<({ColorWorkspaceCore core, RealtimeState state})> open(
 
 Future<void> tool(WidgetTester tester, String name) async {
   final label = find.text(name);
+  await tester.ensureVisible(label);
+  await frames(tester, count: 2);
   final strip = find
       .ancestor(of: label, matching: find.byType(SingleChildScrollView))
       .first;
@@ -135,10 +137,20 @@ Future<void> tool(WidgetTester tester, String name) async {
     await tester.drag(strip, const Offset(-210, 0));
     await tester.pump();
   }
+  if (label.hitTestable().evaluate().isEmpty) {
+    debugPrint(
+      'COLOR_TOOL_ENTRY $name rect=${tester.getRect(label)} view=${tester.view.physicalSize} strip=${tester.getRect(strip)}',
+    );
+  }
   expect(label.hitTestable(), findsOneWidget);
   await tester.tap(label.hitTestable());
   await frames(tester);
-  expect(find.byKey(const Key('legacy-color-controls-scroll')), findsOneWidget);
+  expect(
+    find.byKey(
+      Key(name == '调色盘' ? 'palette-workspace' : 'legacy-color-controls-scroll'),
+    ),
+    findsOneWidget,
+  );
 }
 
 Future<void> close(WidgetTester tester, RealtimeState state) async {
@@ -422,6 +434,87 @@ void main() {
       await tester.tap(find.text('取消'));
       await returnedEditorFrame(tester, core, after: returnedBefore);
       expect(undoEnabled(tester), isFalse);
+      expect(tester.takeException(), isNull);
+      await close(tester, fixture.state);
+    },
+  );
+
+  testWidgets(
+    'Palette collapse preserves tentative edits and apply commits once',
+    (tester) async {
+      final fixture = await open(tester), core = fixture.core;
+      await tool(tester, '调色盘');
+      expect(find.byKey(const Key('palette-tools-toolbar')), findsNothing);
+      expect(
+        find.byKey(const Key('legacy-color-controls-scroll')),
+        findsNothing,
+      );
+      core.requests.clear();
+      final pad = tester.getCenter(find.byKey(const Key('legacy-palette-pad')));
+      await tester.dragFrom(pad, const Offset(24, -16));
+      await frames(tester);
+      final expected = object(core.reviews.last.recipe['palette']);
+      expect(expected['color'], greaterThan(0));
+      expect(expected['tone'], greaterThan(0));
+      await tester.tap(find.byKey(const Key('palette-panel-toggle')));
+      await frames(tester);
+      expect(find.byKey(const Key('palette-tools-toolbar')), findsOneWidget);
+      expect(find.byKey(const Key('legacy-palette-pad')), findsNothing);
+      expect(core.requests.where((r) => r.operation == 'draft.save'), isEmpty);
+      await tester.tap(find.byKey(const Key('palette-tool-2')));
+      await frames(tester);
+      expect(find.byKey(const Key('palette-tools-toolbar')), findsNothing);
+      expect(
+        tester
+            .widget<LegacyPaletteControls>(find.byType(LegacyPaletteControls))
+            .color,
+        expected['color'],
+      );
+      expect(
+        tester
+            .widget<LegacyPaletteControls>(find.byType(LegacyPaletteControls))
+            .tone,
+        expected['tone'],
+      );
+      final returnedBefore = core.returnedFrames.length;
+      await tester.tap(find.byKey(const Key('palette-apply')));
+      await returnedEditorFrame(tester, core, after: returnedBefore);
+      final saves = core.requests
+          .where((r) => r.operation == 'draft.save')
+          .toList();
+      expect(saves, hasLength(1));
+      expect(object(saves.single.payload['recipe'])['palette'], expected);
+      expect(undoEnabled(tester), isTrue);
+      expect(tester.takeException(), isNull);
+      await close(tester, fixture.state);
+    },
+  );
+
+  testWidgets(
+    'Collapsed color toolbar opens curves with palette edits retained',
+    (tester) async {
+      final fixture = await open(tester), core = fixture.core;
+      await tool(tester, '调色盘');
+      await tester.tapAt(
+        tester.getCenter(find.byKey(const Key('legacy-palette-pad'))) +
+            const Offset(20, -10),
+      );
+      await frames(tester);
+      final expected = object(core.reviews.last.recipe['palette']);
+      await tester.tap(find.byKey(const Key('palette-panel-toggle')));
+      await frames(tester);
+      await tester.tap(find.byKey(const Key('palette-tool-5')));
+      await frames(tester, count: 20);
+      expect(find.byKey(const Key('legacy-curve-graph')), findsOneWidget);
+      expect(object(core.reviews.last.recipe['palette']), expected);
+      await tester.tap(find.text('取消'));
+      await frames(tester, count: 12);
+      expect(find.byKey(const Key('legacy-curve-graph')), findsNothing);
+      expect(object(core.reviews.last.recipe['palette']), expected);
+      expect(
+        core.requests.where((r) => r.operation == 'draft.save'),
+        hasLength(1),
+      );
       expect(tester.takeException(), isNull);
       await close(tester, fixture.state);
     },

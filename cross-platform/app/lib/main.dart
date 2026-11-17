@@ -19,6 +19,7 @@ import 'appearance.dart';
 import 'community_activity.dart';
 import 'app_stability.dart';
 import 'album_batch.dart';
+import 'app_launch_services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,19 @@ class HueviaApp extends StatefulWidget {
 }
 
 class _HueviaAppState extends State<HueviaApp> {
+  final rootNavigatorKey = GlobalKey<NavigatorState>();
+  late final launchServices = AppLaunchServices(
+    state: widget.state,
+    navigatorKey: rootNavigatorKey,
+    canPrompt: () => const [
+      '/presets',
+      '/photos',
+      '/settings',
+      '/profile',
+    ].contains(router.routeInformationProvider.value.uri.path),
+  );
   late final GoRouter router = GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: '/presets',
     routes: [
       StatefulShellRoute.indexedStack(
@@ -132,10 +145,12 @@ class _HueviaAppState extends State<HueviaApp> {
     super.initState();
     router.routerDelegate.addListener(routeChanged);
     routeChanged();
+    launchServices.attach();
   }
 
   @override
   void dispose() {
+    launchServices.dispose();
     router.routerDelegate.removeListener(routeChanged);
     router.dispose();
     super.dispose();

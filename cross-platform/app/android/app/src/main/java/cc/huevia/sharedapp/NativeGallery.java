@@ -21,6 +21,7 @@ final class NativeGallery {
     private final Context context;
     private final SharedRuntime runtime;
     private final LocalPhotoRepository repository;
+    private final NativePhoneCatalog phoneCatalog;
     private final LinkedHashMap<String,LocalPhotoRepository.PhonePhoto> known=new LinkedHashMap<>();
     private final Set<String> deletableCopies=new HashSet<>();
     synchronized void allowDeletionUri(String uri){deletableCopies.add(uri);}
@@ -28,8 +29,8 @@ final class NativeGallery {
     private final Object publicationLock=new Object();
     private Thread publicationThread;
     private String publicationJob;
-    NativeGallery(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;repository=new LocalPhotoRepository(this.context);}
-    String access()throws IOException{return SharedJson.encode(SharedRuntime.map("access",repository.access().name().toLowerCase(Locale.ROOT)));}
+    NativeGallery(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;repository=new LocalPhotoRepository(this.context);phoneCatalog=new NativePhoneCatalog(this.context);}
+    String access()throws IOException{return SharedJson.encode(phoneCatalog.access());}
     synchronized String request(String operation,String json,BooleanSupplier cancel)throws IOException{
         return request(operation,json,cancel,"");
     }
@@ -62,15 +63,19 @@ final class NativeGallery {
         if(operation.equals("gallery.access"))return access();
         if(operation.equals("gallery.page")){
             if(Boolean.TRUE.equals(p.get("refresh")))repository.invalidatePhoneIndex();
-            int offset=SharedRuntime.integer(p,"offset",0);if(offset<0)throw new IOException("照片分页位置无效。");
-            PhotoSort order=new PhotoSort(Boolean.TRUE.equals(p.get("added")),Boolean.TRUE.equals(p.get("oldest")));
-            LocalPhotoRepository.Page page=repository.phonePage(offset,60,order,cancel);
-            List<Object> rows=new ArrayList<>();
-            for(LocalPhotoRepository.PhonePhoto photo:page.photos){known.put(photo.key,photo);rows.add(SharedRuntime.map("id",photo.key,"name",photo.filename,"raw",photo.raw(),"date",order.date(photo.takenDate,photo.date),"bytes",photo.bytes));}
-            while(known.size()>600)known.remove(known.keySet().iterator().next());
-            return SharedJson.encode(SharedRuntime.map("items",rows,"nextOffset",page.nextOffset,"hasMore",page.hasMore,"access",repository.access().name().toLowerCase(Locale.ROOT)));
+            return SharedJson.encode(phoneCatalog.page(p,cancel));
         }
+        if(operation.equals("gallery.preview"))return SharedJson.encode(phoneCatalog.preview(SharedRuntime.text(p,"id",2048),cancel));
         String selectedId=SharedRuntime.text(p,"id",2048);LocalPhotoRepository.PhonePhoto photo=known.get(selectedId);
+        NativePhoneCatalog.Entry entry=phoneCatalog.find(selectedId);
+        if(entry!=null){
+            entry=phoneCatalog.known(selectedId);
+            if(entry.video){
+                if(!operation.equals("gallery.thumbnail"))throw new IOException("视频可预览，修图和拼接请选择照片。");
+                return cacheThumbnail(entry.id+"|"+entry.bytes+"|"+entry.modified,()->phoneCatalog.thumbnail(phoneCatalog.known(selectedId)),cancel);
+            }
+            if(photo==null){photo=repository.describe(entry.uri);known.put(selectedId,photo);while(known.size()>600)known.remove(known.keySet().iterator().next());}
+        }
         if(photo==null&&operation.equals("gallery.import")&&Boolean.TRUE.equals(p.get("batchSelection"))&&selectedId.matches("content://media/(external|external_primary)/images/media/[0-9]+")&&repository.access()!=LocalPhotoRepository.Access.NONE)photo=repository.describe(android.net.Uri.parse(selectedId));
         if(photo==null||repository.access()==LocalPhotoRepository.Access.NONE)throw new IOException("照片访问范围已变化，请刷新相册。");
         if(operation.equals("gallery.import")){
@@ -79,14 +84,19 @@ final class NativeGallery {
             return SharedImport.copy(input,photo.filename,false,runtime.root().getPath(),cancel);
         }
         if(!operation.equals("gallery.thumbnail"))throw new IOException("未知的手机相册操作。");
+        final LocalPhotoRepository.PhonePhoto selected=photo;
+        return cacheThumbnail(photo.thumbnailKey(),()->repository.thumbnail(selected,384),cancel);
+    }
+    private interface ThumbnailSource {Bitmap load()throws IOException;}
+    private String cacheThumbnail(String identity,ThumbnailSource source,BooleanSupplier cancel)throws IOException{
         File directory=new File(runtime.root(),"gallery-thumbnails");
         if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片缩略图目录。");
-        String key=PhotoEditStore.hash((photo.thumbnailKey()+":384-v1").getBytes(StandardCharsets.UTF_8));
+        String key=PhotoEditStore.hash((identity+":384-v1").getBytes(StandardCharsets.UTF_8));
         File target=new File(directory,key+".jpg");
         if(Files.isSymbolicLink(target.toPath())||!target.getCanonicalFile().getParentFile().equals(directory.getCanonicalFile()))throw new IOException("缩略图路径无效。");
         if(target.isFile())return SharedJson.encode(SharedRuntime.map("path",target.getPath()));
         if(cancel.getAsBoolean())throw new InterruptedIOException("读取缩略图已取消。");
-        Bitmap bitmap=repository.thumbnail(photo,384);if(bitmap==null)throw new IOException("暂时无法读取此照片的缩略图。");
+        Bitmap bitmap=source.load();if(bitmap==null)throw new IOException("暂时无法读取此项目的缩略图。");
         File temporary=File.createTempFile("thumb-",".part",directory);
         try{
             try(FileOutputStream out=new FileOutputStream(temporary)){if(!bitmap.compress(Bitmap.CompressFormat.JPEG,85,out))throw new IOException("缩略图编码失败。");out.getFD().sync();}

@@ -181,6 +181,17 @@ class _SplitCompareState extends State<SplitCompare> {
       reportAfterLayout();
       void adjust(double value) =>
           setState(() => divider = value.clamp(0.0, 1.0));
+      final gestures = MediaQuery.systemGestureInsetsOf(context);
+      // The clipping line can reach either endpoint; its 48dp grip stays fully
+      // inside the viewport, beyond the system's edge-back gesture areas.
+      final gripWidth = box.maxWidth.clamp(0.0, 48.0);
+      final maxLeft = (box.maxWidth - gripWidth).clamp(0.0, double.infinity);
+      final safeLeft = (gestures.left + 12).clamp(0.0, maxLeft / 2);
+      final safeRight = (gestures.right + 12).clamp(0.0, maxLeft / 2);
+      final gripLeft = (box.maxWidth * divider - gripWidth / 2).clamp(
+        safeLeft,
+        maxLeft - safeRight,
+      );
       Widget surface(String path) => InteractiveViewer(
         transformationController: transform,
         minScale: 1,
@@ -284,13 +295,22 @@ class _SplitCompareState extends State<SplitCompare> {
               ),
             ),
             Positioned(
-              left: (box.maxWidth * divider - 24).clamp(
-                -24.0,
-                box.maxWidth - 24,
-              ),
+              left: box.maxWidth * divider,
               top: 0,
               bottom: 0,
-              width: 48,
+              child: const IgnorePointer(
+                child: SizedBox(
+                  key: ValueKey('compare-line'),
+                  width: 1,
+                  child: ColoredBox(color: Colors.white),
+                ),
+              ),
+            ),
+            Positioned(
+              left: gripLeft,
+              top: 0,
+              bottom: 0,
+              width: gripWidth,
               child: Focus(
                 onKeyEvent: (_, event) {
                   if (event is! KeyDownEvent) return KeyEventResult.ignored;
@@ -322,7 +342,6 @@ class _SplitCompareState extends State<SplitCompare> {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Container(width: 1, color: Colors.white),
                         Container(
                           width: 36,
                           height: 48,

@@ -222,6 +222,37 @@ Future<void> tapConnect(WidgetTester tester) async {
 
 void main() {
   testWidgets(
+    'Dismissing disconnect confirmation keeps the session and transfer intact',
+    (tester) async {
+      final core = IntentCameraCore()..connected = true;
+      final state = AppState(core)..cameraVisible.value = true;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.light),
+          home: CameraPage(state: state),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('断开相机'));
+      await tester.pumpAndSettle();
+      expect(find.text('断开相机连接？'), findsOneWidget);
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      await tester.tap(find.text('保持连接'));
+      await tester.pumpAndSettle();
+      expect(core.connected, isTrue);
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      await tester.tap(find.byTooltip('断开相机'));
+      await tester.pumpAndSettle();
+      await tester.tapAt(const Offset(3, 450));
+      await tester.pumpAndSettle();
+      expect(core.connected, isTrue);
+      expect(core.disconnectsApplied, 0);
+      await tester.pumpWidget(const SizedBox());
+      state.dispose();
+    },
+  );
+
+  testWidgets(
     'A delayed old stop cannot disconnect a replacement camera session',
     (tester) async {
       final core = IntentCameraCore()..connected = true;
@@ -234,6 +265,9 @@ void main() {
       );
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('断开相机'));
+      await tester.pumpAndSettle();
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      await tester.tap(find.byKey(const Key('confirm-camera-disconnect')));
       await tester.pump();
       expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
       core.connectionResult = {
@@ -268,6 +302,9 @@ void main() {
       );
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('断开相机'));
+      await tester.pumpAndSettle();
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      await tester.tap(find.byKey(const Key('confirm-camera-disconnect')));
       await tester.pump();
       await tester.pumpWidget(const SizedBox());
       state.live.stopped.complete();
@@ -300,6 +337,11 @@ void main() {
           .onPressed!;
       callback();
       callback();
+      await tester.pumpAndSettle();
+      expect(find.text('断开相机连接？'), findsOneWidget);
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      await tester.tap(find.byKey(const Key('confirm-camera-disconnect')));
+      await tester.pump();
       state.live.stopped.complete();
       await tester.pumpAndSettle();
       expect(
@@ -328,6 +370,9 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('断开相机'));
     await tester.pumpAndSettle();
+    expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+    await tester.tap(find.byKey(const Key('confirm-camera-disconnect')));
+    await tester.pumpAndSettle();
     expect(core.calls.singleWhere((c) => c.$1 == 'camera.disconnect').$2, {
       'session': 'slot-session',
     });
@@ -349,6 +394,9 @@ void main() {
       );
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('断开相机'));
+      await tester.pumpAndSettle();
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      await tester.tap(find.byKey(const Key('confirm-camera-disconnect')));
       await tester.pumpAndSettle();
       expect(
         core.calls.where((c) => c.$1 == 'camera.disconnect'),

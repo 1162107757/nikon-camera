@@ -4,6 +4,14 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val stageMigrationLegacySources = tasks.register<Sync>("stageMigrationLegacySources") {
+    val overrides = file("../../../core/overrides")
+    from("../../../../app/src/main/java") {
+        exclude(fileTree(overrides).files.map { it.relativeTo(overrides).invariantSeparatorsPath })
+    }
+    into(layout.buildDirectory.dir("generated/migration-legacy-java"))
+}
+
 android {
     namespace = "cc.huevia"
     compileSdk = flutter.compileSdkVersion
@@ -44,7 +52,8 @@ android {
 
     buildFeatures { buildConfig = true }
     sourceSets.getByName("main") {
-        java.srcDirs("../../../../app/src/main/java", "../../../core/java")
+        java.srcDirs(layout.buildDirectory.dir("generated/migration-legacy-java").get().asFile, "../../../core/java")
+        java.srcDir("../../../core/overrides")
         res.srcDir("../../../../app/src/main/res")
         assets.srcDir("../../../../app/src/main/assets")
         jniLibs.srcDir("../../../.build/raw-android/jniLibs")
@@ -108,4 +117,4 @@ val verifyMigrationNativeRuntime = tasks.register("verifyMigrationNativeRuntime"
         }
     }
 }
-tasks.named("preBuild").configure { dependsOn(verifyMigrationNativeRuntime) }
+tasks.named("preBuild").configure { dependsOn(verifyMigrationNativeRuntime, stageMigrationLegacySources) }

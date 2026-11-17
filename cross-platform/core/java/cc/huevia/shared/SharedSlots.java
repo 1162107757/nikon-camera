@@ -3,6 +3,9 @@ package cc.huevia.shared;
 import cc.huevia.album.PtpIpClient;
 import cc.huevia.album.PhotoCameraClient;
 import cc.huevia.ncp.NcpPictureControlConverter;
+import cc.huevia.ncp.CameraPresetProjection;
+import cc.huevia.ncp.NcpFile;
+import cc.huevia.ncp.Np3Container;
 import cc.huevia.picturecontrol.*;
 import cc.huevia.ptp.*;
 import cc.huevia.usb.CameraParameterController;
@@ -22,6 +25,8 @@ public final class SharedSlots implements AutoCloseable {
         default void authorizeParameters(Map<Integer,byte[]> values)throws IOException{throw new IOException("此通道未提供拍摄参数授权。");}
         boolean isOpen();
         default boolean isSessionManaged(){return false;}
+        default long inheritedTransaction(){return 0;}
+        default PhotoCameraClient releaseAlbum(long next)throws IOException{return null;}
         @Override void close();
     }
     private final File root;
@@ -90,7 +95,7 @@ public final class SharedSlots implements AutoCloseable {
     private Object initialize(BooleanSupplier cancel,boolean retainHealthy)throws IOException {
         try{
             check(cancel);Transport connection=transport;if(connection==null)throw new InterruptedIOException("槽位会话已取消。");boolean managed=connection.isSessionManaged();
-            long inherited=connection instanceof WifiTransport?((WifiTransport)connection).inheritedTransaction:0;
+            long inherited=connection instanceof WifiTransport?((WifiTransport)connection).inheritedTransaction:connection.inheritedTransaction();
             if(inherited>0){next=inherited;owned=true;}
             else if(managed){command(0x1002,0,1);owned=true;}
             byte[] info=read(0x1001,owned?next++:0);device=PtpDeviceInfo.parseRedacted(info);PtpDeviceInfo identified=device;
@@ -100,7 +105,7 @@ public final class SharedSlots implements AutoCloseable {
             if(!serial.isEmpty())cameraId=SharedCameraMutationStore.sha(("huevia-slot-camera-v1\n"+identified.manufacturer()+"\n"+identified.model()+"\n"+serial).getBytes(java.nio.charset.StandardCharsets.UTF_8));
             requireReadCapabilities(device);
             if(!owned){command(0x1002,0,1);owned=true;}refresh(cancel);return state();
-        }catch(IOException|RuntimeException error){if(!retainHealthy||!(transport instanceof WifiTransport)||!isConnected()||cancel.getAsBoolean())close();throw error;}
+        }catch(IOException|RuntimeException error){if(!retainHealthy||!(transport instanceof WifiTransport)&&!(transport!=null&&transport.inheritedTransaction()>0)||!isConnected()||cancel.getAsBoolean())close();throw error;}
     }
     public boolean isConnected(){Transport current=transport;return current!=null&&current.isOpen();}
     /** Original prepared-session read-only heartbeat: built-in Picture Control1. */
@@ -123,8 +128,9 @@ public final class SharedSlots implements AutoCloseable {
     }
     PhotoCameraClient releaseAlbum(String expectedSession)throws IOException {
         if(!session.equals(expectedSession))throw new IOException("槽位会话已变化。");
-        Transport current=transport;if(!(current instanceof WifiTransport))return null;
-        PhotoCameraClient album=((WifiTransport)current).release(next);
+        Transport current=transport;if(current==null)return null;
+        if(!(current instanceof WifiTransport)&&consumed){Map<String,Object> record=journal.read();if(!"verified".equals(record.get("phase"))||Boolean.TRUE.equals(record.get("pending"))||Boolean.TRUE.equals(record.get("parametersPending")))return null;}
+        PhotoCameraClient album=current instanceof WifiTransport?((WifiTransport)current).release(next):current.releaseAlbum(next);
         if(album!=null){transport=null;owned=false;preparation=null;requested=null;confirmed=null;}
         return album;
     }
@@ -149,6 +155,7 @@ public final class SharedSlots implements AutoCloseable {
         String kind=SharedRuntime.text(p,"kind",16);int target=SharedRuntime.integer(p,"target",0);target(target);
         byte[] old=slots.get(target);if(old==null)throw new IOException("目标槽位不属于当前快照。");
         PictureControlData before=PictureControlData.parse(old);String explanation="";
+        Map<String,Object> compatibility=null;
         if(kind.equals("delete")){
             if(!device.supportsOperation(0x90ce)||before.hasNoBasePictureControl())throw new IOException("此槽位为空或相机未提供删除能力。");
             requested=null;
@@ -160,10 +167,14 @@ public final class SharedSlots implements AutoCloseable {
                 PictureControlWriteValidation.validateConvertedData(requested);explanation="将当前相机槽位复制到目标；不会选择或应用此预设。";
             }else{
                 String path=SharedRuntime.text(p,"path",4096);File file=new File(path).getCanonicalFile();
-                if(!file.toPath().startsWith(root.toPath())||!file.isFile()||file.length()!=638)throw new IOException("请选择已导入 App 的受支持 NCP 文件。");
+                if(!file.toPath().startsWith(root.toPath())||!file.isFile()||file.length()<8||file.length()>NcpFile.MAX_BYTES)throw new IOException("请选择已导入 App 的 NCP 或 NP3 文件。");
                 byte[] original=Files.readAllBytes(file.toPath());
-                NcpPictureControlConverter.Conversion conversion=NcpPictureControlConverter.convert(original,SharedRuntime.integer(p,"middleQuarter",0),SharedRuntime.integer(p,"clarityQuarter",0));
+                boolean tuning=!Np3Container.isNp3(original)||Boolean.TRUE.equals(p.get("detailOverride"));
+                CameraPresetProjection.Plan projection=CameraPresetProjection.plan(original,
+                        tuning?SharedRuntime.integer(p,"middleQuarter",4):null,tuning?SharedRuntime.integer(p,"clarityQuarter",0):null);
+                NcpPictureControlConverter.Conversion conversion=projection.conversion;
                 requested=conversion.dataBytes();PictureControlWriteValidation.validateConvertedData(requested);explanation=conversion.toDisplayText();
+                if(Np3Container.isNp3(original))compatibility=SharedRuntime.map("format","NP3","retained",projection.retained,"omitted",projection.omitted,"approximated",projection.approximated);
             }
         }else throw new IOException("请选择写入或删除。");
         CameraParameterRequest parameters=SharedSlotParameters.parse(p.get("parameters"));
@@ -171,6 +182,7 @@ public final class SharedSlots implements AutoCloseable {
         check(cancel);confirmed=old.clone();
         preparation=SharedRuntime.map("confirmationId",UUID.randomUUID().toString(),"session",session,"snapshot",snapshot,"kind",kind,"target",target,"targetLabel","C"+(target-200),"beforeName",before.registrationName(),"beforeSha256",SharedCameraMutationStore.sha(old),"overwrite",!before.hasNoBasePictureControl(),"name",requested==null?"":PictureControlData.parse(requested).registrationName(),"desiredSha256",requested==null?"":SharedCameraMutationStore.sha(requested),"explanation",explanation);
         if(p.containsKey("source"))preparation.put("source",p.get("source"));
+        if(compatibility!=null)preparation.put("compatibility",compatibility);
         preparation.put("parameters",SharedSlotParameters.values(parameters));preparation.put("parameterSummary",parameters.summary());
         return new LinkedHashMap<>(preparation);
     }

@@ -161,6 +161,8 @@ class LegacyPaletteControls extends StatelessWidget {
     this.onRedo,
     this.scope = '全图',
     this.padHeight = 208,
+    this.compact = false,
+    this.showReadouts = true,
     this.enabled = true,
   });
 
@@ -170,6 +172,7 @@ class LegacyPaletteControls extends StatelessWidget {
   final String scope;
   final double padHeight;
   final bool enabled;
+  final bool compact, showReadouts;
 
   Future<void> exact(BuildContext context, bool colour) async {
     final value = await showLegacyColorNumberInput(
@@ -185,46 +188,88 @@ class LegacyPaletteControls extends StatelessWidget {
     onEnd?.call();
   }
 
+  Widget readouts(BuildContext context) => SizedBox(
+    height: 48,
+    child: Row(
+      children: [
+        _iconButton(Icons.undo, '撤销调色盘', enabled ? onUndo : null),
+        for (final colour in [true, false])
+          Expanded(
+            child: TextButton(
+              key: Key(colour ? 'palette-color-value' : 'palette-tone-value'),
+              onPressed: enabled ? () => exact(context, colour) : null,
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(48, 48),
+                foregroundColor: _white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    colour ? '颜色' : '影调',
+                    style: const TextStyle(
+                      fontSize: 10,
+                      height: 1,
+                      color: _muted,
+                    ),
+                  ),
+                  Text(
+                    _signed(colour ? color : tone),
+                    style: const TextStyle(fontSize: 12, height: 1),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        _iconButton(Icons.redo, '重做调色盘', enabled ? onRedo : null),
+      ],
+    ),
+  );
+
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            SizedBox(
-              width: 56,
-              child: Text(
-                scope,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 12, color: _white),
+        if (compact && showReadouts) readouts(context),
+        if (!compact)
+          Row(
+            children: [
+              SizedBox(
+                width: 56,
+                child: Text(
+                  scope,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 12, color: _white),
+                ),
               ),
-            ),
-            Expanded(
-              child: _textButton(
-                '颜色  ${_signed(color)}',
-                enabled ? () => exact(context, true) : null,
-                key: const Key('palette-color-value'),
+              Expanded(
+                child: _textButton(
+                  '颜色  ${_signed(color)}',
+                  enabled ? () => exact(context, true) : null,
+                  key: const Key('palette-color-value'),
+                ),
               ),
-            ),
-            Expanded(
-              child: _textButton(
-                '影调  ${_signed(tone)}',
-                enabled ? () => exact(context, false) : null,
-                key: const Key('palette-tone-value'),
+              Expanded(
+                child: _textButton(
+                  '影调  ${_signed(tone)}',
+                  enabled ? () => exact(context, false) : null,
+                  key: const Key('palette-tone-value'),
+                ),
               ),
-            ),
-            _iconButton(Icons.refresh, '重置调色盘', enabled ? onReset : null),
-          ],
-        ),
+              _iconButton(Icons.refresh, '重置调色盘', enabled ? onReset : null),
+            ],
+          ),
         SizedBox(
-          height: math.max(172.0, padHeight),
+          height: math.max(compact ? 48.0 : 172.0, padHeight),
           child: LegacyPalettePad(
             color: color,
             tone: tone,
             enabled: enabled,
+            wide: compact,
             onStart: onStart,
             onEnd: onEnd,
             onChanged: (c, t) => onChanged(c, t, amount),
@@ -243,12 +288,13 @@ class LegacyPaletteControls extends StatelessWidget {
           onEnd: onEnd,
           onChanged: (value) => onChanged(color, tone, value),
         ),
-        _historyRow(
-          '调色盘',
-          enabled ? onUndo : null,
-          enabled ? onRedo : null,
-          hint: '拖动调色 · 按住对比',
-        ),
+        if (!compact)
+          _historyRow(
+            '调色盘',
+            enabled ? onUndo : null,
+            enabled ? onRedo : null,
+            hint: '拖动调色 · 按住对比',
+          ),
       ],
     ),
   );
@@ -544,11 +590,13 @@ class LegacyPalettePad extends StatefulWidget {
     this.onEnd,
     this.onExactColor,
     this.enabled = true,
+    this.wide = false,
   });
   final int color, tone;
   final void Function(int color, int tone) onChanged;
   final VoidCallback? onStart, onEnd, onExactColor;
   final bool enabled;
+  final bool wide;
   @override
   State<LegacyPalettePad> createState() => _LegacyPalettePadState();
 }
@@ -601,10 +649,16 @@ class _LegacyPalettePadState extends State<LegacyPalettePad> {
   }
 
   Rect frame(Size size, double scale) {
-    final inset = math.max(24.0, 16 * scale);
+    final inset = widget.wide
+        ? math.max(16.0, 10 * scale)
+        : math.max(24.0, 16 * scale);
     final height = math.max(1.0, size.height - inset * 2);
-    final side = math.max(28.0, 22 * scale);
-    final width = math.min(math.max(1.0, size.width - side * 2), height * 1.15);
+    final side = widget.wide
+        ? math.max(40.0, 30 * scale)
+        : math.max(28.0, 22 * scale);
+    final width = widget.wide
+        ? math.max(1.0, size.width - side * 2)
+        : math.min(math.max(1.0, size.width - side * 2), height * 1.15);
     return Rect.fromLTWH((size.width - width) / 2, inset, width, height);
   }
 
@@ -737,6 +791,7 @@ class _LegacyPalettePadState extends State<LegacyPalettePad> {
                   widget.tone,
                   scale,
                   widget.enabled,
+                  widget.wide,
                 ),
               ),
             ),
@@ -755,12 +810,13 @@ class _PalettePainter extends CustomPainter {
     this.tone,
     this.scale,
     this.enabled,
+    this.wide,
   );
   final ui.Image? field;
   final Rect rect;
   final int color, tone;
   final double scale;
-  final bool enabled;
+  final bool enabled, wide;
   @override
   void paint(Canvas canvas, Size size) {
     final rounded = RRect.fromRectAndRadius(rect, const Radius.circular(12));
@@ -829,9 +885,9 @@ class _PalettePainter extends CustomPainter {
 
     label('层次', Offset(rect.center.dx, rect.top / 2));
     label('柔和', Offset(rect.center.dx, (rect.bottom + size.height) / 2));
-    final gap = math.max(16.0, 12 * scale);
-    label('淡', Offset(rect.left - gap, rect.center.dy));
-    label('鲜', Offset(rect.right + gap, rect.center.dy));
+    final gap = wide ? math.max(20.0, 14 * scale) : math.max(16.0, 12 * scale);
+    label(wide ? '清淡' : '淡', Offset(rect.left - gap, rect.center.dy));
+    label(wide ? '鲜艳' : '鲜', Offset(rect.right + gap, rect.center.dy));
   }
 
   @override
@@ -841,7 +897,8 @@ class _PalettePainter extends CustomPainter {
       old.color != color ||
       old.tone != tone ||
       old.scale != scale ||
-      old.enabled != enabled;
+      old.enabled != enabled ||
+      old.wide != wide;
 }
 
 /// Shared by legacy colour readouts, including the curve workspace's exact point dialog.

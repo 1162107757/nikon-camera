@@ -101,7 +101,8 @@ public final class Np3PresetDetails {
             List<Row> grading = new ArrayList<>();
             String[] zones = {"高光", "中间调", "阴影"};
             for (int i = 0; i < zones.length; i++) {
-                int start = i * 4;
+                // NP3 stores shadows first; keep the table in highlights-to-shadows order.
+                int start = (2 - i) * 4;
                 int hue = ((fields[32][start] & 15) << 8) | fields[32][start + 1] & 255;
                 grading.add(new Row("zone-" + i, zones[i], hue + "°",
                         signed((fields[32][start + 2] & 255) - 128, 1),

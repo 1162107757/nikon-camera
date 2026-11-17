@@ -17,7 +17,7 @@ public final class CameraControlsBoundaryTest {
     private static void rejects(Action action)throws Exception{checks++;try{action.run();}catch(IOException expected){return;}throw new AssertionError("Unsafe camera request accepted: "+checks);}
     static int run(Path temporary)throws Exception {
         checks=0;File root=Files.createDirectory(temporary.resolve("camera-controls")).toFile();
-        guardChecks();slotChecks(root);ncpChecks(root);remoteChecks(root);dispatcherChecks(root);
+        guardChecks();slotChecks(root);ncpChecks(root);np3Checks(root);remoteChecks(root);dispatcherChecks(root);
         System.out.println("PASS "+checks+" camera controls checks; explicit scope, exact target snapshots, one-shot write/delete/shutter, durable uncertainty and readback recovery");return checks;
     }
     private static void guardChecks()throws Exception {
@@ -75,6 +75,18 @@ public final class CameraControlsBoundaryTest {
         yes(plan.get("name").equals("HOST NCP"));yes(peer.writes==0);yes(((String)plan.get("explanation")).contains("兼容适配"));
         rejects(()->slots.request("camera.slots.execute",confirm("ncp",plan),()->true));yes(peer.writes==0);
         Map<String,Object> result=map(slots.request("camera.slots.execute",confirm("ncp",plan),()->false));yes(map(result.get("action")).get("phase").equals("verified"));yes(Arrays.equals(peer.items.get(204),NcpCompatibilityFixtures.expectedData(8,-4)));yes(Arrays.equals(Files.readAllBytes(file),ncp));slots.close();
+    }
+    private static void np3Checks(File root)throws Exception {
+        SharedSlots slots=new SharedSlots(root);SlotPeer peer=new SlotPeer();slots.open(peer,"np3","trusted-camera",()->false);
+        Path file=root.toPath().resolve("partial.np3");byte[] original=cc.huevia.ncp.CameraPresetProjectionTest.np3(0x1234,8,true,true);Files.write(file,original);
+        Map<String,Object> plan=map(slots.request("camera.slots.prepare",SharedRuntime.map("session","np3","kind","write","path",file.toString(),"target",205,"middleQuarter",4,"clarityQuarter",0),()->false));
+        yes(peer.writes==0);yes(((String)plan.get("explanation")).contains("不导入"));yes(((String)plan.get("explanation")).contains("可继续导入"));
+        rejects(()->slots.request("camera.slots.execute",confirm("np3",plan),()->true));yes(peer.writes==0);
+        Map<String,Object> result=map(slots.request("camera.slots.execute",confirm("np3",plan),()->false));
+        yes(map(result.get("action")).get("phase").equals("verified"));yes(peer.writes==1);
+        yes(Arrays.equals(peer.items.get(205),cc.huevia.ncp.CameraPresetProjection.plan(original,null,null).conversion.dataBytes()));
+        yes(Arrays.equals(Files.readAllBytes(file),original));
+        rejects(()->slots.request("camera.slots.execute",confirm("np3",plan),()->false));yes(peer.writes==1);slots.close();
     }
     private static void dispatcherChecks(File root)throws Exception {
         final class PhotoPeer implements PhotoCameraClient {

@@ -16,6 +16,7 @@ public final class SharedCamera {
         String devices()throws IOException;
         PhotoCameraClient create(String id)throws IOException;
         default SharedSlots.Transport openSlots(String id)throws IOException{throw new IOException("此设备未提供原始 PTP 优化校准通道。");}
+        default SharedSlots.Transport adoptSlots(String id,PhotoCameraClient photo)throws IOException{return null;}
     }
     private WiredConnections wired;
     private volatile String transport="wifi";
@@ -354,6 +355,9 @@ public final class SharedCamera {
                 if(slotsTransport.equals("wifi")&&original instanceof PtpIpClient){
                     // The original API only transfers ownership here; it sends no PTP packet.
                     synchronized(transportOwnership){check(stopped);dedicated=SharedSlots.fromAlbum((PtpIpClient)original);client=null;slots.stage(dedicated,nextSession,slotsCameraId);slotsSession=nextSession;adopted=true;}
+                }else if(slotsTransport.equals("usb")){
+                    synchronized(transportOwnership){check(stopped);dedicated=wired.adoptSlots(slotsDevice,original);if(dedicated!=null){client=null;slots.stage(dedicated,nextSession,slotsCameraId);slotsSession=nextSession;adopted=true;}}
+                    if(dedicated==null){synchronized(transportOwnership){check(stopped);client=null;}original.close();session="";}
                 }else{synchronized(transportOwnership){check(stopped);client=null;}original.close();session="";}
                 handles.clear();observed.clear();resolveHandles=null;indexReady=false;
             }

@@ -84,7 +84,7 @@ void main() {
         );
         final offset = scrollable.position.pixels;
         expect(offset, greaterThan(0));
-        await tester.tap(find.text('选择'));
+        await tester.tap(find.text(phone ? '批量修图' : '选择'));
         await tester.pumpAndSettle();
         expect(tester.element(find.byType(PhotoMasonry)), same(element));
         expect(scrollable.position.pixels, closeTo(offset, .1));

@@ -177,11 +177,12 @@ class AlbumSelectionDock extends StatelessWidget {
     required this.onPressed,
     this.onExport,
     this.onDelete,
+    this.onCollage,
     this.inline = false,
     this.phone = false,
   });
   final VoidCallback? onPressed;
-  final VoidCallback? onExport, onDelete;
+  final VoidCallback? onExport, onDelete, onCollage;
   final bool inline, phone;
   @override
   Widget build(BuildContext context) {
@@ -228,6 +229,7 @@ class AlbumSelectionDock extends StatelessWidget {
                           ('导出', HueIconKind.download, onExport),
                         if (inline && !phone)
                           ('删除', HueIconKind.delete, onDelete),
+                        if (inline) ('拼接', HueIconKind.grid, onCollage),
                       ])
                         Expanded(
                           child: TextButton(

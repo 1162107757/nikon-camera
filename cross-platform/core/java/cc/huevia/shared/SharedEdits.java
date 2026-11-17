@@ -78,6 +78,7 @@ public final class SharedEdits {
         PhotoGeometry g=d.geometry;value.put("geometry",SharedRuntime.map("turns",g.turns,"angle",g.angle,"left",g.left,"top",g.top,"right",g.right,"bottom",g.bottom,"horizontalPerspective",g.horizontalPerspective,"verticalPerspective",g.verticalPerspective,"mirrored",g.mirrored));
         PhotoBorder b=d.border;List<String> fields=new ArrayList<>();for(int i=0;i<5;i++)fields.add(b.field(i));
         value.put("border",SharedRuntime.map("template",b.template,"automatic",b.automatic,"brand",b.brand,"model",b.model,"fields",fields,"visible",b.visible,"logo",b.logo,"margin",b.margin,"corner",b.corner,"shadow",b.shadow,"blur",b.blur));
+        if(b.showLens||!b.lens.isEmpty()){Map<String,Object> border=SharedRuntime.object(value.get("border"));border.put("showLens",b.showLens);border.put("lens",b.lens);value.put("border",border);}
         if(d.adjustments.cleanup.hasStoredState()){
             ByteArrayOutputStream bytes=new ByteArrayOutputStream();d.adjustments.cleanup.write(new DataOutputStream(bytes));value.put("cleanupData",Base64.getEncoder().encodeToString(bytes.toByteArray()));
             value.put("cleanup",SharedRuntime.map("amount",d.adjustments.cleanup.amount,"haze",d.adjustments.cleanup.haze,"noise",d.adjustments.cleanup.noise));

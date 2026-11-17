@@ -11,6 +11,9 @@ import 'legacy_glass_sheet.dart';
 import 'photo_grid.dart';
 import 'album_batch.dart';
 import 'album_operations.dart';
+import 'photo_collage.dart';
+import 'phone_album_categories.dart';
+import 'phone_album_picker.dart';
 
 class PhotosPage extends StatefulWidget {
   const PhotosPage({super.key, required this.state});
@@ -26,6 +29,12 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
   int nextOffset = 0, generation = 0;
   String access = 'none', query = '', filter = '', error = '';
   String alternateBasis = 'added';
+  PhoneAlbumCategory phoneCategory = PhoneAlbumCategory.all;
+  int? phoneTotal;
+  String phoneAlbum = '';
+  List<Json> phoneAlbums = [];
+  final albumMenuAnchor = GlobalKey();
+  final albumCategoryAnchor = GlobalKey();
   bool canAsk = true;
   StreamSubscription<dynamic>? galleryChanges;
   String get alternateLabel =>
@@ -57,6 +66,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
 
   void toggleSelection(List<Json> rows) {
     if (importing) return;
+    rows = rows.where((row) => row['mediaType'] != 'video').toList();
     final ids = rows.map((row) => row['id'] as String).toSet();
     if (!ids.every(selected.contains) && selected.union(ids).length > 100) {
       report(context, '一次最多选择 100 张照片。');
@@ -75,6 +85,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
   }
 
   void selectAll(List<Json> rows) {
+    rows = rows.where((row) => row['mediaType'] != 'video').toList();
     if (selected.union(rows.map((row) => row['id'] as String).toSet()).length >
         100) {
       report(context, '一次最多选择 100 张照片。');
@@ -88,6 +99,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     List<Json> rows, {
     bool delete = false,
     bool export = false,
+    bool collage = false,
   }) async {
     if (!selecting ||
         selectionOwner != owner ||
@@ -96,6 +108,10 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     }
     final chosen = rows.where((row) => selected.contains(row['id'])).toList();
     if (chosen.isEmpty) return;
+    if (collage && (chosen.length < 2 || chosen.length > 9)) {
+      report(context, '一次请选择 2–9 张照片进行拼接。');
+      return;
+    }
     if (chosen.length != selected.length) {
       report(context, '部分所选照片已变化，请刷新后重新选择。');
       return;
@@ -103,7 +119,9 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     await hueRootPage<void>(
       context,
       MaterialPageRoute(
-        builder: (_) => delete
+        builder: (_) => collage
+            ? PhotoCollagePage(state: state, rows: chosen, phone: phone)
+            : delete
             ? AlbumDeletePage(
                 state: state,
                 rows: chosen,
@@ -135,6 +153,9 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     if (saved is Map) {
       phone = saved['source'] == 'phone';
       filter = saved['filter'] as String? ?? '';
+      phoneCategory = PhoneAlbumCategory.restored(
+        saved['phoneCategory'] ?? (phone && filter == 'raw' ? 'raw' : 'all'),
+      );
       added = saved['added'] == true;
       oldest = saved['oldest'] == true;
     }
@@ -177,6 +198,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
         'album': {
           'source': phone ? 'phone' : 'app',
           'filter': filter,
+          'phoneCategory': phoneCategory.id,
           'added': added,
           'oldest': oldest,
         },
@@ -220,6 +242,9 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
         'added': added,
         'oldest': oldest,
         'refresh': !next,
+        'category': phoneCategory.id,
+        'album': phoneAlbum,
+        'query': query,
       });
       if (!mounted || current != generation) return;
       setState(() {
@@ -230,11 +255,12 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
           for (final row in rows) row['id'] as String: row,
         };
         final offset = result['nextOffset'] as int;
-        more =
-            result['hasMore'] == true &&
-            (!next ||
-                (offset > nextOffset && unique.length > phonePhotos.length));
+        more = result['hasMore'] == true && (!next || offset > nextOffset);
         phonePhotos = unique.values.toList();
+        phoneTotal = (result['total'] as num?)?.toInt();
+        if (result['albums'] is List) {
+          phoneAlbums = (result['albums'] as List).map(object).toList();
+        }
         nextOffset = offset;
       });
     } catch (failure) {
@@ -270,6 +296,71 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     if (phone && access != 'none') unawaited(loadPhone());
   }
 
+  void selectPhoneCategory(PhoneAlbumCategory category) {
+    if (category == phoneCategory || selecting || importing) return;
+    setState(() {
+      phoneCategory = category;
+      generation++;
+      loading = false;
+      phonePhotos = [];
+      phoneTotal = null;
+      nextOffset = 0;
+      more = false;
+      error = '';
+    });
+    unawaited(rememberAlbum());
+    unawaited(loadPhone());
+  }
+
+  void showAllPhoneMedia() {
+    if (!phone || selecting || importing) return;
+    setState(() {
+      query = '';
+      phoneAlbum = '';
+      phoneCategory = PhoneAlbumCategory.all;
+      generation++;
+      loading = false;
+      phonePhotos = [];
+      phoneTotal = null;
+      nextOffset = 0;
+      more = false;
+      error = '';
+    });
+    unawaited(rememberAlbum());
+    unawaited(loadPhone());
+  }
+
+  Future<void> choosePhoneAlbum() async {
+    final fallback = <Json>[
+      {
+        'id': '',
+        'name': '全部相册',
+        'count': phoneTotal ?? phonePhotos.length,
+        if (phonePhotos.isNotEmpty) 'cover': phonePhotos.first['id'],
+      },
+    ];
+    final choice = await showPhoneAlbumPicker(
+      context,
+      anchor: albumCategoryAnchor,
+      core: state.core,
+      albums: phoneAlbums.isEmpty ? fallback : phoneAlbums,
+      selected: phoneAlbum,
+    );
+    if (!mounted || choice == null || choice == phoneAlbum) return;
+    setState(() {
+      phoneAlbum = choice;
+      query = '';
+      generation++;
+      loading = false;
+      phonePhotos = [];
+      phoneTotal = null;
+      nextOffset = 0;
+      more = false;
+      error = '';
+    });
+    unawaited(loadPhone());
+  }
+
   Future<void> pick() async {
     if (importing) return;
     Photo? photo;
@@ -294,6 +385,41 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
 
   Future<void> open(Json row) async {
     if (importing) return;
+    if (phone && row['live'] == true) {
+      final choice = await showLegacyGlassSheet<String>(
+        context,
+        builder: (sheet) => SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const ListTile(
+                title: Text('实况照片'),
+                subtitle: Text('编辑静态画面会另存副本，原实况照片保留。'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.motion_photos_on_outlined),
+                title: const Text('查看实况'),
+                onTap: () => Navigator.pop(sheet, 'preview'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.edit_outlined),
+                title: const Text('编辑静态照片'),
+                onTap: () => Navigator.pop(sheet, 'edit'),
+              ),
+            ],
+          ),
+        ),
+      );
+      if (!mounted || choice == null) return;
+      if (choice == 'preview') {
+        try {
+          await state.core.call('gallery.preview', {'id': row['id']});
+        } catch (failure) {
+          if (mounted) report(context, failure);
+        }
+        return;
+      }
+    }
     if (!phone) {
       final photo = state.photos.firstWhere((photo) => photo.path == row['id']);
       await context.push(photo.editorLocation);
@@ -346,7 +472,14 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
       ),
     );
     input.dispose();
-    if (result != null && mounted) setState(() => query = result);
+    if (result != null && mounted) {
+      setState(() {
+        query = result;
+        generation++;
+        loading = false;
+      });
+      if (phone) await loadPhone();
+    }
   }
 
   Future<void> sort() async {
@@ -466,11 +599,9 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
       final rows = phone
           ? phonePhotos
                 .where(
-                  (row) =>
-                      (row['name'] as String).toLowerCase().contains(
-                        query.toLowerCase(),
-                      ) &&
-                      (filter != 'raw' || row['raw'] == true),
+                  (row) => (row['name'] as String).toLowerCase().contains(
+                    query.toLowerCase(),
+                  ),
                 )
                 .toList()
           : state.photos
@@ -552,7 +683,18 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                         ),
                       ),
                       onSelected: (value) {
-                        if (value == 'raw') {
+                        if (value == 'collage') {
+                          unawaited(
+                            hueRootPage<void>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PhotoCollagePage(state: state),
+                              ),
+                            ),
+                          );
+                        } else if (value == 'sort') {
+                          sort();
+                        } else if (value == 'raw') {
                           unawaited(pick());
                         } else if (value == 'permission') {
                           unawaited(permission());
@@ -572,6 +714,12 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                       },
                       itemBuilder: (_) => [
                         const PopupMenuItem(
+                          value: 'collage',
+                          child: Text('图片拼接'),
+                        ),
+                        if (phone)
+                          const PopupMenuItem(value: 'sort', child: Text('排序')),
+                        const PopupMenuItem(
                           value: 'refresh',
                           child: Text('刷新'),
                         ),
@@ -586,10 +734,13 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                               filter == 'starred' ? '显示全部照片' : '只看星标照片',
                             ),
                           ),
-                        PopupMenuItem(
-                          value: 'rawFilter',
-                          child: Text(filter == 'raw' ? '显示全部照片' : '只看 RAW 照片'),
-                        ),
+                        if (!phone)
+                          PopupMenuItem(
+                            value: 'rawFilter',
+                            child: Text(
+                              filter == 'raw' ? '显示全部照片' : '只看 RAW 照片',
+                            ),
+                          ),
                         if (phone)
                           const PopupMenuItem(
                             value: 'permission',
@@ -620,56 +771,98 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                       ),
                     ),
                   ),
-                  Offstage(
-                    offstage: selecting && compact,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: SizedBox(
-                        height: 52,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 4),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 4),
-                                  child: Text(
-                                    phone && access == 'none'
-                                        ? '未授权'
-                                        : query.isNotEmpty
-                                        ? '匹配 ${rows.length} 张 · $query'
-                                        : '共 ${rows.length} 张',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      height: 1.35,
-                                      color: p.secondary,
+                  if (phone)
+                    Offstage(
+                      offstage: selecting && compact,
+                      child: PhoneAlbumToolbar(
+                        anchor: albumMenuAnchor,
+                        name:
+                            phoneAlbums
+                                    .where((album) => album['id'] == phoneAlbum)
+                                    .firstOrNull?['name']
+                                as String? ??
+                            '全部相册',
+                        count: access == 'none'
+                            ? '未授权'
+                            : '${phoneTotal ?? rows.length} 张',
+                        onAlbums: selecting || importing || access == 'none'
+                            ? null
+                            : choosePhoneAlbum,
+                        onBatch:
+                            selecting ||
+                                importing ||
+                                !rows.any((row) => row['mediaType'] != 'video')
+                            ? null
+                            : () => toggleSelection(const []),
+                      ),
+                    ),
+                  if (phone)
+                    Offstage(
+                      offstage: selecting && compact,
+                      child: Padding(
+                        key: albumCategoryAnchor,
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: PhoneAlbumCategories(
+                          selected: phoneCategory,
+                          enabled: !selecting && !importing,
+                          onSelected: selectPhoneCategory,
+                        ),
+                      ),
+                    ),
+                  if (!phone)
+                    Offstage(
+                      offstage: selecting && compact,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: SizedBox(
+                          height: 52,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 4),
+                                    child: Text(
+                                      phone && access == 'none'
+                                          ? '未授权'
+                                          : query.isNotEmpty
+                                          ? '匹配 ${rows.length} 张 · $query'
+                                          : '共 ${phone ? phoneTotal ?? rows.length : rows.length} 张',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        height: 1.35,
+                                        color: p.secondary,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              HueIconButton(
-                                kind: HueIconKind.sort,
-                                label:
-                                    '排序，${added ? alternateLabel : '拍摄时间'}，${oldest ? '旧到新' : '新到旧'}',
-                                disc: false,
-                                iconSize: 20,
-                                onPressed: selecting ? null : sort,
-                              ),
-                              if (!selecting)
-                                TextButton(
-                                  onPressed: rows.isEmpty
-                                      ? null
-                                      : () => toggleSelection(const []),
-                                  child: const Text('选择'),
+                                HueIconButton(
+                                  kind: HueIconKind.sort,
+                                  label:
+                                      '排序，${added ? alternateLabel : '拍摄时间'}，${oldest ? '旧到新' : '新到旧'}',
+                                  disc: false,
+                                  iconSize: 20,
+                                  onPressed: selecting ? null : sort,
                                 ),
-                            ],
+                                if (!selecting)
+                                  TextButton(
+                                    onPressed:
+                                        !rows.any(
+                                          (row) => row['mediaType'] != 'video',
+                                        )
+                                        ? null
+                                        : () => toggleSelection(const []),
+                                    child: Text(phone ? '批量修图' : '选择'),
+                                  ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
                   if (importing || loading)
                     const LinearProgressIndicator(minHeight: 2),
                   if (phone && access == 'limited')
@@ -708,6 +901,8 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                                             ? '没有匹配的照片'
                                             : loading
                                             ? '正在整理照片'
+                                            : phone && access != 'none'
+                                            ? '暂无${phoneCategory == PhoneAlbumCategory.all ? '照片' : phoneCategory.label}'
                                             : phone
                                             ? '浏览手机照片'
                                             : '这里还没有照片',
@@ -723,6 +918,11 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                                       Text(
                                         error.isNotEmpty
                                             ? error
+                                            : phone && access != 'none'
+                                            ? phoneCategory ==
+                                                      PhoneAlbumCategory.live
+                                                  ? '这里显示手机可识别的实况照片。仅允许部分照片时，可管理访问范围。'
+                                                  : '当前访问范围内没有此类内容，可切换分类或管理访问范围。'
                                             : phone
                                             ? '允许访问后，即可在这里浏览照片。'
                                             : '编辑或同步保存的照片会出现在这里。',
@@ -747,11 +947,26 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                                         onPressed: importing
                                             ? null
                                             : phone
-                                            ? permission
+                                            ? more
+                                                  ? () => loadPhone(next: true)
+                                                  : access != 'none'
+                                                  ? showAllPhoneMedia
+                                                  : permission
                                             : () => source(1),
                                         child: Text(
                                           phone
-                                              ? (canAsk ? '允许访问照片' : '前往照片权限设置')
+                                              ? more
+                                                    ? '继续查找'
+                                                    : access != 'none'
+                                                    ? query.isNotEmpty ||
+                                                              phoneCategory !=
+                                                                  PhoneAlbumCategory
+                                                                      .all
+                                                          ? '查看全部'
+                                                          : '刷新'
+                                                    : (canAsk
+                                                          ? '允许访问照片'
+                                                          : '前往照片权限设置')
                                               : '浏览手机照片',
                                         ),
                                       ),
@@ -835,6 +1050,9 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                     onDelete: selected.isEmpty
                         ? null
                         : () => selectedAction(rows, delete: true),
+                    onCollage: selected.length < 2 || selected.length > 9
+                        ? null
+                        : () => selectedAction(rows, collage: true),
                   ),
                 ),
             ],

@@ -13,6 +13,7 @@ enum EditorMoreAction {
   optimize,
   recipes,
   composition,
+  lighting,
   copy,
   undoCopy,
   continueDraft,
