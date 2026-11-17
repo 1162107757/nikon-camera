@@ -13,7 +13,7 @@ class CollageExportCore extends HueviaCore {
   CollageExportCore(Directory directory) {
     root = directory.path;
   }
-  int fullRenders = 0, exports = 0, publications = 0;
+  int previews = 0, fullRenders = 0, exports = 0, publications = 0;
   final operations = <String>[];
   @override
   Future<Json> gallerySavePermission() async => {'granted': true};
@@ -40,7 +40,7 @@ class CollageExportCore extends HueviaCore {
       final full = operation == 'media.detailRender';
       if (full) fullRenders++;
       final file = File(
-        '$root/previews/${full ? 'full-$fullRenders' : payload['path'].hashCode}.png',
+        '$root/previews/${full ? 'full-$fullRenders' : 'review-${++previews}'}.png',
       );
       await file.parent.create(recursive: true);
       await File(payload['path'] as String).copy(file.path);
@@ -95,7 +95,14 @@ Future<void> _until(WidgetTester tester, bool Function() ready) async {
     await tester.pump(const Duration(milliseconds: 25));
   }
   await tester.pump();
-  expect(ready(), isTrue);
+  expect(
+    ready(),
+    isTrue,
+    reason: tester
+        .widgetList<Text>(find.byType(Text))
+        .map((v) => v.data)
+        .join(' | '),
+  );
 }
 
 void main() {

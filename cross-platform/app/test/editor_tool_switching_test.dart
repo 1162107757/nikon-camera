@@ -573,7 +573,7 @@ void main() {
     },
   );
   testWidgets(
-    'Curve HSL palette and cleanup replace only controls and retain the zoomed photo viewport',
+    'Color tools retain the zoomed photo while the dedicated palette uses its own panel height',
     (tester) async {
       final core = _ToolsCore();
       final h = await _open(tester, core);
@@ -592,10 +592,20 @@ void main() {
           routes,
           reason: '$name must stay on the editor route',
         );
-        expect(
-          tester.getRect(find.byKey(const Key('editor-photo-viewport'))),
-          photo,
+        final currentPhoto = tester.getRect(
+          find.byKey(const Key('editor-photo-viewport')),
         );
+        if (name == '调色盘') {
+          // The approved dedicated palette hides the lower toolbar and sizes
+          // its panel independently. Its photo must stay above that panel,
+          // with the same horizontal extent and retained zoom/focus.
+          expect(currentPhoto.topLeft, photo.topLeft);
+          expect(currentPhoto.width, photo.width);
+          expect(currentPhoto.height, greaterThanOrEqualTo(120));
+          expect(find.byKey(const Key('palette-workspace')), findsOneWidget);
+        } else {
+          expect(currentPhoto, photo, reason: name);
+        }
         _sameFocus(h.viewport, focus);
         await tester.tap(find.text('取消').hitTestable());
         await _until(
