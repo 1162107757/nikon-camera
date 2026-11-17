@@ -103,6 +103,28 @@
           "gitBlob": "46acdde8d54a7f75ac8dc43b0b0b3dd9a074e5f5"
         }
       ]
+    },
+    {
+      "commit": "c7f02ae60c7fbafee649eb13ba11356ad034f80f",
+      "reason": "User-authorized NP3 parameter compatibility and Negative Cyan235 colour calibration, plus repeat launch update prompting requested for both signed-in and guest use. Preserve the original frozen baseline and every other original file; accept only these exact four reviewed blobs already included in accepted Android239. NP3 host renderer/inspection checks and70 update-policy checks pass; no original integrity gate is disabled.",
+      "files": [
+        {
+          "path": "app/src/main/java/cc/huevia/ncp/Np3PresetDetails.java",
+          "gitBlob": "7f05b49c652c757a128055c5b6b7b8e7d0935f25"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+          "gitBlob": "876e508a717dd54cadf0697737ed2f8e10c68134"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/ui/UpdatePanel.java",
+          "gitBlob": "60263bfaf6b2a3a22be8d740cdfc23b4c2c8dc50"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/updates/UpdatePolicy.java",
+          "gitBlob": "865297c441564fdd161999eed3fb9f5333cf9d4a"
+        }
+      ]
     }
   ]
 }
