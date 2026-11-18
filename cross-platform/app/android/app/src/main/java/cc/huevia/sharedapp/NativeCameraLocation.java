@@ -39,6 +39,8 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
     private final LocationManager locationManager;
     private final Map<String, BluetoothDevice> discovered = new LinkedHashMap<>();
     private final Map<String, String> names = new LinkedHashMap<>();
+    private final Set<String> pairingAdvertisements = new HashSet<>();
+    private final Map<String, BluetoothDevice> classicCandidates = new LinkedHashMap<>();
     private EventChannel.EventSink events;
     private MethodChannel.Result pending;
     private String operation;
@@ -53,6 +55,8 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
     private UUID subscription, writing;
     private BroadcastReceiver receiver;
     private BluetoothDevice classicTarget;
+    private String classicName;
+    private boolean inquiryStarted;
     private LocationListener locator;
 
     NativeCameraLocation(Activity activity, BinaryMessenger messenger) {
@@ -211,6 +215,7 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
         if (scanner == null) { fail("SCAN_FAILED", "手机暂时无法扫描蓝牙相机。"); return; }
         discovered.clear();
         names.clear();
+        pairingAdvertisements.clear();
         scan = new ScanCallback() {
             @Override public void onScanResult(int callbackType, ScanResult result) {
                 main.post(() -> {
@@ -243,8 +248,9 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
         ScanRecord record = result.getScanRecord();
         if (record == null) return;
         List<ParcelUuid> services = record.getServiceUuids();
-        if (record.getManufacturerSpecificData(0x0399) == null &&
-            (services == null || !services.contains(new ParcelUuid(SERVICE)))) return;
+        boolean nikonData = record.getManufacturerSpecificData(0x0399) != null;
+        boolean nikonService = services != null && services.contains(new ParcelUuid(SERVICE));
+        if (!nikonData && !nikonService) return;
         BluetoothDevice device = result.getDevice();
         String name = record.getDeviceName();
         if (name == null || name.trim().isEmpty()) name = device.getName();
@@ -252,6 +258,7 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
         String id = device.getAddress();
         discovered.put(id, device);
         names.put(id, name.trim());
+        if (nikonService && !nikonData) pairingAdvertisements.add(id);
     }
 
     private void finishScan() {
@@ -324,8 +331,14 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
                         ? BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                         : BluetoothGattDescriptor.ENABLE_INDICATION_VALUE);
                 } else {
+                    if (mtu < 44) {
+                        fail("CONNECT_FAILED", "相机蓝牙连接未能协商足够的数据长度，请重新连接。");
+                        return;
+                    }
                     subscription = null;
                     gattReady = true;
+                    String id = source.getDevice().getAddress();
+                    if (pairingAdvertisements.contains(id)) prepareClassic(names.get(id));
                     success(null);
                 }
             });
@@ -448,26 +461,52 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
         }
     }
 
-    @SuppressWarnings("deprecation")
     private void pairClassic(String name) {
         if (!gattReady || name == null || !names.containsValue(name)) {
             fail("PAIRING", "请先选择并连接相机。"); return;
         }
         closeGatt();
+        if (receiver == null) prepareClassic(name);
+        if (pending == null) return;
         BluetoothAdapter adapter = adapter();
         if (adapter == null) return;
-        Map<String, BluetoothDevice> nearby = new LinkedHashMap<>();
+        // The Classic pairing advertisement can be brief. Reuse an exact
+        // match collected during the LE handshake, then only wait if needed.
+        List<BluetoothDevice> exact = exactCandidates();
+        if (!exact.isEmpty()) {
+            startBond(name, exact);
+            return;
+        }
+        startInquiry(adapter);
+        later(22, () -> startBond(name, classicCandidates.values()));
+    }
+
+    @SuppressWarnings("deprecation")
+    private void prepareClassic(String name) {
+        if (name == null || receiver != null) return;
+        BluetoothAdapter adapter = adapter();
+        if (adapter == null) return;
+        classicName = name;
         receiver = new BroadcastReceiver() {
             @Override public void onReceive(Context context, Intent intent) {
                 safely(() -> {
-                    if (receiver != this || !"pairClassic".equals(operation)) return;
+                    if (receiver != this) return;
+                    boolean handoff = "pairClassic".equals(operation);
                     BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                     String action = intent.getAction();
                     if (BluetoothDevice.ACTION_FOUND.equals(action) && device != null && classicTarget == null) {
-                        if (matchesName(name, device.getName())) nearby.put(device.getAddress(), device);
+                        String foundName = intent.getStringExtra(BluetoothDevice.EXTRA_NAME);
+                        if (foundName == null) foundName = device.getName();
+                        if (device.getType() == BluetoothDevice.DEVICE_TYPE_LE || !matchesName(name, foundName)) return;
+                        classicCandidates.put(device.getAddress(), device);
+                        if (handoff && name.equalsIgnoreCase(foundName.trim())) {
+                            startBond(name, Collections.singletonList(device));
+                        }
                     } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action) && classicTarget == null) {
-                        startBond(name, nearby.values());
-                    } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action) &&
+                        inquiryStarted = false;
+                        if (handoff && !classicCandidates.isEmpty()) startBond(name, classicCandidates.values());
+                        else startInquiry(adapter);
+                    } else if (handoff && BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action) &&
                         device != null && device.equals(classicTarget)) {
                         int state = classicTarget.getBondState();
                         if (state == BluetoothDevice.BOND_BONDED) completeBond();
@@ -486,14 +525,22 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
         else activity.registerReceiver(receiver, filter);
         for (BluetoothDevice device : adapter.getBondedDevices()) {
             if (matchesName(name, device.getName()) && device.getType() != BluetoothDevice.DEVICE_TYPE_LE) {
-                nearby.put(device.getAddress(), device);
+                classicCandidates.put(device.getAddress(), device);
             }
         }
-        if (!adapter.startDiscovery()) {
-            fail("PAIRING", "无法开始相机配对，请检查相机的配对界面。");
-            return;
+        startInquiry(adapter);
+    }
+
+    private void startInquiry(BluetoothAdapter adapter) {
+        if (!inquiryStarted && !adapter.isDiscovering()) inquiryStarted = adapter.startDiscovery();
+    }
+
+    private List<BluetoothDevice> exactCandidates() {
+        List<BluetoothDevice> exact = new ArrayList<>();
+        for (BluetoothDevice device : classicCandidates.values()) {
+            if (classicName.equalsIgnoreCase(device.getName())) exact.add(device);
         }
-        later(22, () -> startBond(name, nearby.values()));
+        return exact;
     }
 
     private static boolean matchesName(String selected, String candidate) {
@@ -534,14 +581,19 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
         try { activity.unregisterReceiver(receiver); } catch (RuntimeException ignored) {}
         receiver = null;
         classicTarget = null;
+        classicName = null;
+        classicCandidates.clear();
+        boolean cancelOwnedInquiry = inquiryStarted;
+        inquiryStarted = false;
         try {
             BluetoothAdapter adapter = bluetooth == null ? null : bluetooth.getAdapter();
-            if (adapter != null) adapter.cancelDiscovery();
+            if (adapter != null && cancelOwnedInquiry) adapter.cancelDiscovery();
         } catch (RuntimeException ignored) {}
     }
 
     private void locate() {
         if (!gattReady) { fail("DISCONNECTED", "请先连接相机蓝牙。"); return; }
+        finishClassic();
         if (locationManager == null) { fail("LOCATION_UNAVAILABLE", "此手机未提供定位服务。"); return; }
         List<String> providers = new ArrayList<>();
         for (String provider : new String[]{LocationManager.GPS_PROVIDER, LocationManager.NETWORK_PROVIDER}) {
@@ -598,6 +650,7 @@ final class NativeCameraLocation implements MethodChannel.MethodCallHandler, Eve
         fail("CANCELLED", "已结束蓝牙定位操作。");
         discovered.clear();
         names.clear();
+        pairingAdvertisements.clear();
     }
 
     void dispose() {
