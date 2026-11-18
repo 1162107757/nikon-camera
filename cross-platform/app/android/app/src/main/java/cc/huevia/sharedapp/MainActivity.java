@@ -38,6 +38,7 @@ public final class MainActivity extends FlutterActivity {
     private NativeGallery gallery;
     private NativeQqAuthorization qqAuthorization;
     private NativeUpdates updates;
+    private NativeCameraLocation cameraLocation;
     private NativeLegacyFiles legacyFiles;
     private MethodChannel.Result galleryPermission;
     private MethodChannel.Result gallerySavePermission;
@@ -63,6 +64,12 @@ public final class MainActivity extends FlutterActivity {
           }
         }
         messenger=engine.getDartExecutor().getBinaryMessenger();
+        if(prior!=null&&prior!=this&&prior.cameraLocation!=null){
+            prior.cameraLocation.dispose();
+            prior.cameraLocation=null;
+        }
+        if(cameraLocation!=null)cameraLocation.dispose();
+        cameraLocation=new NativeCameraLocation(this,messenger);
         protection=new NativeConnectionProtection(this,engine);
         prepareCameraMaintenance();
         if(qqAuthorization!=null)qqAuthorization.close();
@@ -208,6 +215,15 @@ public final class MainActivity extends FlutterActivity {
     @Override protected void onStart(){super.onStart();maintenanceForeground=true;updateCameraMaintenance();}
     @Override protected void onStop(){maintenanceForeground=false;updateCameraMaintenance();super.onStop();}
     @Override protected void onResume(){super.onResume();if(qqAuthorization!=null)qqAuthorization.onHostResumed();if(updates!=null)updates.onHostResumed();}
-    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49324&&protection!=null)protection.permissionResult();if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}if(request==49319&&gallerySavePermission!=null){MethodChannel.Result reply=gallerySavePermission;gallerySavePermission=null;reply.success(SharedJson.encode(SharedRuntime.map("granted",checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED)));}}
-    @Override protected void onDestroy(){if(albumOperations!=null)albumOperations.close();if(qqAuthorization!=null)qqAuthorization.close();if(updates!=null)updates.close();if(legacyFiles!=null)legacyFiles.close();if(originalFiles!=null)originalFiles.dispose();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(protection!=null)protection.detached();if(!NativeConnectionProtection.keepEngine())releaseRetainedBackend();super.onDestroy();}
+    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){
+        super.onRequestPermissionsResult(request,permissions,grants);
+        if(request==NativeCameraLocation.PERMISSION_REQUEST&&cameraLocation!=null)cameraLocation.permissionResult();
+        if(request==49324&&protection!=null)protection.permissionResult();
+        if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}
+        if(request==49319&&gallerySavePermission!=null){MethodChannel.Result reply=gallerySavePermission;gallerySavePermission=null;reply.success(SharedJson.encode(SharedRuntime.map("granted",checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED)));}
+    }
+    @Override protected void onDestroy(){
+        if(cameraLocation!=null){cameraLocation.dispose();cameraLocation=null;}
+        if(albumOperations!=null)albumOperations.close();if(qqAuthorization!=null)qqAuthorization.close();if(updates!=null)updates.close();if(legacyFiles!=null)legacyFiles.close();if(originalFiles!=null)originalFiles.dispose();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(protection!=null)protection.detached();if(!NativeConnectionProtection.keepEngine())releaseRetainedBackend();super.onDestroy();
+    }
 }

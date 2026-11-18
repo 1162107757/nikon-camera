@@ -38,9 +38,9 @@ class _CameraRemotePageState extends State<CameraRemotePage>
   bool busy = false, leaving = false, foreground = true;
   bool grid = true, histogram = false, transferAfterCapture = false;
   bool uncertain = false;
-  Timer? timer;
+  Timer? timer, captureWatch;
   DateTime? frameReceivedAt;
-  int ticks = 0, sequence = 0;
+  int ticks = 0, sequence = 0, captureTicks = 0;
   late final String owner;
   late final CameraTransfer transfer;
   final ValueNotifier<int> updates = ValueNotifier<int>(0);
@@ -55,8 +55,9 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       widget.state.session['logoutPending'] != true;
   Json get scope => {'session': data['session'], 'remoteId': data['remoteId']};
   Json get action => data['action'] is Map ? object(data['action']) : {};
-  List<Json> get photos =>
-      (action['photos'] as List? ?? []).map(object).toList();
+  List<Json> get photos => action['phase'] == 'verified'
+      ? (action['photos'] as List? ?? []).map(object).toList()
+      : [];
   bool get pending => action['pending'] == true || uncertain;
 
   @override
@@ -82,6 +83,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       return;
     }
     timer?.cancel();
+    stopCaptureWatch();
     final lease = Map<String, dynamic>.of(scope);
     final waiting = pollCompletion?.future;
     leaving = true;
@@ -176,7 +178,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
             !remoteFrameIsFresh(frameReceivedAt, DateTime.now())) {
           setState(() {});
         }
-        unawaited(poll());
+        if (captureWatch == null || ++captureTicks % 3 == 0) unawaited(poll());
       });
     }
   }
@@ -189,6 +191,10 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       error ??
       (busy
           ? busyLabel ?? '正在处理相机操作'
+          : captureWatch != null
+          ? action['phase'] == 'waitingForJpeg'
+                ? 'RAW 已保存，正在等待配套 JPEG'
+                : '正在等待相机保存照片'
           : pending
           ? '拍摄结果待核对'
           : action['phase'] == 'verified'
@@ -247,6 +253,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       if (operation == 'camera.remote.check' ||
           operation == 'camera.remote.acknowledge') {
         uncertain = false;
+        reconcileCaptureWatch();
       }
       await importVerifiedIfEnabled();
     },
@@ -261,19 +268,41 @@ class _CameraRemotePageState extends State<CameraRemotePage>
         operation == 'camera.remote.view' && payload['enabled'] == false,
   );
 
-  Future<void> capture() => run(() async {
-    if (pending) throw const AppFailure('上次拍摄结果待核对，未发送快门。');
-    if (data['connected'] != true || data['capture'] != true) {
-      throw const AppFailure('相机当前不可拍摄，请核对机身状态。');
+  Future<void> capture() async {
+    var watchStarted = false;
+    await run(() async {
+      if (pending) throw const AppFailure('上次拍摄结果待核对，未发送快门。');
+      if (data['connected'] != true || data['capture'] != true) {
+        throw const AppFailure('相机当前不可拍摄，请核对机身状态。');
+      }
+      uncertain = true;
+      data = await call('camera.remote.capture', scope);
+      uncertain = false;
+      if (action['pending'] == true && action['phase'] == 'acknowledged') {
+        captureTicks = 0;
+        captureWatch = Timer(const Duration(seconds: 60), () {
+          stopCaptureWatch();
+          if (current) {
+            setState(() {});
+            updates.value++;
+          }
+        });
+        watchStarted = true;
+      }
+    }, label: '正在拍摄');
+    if (watchStarted) await poll();
+  }
+
+  void stopCaptureWatch() {
+    captureWatch?.cancel();
+    captureWatch = null;
+  }
+
+  void reconcileCaptureWatch() {
+    if (action['pending'] != true || action['phase'] == 'multipleExposures') {
+      stopCaptureWatch();
     }
-    uncertain = true;
-    data = await call('camera.remote.capture', scope);
-    uncertain = false;
-    if (action['pending'] == true) {
-      data = await call('camera.remote.check', scope);
-    }
-    await importVerifiedIfEnabled();
-  }, label: '正在拍摄');
+  }
 
   Future<void> importVerifiedIfEnabled() async {
     final id = action['actionId'] as String? ?? '';
@@ -304,29 +333,33 @@ class _CameraRemotePageState extends State<CameraRemotePage>
         conflictingWork) {
       return;
     }
-    final refresh = ++ticks % 8 == 0;
-    if (!refresh && data['viewing'] != true) return;
+    final checkingCapture = captureWatch != null;
+    final refresh = !checkingCapture && ++ticks % 8 == 0;
+    if (!checkingCapture && !refresh && (pending || data['viewing'] != true)) {
+      return;
+    }
     final completion = Completer<void>();
     pollCompletion = completion;
     var changed = false;
     try {
-      if (refresh) {
-        final next = await call('camera.remote.status', scope);
+      if (checkingCapture || refresh) {
+        final next = await call(
+          checkingCapture ? 'camera.remote.check' : 'camera.remote.status',
+          scope,
+        );
         if (jsonEncode(next) != jsonEncode(data)) {
           data = next;
           changed = true;
         }
-        if (!foreground || data['viewing'] != true) return;
-        if (action['pending'] == true) {
-          final checked = await call('camera.remote.check', scope);
-          if (jsonEncode(checked) != jsonEncode(data)) {
-            data = checked;
-            changed = true;
+        if (checkingCapture) {
+          reconcileCaptureWatch();
+          if (foreground && action['pending'] != true) {
+            await importVerifiedIfEnabled();
           }
+          return;
         }
-        await importVerifiedIfEnabled();
       }
-      if (!foreground || data['viewing'] != true) return;
+      if (busy || !foreground || pending || data['viewing'] != true) return;
       final next = await call('camera.remote.frame', scope);
       if (next['ready'] == true) {
         await FileImage(File(next['path'] as String)).evict();
@@ -338,6 +371,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       }
     } catch (failure) {
       if (current) {
+        if (checkingCapture) stopCaptureWatch();
         error = '$failure';
         changed = true;
       }
@@ -435,6 +469,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     final waiting = pollCompletion?.future;
     setState(() => leaving = true);
     timer?.cancel();
+    stopCaptureWatch();
     try {
       if (data['remoteId'] != null) {
         await closeLease(lease, waiting);
@@ -484,6 +519,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     final waiting = pollCompletion?.future;
     leaving = true;
     timer?.cancel();
+    stopCaptureWatch();
     widget.state.removeListener(accountChanged);
     WidgetsBinding.instance.removeObserver(this);
     transfer.removeListener(transferChanged);
@@ -622,7 +658,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
         title: const Text('实时取景'),
         subtitle: Text(data['liveView'] == true ? '仅控制当前遥控取景' : '相机未提供此能力'),
         value: data['viewing'] == true,
-        onChanged: busy || data['liveView'] != true
+        onChanged: busy || pending || data['liveView'] != true
             ? null
             : (on) {
                 Navigator.pop(context);
@@ -809,7 +845,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
                     unawaited(request('camera.remote.focus', {'x': x, 'y': y}))
               : null,
           onHistogram: (measured) => unawaited(showHistogram(measured)),
-          onResume: data['liveView'] == true
+          onResume: !pending && data['liveView'] == true
               ? () =>
                     unawaited(request('camera.remote.view', {'enabled': true}))
               : null,
@@ -819,7 +855,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
             right: 14,
             bottom: 13,
             child: TextButton.icon(
-              onPressed: busy
+              onPressed: busy || pending
                   ? null
                   : () => request('camera.remote.view', {'enabled': false}),
               style: TextButton.styleFrom(

@@ -9,7 +9,10 @@ import 'camera_remote_test.dart' as fixtures;
 
 class PollCore extends fixtures.RemoteCore {
   Completer<Json>? frameGate, statusGate;
+  bool previewAvailable = true;
   int activeCommands = 0, maximumCommands = 0;
+  @override
+  Json remote() => {...super.remote(), 'liveView': previewAvailable};
   @override
   Future<Json> call(
     String operation, [
@@ -131,13 +134,80 @@ void main() {
         core.calls.where((c) => c.operation == 'camera.remote.capture'),
         hasLength(1),
       );
-      expect(find.text('拍摄结果待核对'), findsOneWidget);
+      expect(find.text('正在等待相机保存照片'), findsOneWidget);
       expect(tester.widget<IconButton>(shutter).onPressed, isNull);
       expect(core.maximumCommands, 1);
       await tester.pumpWidget(const SizedBox());
       await flush(tester);
     },
   );
+  for (final viewing in [false, true]) {
+    testWidgets('Delayed shutter result is checked with live view $viewing', (
+      tester,
+    ) async {
+      final core = PollCore()..previewAvailable = viewing;
+      await mount(tester, core);
+      await tester.ensureVisible(shutter);
+      await tester.tap(shutter);
+      await flush(tester);
+      final captureIndex = core.calls.indexWhere(
+        (call) => call.operation == 'camera.remote.capture',
+      );
+      expect(captureIndex, greaterThanOrEqualTo(0));
+      await tick(tester, 9);
+      expect(find.text('正在等待相机保存照片'), findsOneWidget);
+      expect(tester.widget<IconButton>(shutter).onPressed, isNull);
+      final afterCapture = core.calls.skip(captureIndex + 1);
+      expect(afterCapture.length, greaterThan(1));
+      expect(
+        afterCapture.every((call) => call.operation == 'camera.remote.check'),
+        isTrue,
+      );
+      core.verified = true;
+      await tick(tester, 3);
+      expect(find.text('已确认新照片'), findsOneWidget);
+      expect(tester.widget<IconButton>(shutter).onPressed, isNotNull);
+      expect(
+        core.calls.where((call) => call.operation == 'camera.remote.capture'),
+        hasLength(1),
+      );
+      expect(core.maximumCommands, 1);
+      await tester.pumpWidget(const SizedBox());
+      await flush(tester);
+    });
+  }
+  testWidgets('Unseen result ends automatic checks and stays safe to review', (
+    tester,
+  ) async {
+    final core = PollCore();
+    await mount(tester, core);
+    await tester.tap(shutter);
+    await flush(tester);
+    await tester.pump(const Duration(seconds: 61));
+    await flush(tester);
+    expect(find.text('拍摄结果待核对'), findsOneWidget);
+    expect(tester.widget<IconButton>(shutter).onPressed, isNull);
+    expect(
+      tester
+          .widget<IconButton>(find.byKey(const Key('remote-close')))
+          .onPressed,
+      isNotNull,
+    );
+    final checkCount = core.calls
+        .where((c) => c.operation == 'camera.remote.check')
+        .length;
+    await tick(tester, 9);
+    expect(
+      core.calls.where((c) => c.operation == 'camera.remote.check'),
+      hasLength(checkCount),
+    );
+    expect(
+      core.calls.where((c) => c.operation == 'camera.remote.capture'),
+      hasLength(1),
+    );
+    await tester.pumpWidget(const SizedBox());
+    await flush(tester);
+  });
   testWidgets(
     '2.8s held status poll never flashes busy and rechecks capture capability before queued shutter',
     (tester) async {

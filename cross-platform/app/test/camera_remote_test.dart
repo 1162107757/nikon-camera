@@ -268,7 +268,7 @@ void main() {
         core.calls.where((c) => c.operation == 'camera.remote.check').length,
         1,
       );
-      expect(find.text('拍摄结果待核对'), findsOneWidget);
+      expect(find.text('正在等待相机保存照片'), findsOneWidget);
       expect(
         tester
             .widget<IconButton>(find.byKey(const Key('remote-shutter')))

@@ -7,11 +7,13 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 import java.util.function.BooleanSupplier;
+import java.util.function.LongSupplier;
 
 /** A revocable remote grant on the existing album connection, with one durable shutter intent. */
 public final class SharedRemote implements AutoCloseable {
     private final File directory;
     private final SharedCameraMutationStore journal;
+    private final LongSupplier clock;
     private NikonRemoteCamera camera;
     private AutoCloseable grant;
     private String session="",identity="",token="";
@@ -20,7 +22,11 @@ public final class SharedRemote implements AutoCloseable {
     private int sequence;
     private Map<Integer,Long> parameters=new LinkedHashMap<>();
     public SharedRemote(File root)throws IOException {
+        this(root,System::currentTimeMillis);
+    }
+    SharedRemote(File root,LongSupplier clock)throws IOException {
         directory=new File(root,"camera-remote");journal=new SharedCameraMutationStore(root,"remote");
+        this.clock=clock;
         if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建取景缓存。");
     }
     public Object open(PhotoCameraClient client,PtpDeviceInfo device,String currentSession)throws IOException {
@@ -71,7 +77,9 @@ public final class SharedRemote implements AutoCloseable {
         parameters=camera.parameters();Long shutter=parameters.get(0x500d);
         if(!Long.valueOf(1).equals(parameters.get(0x5013))||shutter==null||shutter<=0||shutter>=0xfffffffeL)throw new IOException("请在机身使用单张拍摄和普通快门时间。");
         Set<Long> baseline=camera.inventory();check(cancel);
-        Map<String,Object> pending=SharedRuntime.map("pending",true,"actionId",UUID.randomUUID().toString(),"cameraId",identity,"session",session,"baseline",new ArrayList<>(baseline),"phase","resultUnknown","time",System.currentTimeMillis());
+        Long quality=parameters.get(0x5004);
+        boolean jpegExpected=quality!=null&&(quality<=2||quality>=5&&quality<=7);
+        Map<String,Object> pending=SharedRuntime.map("pending",true,"actionId",UUID.randomUUID().toString(),"cameraId",identity,"session",session,"baseline",new ArrayList<>(baseline),"phase","resultUnknown","time",clock.getAsLong(),"jpegExpected",jpegExpected);
         journal.save(pending); // Must be durable before the one and only shutter command.
         try{camera.release();pending.put("phase","acknowledged");journal.save(pending);}
         catch(PtpResponseException rejected){
@@ -87,16 +95,44 @@ public final class SharedRemote implements AutoCloseable {
         if(!identity.equals(pending.get("cameraId")))throw new IOException("请连接上次拍摄的同一相机后核对。");
         Object saved=pending.get("baseline");if(!(saved instanceof List))throw new IOException("拍摄基线不完整，请在相机上手动核对。");
         Set<Long> baseline=new LinkedHashSet<>();for(Object item:(List<?>)saved){if(!(item instanceof Number))throw new IOException("拍摄基线无效。");baseline.add(((Number)item).longValue());}
-        List<NikonRemoteCamera.CapturedPhoto> photos=camera.newPhotos(baseline);List<Object> rows=new ArrayList<>();
+        List<NikonRemoteCamera.CapturedPhoto> photos;
+        try{photos=camera.newPhotos(baseline);}
+        catch(PtpResponseException busy){
+            // Nikon can report DeviceBusy while it finalizes the file on the card.
+            if(busy.responseCode()==0x2019)return state(pending);
+            throw busy;
+        }
+        Map<String,Object> previous=new LinkedHashMap<>(pending);
+        List<Object> rows=new ArrayList<>();
         for(NikonRemoteCamera.CapturedPhoto photo:photos)rows.add(SharedRuntime.map("handle",photo.handle,"name",photo.object.filename(),"raw",!photo.jpeg()));
         pending.put("photos",rows);pending.put("checked",true);
-        if(NikonRemoteCamera.oneExposure(photos)){pending.put("pending",false);pending.put("phase","verified");}
-        else pending.put("phase",photos.isEmpty()?"waitingForPhoto":"multipleExposures");
-        journal.save(pending);return state();
+        if(photos.isEmpty())pending.put("phase","waitingForPhoto");
+        else if(!NikonRemoteCamera.oneExposure(photos))pending.put("phase","multipleExposures");
+        else if(photos.stream().anyMatch(photo->photo.object.compressedSize()==0))pending.put("phase","waitingForPhoto");
+        else {
+            boolean jpeg=photos.stream().anyMatch(NikonRemoteCamera.CapturedPhoto::jpeg);
+            if(shouldWaitForJpeg(pending,jpeg))pending.put("phase","waitingForJpeg");
+            else {pending.put("pending",false);pending.put("phase","verified");}
+        }
+        if(!pending.equals(previous))journal.save(pending);
+        return state(pending);
     }
-    private Object state()throws IOException {
+    private boolean shouldWaitForJpeg(Map<String,Object> pending,boolean jpeg){
+        if(jpeg||!Boolean.TRUE.equals(pending.get("jpegExpected")))return false;
+        long now=clock.getAsLong();
+        Object saved=pending.get("rawObservedAt");
+        if(!(saved instanceof Number)){pending.put("rawObservedAt",now);return true;}
+        long elapsed=now-((Number)saved).longValue();
+        return elapsed>=0&&elapsed<10_000;
+    }
+    private Object state()throws IOException {return state(journal.read());}
+    private Object state(Map<String,Object> action){
         List<Object> values=new ArrayList<>();for(Map.Entry<Integer,Long> entry:parameters.entrySet())values.add(SharedRuntime.map("code",entry.getKey(),"value",entry.getValue(),"writable",false));
-        return SharedRuntime.map("session",session,"remoteId",token,"model",camera==null?"":camera.model,"connected",camera!=null&&camera.isOpen(),"liveView",camera!=null&&camera.liveView,"capture",camera!=null&&camera.capture,"autoFocus",camera!=null&&camera.autoFocus,"pointFocus",camera!=null&&camera.pointFocus,"viewing",view,"parameters",values,"action",journal.read());
+        Map<String,Object> summary=new LinkedHashMap<>();
+        for(String field:new String[]{"actionId","pending","phase","photos","checked","message"}){
+            if(action.containsKey(field))summary.put(field,action.get(field));
+        }
+        return SharedRuntime.map("session",session,"remoteId",token,"model",camera==null?"":camera.model,"connected",camera!=null&&camera.isOpen(),"liveView",camera!=null&&camera.liveView,"capture",camera!=null&&camera.capture,"autoFocus",camera!=null&&camera.autoFocus,"pointFocus",camera!=null&&camera.pointFocus,"viewing",view,"parameters",values,"action",summary);
     }
     private void require(Map<String,Object> p)throws IOException {if(camera==null||!camera.isOpen()||!session.equals(p.get("session"))||!token.equals(p.get("remoteId")))throw new IOException("遥控会话已结束，请返回相册重新打开。");}
     private static Double coordinate(Object value)throws IOException{if(!(value instanceof Number))throw new IOException("对焦坐标无效。");double number=((Number)value).doubleValue();if(!Double.isFinite(number)||number<0||number>1)throw new IOException("对焦坐标超出取景范围。");return number;}

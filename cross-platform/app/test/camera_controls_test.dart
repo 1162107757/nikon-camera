@@ -21,7 +21,15 @@ class ControlsCore extends HueviaCore {
     'parameters': [
       {'code': 0x500f, 'value': 400, 'writable': false},
     ],
-    'action': {'pending': pending, 'actionId': 'shutter-one'},
+    'action': {
+      'pending': pending,
+      'actionId': 'shutter-one',
+      'phase': pending
+          ? remoteChecks == 0
+                ? 'acknowledged'
+                : 'waitingForPhoto'
+          : 'verified',
+    },
   };
   Json slots() => {
     'session': 'slots',
@@ -181,9 +189,8 @@ void main() {
         hasLength(1),
       );
       expect(tester.widget<IconButton>(shutter).onPressed, isNull);
-      await tester.tap(find.text('拍摄结果待核对'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('查看相机最近照片'));
+      expect(find.text('正在等待相机保存照片'), findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 1100));
       await tester.pumpAndSettle();
       expect(
         core.calls.where((call) => call == 'camera.remote.capture'),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import 'domain.dart';
 import 'widgets.dart';
@@ -15,6 +16,7 @@ import 'camera_live.dart';
 import 'photo_grid.dart';
 import 'project_presets.dart';
 import 'camera_remote.dart';
+import 'camera_location.dart';
 import 'camera_slots.dart';
 import 'camera_downloads.dart';
 import 'camera_connection.dart';
@@ -223,6 +225,17 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     allowExclusive: true,
     compact: true,
   );
+
+  Future<void> openLocation() async {
+    if (childOpen || busy || transfer.busy || exclusive) return;
+    if (connected) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('请先断开相机的 Wi-Fi 或 USB 连接，再开启蓝牙定位同步。')),
+      );
+      return;
+    }
+    await openCameraTool(const CameraLocationPage(), fullScreen: true);
+  }
 
   void loadNearEnd() {
     if (!mounted ||
@@ -1403,6 +1416,12 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                 onSlots: busy || transfer.busy || exclusive
                     ? null
                     : () => openConnectedTool(slots: true),
+                onLocation:
+                    !kIsWeb &&
+                        (defaultTargetPlatform == TargetPlatform.android ||
+                            defaultTargetPlatform == TargetPlatform.iOS)
+                    ? openLocation
+                    : null,
                 downloadActive: widget.state.cameraDownloadsActive,
                 downloadRemaining: widget.state.cameraDownloads.current == null
                     ? 0

@@ -25,6 +25,7 @@
 #import "HueviaConnectionProtection.h"
 #import "HueviaPublicInternetQueues.h"
 #import "HueviaCameraPresentation.h"
+#import "HueviaCameraLocation.h"
 #import "cc/huevia/account/AccountException.h"
 #import "java/lang/Runnable.h"
 
@@ -56,6 +57,7 @@
 @property(nonatomic,strong) HueviaOriginalFiles *originalFiles;
 @property(nonatomic,strong) HueviaAlbumOperations *albumOperations;
 @property(nonatomic,strong) HueviaConnectionProtection *protection;
+@property(nonatomic,strong) HueviaCameraLocation *cameraLocation;
 @property(atomic) BOOL maintenanceAllowed;
 @property(nonatomic) BOOL maintenanceDetached;
 @property(nonatomic) BOOL maintenanceObserved;
@@ -72,6 +74,7 @@
   [HueviaDistribution registerWithRegistrar:registrar];
   [HueviaLegacyFiles registerWithRegistrar:registrar];
   HueviaCorePlugin *host=[[self alloc] init];
+  host.cameraLocation=[[HueviaCameraLocation alloc] initWithMessenger:registrar.messenger];
   host.queue=dispatch_queue_create("cc.huevia.shared.worker",DISPATCH_QUEUE_SERIAL);
   host.publicInternetQueues=[[HueviaPublicInternetQueues alloc] init];
   host.publicInternetJobs=[NSMutableSet set];
@@ -318,6 +321,8 @@
   else dispatch_async(self.queue,perform);
 }
 - (void)detachFromEngineForRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+  [self.cameraLocation detach];
+  self.cameraLocation=nil;
   self.protection.maintenanceChanged=nil;
   self.events=nil;
   CcHueviaSharedSharedCamera *camera;
