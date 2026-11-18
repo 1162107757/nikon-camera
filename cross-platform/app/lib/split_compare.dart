@@ -26,6 +26,7 @@ class SplitCompare extends StatefulWidget {
     this.originalDetailController,
     this.viewportState,
     this.viewportPlane,
+    this.fitPreview = false,
   });
   final String effect;
   final String? original;
@@ -41,12 +42,17 @@ class SplitCompare extends StatefulWidget {
       originalDetailController;
   final EditingViewportState? viewportState;
   final EditingViewportPlane? viewportPlane;
+  final bool fitPreview;
   @override
   State<SplitCompare> createState() => _SplitCompareState();
 }
 
 class _SplitCompareState extends State<SplitCompare> {
   final transform = TransformationController();
+  TransformationController? fitTransform;
+  TransformationController get displayTransform => widget.fitPreview
+      ? (fitTransform ??= TransformationController())
+      : transform;
   late EditingViewportBinding viewportBinding;
   final ownViewport = EditingViewportState();
   double divider = .5;
@@ -73,10 +79,10 @@ class _SplitCompareState extends State<SplitCompare> {
       return;
     }
     final visible = Rect.fromPoints(
-      transform.toScene(Offset.zero),
-      transform.toScene(Offset(viewport.width, viewport.height)),
+      displayTransform.toScene(Offset.zero),
+      displayTransform.toScene(Offset(viewport.width, viewport.height)),
     ).intersect(imageRect);
-    final scale = transform.value.getMaxScaleOnAxis();
+    final scale = displayTransform.value.getMaxScaleOnAxis();
     final region = visible.isEmpty
         ? Rect.zero
         : Rect.fromLTRB(
@@ -132,6 +138,7 @@ class _SplitCompareState extends State<SplitCompare> {
     viewportBinding.dispose();
     transform.removeListener(reportViewport);
     transform.dispose();
+    fitTransform?.dispose();
     super.dispose();
   }
 
@@ -175,6 +182,7 @@ class _SplitCompareState extends State<SplitCompare> {
         imageRect: imageRect,
         plane: widget.viewportPlane,
         active:
+            !widget.fitPreview &&
             TickerMode.valuesOf(context).enabled &&
             (ModalRoute.of(context)?.isCurrent ?? true),
       );
@@ -193,7 +201,9 @@ class _SplitCompareState extends State<SplitCompare> {
         maxLeft - safeRight,
       );
       Widget surface(String path) => InteractiveViewer(
-        transformationController: transform,
+        transformationController: displayTransform,
+        panEnabled: !widget.fitPreview,
+        scaleEnabled: !widget.fitPreview,
         minScale: 1,
         maxScale: 32,
         child: SizedBox(
@@ -282,9 +292,9 @@ class _SplitCompareState extends State<SplitCompare> {
               child: ClipRect(
                 clipper: _FractionClip(divider),
                 child: AnimatedBuilder(
-                  animation: transform,
+                  animation: displayTransform,
                   builder: (_, _) => Transform(
-                    transform: transform.value,
+                    transform: displayTransform.value,
                     alignment: Alignment.topLeft,
                     child: image(
                       widget.original!,

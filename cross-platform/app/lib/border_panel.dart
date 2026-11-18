@@ -73,12 +73,13 @@ class BorderPanel extends StatefulWidget {
     required this.onRedo,
     required this.canUndo,
     required this.canRedo,
+    this.settingsInDock = false,
   });
   final AppState state;
   final Photo photo;
   final String owner;
   final Json recipe;
-  final bool enabled, canUndo, canRedo;
+  final bool enabled, canUndo, canRedo, settingsInDock;
   final void Function(Json border, bool snapshot) onChanged;
   final VoidCallback onDragStart, onUndo, onRedo;
   @override
@@ -705,6 +706,10 @@ class _BorderPanelState extends State<BorderPanel> {
 
   Future<void> settings() async {
     if (!ready) return;
+    if (widget.settingsInDock) {
+      setState(() => dockSettingsTab = 2);
+      return;
+    }
     var tab = 2;
     await borderSheet<void>(
       (sheet) => StatefulBuilder(
@@ -721,192 +726,10 @@ class _BorderPanelState extends State<BorderPanel> {
                       MediaQuery.paddingOf(context).vertical -
                       40,
                 ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            '边框设置',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          tooltip: '关闭边框设置',
-                          onPressed: () => Navigator.pop(sheet),
-                          icon: const HueIcon(HueIconKind.close, color: _text),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        for (var i = 0; i < 3; i++)
-                          Expanded(
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: button(
-                                    ['样式', '信息', '外观'][i],
-                                    () => refresh(() => tab = i),
-                                    selected: tab == i,
-                                    muted: tab != i,
-                                  ),
-                                ),
-                                if (tab == i)
-                                  Positioned(
-                                    bottom: 5,
-                                    child: Container(
-                                      width: 18,
-                                      height: 2,
-                                      decoration: BoxDecoration(
-                                        color: _accent,
-                                        borderRadius: BorderRadius.circular(1),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        IconButton(
-                          tooltip: '撤销边框调整',
-                          onPressed: ready && widget.canUndo
-                              ? widget.onUndo
-                              : null,
-                          icon: HueIcon(
-                            HueIconKind.undo,
-                            color: ready && widget.canUndo
-                                ? _text
-                                : _text.withValues(alpha: .35),
-                          ),
-                        ),
-                        IconButton(
-                          tooltip: '重做边框调整',
-                          onPressed: ready && widget.canRedo
-                              ? widget.onRedo
-                              : null,
-                          icon: HueIcon(
-                            HueIconKind.redo,
-                            color: ready && widget.canRedo
-                                ? _text
-                                : _text.withValues(alpha: .35),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView(
-                        key: ValueKey('border-settings-body-$tab'),
-                        children: tab == 0
-                            ? [
-                                for (var i = 0; i < 4; i++)
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: button(
-                                      borderTemplates[i],
-                                      !ready
-                                          ? null
-                                          : () => apply({
-                                              ...border,
-                                              'template': i,
-                                            }),
-                                      selected: (border['template'] ?? 0) == i,
-                                    ),
-                                  ),
-                              ]
-                            : tab == 1
-                            ? [
-                                for (var i = 0; i < 6; i++)
-                                  row(i, checkbox: true),
-                                lensRow(),
-                              ]
-                            : [
-                                for (final entry in const [
-                                  ('margin', '边距', 50.0, 160.0),
-                                  ('corner', '圆角', 0.0, 200.0),
-                                  ('shadow', '阴影', 0.0, 150.0),
-                                  ('blur', '模糊', 0.0, 200.0),
-                                ])
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 66,
-                                        child: Text(
-                                          entry.$2,
-                                          style: const TextStyle(fontSize: 12),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: sliderFace(
-                                          Slider(
-                                            activeColor: _accent,
-                                            key: ValueKey(
-                                              'border-appearance-${entry.$1}',
-                                            ),
-                                            value:
-                                                (border[entry.$1] as num? ??
-                                                        100)
-                                                    .toDouble(),
-                                            min: entry.$3,
-                                            max: entry.$4,
-                                            semanticFormatterCallback: (v) =>
-                                                '${v.round()}%',
-                                            onChangeStart: !ready
-                                                ? null
-                                                : (_) {
-                                                    dragging = true;
-                                                    widget.onDragStart();
-                                                  },
-                                            onChanged: !ready
-                                                ? null
-                                                : (v) => apply({
-                                                    ...border,
-                                                    entry.$1: v.round(),
-                                                  }, snapshot: false),
-                                            onChangeEnd: !ready
-                                                ? null
-                                                : (_) {
-                                                    dragging = false;
-                                                    schedule();
-                                                  },
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 44,
-                                        child: Text(
-                                          '${border[entry.$1] ?? 100}%',
-                                          textAlign: TextAlign.end,
-                                          style: const TextStyle(
-                                            fontSize: 11,
-                                            color: _muted,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                button(
-                                  'Logo · ${_logos[border['logo'] as int? ?? 0]}',
-                                  ready ? logo : null,
-                                  accent: true,
-                                ),
-                                button(
-                                  '恢复默认',
-                                  !ready
-                                      ? null
-                                      : () => apply({
-                                          'template': border['template'] ?? 0,
-                                        }),
-                                  accent: true,
-                                ),
-                              ],
-                      ),
-                    ),
-                  ],
+                child: settingsBody(
+                  tab,
+                  (next) => refresh(() => tab = next),
+                  () => Navigator.pop(sheet),
                 ),
               ),
             ),
@@ -916,6 +739,174 @@ class _BorderPanelState extends State<BorderPanel> {
     );
     dragging = false;
   }
+
+  int? dockSettingsTab;
+
+  Widget settingsBody(
+    int tab,
+    ValueChanged<int> selectTab,
+    VoidCallback close,
+  ) => Column(
+    children: [
+      Row(
+        children: [
+          const Expanded(
+            child: Text(
+              '边框设置',
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
+          ),
+          IconButton(
+            tooltip: '关闭边框设置',
+            onPressed: close,
+            icon: const HueIcon(HueIconKind.close, color: _text),
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          for (var i = 0; i < 3; i++)
+            Expanded(
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: button(
+                      ['样式', '信息', '外观'][i],
+                      () => selectTab(i),
+                      selected: tab == i,
+                      muted: tab != i,
+                    ),
+                  ),
+                  if (tab == i)
+                    Positioned(
+                      bottom: 5,
+                      child: Container(
+                        width: 18,
+                        height: 2,
+                        decoration: BoxDecoration(
+                          color: _accent,
+                          borderRadius: BorderRadius.circular(1),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          IconButton(
+            tooltip: '撤销边框调整',
+            onPressed: ready && widget.canUndo ? widget.onUndo : null,
+            icon: HueIcon(
+              HueIconKind.undo,
+              color: ready && widget.canUndo
+                  ? _text
+                  : _text.withValues(alpha: .35),
+            ),
+          ),
+          IconButton(
+            tooltip: '重做边框调整',
+            onPressed: ready && widget.canRedo ? widget.onRedo : null,
+            icon: HueIcon(
+              HueIconKind.redo,
+              color: ready && widget.canRedo
+                  ? _text
+                  : _text.withValues(alpha: .35),
+            ),
+          ),
+        ],
+      ),
+      Expanded(
+        child: ListView(
+          key: ValueKey('border-settings-body-$tab'),
+          children: tab == 0
+              ? [
+                  for (var i = 0; i < 4; i++)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: button(
+                        borderTemplates[i],
+                        !ready ? null : () => apply({...border, 'template': i}),
+                        selected: (border['template'] ?? 0) == i,
+                      ),
+                    ),
+                ]
+              : tab == 1
+              ? [for (var i = 0; i < 6; i++) row(i, checkbox: true), lensRow()]
+              : [
+                  for (final entry in const [
+                    ('margin', '边距', 50.0, 160.0),
+                    ('corner', '圆角', 0.0, 200.0),
+                    ('shadow', '阴影', 0.0, 150.0),
+                    ('blur', '模糊', 0.0, 200.0),
+                  ])
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 66,
+                          child: Text(
+                            entry.$2,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ),
+                        Expanded(
+                          child: sliderFace(
+                            Slider(
+                              activeColor: _accent,
+                              key: ValueKey('border-appearance-${entry.$1}'),
+                              value: (border[entry.$1] as num? ?? 100)
+                                  .toDouble(),
+                              min: entry.$3,
+                              max: entry.$4,
+                              semanticFormatterCallback: (v) => '${v.round()}%',
+                              onChangeStart: !ready
+                                  ? null
+                                  : (_) {
+                                      dragging = true;
+                                      widget.onDragStart();
+                                    },
+                              onChanged: !ready
+                                  ? null
+                                  : (v) => apply({
+                                      ...border,
+                                      entry.$1: v.round(),
+                                    }, snapshot: false),
+                              onChangeEnd: !ready
+                                  ? null
+                                  : (_) {
+                                      dragging = false;
+                                      schedule();
+                                    },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 44,
+                          child: Text(
+                            '${border[entry.$1] ?? 100}%',
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(fontSize: 11, color: _muted),
+                          ),
+                        ),
+                      ],
+                    ),
+                  button(
+                    'Logo · ${_logos[border['logo'] as int? ?? 0]}',
+                    ready ? logo : null,
+                    accent: true,
+                  ),
+                  button(
+                    '恢复默认',
+                    !ready
+                        ? null
+                        : () => apply({'template': border['template'] ?? 0}),
+                    accent: true,
+                  ),
+                ],
+        ),
+      ),
+    ],
+  );
 
   double cameraHeight(BuildContext context, bool manual) {
     final screen = MediaQuery.sizeOf(context);
@@ -1205,6 +1196,20 @@ class _BorderPanelState extends State<BorderPanel> {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
+      final settingsTab = dockSettingsTab;
+      if (settingsTab != null) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: settingsBody(
+            settingsTab,
+            (next) => setState(() => dockSettingsTab = next),
+            () => setState(() {
+              dragging = false;
+              dockSettingsTab = null;
+            }),
+          ),
+        );
+      }
       final stripHeight = math.min(82 * textScale + 16, box.maxHeight * .6),
           labelHeight = math.min(20 * textScale, stripHeight / 2),
           imageHeight = math.max(12.0, stripHeight - 16 - labelHeight);

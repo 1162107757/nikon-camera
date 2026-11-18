@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'domain.dart';
@@ -7,6 +8,12 @@ import 'domain.dart';
 /// Native, persistent folder grants. Only the opaque ID crosses into the app.
 class OriginalFiles {
   static const channel = MethodChannel('cc.huevia/file-publication');
+
+  static bool get canChooseTarget =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS);
+
   static Future<Json?> chooseTarget(String owner) async {
     try {
       final result = await channel.invokeMethod<String>('chooseTarget', {

@@ -162,6 +162,7 @@ public final class MainActivity extends FlutterActivity {
                         if(operation.startsWith("media."))value=media.request(operation,payload,cancelled::get,progress);
                         else if(operation.startsWith("camera.")){Map<String,Object> p=SharedJson.object(payload);if(p.containsKey("queueId"))runtime.guardOwner(SharedRuntime.text(p,"owner",64));value=camera.request(operation,payload,identity,cancelled::get,progress);}
                         else if(operation.equals("files.publishOriginal")){if(originalFiles==null)throw new IOException("文件保存尚未准备好。");value=originalFiles.publish(payload,cancelled::get);}
+                        else if(operation.equals("files.publishExport")){if(originalFiles==null)throw new IOException("文件保存尚未准备好。");value=originalFiles.publishExport(payload,cancelled::get);}
                         else if(operation.equals("gallery.delete")||operation.equals("gallery.publishedCopies")){if(albumOperations==null)throw new IOException("系统相册尚未准备好。");value=albumOperations.request(operation,payload,cancelled::get);}
                         else if(operation.startsWith("gallery.")){value=gallery.request(operation,payload,cancelled::get,identity);if(operation.equals("gallery.publish")||operation.equals("gallery.publishOriginal"))main.post(()->emit(SharedRuntime.map("kind","galleryChanged")));}
                         else if(SharedRuntime.accountNetworkOperation(operation)||SharedRuntime.publicNetworkOperation(operation))value=runtime.requestPublic(operation,payload,cancelled::get);

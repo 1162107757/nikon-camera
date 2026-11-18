@@ -9,6 +9,7 @@ import 'package:path/path.dart' as p;
 import 'package:crypto/crypto.dart';
 
 import 'domain.dart';
+import 'export_save.dart';
 import 'raw_reference.dart';
 
 class BatchPhoto {
@@ -52,6 +53,9 @@ class BatchExport extends ChangeNotifier {
   int strength = 100;
   int _recipeBytes = 0;
   bool saveToGallery = false;
+  bool _orderedFilename = true;
+  String? targetId, targetName;
+  bool get publishesExternally => saveToGallery || targetId != null;
   Future<void> _writes = Future.value();
   File get journal => File(
     p.join(
@@ -63,7 +67,7 @@ class BatchExport extends ChangeNotifier {
   int get published => items.where((item) => item.receipt != null).length;
   bool get done =>
       completed == items.length &&
-      (!saveToGallery || published == items.length);
+      (!publishesExternally || published == items.length);
   void restore() {
     if (!p.isAbsolute(state.core.root)) return;
     try {
@@ -74,6 +78,10 @@ class BatchExport extends ChangeNotifier {
           value['phone'] != phone ||
           value['schema'] != 1) {
         return;
+      }
+      final savedTargetId = value['targetId'] as String?;
+      if (!validExportTarget(savedTargetId)) {
+        throw const FormatException('无效的文件夹授权。');
       }
       final rows = value['items'] as List;
       if (rows.length != items.length) return;
@@ -106,7 +114,7 @@ class BatchExport extends ChangeNotifier {
           item.receipt = object(row['receipt']);
         }
         item.phase = item.receipt != null
-            ? '已保存到系统相册'
+            ? (savedTargetId == null ? '已保存到系统相册' : '已保存到文件夹')
             : item.output != null
             ? '已保存成品'
             : '等待继续';
@@ -114,13 +122,18 @@ class BatchExport extends ChangeNotifier {
       preset = value['preset'] as String?;
       strength = value['strength'] as int? ?? 100;
       size = value['size'] as String? ?? 'full';
-      saveToGallery = value['saveToGallery'] == true;
+      targetId = savedTargetId;
+      targetName = savedTargetId == null
+          ? null
+          : value['targetName'] as String?;
+      saveToGallery = targetId == null && value['saveToGallery'] == true;
+      _orderedFilename = targetId != null || value['orderedFilename'] == true;
       locked = value['locked'] == true;
       _recipeBytes = items
           .where((i) => i.recipe != null)
           .fold(0, (v, i) => v + utf8.encode(jsonEncode(i.recipe)).length);
     } catch (_) {
-      recoveryError = '上次批量任务记录无法完整读取，请核对系统相册后新建任务。';
+      recoveryError = '上次批量任务记录无法完整读取，请核对保存位置后新建任务。';
       locked = true;
     }
   }
@@ -137,6 +150,9 @@ class BatchExport extends ChangeNotifier {
       'strength': strength,
       'size': size,
       'saveToGallery': saveToGallery,
+      'orderedFilename': _orderedFilename,
+      'targetId': ?targetId,
+      'targetName': ?targetName,
       'locked': locked,
       'items': [
         for (final i in items)
@@ -182,6 +198,8 @@ class BatchExport extends ChangeNotifier {
       item.phase = '等待处理';
     }
     _recipeBytes = 0;
+    targetId = targetName = null;
+    _orderedFilename = true;
     recoveryError = null;
     locked = false;
     stopped = false;
@@ -196,7 +214,8 @@ class BatchExport extends ChangeNotifier {
   }
 
   void accountChanged() {
-    if ((state.session['user']?['id'] as String? ?? '') != owner) {
+    if (state.session['logoutPending'] == true ||
+        (state.session['user']?['id'] as String? ?? '') != owner) {
       accountInvalid = true;
       unawaited(cancel());
     }
@@ -205,6 +224,7 @@ class BatchExport extends ChangeNotifier {
   void check() {
     if (!_alive || stopped) throw const AppFailure('批量处理已停止。');
     if (accountInvalid ||
+        state.session['logoutPending'] == true ||
         (state.session['user']?['id'] as String? ?? '') != owner) {
       throw const AppFailure('账号已改变，请重新选择照片。');
     }
@@ -335,6 +355,8 @@ class BatchExport extends ChangeNotifier {
     int amount = 100,
     String exportSize = 'full',
     bool systemAlbum = false,
+    String? targetId,
+    String? targetName,
   }) async {
     if (busy || accountInvalid || done) return;
     if (recoveryError != null) throw AppFailure(recoveryError!);
@@ -344,10 +366,16 @@ class BatchExport extends ChangeNotifier {
           !['full', 'share'].contains(exportSize)) {
         throw const AppFailure('批量导出设置无效。');
       }
+      if (!validExportTarget(targetId)) {
+        throw const AppFailure('文件夹授权记录无效，请重新选择。');
+      }
       preset = presetId;
       strength = amount;
       size = exportSize;
-      saveToGallery = systemAlbum;
+      saveToGallery = targetId == null && systemAlbum;
+      this.targetId = targetId;
+      this.targetName = targetId == null ? null : targetName;
+      _orderedFilename = true;
       locked = true;
     }
     stopped = false;
@@ -401,35 +429,34 @@ class BatchExport extends ChangeNotifier {
           changed();
         }
       }
-      if (saveToGallery) {
+      if (publishesExternally) {
         for (final item in items.where(
           (i) => i.version != null && i.receipt == null,
         )) {
           check();
           item.error = null;
-          item.phase = '保存到系统相册';
+          item.phase = this.targetId == null ? '保存到系统相册' : '保存到文件夹';
           changed();
           try {
             await persist();
-            final receipt = await call('gallery.publish', {
-              'owner': owner,
-              'id': item.version!['id'],
-              'filename': '${p.basenameWithoutExtension(item.photo!.name)}.jpg',
-              'extraCopy': true,
-              'operationId': item.operation,
-            });
-            if (receipt['published'] != true ||
-                (receipt['uri'] ?? receipt['identifier']) is! String) {
-              throw const AppFailure('系统相册尚未确认保存，请重试。');
-            }
+            final receipt = await publishExport(
+              call,
+              owner: owner,
+              version: item.version!['id'],
+              originalName: item.photo!.name,
+              operation: item.operation,
+              targetId: this.targetId,
+              orderedFilename: _orderedFilename,
+            );
+            check();
             item.receipt = receipt;
-            item.phase = '已保存到系统相册';
+            item.phase = this.targetId == null ? '已保存到系统相册' : '已保存到文件夹';
             await persist();
             changed();
           } catch (failure) {
             if (stopped || accountInvalid || !_alive) break;
             item.error = '$failure';
-            item.phase = '相册保存未完成';
+            item.phase = this.targetId == null ? '相册保存未完成' : '文件夹保存未完成';
             changed();
             break;
           }

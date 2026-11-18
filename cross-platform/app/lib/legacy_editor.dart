@@ -687,6 +687,7 @@ extension _LegacyWorkspace on _EditorPageState {
                 detailController: details.effect,
                 originalDetailController: details.original,
                 viewportState: editingViewport,
+                fitPreview: tab == 4 && embeddedTool == null,
                 viewportPlane: EditingViewportPlane.fromRecipe(
                   object(displayedOverlay?['recipe'] ?? recipe.data),
                   sourceSize: Size(
@@ -1232,6 +1233,7 @@ extension _LegacyWorkspace on _EditorPageState {
     owner: owner,
     recipe: recipe.data,
     enabled: toolsEnabled,
+    settingsInDock: true,
     canUndo: undo.isNotEmpty,
     canRedo: redo.isNotEmpty,
     onUndo: () => history(false),

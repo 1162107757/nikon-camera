@@ -45,17 +45,28 @@ final class NativeGallery {
                 boolean original=operation.equals("gallery.publishOriginal");
                 Object extra=p.get("extraCopy");if(extra!=null&&!(extra instanceof Boolean))throw new IOException("导出副本选项无效。");
                 if(original&&Boolean.TRUE.equals(extra))throw new IOException("原始文件不能重新编码或改写拍摄信息。");
+                Object naming=p.get("orderedFilename");
+                if(naming!=null&&(!(naming instanceof Boolean)||Boolean.TRUE.equals(naming)&&(original||!Boolean.TRUE.equals(extra))))throw new IOException("导出文件命名选项无效。");
                 String owner=SharedRuntime.text(p,"owner",64),id=SharedRuntime.text(p,"id",64);runtime.guardOwner(owner);
                 Map<String,Object> saved=SharedJson.object(original?runtime.prepareOriginalPublication(json,cancel):runtime.request("version.open",SharedJson.encode(SharedRuntime.map("owner",owner,"id",id)),cancel,value->{}));
                 if(original)id=(String)saved.get("id");
                 if(cancel.getAsBoolean())throw new InterruptedIOException("保存照片已取消。");
                 runtime.guardOwner(owner);
                 String filename=SharedRuntime.text(p,"filename",256),sha=(String)saved.get("sha256");File source=new File((String)saved.get("path"));long bytes=((Number)saved.get("bytes")).longValue();
-                String uri=original?("NEF".equals(saved.get("format"))?SharedRawGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,cancel):SharedGalleryPublication.publishOriginal(context,source,owner,id,filename,sha,bytes,cancel)):Boolean.TRUE.equals(extra)?SharedGalleryCopies.publish(context,source,owner,id,SharedRuntime.text(p,"operationId",32),filename,sha,bytes,cancel):SharedGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,false,cancel);
+                String uri;String publishedName=null;
+                if(original){
+                    uri="NEF".equals(saved.get("format"))?SharedRawGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,cancel):SharedGalleryPublication.publishOriginal(context,source,owner,id,filename,sha,bytes,cancel);
+                }else if(Boolean.TRUE.equals(extra)){
+                    SharedGalleryCopies.Copy copy=SharedGalleryCopies.publish(context,source,owner,id,SharedRuntime.text(p,"operationId",32),filename,sha,bytes,Boolean.TRUE.equals(naming),cancel);
+                    uri=copy.uri;publishedName=copy.filename;
+                }else{
+                    uri=SharedGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,false,cancel);
+                }
                 if(original){SharedGalleryPublication.verify(context,uri,sha,bytes,cancel);runtime.releaseOriginalPublication(SharedJson.encode(SharedRuntime.map("owner",owner,"operationId",SharedRuntime.text(p,"operationId",32),"sha256",sha,"bytes",bytes)));}
                 runtime.guardOwner(owner);
                 repository.invalidatePhoneIndex();
                 Map<String,Object> receipt=SharedRuntime.map("id",id,"published",true,"uri",uri,"verified",true);
+                if(publishedName!=null)receipt.put("filename",publishedName);
                 if(original){receipt.put("owner",owner);receipt.put("operationId",SharedRuntime.text(p,"operationId",32));receipt.put("sha256",sha);receipt.put("bytes",bytes);receipt.put("targetKind","system");}
                 return SharedJson.encode(receipt);
             } finally {synchronized(publicationLock){publicationJob=null;publicationThread=null;Thread.interrupted();}}

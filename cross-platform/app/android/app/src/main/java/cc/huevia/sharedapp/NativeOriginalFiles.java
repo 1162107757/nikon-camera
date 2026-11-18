@@ -15,11 +15,12 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.security.*;
+import java.text.Normalizer;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.BooleanSupplier;
 
-/** Persistent SAF folder grants and byte-exact, idempotent original publication. */
+/** Persistent SAF folder grants and byte-exact, idempotent file publication. */
 final class NativeOriginalFiles implements MethodChannel.MethodCallHandler {
     static final int PICK_FOLDER=0x6f30;
     private final Activity activity;
@@ -62,10 +63,7 @@ final class NativeOriginalFiles implements MethodChannel.MethodCallHandler {
     synchronized String publish(String json,BooleanSupplier cancel)throws IOException {
         Map<String,Object> p=SharedJson.object(json);String owner=SharedRuntime.text(p,"owner",64),operation=SharedRuntime.text(p,"operationId",32),target=SharedRuntime.text(p,"targetId",32);
         if(!operation.matches("[0-9a-f]{32}")||!target.matches("[0-9a-f]{32}"))throw new IOException("文件保存任务或目标标识无效。");runtime.guardOwner(owner);check(cancel);
-        Map<String,Object> selected=read(record(owner,"file-targets",target));if(selected==null||!owner.equals(selected.get("owner"))||!target.equals(selected.get("id")))throw new IOException("文件夹授权记录不可用，请重新选择目标。");
-        Uri tree=Uri.parse((String)selected.get("tree"));boolean permission=false;
-        for(UriPermission grant:activity.getContentResolver().getPersistedUriPermissions())if(grant.getUri().equals(tree)&&grant.isReadPermission()&&grant.isWritePermission())permission=true;
-        if(!permission)throw new IOException("文件夹访问权限已失效，请重新选择文件夹；未重复保存。");
+        Uri tree=authorizedTree(owner,target);
         Map<String,Object> source=SharedJson.object(runtime.prepareOriginalPublication(json,cancel));String sha=(String)source.get("sha256"),format=(String)source.get("format");long bytes=((Number)source.get("bytes")).longValue();File file=new File((String)source.get("path"));
         AtomicFile journal=record(owner,"file-publications",operation);Map<String,Object> receipt=read(journal);boolean existing=receipt!=null;
         String name=safeName(SharedRuntime.text(p,"filename",256),operation,format);
@@ -87,6 +85,170 @@ final class NativeOriginalFiles implements MethodChannel.MethodCallHandler {
             byte[] buffer=new byte[65536];long total=0;int count;while((count=in.read(buffer))!=-1){check(cancel);total+=count;if(total>bytes)throw new IOException("原文件快照已变化。");out.write(buffer,0,count);}if(total!=bytes)throw new IOException("原文件快照不完整。");out.flush();out.getFD().sync();
         }
         verify(document,sha,bytes,cancel);runtime.guardOwner(owner);receipt.put("state","complete");write(journal,receipt);return finish(owner,operation,target,document,sha,bytes,existing);
+    }
+
+    synchronized String publishExport(String json,BooleanSupplier cancel)throws IOException {
+        Map<String,Object> request=SharedJson.object(json);
+        String owner=SharedRuntime.text(request,"owner",64),id=SharedRuntime.text(request,"id",64);
+        String target=SharedRuntime.text(request,"targetId",32),operation=SharedRuntime.text(request,"operationId",32);
+        if(!id.matches("[0-9a-f]{64}")||!target.matches("[0-9a-f]{32}")||!operation.matches("[0-9a-f]{32}")) {
+            throw new IOException("导出任务或目标标识无效。");
+        }
+        runtime.guardOwner(owner);
+        check(cancel);
+        Uri tree=authorizedTree(owner,target);
+        String stem=exportStem(SharedRuntime.text(request,"filename",256));
+        Map<String,Object> source=SharedJson.object(runtime.request("version.open",
+            SharedJson.encode(SharedRuntime.map("owner",owner,"id",id)),cancel,value->{}));
+        File file=new File((String)source.get("path"));
+        String sha=(String)source.get("sha256");
+        long bytes=number(source,"bytes");
+        AtomicFile journal=record(owner,"file-export-publications",operation);
+        Map<String,Object> receipt=read(journal);
+        boolean existing=receipt!=null;
+        if(existing&&(!owner.equals(receipt.get("owner"))||!id.equals(receipt.get("id"))||!operation.equals(receipt.get("operationId"))||
+            !target.equals(receipt.get("targetId"))||!sha.equals(receipt.get("sha256"))||
+            bytes!=number(receipt,"bytes")||!stem.equals(receipt.get("stem")))) {
+            throw new IOException("导出任务已绑定其他成品或文件夹，未重复保存。");
+        }
+
+        ContentResolver resolver=activity.getContentResolver();
+        Uri folder=treeDocument(tree);
+        Uri document;
+        String filename;
+        if(existing){
+            document=Uri.parse((String)receipt.get("uri"));
+            filename=(String)receipt.get("name");
+            if(!DocumentsContract.isChildDocument(resolver,folder,document)||!filename.equals(displayName(document))) {
+                throw new IOException("上一次导出的文件已移动或改名，请先核对所选文件夹。");
+            }
+            if("complete".equals(receipt.get("state"))){
+                verify(document,sha,bytes,cancel);
+                runtime.guardOwner(owner);
+                return exportReceipt(owner,id,target,operation,document,filename,sha,bytes,true);
+            }
+            if(!prefixMatches(document,file,bytes,cancel))throw new IOException("未完成的导出文件已发生变化，请先核对所选文件夹。");
+        }else{
+            ExportDocument created=reserveExportDocument(tree,folder,stem,owner,cancel);
+            filename=created.filename;
+            document=created.uri;
+            try {
+                receipt=SharedRuntime.map("schema",1,"owner",owner,"id",id,"targetId",target,"operationId",operation,
+                    "sha256",sha,"bytes",bytes,"stem",stem,"name",filename,"uri",document.toString(),"state","pending");
+                write(journal,receipt);
+            } catch(IOException|RuntimeException failure) {
+                try { DocumentsContract.deleteDocument(resolver,document); } catch(Exception ignored) {}
+                throw failure;
+            }
+        }
+        runtime.guardOwner(owner);
+        check(cancel);
+        try(InputStream in=new FileInputStream(file);OutputStream out=resolver.openOutputStream(document,"wt")) {
+            if(out==null)throw new IOException("无法写入所选文件夹。");
+            byte[] buffer=new byte[65536];long total=0;int count;
+            while((count=in.read(buffer))!=-1){
+                check(cancel);total+=count;
+                if(total>bytes)throw new IOException("导出成品已发生变化。");
+                out.write(buffer,0,count);
+            }
+            if(total!=bytes)throw new IOException("导出成品不完整。");
+        }
+        verify(document,sha,bytes,cancel);
+        runtime.guardOwner(owner);
+        receipt.put("state","complete");
+        write(journal,receipt);
+        return exportReceipt(owner,id,target,operation,document,filename,sha,bytes,existing);
+    }
+
+    private Uri authorizedTree(String owner,String target)throws IOException {
+        Map<String,Object> selected=read(record(owner,"file-targets",target));
+        if(selected==null||!owner.equals(selected.get("owner"))||!target.equals(selected.get("id"))) {
+            throw new IOException("文件夹授权记录不可用，请重新选择目标。");
+        }
+        Uri tree=Uri.parse((String)selected.get("tree"));
+        for(UriPermission grant:activity.getContentResolver().getPersistedUriPermissions()) {
+            if(grant.getUri().equals(tree)&&grant.isReadPermission()&&grant.isWritePermission())return tree;
+        }
+        throw new IOException("文件夹访问权限已失效，请重新选择文件夹；未重复保存。");
+    }
+
+    private static final class ExportDocument {
+        final Uri uri;
+        final String filename;
+        ExportDocument(Uri uri,String filename){this.uri=uri;this.filename=filename;}
+    }
+
+    private ExportDocument reserveExportDocument(Uri tree,Uri folder,String stem,String owner,BooleanSupplier cancel)throws IOException {
+        ContentResolver resolver=activity.getContentResolver();
+        Set<String> occupied=folderNames(tree,stem,cancel);
+        for(int attempt=0;attempt<3;attempt++) {
+            String filename=nextExportName(stem,occupied);
+            runtime.guardOwner(owner);
+            check(cancel);
+            Uri document=DocumentsContract.createDocument(resolver,folder,"image/jpeg",filename);
+            if(document==null)throw new IOException("无法在所选文件夹创建导出文件。");
+            try {
+                if(filename.equals(displayName(document)))return new ExportDocument(document,filename);
+            } catch(IOException|RuntimeException failure) {
+                try { DocumentsContract.deleteDocument(resolver,document); } catch(Exception ignored) {}
+                throw failure;
+            }
+            // A provider can choose its own suffix if another writer took the name.
+            if(!DocumentsContract.deleteDocument(resolver,document))throw new IOException("文件夹提供者更改了文件名，请先核对目标文件夹。");
+            occupied.add(exportNameKey(filename));
+        }
+        throw new IOException("文件夹提供者未保留导出文件名，请另选文件夹或重试。");
+    }
+
+    private Set<String> folderNames(Uri tree,String stem,BooleanSupplier cancel)throws IOException {
+        Set<String> names=new HashSet<>();
+        String prefix=exportNameKey(stem)+"_";
+        Uri children=DocumentsContract.buildChildDocumentsUriUsingTree(tree,DocumentsContract.getTreeDocumentId(tree));
+        try(Cursor rows=activity.getContentResolver().query(children,
+            new String[]{DocumentsContract.Document.COLUMN_DISPLAY_NAME},null,null,null)) {
+            if(rows==null)throw new IOException("无法读取目标文件夹，请检查授权。");
+            while(rows.moveToNext()){
+                check(cancel);
+                String name=rows.getString(0);
+                if(name==null)continue;
+                String key=exportNameKey(name);
+                if(key.startsWith(prefix)&&key.endsWith(".jpg"))names.add(key);
+            }
+        }
+        return names;
+    }
+
+    private String displayName(Uri document)throws IOException {
+        try(Cursor row=activity.getContentResolver().query(document,
+            new String[]{DocumentsContract.Document.COLUMN_DISPLAY_NAME},null,null,null)) {
+            if(row!=null&&row.moveToFirst()&&!row.isNull(0))return row.getString(0);
+        }
+        throw new IOException("无法确认已创建文件的名称。");
+    }
+
+    private static String exportStem(String filename){
+        int dot=filename.lastIndexOf('.');
+        String stem=Normalizer.normalize(dot>0?filename.substring(0,dot):filename,Normalizer.Form.NFC)
+            .replaceAll("[\\p{Cntrl}\\\\/:*?\"<>|]","_").replaceAll("^[ .]+|[ .]+$","");
+        while(stem.getBytes(StandardCharsets.UTF_8).length>200)stem=stem.substring(0,stem.offsetByCodePoints(stem.length(),-1));
+        return stem.isEmpty()?"Huevia":stem;
+    }
+
+    private static String exportNameKey(String name){return Normalizer.normalize(name,Normalizer.Form.NFC).toLowerCase(Locale.ROOT);}
+
+    private static String nextExportName(String stem,Set<String> occupied)throws IOException {
+        for(int number=1;number>0;number++){
+            String name=String.format(Locale.ROOT,"%s_%03d.jpg",stem,number);
+            if(!occupied.contains(exportNameKey(name)))return name;
+        }
+        throw new IOException("找不到可用的文件名，请选择另一个文件夹。");
+    }
+
+    private static String exportReceipt(String owner,String id,String target,String operation,Uri uri,String filename,
+        String sha,long bytes,boolean existing){
+        return SharedJson.encode(SharedRuntime.map("published",true,"owner",owner,"id",id,"targetId",target,
+            "operationId",operation,"targetKind","folder","uri",uri.toString(),"filename",filename,
+            "sha256",sha,"bytes",bytes,"verified",true,"existing",existing));
     }
     private String finish(String owner,String operation,String target,Uri uri,String sha,long bytes,boolean existing)throws IOException {
         runtime.releaseOriginalPublication(SharedJson.encode(SharedRuntime.map("owner",owner,"operationId",operation,"sha256",sha,"bytes",bytes)));

@@ -8,6 +8,7 @@ import 'package:huevia/export_settings_model.dart';
 class SaveCore extends HueviaCore {
   final calls = <(String, Json)>[];
   bool failPublish = false, permitted = true;
+  String? responseTargetId;
   Completer<Json>? pending;
   final cancelled = <String>[];
   @override
@@ -31,6 +32,16 @@ class SaveCore extends HueviaCore {
         'uri': 'content://media/external/images/media/1',
       };
     }
+    if (op == 'files.publishExport') {
+      if (failPublish) throw const AppFailure('storage full');
+      return {
+        'published': true,
+        'verified': true,
+        'targetId': responseTargetId ?? payload['targetId'],
+        'uri': 'content://documents/1',
+        'filename': 'own_001.jpg',
+      };
+    }
     throw StateError(op);
   }
 }
@@ -52,10 +63,13 @@ void main() {
     {'sourceSha': 'b' * 64},
     {'size': 'custom', 'quality': 80, 'longEdge': 1280},
   );
-  (SaveCore, SaveState, ExportSave) fixture(List<ExportItem> items) {
+  (SaveCore, SaveState, ExportSave) fixture(
+    List<ExportItem> items, {
+    String? targetId,
+  }) {
     final core = SaveCore();
     final actual = SaveState(core);
-    final queue = ExportSave(actual, '', items);
+    final queue = ExportSave(actual, '', items, targetId: targetId);
     addTearDown(() {
       queue.dispose();
       actual.dispose();
@@ -74,6 +88,8 @@ void main() {
     expect(core.calls.map((c) => c.$1), ['media.export', 'gallery.publish']);
     final published = core.calls.last.$2;
     expect(published['extraCopy'], true);
+    expect(published['orderedFilename'], true);
+    expect(published['filename'], 'own.jpg');
     expect(published['operationId'], matches(r'^[0-9a-f]{32}$'));
     expect(core.calls.first.$2['snapshot'], true);
     expect(core.calls.first.$2['quality'], 80);
@@ -107,6 +123,33 @@ void main() {
     await queue.run();
     expect(queue.done, true);
   });
+  test(
+    'folder export skips album permission and retries its frozen destination',
+    () async {
+      const target = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+      final (core, _, queue) = fixture([item('current')], targetId: target);
+      core.permitted = false;
+      core.responseTargetId = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
+      await queue.run();
+      expect(queue.done, false);
+      expect(queue.error, contains('文件夹'));
+      final request = core.calls.last.$2;
+      expect(request, containsPair('targetId', target));
+      expect(request, containsPair('orderedFilename', true));
+      expect(request, containsPair('filename', 'own.jpg'));
+      expect(request.containsKey('extraCopy'), false);
+      core.responseTargetId = null;
+      await queue.run();
+      expect(core.calls.map((c) => c.$1), [
+        'media.export',
+        'files.publishExport',
+        'files.publishExport',
+      ]);
+      expect(core.calls.last.$2, request);
+      expect(queue.items.single.receipt?['filename'], 'own_001.jpg');
+      expect(queue.done, true);
+    },
+  );
   test('owner change cancels a live publication and suppresses its late acknowledgement', () async {
     final (core, state, queue) = fixture([item('current')]);
     core.pending = Completer<Json>();

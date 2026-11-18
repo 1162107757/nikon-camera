@@ -3,6 +3,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "java/io/IOException.h"
 #import "java/lang/Throwable.h"
+#include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
 
@@ -18,6 +19,68 @@ void filesWrite(NSString *path,NSDictionary *p){NSData *data=[NSJSONSerializatio
 NSString *filesName(NSString *input,NSString *operation,BOOL raw){if(![input isKindOfClass:NSString.class])input=@"original";NSMutableCharacterSet *bad=[NSCharacterSet.controlCharacterSet mutableCopy];[bad addCharactersInString:@"/\\"];NSString *name=[[[input componentsSeparatedByCharactersInSet:bad] componentsJoinedByString:@"_"] stringByDeletingPathExtension];while(name.length>90)name=[name substringToIndex:[name rangeOfComposedCharacterSequenceAtIndex:name.length-1].location];if(!name.length)name=@"original";return [NSString stringWithFormat:@"%@__Huevia_%@.%@",name,operation,raw?@"NEF":@"jpg"];}
 BOOL filesPrefix(NSURL *destination,NSString *source,unsigned long long expected,HueviaTask *task){NSInputStream *a=[NSInputStream inputStreamWithURL:destination],*b=[NSInputStream inputStreamWithFileAtPath:source];[a open];[b open];BOOL equal=YES;unsigned long long total=0;uint8_t left[65536],right[65536];@try{NSInteger count;while((count=[a read:left maxLength:sizeof(left)])>0){filesCheck(task);total+=count;if(total>expected){equal=NO;break;}NSInteger offset=0;while(offset<count){NSInteger n=[b read:right+offset maxLength:count-offset];if(n<=0){equal=NO;break;}offset+=n;}if(!equal||memcmp(left,right,count)){equal=NO;break;}}if(count<0)filesFail(@"未完成文件暂不可读，请检查 Files 访问权限。");}@finally{[a close];[b close];}return equal;}
 void filesVerify(NSURL *url,NSString *sha,unsigned long long expected,HueviaTask *task){NSInputStream *input=[NSInputStream inputStreamWithURL:url];[input open];CC_SHA256_CTX context;CC_SHA256_Init(&context);unsigned long long total=0;uint8_t buffer[65536];@try{NSInteger count;while((count=[input read:buffer maxLength:sizeof(buffer)])>0){filesCheck(task);total+=count;if(total>expected)filesFail(@"目标文件已变化，未覆盖或重复保存。");CC_SHA256_Update(&context,buffer,(CC_LONG)count);}if(count<0)filesFail(@"保存后的文件暂不可读，请稍后核对。");}@finally{[input close];}uint8_t sum[CC_SHA256_DIGEST_LENGTH];CC_SHA256_Final(sum,&context);NSMutableString *actual=[NSMutableString string];for(uint8_t v:sum)[actual appendFormat:@"%02x",v];if(total!=expected||![actual isEqual:sha])filesFail(@"文件长度或 SHA-256 未通过读回核对；未重复保存。");}
+
+NSString *exportStem(NSString *filename) {
+  if(!filename)filename=@"";
+  if(![filename isKindOfClass:NSString.class]||filename.length>256)filesFail(@"导出文件名无效。");
+  NSRange dot=[filename rangeOfString:@"." options:NSBackwardsSearch];
+  NSString *stem=dot.location!=NSNotFound&&dot.location>0?[filename substringToIndex:dot.location]:filename;
+  NSMutableCharacterSet *bad=[NSCharacterSet.controlCharacterSet mutableCopy];
+  [bad addCharactersInString:@"\\/:*?\"<>|"];
+  stem=[[[stem.precomposedStringWithCanonicalMapping componentsSeparatedByCharactersInSet:bad]
+    componentsJoinedByString:@"_"] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" ."]];
+  while([stem lengthOfBytesUsingEncoding:NSUTF8StringEncoding]>200) {
+    stem=[stem substringToIndex:[stem rangeOfComposedCharacterSequenceAtIndex:stem.length-1].location];
+  }
+  return stem.length?stem:@"Huevia";
+}
+
+NSString *exportNameKey(NSString *name){return name.precomposedStringWithCanonicalMapping.lowercaseString;}
+
+NSString *nextExportName(NSURL *folder,NSString *stem,HueviaTask *task) {
+  NSFileCoordinator *coordinator=[[NSFileCoordinator alloc] initWithFilePresenter:nil];
+  NSError *coordination=nil;
+  __block NSArray<NSURL *> *children=nil;
+  [coordinator coordinateReadingItemAtURL:folder options:0 error:&coordination byAccessor:^(NSURL *reading) {
+    children=[NSFileManager.defaultManager contentsOfDirectoryAtURL:reading includingPropertiesForKeys:nil options:0 error:nil];
+  }];
+  if(coordination||!children)filesFail(@"无法读取目标文件夹，请检查授权。");
+  NSMutableSet<NSString *> *occupied=[NSMutableSet set];
+  NSString *prefix=[exportNameKey(stem) stringByAppendingString:@"_"];
+  for(NSURL *child in children) {
+    filesCheck(task);
+    NSString *key=exportNameKey(child.lastPathComponent);
+    if([key hasPrefix:prefix]&&[key hasSuffix:@".jpg"])[occupied addObject:key];
+  }
+  for(NSUInteger number=1;number>0;number++) {
+    NSString *name=[NSString stringWithFormat:@"%@_%03lu.jpg",stem,(unsigned long)number];
+    if(![occupied containsObject:exportNameKey(name)])return name;
+  }
+  filesFail(@"找不到可用的文件名，请选择另一个文件夹。");
+  return nil;
+}
+
+void writeExportFile(int descriptor,NSString *source,unsigned long long expected,HueviaTask *task) {
+  NSInputStream *input=[NSInputStream inputStreamWithFileAtPath:source];
+  [input open];
+  @try {
+    uint8_t buffer[65536];
+    unsigned long long total=0;
+    NSInteger count;
+    while((count=[input read:buffer maxLength:sizeof(buffer)])>0) {
+      filesCheck(task);
+      total+=count;
+      if(total>expected)filesFail(@"导出成品已发生变化。");
+      NSInteger offset=0;
+      while(offset<count) {
+        ssize_t written=write(descriptor,buffer+offset,count-offset);
+        if(written<1)filesFail(@"Files 导出文件写入中断，请重试。");
+        offset+=written;
+      }
+    }
+    if(count<0||total!=expected||fsync(descriptor)!=0)filesFail(@"导出文件未完整保存，请核对目标文件夹。");
+  } @finally { [input close]; }
+}
 }
 
 @interface HueviaOriginalFiles ()
@@ -29,6 +92,7 @@ void filesVerify(NSURL *url,NSString *sha,unsigned long long expected,HueviaTask
 @property(nonatomic,strong) dispatch_queue_t worker;
 - (void)presentFolderPicker;
 - (void)failPicker:(NSString *)message;
+- (NSURL *)authorizedFolder:(NSString *)target owner:(NSString *)owner;
 @end
 
 @implementation HueviaOriginalFiles
@@ -68,9 +132,7 @@ void filesVerify(NSURL *url,NSString *sha,unsigned long long expected,HueviaTask
 - (NSDictionary *)publish:(NSDictionary *)p task:(HueviaTask *)task {
   @synchronized(self){
     NSString *owner=p[@"owner"],*operation=p[@"operationId"],*target=p[@"targetId"];if(![owner isKindOfClass:NSString.class]||owner.length>64||!filesHex(operation,32)||!filesHex(target,32))filesFail(@"文件发布身份或目标无效。");[self.runtime guardOwnerWithNSString:owner];filesCheck(task);
-    NSDictionary *chosen=filesRead([self record:@"file-targets" owner:owner identifier:target]);if(![chosen[@"owner"] isEqual:owner]||![chosen[@"id"] isEqual:target])filesFail(@"文件夹授权记录不可用，请重新选择目标。");
-    NSData *bookmark=[[NSData alloc] initWithBase64EncodedString:chosen[@"bookmark"] options:0];BOOL stale=NO;NSURL *folder=[NSURL URLByResolvingBookmarkData:bookmark options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&stale error:nil];
-    if(!folder||stale)filesFail(@"文件夹授权已失效，请重新选择；未重复保存。");BOOL scoped=[folder startAccessingSecurityScopedResource];
+    NSURL *folder=[self authorizedFolder:target owner:owner];BOOL scoped=[folder startAccessingSecurityScopedResource];
     if(!scoped&&![folder.path hasPrefix:[NSHomeDirectory() stringByAppendingString:@"/"]])filesFail(@"Files 文件夹不可访问，请重新授权。");
     @try{
       NSString *prepared=[self.runtime prepareOriginalPublicationWithNSString:filesJson(p) withJavaUtilFunctionBooleanSupplier:task];NSDictionary *source=[NSJSONSerialization JSONObjectWithData:[prepared dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
@@ -100,6 +162,102 @@ void filesVerify(NSURL *url,NSString *sha,unsigned long long expected,HueviaTask
       [self.runtime releaseOriginalPublicationWithNSString:filesJson(@{@"owner":owner,@"operationId":operation,@"sha256":sha,@"bytes":@(bytes)})];
       return @{@"published":@YES,@"owner":owner,@"operationId":operation,@"targetKind":@"folder",@"uri":destination.absoluteString,@"targetId":target,@"sha256":sha,@"bytes":@(bytes),@"verified":@YES,@"existing":@(existing)};
     }@finally{if(scoped)[folder stopAccessingSecurityScopedResource];}
+  }
+}
+
+- (NSURL *)authorizedFolder:(NSString *)target owner:(NSString *)owner {
+  NSDictionary *chosen=filesRead([self record:@"file-targets" owner:owner identifier:target]);
+  if(![chosen[@"owner"] isEqual:owner]||![chosen[@"id"] isEqual:target])filesFail(@"文件夹授权记录不可用，请重新选择目标。");
+  NSData *bookmark=[[NSData alloc] initWithBase64EncodedString:chosen[@"bookmark"] options:0];
+  BOOL stale=NO;
+  NSURL *folder=[NSURL URLByResolvingBookmarkData:bookmark options:NSURLBookmarkResolutionWithoutUI
+    relativeToURL:nil bookmarkDataIsStale:&stale error:nil];
+  if(!folder||stale)filesFail(@"文件夹授权已失效，请重新选择；未重复保存。");
+  return folder;
+}
+
+- (NSDictionary *)publishExport:(NSDictionary *)p task:(HueviaTask *)task {
+  @synchronized(self) {
+    NSString *owner=p[@"owner"],*operation=p[@"operationId"],*target=p[@"targetId"],*version=p[@"id"];
+    if(![owner isKindOfClass:NSString.class]||owner.length>64||!filesHex(operation,32)||!filesHex(target,32)||!filesHex(version,64)) {
+      filesFail(@"导出任务或目标标识无效。");
+    }
+    [self.runtime guardOwnerWithNSString:owner];
+    filesCheck(task);
+    NSString *stem=exportStem(p[@"filename"]);
+    NSURL *folder=[self authorizedFolder:target owner:owner];
+    BOOL scoped=[folder startAccessingSecurityScopedResource];
+    if(!scoped&&![folder.path hasPrefix:[NSHomeDirectory() stringByAppendingString:@"/"]])filesFail(@"Files 文件夹不可访问，请重新授权。");
+    @try {
+      NSString *opened=[self.runtime requestWithNSString:@"version.open" withNSString:filesJson(@{@"owner":owner,@"id":version})
+        withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
+      NSDictionary *source=[NSJSONSerialization JSONObjectWithData:[opened dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+      NSString *path=source[@"path"],*sha=source[@"sha256"];
+      unsigned long long bytes=[source[@"bytes"] unsignedLongLongValue];
+      if(!filesHex(sha,64)||bytes<4||bytes>512ULL*1024*1024)filesFail(@"导出成品无效。");
+      NSString *journal=[self record:@"file-export-publications" owner:owner identifier:operation];
+      NSMutableDictionary *receipt=[filesRead(journal) mutableCopy];
+      BOOL existing=receipt!=nil;
+      if(existing&&(![receipt[@"owner"] isEqual:owner]||![receipt[@"id"] isEqual:version]||![receipt[@"operationId"] isEqual:operation]||
+          ![receipt[@"targetId"] isEqual:target]||![receipt[@"sha256"] isEqual:sha]||
+          [receipt[@"bytes"] unsignedLongLongValue]!=bytes||![receipt[@"stem"] isEqual:stem])) {
+        filesFail(@"导出任务已绑定其他成品或文件夹，未重复保存。");
+      }
+      for(NSUInteger attempt=0;attempt<3;attempt++) {
+        NSString *name=existing?receipt[@"name"]:nextExportName(folder,stem,task);
+        NSURL *destination=[folder URLByAppendingPathComponent:name isDirectory:NO];
+        if(![destination.URLByResolvingSymlinksInPath.URLByDeletingLastPathComponent.path isEqual:folder.URLByResolvingSymlinksInPath.path]) {
+          filesFail(@"导出文件路径越过授权文件夹，已停止。");
+        }
+        NSMutableDictionary *record=receipt?:[@{@"schema":@1,@"owner":owner,@"id":version,@"targetId":target,
+          @"operationId":operation,@"sha256":sha,@"bytes":@(bytes),@"stem":stem,@"name":name,@"state":@"pending"} mutableCopy];
+        NSFileCoordinator *coordinator=[[NSFileCoordinator alloc] initWithFilePresenter:nil];
+        NSError *coordination=nil;
+        __block id pendingFailure=nil;
+        __block BOOL collision=NO;
+        __block BOOL verified=NO;
+        [coordinator coordinateWritingItemAtURL:destination options:0 error:&coordination byAccessor:^(NSURL *writing) {
+          @try {
+            [self.runtime guardOwnerWithNSString:owner];
+            filesCheck(task);
+            if(existing){
+              NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:writing.path error:nil];
+              if(![attributes[NSFileType] isEqual:NSFileTypeRegular])filesFail(@"此前导出的文件已不可访问，请先核对所选文件夹。");
+              if([record[@"state"] isEqual:@"complete"]){filesVerify(writing,sha,bytes,task);verified=YES;return;}
+              if(!filesPrefix(writing,path,bytes,task))filesFail(@"未完成的导出文件已发生变化，请先核对所选文件夹。");
+            }
+            int descriptor=open(writing.fileSystemRepresentation,O_WRONLY|O_NOFOLLOW|(existing?O_TRUNC:(O_CREAT|O_EXCL)),0600);
+            if(descriptor<0){
+              if(!existing&&errno==EEXIST){collision=YES;return;}
+              filesFail(@"Files 无法创建或写入导出文件，未覆盖其他文件。");
+            }
+            @try {
+              if(!existing) {
+                @try {filesWrite(journal,record);}
+                @catch(id failure){unlink(writing.fileSystemRepresentation);@throw failure;}
+              }
+              writeExportFile(descriptor,path,bytes,task);
+            } @finally { close(descriptor); }
+            filesVerify(writing,sha,bytes,task);
+            [self.runtime guardOwnerWithNSString:owner];
+            record[@"state"]=@"complete";
+            filesWrite(journal,record);
+            verified=YES;
+          } @catch(id failure){pendingFailure=failure;}
+        }];
+        if(pendingFailure)@throw pendingFailure;
+        if(coordination)filesFail(@"Files 文件提供者未确认写入，请稍后核对目标文件夹。");
+        if(collision)continue;
+        if(!verified)filesFail(@"Files 尚未确认导出结果，请重试。");
+        [self.runtime guardOwnerWithNSString:owner];
+        filesCheck(task);
+        return @{@"published":@YES,@"owner":owner,@"id":version,@"operationId":operation,@"targetKind":@"folder",
+          @"uri":destination.absoluteString,@"targetId":target,@"filename":name,@"sha256":sha,@"bytes":@(bytes),
+          @"verified":@YES,@"existing":@(existing)};
+      }
+      filesFail(@"目标文件夹中出现同名文件，请重试导出。");
+      return nil;
+    } @finally { if(scoped)[folder stopAccessingSecurityScopedResource]; }
   }
 }
 @end

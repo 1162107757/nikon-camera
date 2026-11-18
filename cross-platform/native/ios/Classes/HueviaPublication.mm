@@ -14,7 +14,7 @@ void publicationCheck(HueviaTask *task){if(task.cancelled)@throw [[JavaIoInterru
 NSString *publicationJson(NSDictionary *value){return [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:value options:0 error:nil] encoding:NSUTF8StringEncoding];}
 BOOL publicationHex(NSString *value,NSUInteger length){return [value isKindOfClass:NSString.class]&&value.length==length&&[value rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"0123456789abcdef"].invertedSet].location==NSNotFound;}
 NSString *publicationHash(NSString *text){NSData *data=[text dataUsingEncoding:NSUTF8StringEncoding];unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(data.bytes,(CC_LONG)data.length,digest);NSMutableString *s=[NSMutableString string];for(int i=0;i<CC_SHA256_DIGEST_LENGTH;i++)[s appendFormat:@"%02x",digest[i]];return s;}
-NSDictionary *publicationResult(NSString *version,NSString *identifier,BOOL existing,BOOL verified,BOOL original,NSString *owner,NSString *operation,NSString *sha,unsigned long long bytes){NSMutableDictionary *result=[@{@"id":version,@"published":@YES,@"identifier":identifier,@"existing":@(existing),@"verified":@(verified)} mutableCopy];if(original){result[@"owner"]=owner;result[@"operationId"]=operation;result[@"sha256"]=sha;result[@"bytes"]=@(bytes);result[@"targetKind"]=@"system";}return result;}
+NSDictionary *publicationResult(NSString *version,NSString *identifier,BOOL existing,BOOL verified,BOOL original,NSString *owner,NSString *operation,NSString *sha,unsigned long long bytes,NSString *filename){NSMutableDictionary *result=[@{@"id":version,@"published":@YES,@"identifier":identifier,@"existing":@(existing),@"verified":@(verified)} mutableCopy];if(original){result[@"owner"]=owner;result[@"operationId"]=operation;result[@"sha256"]=sha;result[@"bytes"]=@(bytes);result[@"targetKind"]=@"system";}if(filename)result[@"filename"]=filename;return result;}
 NSString *publicationDirectory(NSString *root,NSString *component){
   NSString *base=root.stringByResolvingSymlinksInPath,*path=[base stringByAppendingPathComponent:component];
   NSFileManager *fm=NSFileManager.defaultManager;NSDictionary *attrs=[fm attributesOfItemAtPath:path error:nil];
@@ -119,6 +119,16 @@ NSString *publicationName(NSString *value,NSString *version){
   if(!name.length)name=[NSString stringWithFormat:@"Huevia-%@.jpg",[version substringToIndex:12]];
   if(![@[@"jpg",@"jpeg"] containsObject:name.pathExtension.lowercaseString])name=[name stringByAppendingString:@".jpg"];return name;
 }
+NSString *numberedStem(NSString *value,NSString *version){
+  NSString *name=publicationName(value,version).stringByDeletingPathExtension;
+  NSMutableCharacterSet *bad=[NSCharacterSet.controlCharacterSet mutableCopy];[bad addCharactersInString:@"/\\:*?\"<>|"];
+  name=[[name componentsSeparatedByCharactersInSet:bad] componentsJoinedByString:@"_"];
+  name=[name stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@". "]];
+  while([name lengthOfBytesUsingEncoding:NSUTF8StringEncoding]>160){NSRange range=[name rangeOfComposedCharacterSequenceAtIndex:name.length-1];name=[name substringToIndex:range.location];}
+  return name.length?name:@"照片";
+}
+NSString *numberedFilename(NSString *stem,NSUInteger number){return [NSString stringWithFormat:@"%@_%03lu.jpg",stem,(unsigned long)number];}
+NSString *numberedKey(NSString *stem){return [stem precomposedStringWithCanonicalMapping].lowercaseString;}
 NSDate *publicationCaptureDate(NSURL *url){
   CGImageSourceRef image=CGImageSourceCreateWithURL((__bridge CFURLRef)url,(__bridge CFDictionaryRef)@{(id)kCGImageSourceShouldCache:@NO});if(!image)return nil;
   NSDictionary *properties=CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(image,0,NULL));CFRelease(image);
@@ -138,6 +148,8 @@ NSDate *publicationCaptureDate(NSURL *url){
 @interface HueviaPublication ()
 @property(nonatomic,copy) NSString *root;
 @property(nonatomic,strong) CcHueviaSharedSharedRuntime *runtime;
+@property(nonatomic,copy) NSDictionary<NSString *,NSNumber *> *visibleNumbers;
+@property(nonatomic,assign) PHAuthorizationStatus numberedReadAccess;
 - (NSDictionary *)publish:(NSDictionary *)p task:(HueviaTask *)task original:(BOOL)original;
 @end
 @implementation HueviaPublication
@@ -153,6 +165,42 @@ NSDate *publicationCaptureDate(NSURL *url){
 - (NSDictionary *)publishOriginal:(NSDictionary *)p task:(HueviaTask *)task {
   return [self publish:p task:task original:YES];
 }
+- (NSString *)reserveFilename:(NSString *)stem task:(HueviaTask *)task {
+  PHAuthorizationStatus access=[PHPhotoLibrary authorizationStatusForAccessLevel:PHAccessLevelReadWrite];
+  if(!self.visibleNumbers||self.numberedReadAccess!=access){
+    NSMutableDictionary<NSString *,NSNumber *> *visible=[NSMutableDictionary dictionary];
+    if(access==PHAuthorizationStatusAuthorized||access==PHAuthorizationStatusLimited){
+      PHFetchResult<PHAsset *> *images=[PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:nil];
+      NSCharacterSet *nonDigits=[NSCharacterSet characterSetWithCharactersInString:@"0123456789"].invertedSet;
+      [images enumerateObjectsUsingBlock:^(PHAsset *asset,NSUInteger index,BOOL *stop){
+        if(task.cancelled){*stop=YES;return;}
+        @autoreleasepool {
+          for(PHAssetResource *resource in [PHAssetResource assetResourcesForAsset:asset]){
+            NSString *name=resource.originalFilename;if(!name.length||![@[@"jpg",@"jpeg"] containsObject:name.pathExtension.lowercaseString])continue;
+            NSString *base=name.stringByDeletingPathExtension;NSRange underscore=[base rangeOfString:@"_" options:NSBackwardsSearch];
+            if(underscore.location==NSNotFound||underscore.location==0)continue;
+            NSString *digits=[base substringFromIndex:NSMaxRange(underscore)];
+            if(digits.length<3||digits.length>6||[digits rangeOfCharacterFromSet:nonDigits].location!=NSNotFound)continue;
+            NSString *key=numberedKey([base substringToIndex:underscore.location]);NSUInteger number=(NSUInteger)digits.integerValue;
+            if(number>[visible[key] unsignedIntegerValue])visible[key]=@(number);
+          }
+        }
+      }];
+      publicationCheck(task);
+    }
+    self.visibleNumbers=visible;self.numberedReadAccess=access;
+  }
+  NSString *key=numberedKey(stem),*directory=publicationDirectory(self.root,@"gallery-numbered-exports");
+  NSString *path=[directory stringByAppendingPathComponent:[publicationHash(key) stringByAppendingString:@".json"]];
+  NSDictionary *prior=publicationRead(path);id savedNumber=prior[@"number"];
+  if(prior&&(![prior[@"stem"] isEqual:key]||![savedNumber isKindOfClass:NSNumber.class]))publicationFail(@"导出文件编号记录无效。");
+  NSUInteger previous=[savedNumber unsignedIntegerValue];
+  if(prior&&(previous==0||previous>999999))publicationFail(@"导出文件编号记录无效。");
+  NSUInteger next=MAX(previous,[self.visibleNumbers[key] unsignedIntegerValue])+1;
+  if(next>999999)publicationFail(@"同名导出文件过多，请选择其他照片或文件夹。");
+  NSError *error=nil;if(!publicationWrite(path,@{@"schema":@1,@"stem":key,@"number":@(next)},&error))publicationFail(@"无法记录导出文件编号，请检查存储空间。");
+  return numberedFilename(stem,next);
+}
 - (NSDictionary *)publish:(NSDictionary *)p task:(HueviaTask *)task original:(BOOL)original {
   @synchronized(self){
     publicationCheck(task);NSString *owner=p[@"owner"],*version=p[@"id"];
@@ -160,6 +208,8 @@ NSDate *publicationCaptureDate(NSURL *url){
     id extra=p[@"extraCopy"];if(extra&&CFGetTypeID((__bridge CFTypeRef)extra)!=CFBooleanGetTypeID())publicationFail(@"导出副本选项无效。");
     BOOL another=[extra boolValue];NSString *operation=p[@"operationId"];if(another&&!publicationHex(operation,32))publicationFail(@"副本保存标识无效，请重新操作。");
     if(original&&another)publicationFail(@"原始文件不能重新编码或改写拍摄信息。");
+    id naming=p[@"orderedFilename"];
+    if(naming&&(CFGetTypeID((__bridge CFTypeRef)naming)!=CFBooleanGetTypeID()||([naming boolValue]&&(original||!another))))publicationFail(@"导出文件命名选项无效。");
     [_runtime guardOwnerWithNSString:owner];
     if(![[self.class saveAccess][@"granted"] boolValue])publicationFail(@"请允许添加照片到系统相册后重试，应用内成品仍然保留。");
     NSString *opened=original?[_runtime prepareOriginalPublicationWithNSString:publicationJson(p) withJavaUtilFunctionBooleanSupplier:task]:[_runtime requestWithNSString:@"version.open" withNSString:publicationJson(@{@"owner":owner,@"id":version}) withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
@@ -175,6 +225,13 @@ NSDate *publicationCaptureDate(NSURL *url){
     NSString *directory=publicationDirectory(publicationDirectory(self.root,@"gallery-publications"),publicationHash(owner));
     NSString *key=another?[NSString stringWithFormat:@"%@-%@",version,operation]:version,*journal=[directory stringByAppendingPathComponent:[key stringByAppendingString:@".json"]];
     NSDictionary *prior=publicationRead(journal);
+    BOOL ordered=[naming boolValue]&&(!prior||prior[@"numberedStem"]);
+    NSString *stem=ordered?numberedStem(p[@"filename"],version):nil,*orderedName=nil;
+    if(prior&&(prior[@"numberedStem"]||stem)&&![prior[@"numberedStem"] isEqual:stem])publicationFail(@"此导出任务的文件命名已确定，请按原设置重试。");
+    if(ordered){
+      orderedName=prior?prior[@"filename"]:[self reserveFilename:stem task:task];
+      if(![orderedName isKindOfClass:NSString.class]||![orderedName hasPrefix:[stem stringByAppendingString:@"_"]]||![orderedName hasSuffix:@".jpg"])publicationFail(@"导出文件名记录无效。");
+    }
     NSString *originalSha=sha,*frozen=[directory stringByAppendingPathComponent:[key stringByAppendingString:@".jpg"]];unsigned long long originalBytes=bytes;NSDate *capture=nil;
     if(another){
       if(prior&&(![prior[@"sourceSha"] isEqual:originalSha]||[prior[@"sourceBytes"] unsignedLongLongValue]!=originalBytes))publicationFail(@"导出记录与此成品不匹配，未重复保存。");
@@ -183,6 +240,7 @@ NSDate *publicationCaptureDate(NSURL *url){
       if(!prior||[prior[@"state"] isEqual:@"preparing"]){
         if(!prior&&[NSFileManager.defaultManager fileExistsAtPath:frozen])publicationFail(@"导出暂存缺少记录，未覆盖或删除。");
         NSMutableDictionary *prepared=[@{@"schema":@1,@"state":@"preparing",@"asset":@"",@"sourceSha":originalSha,@"sourceBytes":@(originalBytes),@"date":@([capture timeIntervalSince1970])} mutableCopy];
+        if(ordered){prepared[@"numberedStem"]=stem;prepared[@"filename"]=orderedName;}
         NSError *error=nil;if(!publicationWrite(journal,prepared,&error))publicationFail(@"无法记录导出副本，请检查存储空间。");
         publicationDatedCopy(source,frozen,capture,task);sha=publicationFileHash(frozen,task);bytes=[[NSFileManager.defaultManager attributesOfItemAtPath:frozen error:nil][NSFileSize] unsignedLongLongValue];
         if(bytes<4||bytes>512ULL*1024*1024)publicationFail(@"导出副本大小无效。");
@@ -203,26 +261,27 @@ NSDate *publicationCaptureDate(NSURL *url){
           NSError *error=nil;if(!publicationWrite(journal,confirmed,&error))publicationFail(@"相册副本已核对，但保存记录暂不可写，请稍后重试。");
           if(another)publicationCleanup(frozen,confirmed,task);
           if(original)[_runtime releaseOriginalPublicationWithNSString:publicationJson(@{@"owner":owner,@"operationId":operation,@"sha256":sha,@"bytes":@(bytes)})];
-          [_runtime guardOwnerWithNSString:owner];return publicationResult(version,identifier,YES,YES,original,owner,operation,sha,bytes);
+          [_runtime guardOwnerWithNSString:owner];return publicationResult(version,identifier,YES,YES,original,owner,operation,sha,bytes,orderedName);
         }
         if(read==PHAuthorizationStatusLimited)publicationFail(@"这份相册副本当前不在允许访问的范围内，未重复保存。");
         if(!complete)publicationFail(@"上次保存尚待系统确认，请稍后查看相册或重试。");
         publicationFail(@"此前保存的相册副本已不可访问，请重新发起导出。");
       }else if(identifier.length){
-        if(complete){if(another)publicationCleanup(frozen,prior,task);if(original)[_runtime releaseOriginalPublicationWithNSString:publicationJson(@{@"owner":owner,@"operationId":operation,@"sha256":sha,@"bytes":@(bytes)})];[_runtime guardOwnerWithNSString:owner];return publicationResult(version,identifier,YES,NO,original,owner,operation,sha,bytes);}
+        if(complete){if(another)publicationCleanup(frozen,prior,task);if(original)[_runtime releaseOriginalPublicationWithNSString:publicationJson(@{@"owner":owner,@"operationId":operation,@"sha256":sha,@"bytes":@(bytes)})];[_runtime guardOwnerWithNSString:owner];return publicationResult(version,identifier,YES,NO,original,owner,operation,sha,bytes,orderedName);}
         publicationFail(@"上次保存尚待确认，请允许访问照片后重试，未重复保存。");
-      }else if(!complete){[NSFileManager.defaultManager removeItemAtPath:journal error:nil];}
+      }else if(!complete){if(!ordered)[NSFileManager.defaultManager removeItemAtPath:journal error:nil];}
       else publicationFail(@"保存记录缺少相册标识，未重复保存。");
     }
     publicationCheck(task);[_runtime guardOwnerWithNSString:owner];
     NSString *token=NSUUID.UUID.UUIDString;NSMutableDictionary *record=[@{@"schema":@1,@"token":token,@"state":@"pending",@"asset":@"",@"sha256":sha,@"bytes":@(bytes)} mutableCopy];
     if(another){
       record[@"sourceSha"]=originalSha;record[@"sourceBytes"]=@(originalBytes);record[@"date"]=@([capture timeIntervalSince1970]);
+      if(ordered){record[@"numberedStem"]=stem;record[@"filename"]=orderedName;}
       NSDictionary *attrs=[NSFileManager.defaultManager attributesOfItemAtPath:frozen error:nil];
       if(![attrs[NSFileType] isEqual:NSFileTypeRegular]||[attrs[NSFileSize] unsignedLongLongValue]!=bytes||![publicationFileHash(frozen,task) isEqual:sha])publicationFail(@"导出副本已变化，未覆盖或重复保存。");
     }
     NSError *error=nil;if(!publicationWrite(journal,record,&error))publicationFail(@"无法写入保存记录，请检查存储空间后重试。");
-    NSString *name=publicationName(p[@"filename"],version);if(raw){NSString *stem=name.stringByDeletingPathExtension;if([stem.pathExtension.lowercaseString isEqual:@"nef"])stem=stem.stringByDeletingPathExtension;name=[stem stringByAppendingPathExtension:@"NEF"];}
+    NSString *name=orderedName?:publicationName(p[@"filename"],version);if(raw){NSString *stem=name.stringByDeletingPathExtension;if([stem.pathExtension.lowercaseString isEqual:@"nef"])stem=stem.stringByDeletingPathExtension;name=[stem stringByAppendingPathExtension:@"NEF"];}
     NSURL *url=[NSURL fileURLWithPath:source];if(!another)capture=publicationCaptureDate(url);
     __block NSString *identifier=nil;__block NSError *failure=nil;dispatch_semaphore_t done=dispatch_semaphore_create(0);
     [PHPhotoLibrary.sharedPhotoLibrary performChanges:^{
@@ -241,7 +300,10 @@ NSDate *publicationCaptureDate(NSURL *url){
       @try {
         if(!success||failure||!identifier.length){
           failure=failure?:saveError?:[NSError errorWithDomain:@"HueviaPublication" code:4 userInfo:@{NSLocalizedDescriptionKey:@"照片尚未保存。"}];
-          if(publicationMatches(journal,token))[NSFileManager.defaultManager removeItemAtPath:journal error:nil];
+          if(publicationMatches(journal,token)){
+            if(!ordered)[NSFileManager.defaultManager removeItemAtPath:journal error:nil];
+            else if(!success){record[@"state"]=@"prepared";record[@"asset"]=@"";publicationWrite(journal,record,nil);}
+          }
         }else{
           record[@"state"]=@"complete";NSError *writeError=nil;
           if(!publicationMatches(journal,token))failure=[NSError errorWithDomain:@"HueviaPublication" code:6 userInfo:@{NSLocalizedDescriptionKey:@"系统保存记录尚待确认。"}];
@@ -260,7 +322,7 @@ NSDate *publicationCaptureDate(NSURL *url){
     if(readback){PHAsset *asset=[PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil].firstObject;if(!asset)publicationFail(@"原文件已提交系统相册，但暂不可读回；请核对授权后重试此任务，未重复创建。");publicationVerify(asset,sha,bytes,task,raw);}
     if(another)publicationCleanup(frozen,record,task);
     if(original)[_runtime releaseOriginalPublicationWithNSString:publicationJson(@{@"owner":owner,@"operationId":operation,@"sha256":sha,@"bytes":@(bytes)})];
-    [_runtime guardOwnerWithNSString:owner];return publicationResult(version,identifier,NO,YES,original,owner,operation,sha,bytes);
+    [_runtime guardOwnerWithNSString:owner];return publicationResult(version,identifier,NO,YES,original,owner,operation,sha,bytes,orderedName);
   }
 }
 @end
