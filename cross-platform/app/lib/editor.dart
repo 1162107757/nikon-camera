@@ -140,6 +140,7 @@ class _EditorPageState extends State<EditorPage> {
   Recipe? regionAdjustments;
   LocalAdjustmentQueue? localQueue;
   bool leaving = false, allowPop = false;
+  bool closingDraftQueued = false;
   Json? displayedOverlay;
   ui.Image? regionLayer;
   String? regionLayerJob;
@@ -213,8 +214,15 @@ class _EditorPageState extends State<EditorPage> {
     widget.state.addListener(editorOwnerChanged);
     progressEvents = HueviaCore.progress.listen((event) {
       final value = object(event);
-      if (mounted && value['jobId'] == activeJob) {
-        setState(() => progress = (value['progress'] as num).toDouble());
+      final next = value['progress'];
+      if (mounted &&
+          activeJob != null &&
+          value['jobId'] == activeJob &&
+          ((rendering && preview == null) || exporting || analyzingCleanup) &&
+          next is num &&
+          next.isFinite &&
+          next != progress) {
+        setState(() => progress = next.toDouble());
       }
     }, onError: (_) {});
     unawaited(restore());
@@ -222,24 +230,31 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> restore() async {
     try {
+      await widget.state.core.waitForClosingDraft(widget.photo.path, owner);
+      if (!mounted || leaving || !sameOwner) return;
       final saved = await widget.state.core.call('draft.load', {
         'path': widget.photo.path,
         'owner': owner,
       });
+      if (!mounted || leaving || !sameOwner) return;
       sourceSha = saved['sourceSha'] as String? ?? '';
       if (saved['recipe'] != null) {
         recipe = Recipe(data: object(saved['recipe']));
       } else if (await legacyDraft.exists()) {
         // Validate the old development draft through the original native format.
+        if (!mounted || leaving || !sameOwner) return;
+        final oldRecipe = object(jsonDecode(await legacyDraft.readAsString()));
+        if (!mounted || leaving || !sameOwner) return;
         final migrated = await widget.state.core.call('draft.save', {
           'path': widget.photo.path,
           'owner': owner,
-          'recipe': object(jsonDecode(await legacyDraft.readAsString())),
+          'recipe': oldRecipe,
         });
         recipe = Recipe(data: object(migrated['recipe']));
       }
+      if (!mounted || leaving || !sameOwner) return;
       await reloadLocalState();
-      if (mounted) {
+      if (mounted && !leaving && sameOwner) {
         setState(() => restored = true);
         await render();
       }
@@ -267,9 +282,8 @@ class _EditorPageState extends State<EditorPage> {
     histogram.dispose();
     clearRegionLayer();
     debounce?.cancel();
-    if (restored && !exporting && !photoDeleted && !colorToolActive) {
-      unawaited(saveDraft().catchError((_) {}));
-    }
+    unawaited(queueClosingDraft()?.catchError((_) {}));
+    localQueue?.close();
     unawaited(progressEvents?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
     if (preview != null) unawaited(discardPreview(preview, force: true));
@@ -277,6 +291,34 @@ class _EditorPageState extends State<EditorPage> {
     if (atmosphere != null) unawaited(discardPreview(atmosphere, force: true));
     panelRevision.dispose();
     super.dispose();
+  }
+
+  Future<void>? queueClosingDraft() {
+    if (closingDraftQueued ||
+        !restored ||
+        exporting ||
+        photoDeleted ||
+        colorToolActive ||
+        !sameOwner) {
+      return null;
+    }
+    final state = widget.state, path = widget.photo.path, draftOwner = owner;
+    final frozen = recipe.clone().data;
+    bool ownerCurrent() =>
+        state.session['logoutPending'] != true &&
+        (state.session['user']?['id'] as String? ?? '') == draftOwner;
+    final local = localQueue?.finish(ownerCurrent);
+    localQueue = null;
+    closingDraftQueued = true;
+    return state.core.queueClosingDraft(path, draftOwner, () async {
+      if (local != null) frozen['localData'] = (await local)['localData'];
+      if (!ownerCurrent()) throw const AppFailure('账号已改变，请重新打开照片。');
+      await state.core.call('draft.save', {
+        'path': path,
+        'owner': draftOwner,
+        'recipe': frozen,
+      });
+    });
   }
 
   Future<void> saveDraft() async {
@@ -395,11 +437,13 @@ class _EditorPageState extends State<EditorPage> {
     }
     if (!previewRequestCurrent(request)) return null;
     final job = 'preview-${DateTime.now().microsecondsSinceEpoch}';
-    setState(() {
-      rendering = true;
-      activeJob = job;
-      progress = 0;
-    });
+    rendering = true;
+    activeJob = job;
+    progress = 0;
+    if (preview == null) setState(() {});
+    // Interactive frames use the same pixels without writing and syncing a
+    // draft for every slider sample. The final regular frame still saves it.
+    final snapshot = interactive || request.readOnly;
     try {
       final result = await widget.state.core.call(
         request.readOnly ? 'media.reviewPreview' : 'media.preview',
@@ -408,13 +452,13 @@ class _EditorPageState extends State<EditorPage> {
           'recipe': frozen.data,
           'owner': owner,
           'maxEdge': interactive ? 640 : 1280,
-          if (request.readOnly) 'snapshot': true,
-          if (request.readOnly) 'expectedSourceSha': request.sourceSha,
+          if (snapshot) 'snapshot': true,
+          if (snapshot) 'expectedSourceSha': request.sourceSha,
         },
         job,
       );
       if (!previewRequestCurrent(request) || activeJob != job) {
-        unawaited(discardPreview(result['path']));
+        unawaited(discardPreview(result['path'], waitForDecode: false));
         return null;
       }
       String? reference;
@@ -432,29 +476,28 @@ class _EditorPageState extends State<EditorPage> {
               'recipe': neutral,
               'owner': owner,
               'maxEdge': interactive ? 640 : 1280,
-              if (request.readOnly) 'snapshot': true,
-              if (request.readOnly) 'expectedSourceSha': request.sourceSha,
+              'snapshot': true,
+              'expectedSourceSha': request.sourceSha,
             },
             job,
           );
         } catch (_) {
-          unawaited(discardPreview(result['path']));
+          unawaited(discardPreview(result['path'], waitForDecode: false));
           rethrow;
         }
         reference = before['path'] as String;
         if (!previewRequestCurrent(request) || activeJob != job) {
-          unawaited(discardPreview(reference));
-          unawaited(discardPreview(result['path']));
+          unawaited(discardPreview(reference, waitForDecode: false));
+          unawaited(discardPreview(result['path'], waitForDecode: false));
           return null;
         }
       }
       return _EditorPreviewFrame(result, reference);
     } finally {
       if (mounted && activeJob == job) {
-        setState(() {
-          rendering = false;
-          activeJob = null;
-        });
+        rendering = false;
+        activeJob = null;
+        if (preview == null) setState(() {});
       }
     }
   }
@@ -515,12 +558,15 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> discardPreviewFrame(_EditorPreviewFrame? frame) async {
     if (frame == null) return;
-    // Decoding a retiring image must not hold up the next native render.
-    unawaited(discardPreview(frame.result['path']));
-    unawaited(discardPreview(frame.reference));
+    unawaited(discardPreview(frame.result['path'], waitForDecode: false));
+    unawaited(discardPreview(frame.reference, waitForDecode: false));
   }
 
-  Future<void> discardPreview(Object? path, {bool force = false}) async {
+  Future<void> discardPreview(
+    Object? path, {
+    bool force = false,
+    bool waitForDecode = true,
+  }) async {
     if (path is! String ||
         !p.isWithin(p.join(widget.state.core.root, 'previews'), path)) {
       return;
@@ -533,7 +579,7 @@ class _EditorPageState extends State<EditorPage> {
       // A fast native frame may retire its predecessor before FileImage has
       // finished reading it. Join that same decoded-image stream before
       // removing its backing file; this never stalls the render queue.
-      if (await file.exists()) {
+      if (waitForDecode && await file.exists()) {
         final read = Completer<void>();
         final stream = FileImage(file).resolve(const ImageConfiguration());
         final listener = ImageStreamListener(

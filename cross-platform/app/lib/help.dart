@@ -153,7 +153,7 @@ class HelpPage extends StatelessWidget {
         ),
         _HelpCard(
           '更新与旧版资料',
-          '在设置中检查更新，Android 下载核对后打开系统安装；iOS 下载未签名 IPA 后自行签名安装。旧 Android 先安装同签名维护版导出资料包，iOS 可从文件中的旧版资料导入。迁入前可检查清单，旧账号需重新登录。',
+          '在设置中检查更新，Android 下载核对后打开系统安装；iOS 在浏览器下载 IPA 后自行签名安装。旧 Android 先安装同签名维护版导出资料包，iOS 可从文件中的旧版资料导入。迁入前可检查清单，旧账号需重新登录。',
         ),
         const SizedBox(height: 8),
         FilledButton(

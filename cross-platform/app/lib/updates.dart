@@ -9,8 +9,7 @@ import 'updates_ios.dart';
 import 'theme.dart';
 
 class UpdatesPage extends StatefulWidget {
-  const UpdatesPage({super.key, required this.state});
-  final AppState state;
+  const UpdatesPage({super.key});
   @override
   State<UpdatesPage> createState() => _UpdatesPageState();
 }
@@ -88,7 +87,7 @@ class _UpdatesPageState extends State<UpdatesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) return IosUpdatesPage(root: widget.state.core.root);
+    if (Platform.isIOS) return const IosUpdatesPage();
     final release = status['release'] is Map
         ? object(status['release'])
         : <String, dynamic>{};
@@ -107,7 +106,7 @@ class _UpdatesPageState extends State<UpdatesPage> {
           padding: const EdgeInsets.all(24),
           children: [
             Text(
-              '当前版本 ${status['versionName'] ?? '正在读取…'}',
+              '当前版本 ${updateVersionLabel(status['versionName'], status['versionCode'])}',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
@@ -136,7 +135,7 @@ class _UpdatesPageState extends State<UpdatesPage> {
             if (release.isNotEmpty) ...[
               const SizedBox(height: 16),
               Text(
-                '新版本 ${release['versionName']}',
+                '新版本 ${updateVersionLabel(release['versionName'], release['versionCode'])}',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(

@@ -82,6 +82,7 @@ class AppLaunchServices with WidgetsBindingObserver {
   int retryCount = 0;
   Timer? heartbeat, retry, pendingPrompt, stateDebounce;
   Json? available;
+  Uri? iosDownload;
 
   bool get loggedIn =>
       state.session['user'] is Map && state.session['logoutPending'] != true;
@@ -117,6 +118,9 @@ class AppLaunchServices with WidgetsBindingObserver {
             ? android.invokeMapMethod<String, dynamic>('snapshot')
             : ios.invokeMapMethod<String, dynamic>('information')),
       );
+      if (Platform.isIOS) {
+        unawaited(checkUpdate().then((_) => schedulePrompt()));
+      }
       final file = File(p.join(state.core.root, 'anonymous-usage.json'));
       try {
         if (await file.exists() && await file.length() < 4096) {
@@ -142,12 +146,16 @@ class AppLaunchServices with WidgetsBindingObserver {
       heartbeat = Timer.periodic(const Duration(minutes: 15), (_) {
         if (foreground) unawaited(report());
       });
-      await coordinateLaunchChecks(
-        usage: report(),
-        update: checkUpdate(),
-        mandatory: () => available?['mandatory'] == true,
-        notify: schedulePrompt,
-      );
+      if (Platform.isIOS) {
+        unawaited(report());
+      } else {
+        await coordinateLaunchChecks(
+          usage: report(),
+          update: checkUpdate(),
+          mandatory: () => available?['mandatory'] == true,
+          notify: schedulePrompt,
+        );
+      }
     } catch (_) {
       /* Optional services never prevent opening the app or editing offline. */
     }
@@ -229,6 +237,8 @@ class AppLaunchServices with WidgetsBindingObserver {
 
   Future<void> checkUpdate() async {
     if (disposed) return;
+    available = null;
+    iosDownload = null;
     try {
       if (Platform.isAndroid) {
         var status = object(
@@ -267,6 +277,7 @@ class AppLaunchServices with WidgetsBindingObserver {
         if (release.code > (int.tryParse('${metadata['versionCode']}') ?? 0) &&
             release.supportsOs(metadata['osVersion'] as String)) {
           available = {...release.data, 'mandatory': false};
+          iosDownload = release.browserDownload;
         }
       }
     } catch (_) {
@@ -279,20 +290,25 @@ class AppLaunchServices with WidgetsBindingObserver {
         available == null ||
         !gate.eligible(
           mandatory: available!['mandatory'] == true,
-          probability: probability,
+          probability: iosDownload == null ? probability : 1,
         )) {
       return;
     }
     pendingPrompt?.cancel();
     pendingPrompt = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (disposed || gate.shown && available!['mandatory'] != true) {
+      if (disposed ||
+          available == null ||
+          gate.shown && available!['mandatory'] != true) {
         timer.cancel();
         return;
       }
+      final navigator = navigatorKey.currentState;
       if (foreground &&
           !state.cameraDownloadsActive &&
           canPrompt() &&
-          navigatorKey.currentState?.overlay != null &&
+          navigator != null &&
+          navigator.overlay != null &&
+          (iosDownload == null || !navigator.canPop()) &&
           !prompting) {
         timer.cancel();
         unawaited(showPrompt());
@@ -306,6 +322,7 @@ class AppLaunchServices with WidgetsBindingObserver {
     prompting = true;
     gate.shown = true;
     final release = available!, required = release['mandatory'] == true;
+    final download = iosDownload;
     try {
       final update = await showDialog<bool>(
         context: context,
@@ -313,7 +330,11 @@ class AppLaunchServices with WidgetsBindingObserver {
         builder: (dialog) => PopScope(
           canPop: !required,
           child: AlertDialog(
-            title: Text(required ? '需要更新' : '发现新版本 ${release['versionName']}'),
+            title: Text(
+              required
+                  ? '需要更新'
+                  : '发现新版本 ${updateVersionLabel(release['versionName'], release['versionCode'])}',
+            ),
             content: SingleChildScrollView(
               child: Text(release['notes'] as String? ?? '新版本已发布，可前往应用更新查看。'),
             ),
@@ -325,15 +346,24 @@ class AppLaunchServices with WidgetsBindingObserver {
                 ),
               FilledButton(
                 onPressed: () => Navigator.pop(dialog, true),
-                child: const Text('查看更新'),
+                child: Text(download == null ? '查看更新' : '下载 IPA'),
               ),
             ],
           ),
         ),
       );
       if (update == true && !disposed) {
+        if (download != null) {
+          final opened = await openIosReleaseDownload(download);
+          if (!opened && context.mounted) {
+            ScaffoldMessenger.maybeOf(
+              context,
+            )?.showSnackBar(const SnackBar(content: Text('无法打开浏览器，请在设置中重试。')));
+          }
+          return;
+        }
         await navigatorKey.currentState?.push<void>(
-          MaterialPageRoute(builder: (_) => UpdatesPage(state: state)),
+          MaterialPageRoute(builder: (_) => const UpdatesPage()),
         );
         if (required && !disposed) {
           await checkUpdate();

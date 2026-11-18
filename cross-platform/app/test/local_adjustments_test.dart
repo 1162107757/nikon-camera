@@ -94,6 +94,30 @@ void main() {
   );
 
   test(
+    'closing hands queued region edits to the draft without updating UI',
+    () async {
+      final core = RegionQueueCore();
+      var mounted = true;
+      final queue = LocalAdjustmentQueue(
+        core: core,
+        initial: {'localData': 'initial', 'sha256': 'sha-0'},
+        isCurrent: () => mounted,
+        onAccepted: (_) => fail('closed editor updated'),
+      );
+      unawaited(queue.change('one', {}));
+      unawaited(queue.change('two', {}));
+      await Future<void>.delayed(Duration.zero);
+      final frozen = queue.finish(() => true);
+      mounted = false;
+      core.replies.single.complete({'localData': 'first', 'sha256': 'sha-1'});
+      await Future<void>.delayed(Duration.zero);
+      expect(core.requests.last['expectedSha'], 'sha-1');
+      core.replies.last.complete({'localData': 'second', 'sha256': 'sha-2'});
+      expect((await frozen)['localData'], 'second');
+    },
+  );
+
+  test(
     'failed binary validation stops the queue without changing the draft',
     () async {
       final core = RegionQueueCore();

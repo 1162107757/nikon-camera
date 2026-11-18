@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/app_launch_services.dart';
+import 'package:huevia/domain.dart';
 
 void main() {
   test(
@@ -62,6 +65,59 @@ void main() {
     gate.shown = true;
     expect(gate.eligible(mandatory: true, probability: 0), isTrue);
   });
+  testWidgets(
+    'iOS update prompts and opens the IPA directly on the first tap',
+    (tester) async {
+      final state = AppState(HueviaCore());
+      final navigator = GlobalKey<NavigatorState>();
+      final download = Uri.parse(
+        'https://huevia.cc/preset-library/ios/releases/dd87c30e-75e5-40a7-8eb4-e85cde60254e/file',
+      );
+      final service =
+          AppLaunchServices(
+              state: state,
+              navigatorKey: navigator,
+              canPrompt: () => true,
+            )
+            ..probability = 0
+            ..available = {'versionName': '0.31.1', 'versionCode': 242}
+            ..iosDownload = download;
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      const channel = MethodChannel('plugins.flutter.io/url_launcher');
+      final launches = <MethodCall>[];
+      messenger.setMockMethodCallHandler(channel, (call) async {
+        launches.add(call);
+        return true;
+      });
+      addTearDown(() {
+        messenger.setMockMethodCallHandler(channel, null);
+        service.dispose();
+        state.dispose();
+      });
+
+      await tester.pumpWidget(
+        MaterialApp(
+          navigatorKey: navigator,
+          home: const Scaffold(body: Text('首页')),
+        ),
+      );
+      service.schedulePrompt();
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+      expect(find.text('发现新版本 0.31.1 · 构建 242'), findsOneWidget);
+      await tester.tap(find.text('下载 IPA'));
+      await tester.pumpAndSettle();
+
+      expect(launches, hasLength(1));
+      expect(launches.single.method, 'launch');
+      expect(launches.single.arguments['url'], '$download');
+      expect(launches.single.arguments['useSafariVC'], false);
+      expect(launches.single.arguments['useWebView'], false);
+      expect(find.text('首页'), findsOneWidget);
+      expect(navigator.currentState!.canPop(), false);
+    },
+  );
   test(
     'anonymous ID is a random UUID and has no account or hardware identifier',
     () {

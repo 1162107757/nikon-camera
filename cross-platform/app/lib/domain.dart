@@ -39,6 +39,35 @@ class HueviaCore {
   int publicImageGeneration = 0;
   bool customTemplate = false;
   final List<Json> recentOperations = [];
+  final _closingDrafts = <(String, String), Future<void>>{};
+
+  Future<void> queueClosingDraft(
+    String path,
+    String owner,
+    Future<void> Function() write,
+  ) {
+    final key = (path, owner);
+    final previous = _closingDrafts[key] ?? Future<void>.value();
+    final result = previous.then((_) => write());
+    late final Future<void> settled;
+    settled = result
+        .then<void>((_) {}, onError: (Object _, StackTrace _) {})
+        .whenComplete(() {
+          if (identical(_closingDrafts[key], settled)) _closingDrafts.remove(key);
+        });
+    _closingDrafts[key] = settled;
+    return result;
+  }
+
+  Future<void> waitForClosingDraft(String path, String owner) async {
+    final key = (path, owner);
+    var pending = _closingDrafts[key];
+    while (pending != null) {
+      await pending;
+      pending = _closingDrafts[key];
+    }
+  }
+
   Future<void> requestUsbPermission(String id) async {
     await _invoke('cameraUsbPermission', {'id': id});
   }
@@ -72,6 +101,13 @@ class HueviaCore {
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (operation == 'draft.load' && payload['path'] is String) {
+      final owner = payload['owner'];
+      await waitForClosingDraft(
+        payload['path'] as String,
+        owner is String ? owner : '',
+      );
+    }
     if (const {
       'account.login',
       'account.register',
