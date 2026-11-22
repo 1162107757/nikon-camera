@@ -660,6 +660,8 @@ extension _LegacyWorkspace on _EditorPageState {
     Json? heldComparisonRecipe,
     BuildContext? viewContext,
     bool showCompareButton = true,
+    bool compareButtonAtBottom = false,
+    bool compareReadOnly = false,
   }) {
     final details = editorDetailBindings(
       viewContext: viewContext ?? context,
@@ -685,6 +687,7 @@ extension _LegacyWorkspace on _EditorPageState {
                 detailController: details.effect,
                 originalDetailController: details.original,
                 viewportState: editingViewport,
+                fitPreview: tab == 4 && embeddedTool == null,
                 viewportPlane: EditingViewportPlane.fromRecipe(
                   object(displayedOverlay?['recipe'] ?? recipe.data),
                   sourceSize: Size(
@@ -751,8 +754,12 @@ extension _LegacyWorkspace on _EditorPageState {
               ),
             if (showCompareButton)
               Positioned(
-                top: 9,
-                right: 9,
+                top: compareButtonAtBottom ? null : 9,
+                bottom: compareButtonAtBottom ? 12 : null,
+                right: math.max(
+                  12,
+                  MediaQuery.systemGestureInsetsOf(context).right + 8,
+                ),
                 child: SizedBox(
                   width: 48,
                   height: 48,
@@ -760,6 +767,7 @@ extension _LegacyWorkspace on _EditorPageState {
                     color: const Color(0x9c101412),
                     shape: const CircleBorder(),
                     child: IconButton(
+                      key: const Key('editor-compare-toggle'),
                       tooltip: compare ? '显示效果' : '对比原图',
                       onPressed:
                           toolsEnabled && widget.photo.info['raw'] != true
@@ -767,7 +775,7 @@ extension _LegacyWorkspace on _EditorPageState {
                               refreshWorkspace(() => compare = !compare);
                               revision++;
                               debounce?.cancel();
-                              unawaited(render());
+                              unawaited(render(readOnly: compareReadOnly));
                             }
                           : null,
                       icon: const HueIcon(
@@ -870,6 +878,10 @@ extension _LegacyWorkspace on _EditorPageState {
 
   void selectWorkspaceMode(int next) {
     if (!toolsEnabled) return;
+    if (next == 10) {
+      unawaited(openLegacyTools(lighting: true));
+      return;
+    }
     if (next == 8) {
       unawaited(openRetouch());
       return;
@@ -886,6 +898,7 @@ extension _LegacyWorkspace on _EditorPageState {
           for (final entry in [
             (0, '滤镜', HueIconKind.filter),
             (1, '调节', HueIconKind.adjust),
+            (10, '光影', HueIconKind.brightness),
             (3, '裁切', HueIconKind.crop),
             (8, '人像', HueIconKind.person),
             (4, '边框', HueIconKind.frame),
@@ -1112,6 +1125,8 @@ extension _LegacyWorkspace on _EditorPageState {
         if (!compact) SizedBox(height: 12 * scale),
         Expanded(
           child: SingleChildScrollView(
+            key: const PageStorageKey('editor-adjustment-tools'),
+            controller: adjustmentToolsScroll,
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
@@ -1218,6 +1233,7 @@ extension _LegacyWorkspace on _EditorPageState {
     owner: owner,
     recipe: recipe.data,
     enabled: toolsEnabled,
+    settingsInDock: true,
     canUndo: undo.isNotEmpty,
     canRedo: redo.isNotEmpty,
     onUndo: () => history(false),

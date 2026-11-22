@@ -32,7 +32,7 @@ public final class UpdatePolicyTest {
         long now=10_000_000;
         require(UpdatePolicy.automaticDue(now,0,0,false,true),"first launch checks automatically");
         require(UpdatePolicy.automaticDue(now,now-120_000,now-120_000,false,true),"fresh process checks even within normal resume interval");
-        require(!UpdatePolicy.automaticDue(now,now-30_000,now-30_000,false,true),"rapid relaunch does not hammer metadata service");
+        require(UpdatePolicy.automaticDue(now,now-30_000,now-30_000,false,true),"each cold launch checks so an earlier dismissal cannot suppress the next launch");
         require(!UpdatePolicy.automaticDue(now,now-120_000,now-120_000,false,false),"ordinary foreground checks are throttled");
         require(UpdatePolicy.automaticDue(now,now-UpdatePolicy.AUTOMATIC_INTERVAL_MS,now-UpdatePolicy.AUTOMATIC_INTERVAL_MS,false,false),"ordinary metadata refreshes after thirty minutes");
         require(UpdatePolicy.automaticDue(now,now-60_000,now-60_000,true,false),"required policy refreshes after a minute so withdrawal is visible");

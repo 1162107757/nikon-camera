@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import 'domain.dart';
 import 'widgets.dart';
@@ -15,6 +16,7 @@ import 'camera_live.dart';
 import 'photo_grid.dart';
 import 'project_presets.dart';
 import 'camera_remote.dart';
+import 'camera_location.dart';
 import 'camera_slots.dart';
 import 'camera_downloads.dart';
 import 'camera_connection.dart';
@@ -50,10 +52,14 @@ class CameraPage extends StatefulWidget {
     required this.state,
     this.configuration = false,
     this.reuseConnected = false,
+    this.attachedUsbId,
+    this.connectOnAttachment = false,
   });
   final AppState state;
   final bool configuration;
   final bool reuseConnected;
+  final String? attachedUsbId;
+  final bool connectOnAttachment;
   @override
   State<CameraPage> createState() => _CameraPageState();
 }
@@ -64,6 +70,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   String protocol = 'nikon', session = '', model = '', job = '';
   String connectionMode = 'none';
   bool connectedUsb = false;
+  bool closingWiredSession = false;
   bool inventoryReady = false;
   bool busy = false, connected = false, hasMore = false;
   bool loadingMore = false;
@@ -73,6 +80,8 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   late final CameraPreviews previews;
   late final CameraTransfer transfer;
   late final CameraConnectionRequest connectionRequest;
+  Future<void>? initialStatus;
+  bool cameraStatusKnown = false;
   StreamSubscription<dynamic>? maintenanceEvents;
   final listScroll = ScrollController();
   int offset = 0, epoch = 0, statusRevision = 0;
@@ -110,10 +119,17 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   final Set<int> selection = {};
   bool get exclusive =>
       widget.state.cameraLiveActive || widget.state.cameraDownloadsActive;
+  bool get hasAndroidUsbSession =>
+      connectedUsb && widget.state.core.platform == 'android';
+  bool get canDisconnect =>
+      !childOpen &&
+      session.isNotEmpty &&
+      (!busy || hasAndroidUsbSession && transfer.busy && !closingWiredSession);
   bool get browsingPhotos =>
       !widget.configuration &&
       inForeground &&
       !childOpen &&
+      !closingWiredSession &&
       widget.state.cameraVisible.value &&
       overviewTab == 0;
   bool get photosReady => connected && connectionMode == 'photos';
@@ -127,6 +143,8 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   void acceptCameraStatus(Json value) {
     final wasConnected = connected;
     final previousUsb = connectedUsb;
+    final firstStatus = !cameraStatusKnown;
+    cameraStatusKnown = true;
     connected = value['connected'] == true;
     session = value['session'] as String? ?? '';
     model = value['model'] as String? ?? '';
@@ -134,7 +152,9 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         value['mode'] as String? ?? (connected ? 'photos' : 'none');
     inventoryReady = value['inventoryReady'] == true;
     connectedUsb = value['transport'] == 'usb';
-    if (connected && (!wasConnected || connectedUsb != previousUsb)) {
+    if (connected &&
+        (!wasConnected || connectedUsb != previousUsb) &&
+        (!firstStatus || widget.attachedUsbId == null || connectedUsb)) {
       connectionUsb = connectedUsb;
     }
     final notice = value['connectionNotice'];
@@ -150,6 +170,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     bool allowExclusive = false,
     bool fullScreen = false,
     bool compact = false,
+    bool refreshPhotosAfterClose = false,
     Future<void> Function()? afterClose,
   }) async {
     if (childOpen || busy || transfer.busy || (!allowExclusive && exclusive)) {
@@ -192,7 +213,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       }
       if (mounted) {
         if (!exclusive && browsingPhotos && photosReady) previews.resume();
-        await status(reload: false);
+        await status(reload: refreshPhotosAfterClose);
       }
     }
   }
@@ -210,6 +231,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
               onClosing: (value) => remoteClosing = value,
             ),
       fullScreen: !slots,
+      refreshPhotosAfterClose: !slots && connectedUsb,
       afterClose: slots
           ? null
           : () async {
@@ -223,6 +245,20 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     allowExclusive: true,
     compact: true,
   );
+
+  Future<void> openLocation() async {
+    if (childOpen || busy || transfer.busy || exclusive) return;
+    if (connected) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('请先断开相机的 Wi-Fi 或 USB 连接，再开启蓝牙定位同步。')),
+      );
+      return;
+    }
+    await openCameraTool(
+      CameraLocationPage(session: widget.state.cameraLocation),
+      fullScreen: true,
+    );
+  }
 
   void loadNearEnd() {
     if (!mounted ||
@@ -277,28 +313,29 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     try {
       final target = await chooseDownloadTarget(context, widget.state);
       if (!mounted || target == null) return;
-      final status = await widget.state.core.call('camera.status');
-      if (!mounted ||
-          expectedSession != session ||
-          status['session'] != expectedSession ||
-          exclusive) {
-        throw const AppFailure('相机会话已改变，请重新选择照片。');
-      }
-      await widget.state.cameraDownloads.create(status, selected, target);
-      if (!mounted) return;
+      await queueDownloads(selected, target, expectedSession);
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    }
+  }
+
+  Future<void> queueDownloads(List<Json> selected, Json target, String expectedSession) async {
+    final status = await widget.state.core.call('camera.status');
+    if (!mounted) return;
+    if (expectedSession != session || status['session'] != expectedSession || exclusive) {
+      throw const AppFailure('相机会话已改变，请重新选择照片。');
+    }
+    final downloads = widget.state.cameraDownloads;
+    await downloads.create(status, selected, target);
+    if (!mounted) return;
+    if (selecting) {
       setState(() {
         selecting = false;
         selection.clear();
       });
-      unawaited(
-        widget.state.cameraDownloads.resume(
-          widget.state.cameraDownloads.current!['id'] as String,
-        ),
-      );
-      await openDownloads();
-    } catch (failure) {
-      if (mounted) report(context, failure);
     }
+    unawaited(downloads.resume(downloads.current!['id'] as String));
+    await openDownloads();
   }
 
   void downloadsChanged() {
@@ -315,7 +352,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     bool? loadPhotos,
     bool waitForStatus = true,
   }) async {
-    if (!mounted || childOpen) return false;
+    if (!mounted || childOpen || closingWiredSession) return false;
     final browseAfter = loadPhotos ?? browsingPhotos;
     setState(() => childOpen = true);
     previews.pause();
@@ -350,12 +387,12 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       context: context,
       title: '选择相机类型',
       selected: protocol,
-      choices: const [('nikon', '尼康'), ('fujifilm', '富士 X-T20')],
+      choices: const [('nikon', '尼康'), ('fujifilm', '富士')],
     );
     if (!mounted || selected == null || selected == protocol) return;
     setState(() {
       protocol = selected;
-      host.text = protocol == 'nikon' ? '192.168.1.1' : '';
+      host.text = protocol == 'nikon' ? '192.168.1.1' : '192.168.0.1';
       port.text = protocol == 'nikon' ? '15740' : '55740';
       error = null;
     });
@@ -364,6 +401,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    connectionUsb = widget.attachedUsbId != null;
     WidgetsBinding.instance.addObserver(this);
     previews = CameraPreviews(widget.state.core);
     transfer = CameraTransfer(widget.state);
@@ -386,7 +424,20 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         unawaited(status(reload: false, inspectOnly: true));
       }, onError: (_) {});
     }
-    unawaited(status());
+    final statusRequest = initialStatus = status();
+    unawaited(statusRequest.whenComplete(() => initialStatus = null));
+    final attachedUsbId = widget.attachedUsbId;
+    if (widget.connectOnAttachment && attachedUsbId != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await statusRequest;
+        if (mounted &&
+            inForeground &&
+            connectionUsb &&
+            ModalRoute.of(context)?.isCurrent == true) {
+          await connect(usbId: attachedUsbId, onlyIfDisconnected: true);
+        }
+      });
+    }
   }
 
   @override
@@ -437,6 +488,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     connectionRequest.cancel();
     setState(() {
       busy = connected = false;
+      closingWiredSession = false;
       session = job = '';
       items = [];
       error = '已取消连接与照片读取。';
@@ -506,7 +558,9 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           connectionNotice = '相机连接已断开，请重新连接后继续。';
         }
       });
-      if (!connected || changed && previousSession.isNotEmpty) {
+      if ((!connected || changed) &&
+          (previousSession.isNotEmpty ||
+              !connected && widget.attachedUsbId == null)) {
         retireSessionWork(previousSession);
       }
       if (connected && session.isNotEmpty) {
@@ -581,6 +635,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       epoch++;
       setState(() {
         busy = loadingMore = false;
+        closingWiredSession = false;
         job = '';
       });
       if (oldPageRequest) {
@@ -593,14 +648,91 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
   Future<void> connectWired(String id) => connect(usbId: id);
 
-  Future<void> connect({String? usbId}) async {
+  Future<void> drainWiredTransfer(String expectedSession, int request) async {
+    final state = widget.state;
+    previews.pause();
+    Future<void> stopSafely(Future<void> Function() stop) async {
+      try {
+        await stop();
+      } catch (failure) {
+        // The serialized native request can still close the exact USB session.
+        if (mounted && request == epoch) report(context, failure);
+      }
+    }
+
+    await stopSafely(
+      () => state.stopCameraManualTransfer(
+        expectedSession: expectedSession,
+        preserveConnection: true,
+      ),
+    );
+    if (!mounted || request != epoch) return;
+    if (state.cameraDownloadsActive) {
+      final queue = state.cameraDownloads;
+      if (queue.activeSession.isEmpty ||
+          queue.activeSession == expectedSession) {
+        await stopSafely(() => queue.stop());
+      }
+    }
+    if (!mounted || request != epoch) return;
+    if (state.cameraLiveActive) {
+      final live = state.cameraLive;
+      if (live.session.isEmpty || live.session == expectedSession) {
+        await stopSafely(() => live.stop());
+      }
+    }
+  }
+
+  Future<void> chooseFujifilmWifi() async {
+    final result = await showFujifilmWifiDialog(context);
+    if (!mounted || result == null) return;
+    try {
+      await widget.state.core.requestCameraWifiPermission();
+      if (!mounted || protocol != 'fujifilm' || connectionUsb || busy) return;
+      await connect(wifi: result);
+    } catch (failure) {
+      if (mounted) setState(() => error = '$failure');
+    }
+  }
+
+  Future<void> connect({
+    String? usbId,
+    bool onlyIfDisconnected = false,
+    FujifilmWifiChoice? wifi,
+  }) async {
+    if (onlyIfDisconnected &&
+        (!cameraStatusKnown ||
+            connected ||
+            busy ||
+            connectionRequest.busy ||
+            exclusive ||
+            widget.state.cameraManualTransferActive)) {
+      return;
+    }
     if (busy || connectionRequest.busy) {
       setState(() => error = '本次连接仍在进行，可以先取消后重试。');
       return;
     }
+    final state = widget.state;
+    if (state.core.platform == 'android' &&
+        !cameraStatusKnown &&
+        (exclusive || state.cameraManualTransferActive)) {
+      // A fresh connection screen may still be waiting on the current transfer
+      // for its first status. Identify its transport before choosing how to stop.
+      setState(() => busy = true);
+      await (initialStatus ?? status(reload: false, inspectOnly: true));
+      if (!mounted) return;
+      setState(() => busy = false);
+      if (!cameraStatusKnown) {
+        setState(() => error = '暂时无法确认当前相机连接，请重试。');
+        return;
+      }
+    }
     final request = ++epoch;
+    final replaceSession = hasAndroidUsbSession ? session : '';
     setState(() {
       busy = true;
+      closingWiredSession = replaceSession.isNotEmpty;
       error = null;
       connectionNotice = null;
       paginationError = null;
@@ -609,33 +741,38 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     });
     var connectionSent = false;
     try {
-      // This is an explicit reconnect request. Retire old local producers by
-      // their own session; do not send a late stop to the new camera session.
-      if (widget.state.cameraLiveActive) {
-        final live = widget.state.cameraLive;
-        final oldCameraJob = live.pendingCameraJob;
-        live.connectionLost(expectedSession: live.session);
-        if (oldCameraJob != null) {
-          await widget.state.core
-              .cancel(oldCameraJob)
-              .timeout(const Duration(seconds: 2));
+      if (replaceSession.isNotEmpty) {
+        await drainWiredTransfer(replaceSession, request);
+      } else if (!onlyIfDisconnected) {
+        // Retire old local producers by their own session before reconnecting.
+        if (widget.state.cameraLiveActive) {
+          final live = widget.state.cameraLive;
+          final oldCameraJob = live.pendingCameraJob;
+          live.connectionLost(expectedSession: live.session);
+          if (oldCameraJob != null) {
+            await widget.state.core
+                .cancel(oldCameraJob)
+                .timeout(const Duration(seconds: 2));
+          }
         }
-      }
-      if (widget.state.cameraDownloadsActive) {
-        final queue = widget.state.cameraDownloads;
-        final oldCameraJob = queue.pendingCameraJob;
-        queue.connectionLost(expectedSession: queue.activeSession);
-        if (oldCameraJob != null) {
-          await widget.state.core
-              .cancel(oldCameraJob)
-              .timeout(const Duration(seconds: 2));
+        if (widget.state.cameraDownloadsActive) {
+          final queue = widget.state.cameraDownloads;
+          final oldCameraJob = queue.pendingCameraJob;
+          queue.connectionLost(expectedSession: queue.activeSession);
+          if (oldCameraJob != null) {
+            await widget.state.core
+                .cancel(oldCameraJob)
+                .timeout(const Duration(seconds: 2));
+          }
         }
+        await widget.state.stopCameraManualTransfer();
       }
-      await widget.state.stopCameraManualTransfer();
       if (!mounted || request != epoch) return;
       if (widget.state.cameraManualTransferActive) {
         throw const AppFailure('另一项照片传输仍在结束，请稍后重新连接。');
       }
+      await state.stopCameraLocation();
+      if (!mounted || request != epoch) return;
       connectionSent = true;
       final result = await connectionRequest.run(
         'camera.connect',
@@ -643,7 +780,17 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           'host': host.text.trim(),
           'port': int.tryParse(port.text) ?? 0,
           'protocol': usbId == null ? protocol : 'nikon',
+          if (wifi != null) ...{
+            'wifiSsid': wifi.ssid,
+            'wifiPassword': wifi.password,
+          },
+          if (usbId == null && protocol == 'fujifilm' &&
+              state.core.platform == 'android' &&
+              (host.text.trim().isEmpty || host.text.trim() == '192.168.0.1'))
+            'automaticHost': true,
           if (usbId != null) 'transport': 'usb',
+          if (replaceSession.isNotEmpty) 'replaceSession': replaceSession,
+          if (onlyIfDisconnected) 'requireDisconnected': true,
           'deviceId': ?usbId,
         },
         job,
@@ -657,12 +804,13 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       }
       setState(() {
         acceptCameraStatus(result);
+        closingWiredSession = false;
         busy = false;
         job = '';
       });
       widget.state.cameraLive.connectionRestored(session: session);
       previews.setSession(session);
-      if (widget.configuration) {
+      if (widget.configuration && widget.attachedUsbId == null) {
         finishConnection();
       } else if (browsingPhotos) {
         await page(refresh: false);
@@ -690,7 +838,8 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
             connectionNotice = null;
             error = '$failure';
           });
-          if (!connected || session != previousSession) {
+          if (!onlyIfDisconnected &&
+              (!connected || session != previousSession)) {
             retireSessionWork(previousSession);
           }
           previews.setSession(session);
@@ -702,8 +851,15 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       if (mounted && request == epoch) {
         setState(() {
           busy = false;
+          closingWiredSession = false;
           job = '';
         });
+        if (replaceSession.isNotEmpty &&
+            browsingPhotos &&
+            photosReady &&
+            !exclusive) {
+          previews.resume();
+        }
       }
     }
   }
@@ -815,6 +971,16 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
   Future<void> download(Json item) async {
     if (busy || transfer.busy || exclusive) return;
+    final expectedSession = session;
+    final target = await chooseDownloadTarget(context, widget.state);
+    if (!mounted || target == null) return;
+    if (expectedSession != session || busy || transfer.busy || exclusive) {
+      throw const AppFailure('相机会话已改变，请重新选择照片。');
+    }
+    if (target['kind'] != 'app') {
+      await queueDownloads([item], target, expectedSession);
+      return;
+    }
     final request = ++epoch;
     previews.pause();
     setState(() {
@@ -850,7 +1016,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     } catch (failure) {
       if (mounted && request == epoch) setState(() => error = '$failure');
     } finally {
-      previews.resume();
+      if (!closingWiredSession) previews.resume();
       if (mounted && request == epoch) {
         setState(() {
           busy = false;
@@ -861,23 +1027,66 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   }
 
   Future<void> disconnect() async {
-    if (!mounted || busy || childOpen || session.isEmpty) return;
+    if (!mounted || !canDisconnect) return;
+    final confirmedSession = session;
+    setState(() => childOpen = true);
+    bool? confirmed;
+    try {
+      confirmed = await hueDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          title: const Text('断开相机连接？'),
+          content: Text(
+            widget.state.cameraLiveActive ||
+                    widget.state.cameraDownloadsActive ||
+                    widget.state.cameraManualTransferActive
+                ? '断开后将停止边拍边传和相机接收任务，已接收的照片会保留。'
+                : '断开后需要重新连接才能导入预设或接收相机照片。',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialog, false),
+              child: const Text('保持连接'),
+            ),
+            TextButton(
+              key: const Key('confirm-camera-disconnect'),
+              onPressed: () => Navigator.pop(dialog, true),
+              child: const Text('断开连接'),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => childOpen = false);
+    }
+    if (!mounted ||
+        confirmed != true ||
+        !canDisconnect ||
+        session != confirmedSession) {
+      return;
+    }
     final request = ++epoch, expectedSession = session;
+    final gracefulUsb = hasAndroidUsbSession;
     setState(() {
       busy = true;
+      closingWiredSession = gracefulUsb;
       error = null;
     });
     try {
-      await widget.state.stopCameraManualTransfer(
-        expectedSession: expectedSession,
-      );
-      if (!mounted || request != epoch) return;
-      if (widget.state.cameraDownloadsActive) {
-        await widget.state.cameraDownloads.stop(preserveConnection: false);
-      }
-      if (!mounted || request != epoch) return;
-      if (widget.state.cameraLiveActive) {
-        await widget.state.cameraLive.stop(preserveConnection: false);
+      if (gracefulUsb) {
+        await drainWiredTransfer(expectedSession, request);
+      } else {
+        await widget.state.stopCameraManualTransfer(
+          expectedSession: expectedSession,
+        );
+        if (!mounted || request != epoch) return;
+        if (widget.state.cameraDownloadsActive) {
+          await widget.state.cameraDownloads.stop(preserveConnection: false);
+        }
+        if (!mounted || request != epoch) return;
+        if (widget.state.cameraLiveActive) {
+          await widget.state.cameraLive.stop(preserveConnection: false);
+        }
       }
       if (!mounted || request != epoch) return;
       final result = await widget.state.core.call('camera.disconnect', {
@@ -903,15 +1112,21 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       if (mounted && request == epoch) {
         setState(() {
           busy = false;
+          closingWiredSession = false;
           job = '';
         });
+        if (gracefulUsb && browsingPhotos && photosReady && !exclusive) {
+          previews.resume();
+        }
       }
     }
   }
 
   @override
-  Widget build(BuildContext context) =>
-      widget.configuration ? connectionView(context) : overview(context);
+  Widget build(BuildContext context) => PopScope(
+    canPop: !closingWiredSession || connectionRequest.busy,
+    child: widget.configuration ? connectionView(context) : overview(context),
+  );
 
   Widget connectionStatus() => Padding(
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -939,6 +1154,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     core: widget.state.core,
     enabled: !busy,
     compact: true,
+    preferredId: widget.attachedUsbId,
     active: connectionUsb && !(connected && connectedUsb),
     onBusyChanged: (value) {
       if (mounted) setState(() => usbBusy = value);
@@ -947,6 +1163,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     builder: (context, picker, primary) => CameraConnectionView(
       usb: connectionUsb,
       busy: busy,
+      closingWiredSession: closingWiredSession,
       usbBusy: usbBusy,
       connected:
           connected && session.isNotEmpty && connectionUsb == connectedUsb,
@@ -966,7 +1183,10 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         connectionNotice = null;
       }),
       onProtocol: chooseProtocol,
-      onConnect: connect,
+      onConnect: () => connect(),
+      onChooseFujifilmWifi: widget.state.core.platform == 'android'
+          ? chooseFujifilmWifi
+          : null,
       onCancel: cancelCameraRequest,
       onSettings: () => setState(() => settingsExpanded = !settingsExpanded),
       onPermissionSettings: () async {
@@ -1086,32 +1306,46 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   Widget overview(BuildContext context) {
     final p = HuePalette.of(context);
     final compact = MediaQuery.sizeOf(context).height < 480;
+    final location = widget.state.cameraLocation;
     return Scaffold(
       appBar: HueHeader(
         title: '同步',
         compact: compact,
         actions: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: connected ? const Color(0xff42735b) : p.secondary,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 6),
-              Text(
-                connected ? '$model · 已连接' : '未连接',
-                style: TextStyle(fontSize: 11, color: p.secondary),
-              ),
-            ],
+          ListenableBuilder(
+            listenable: location,
+            builder: (context, _) {
+              if (!connected && location.connected) {
+                return TextButton.icon(
+                  onPressed: openLocation,
+                  icon: const Icon(Icons.bluetooth_connected, size: 16),
+                  label: Text(location.positionSent ? '蓝牙 · 位置已发送' : '蓝牙 · 等待定位'),
+                  style: TextButton.styleFrom(minimumSize: const Size(0, 44)),
+                );
+              }
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: connected ? const Color(0xff42735b) : p.secondary,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    connected ? '$model · 已连接' : '未连接',
+                    style: TextStyle(fontSize: 11, color: p.secondary),
+                  ),
+                ],
+              );
+            },
           ),
           if (connected)
             IconButton(
-              onPressed: busy ? null : disconnect,
+              onPressed: canDisconnect ? disconnect : null,
               tooltip: '断开相机',
               icon: const Icon(Icons.link_off_rounded),
             ),
@@ -1130,7 +1364,9 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
               height: 60,
             ),
           ),
-          if (busy && !transfer.busy && !loadingMore)
+          if (closingWiredSession)
+            const WiredSessionClosingStatus()
+          else if (busy && !transfer.busy && !loadingMore)
             const LinearProgressIndicator(minHeight: 2),
           if (connectionRequest.busy && !loadingMore) connectionStatus(),
           Expanded(
@@ -1139,6 +1375,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                   ? ProjectPresetsPage(
                       state: widget.state,
                       embedded: true,
+                      cameraActionsEnabled: !closingWiredSession,
                       onConnect: () => openConnection(
                         loadPhotos: false,
                         waitForStatus: false,
@@ -1369,6 +1606,12 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                 onSlots: busy || transfer.busy || exclusive
                     ? null
                     : () => openConnectedTool(slots: true),
+                onLocation:
+                    !kIsWeb &&
+                        (defaultTargetPlatform == TargetPlatform.android ||
+                            defaultTargetPlatform == TargetPlatform.iOS)
+                    ? openLocation
+                    : null,
                 downloadActive: widget.state.cameraDownloadsActive,
                 downloadRemaining: widget.state.cameraDownloads.current == null
                     ? 0

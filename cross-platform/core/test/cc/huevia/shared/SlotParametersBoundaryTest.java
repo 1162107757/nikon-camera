@@ -44,6 +44,23 @@ public final class SlotParametersBoundaryTest {
         rejects(()->SharedSlotParameters.parse(SharedRuntime.map("whiteBalance",4,"kelvin",5500)));
         rejects(()->SharedSlotParameters.parse(SharedRuntime.map("whiteBalance",0x8012)));
         rejects(()->SharedSlotParameters.parse(SharedRuntime.map("iso",100)));
+        // The structured NP3 report must survive prepare and leave the normal
+        // explicitly confirmed partial-conversion write available.
+        Path np3Root=Files.createDirectory(root.resolve("np3-report"));
+        Path np3=np3Root.resolve("partial.np3");
+        byte[] original=cc.huevia.ncp.CameraPresetProjectionTest.np3(0x20,7,true,true);
+        Files.write(np3,original);Peer np3Peer=new Peer(np3Root);
+        SharedSlots np3Slots=new SharedSlots(np3Root.toFile());np3Slots.open(np3Peer,"np3-session","camera-fixture",()->false);
+        Map<String,Object> np3Plan=map(np3Slots.request("camera.slots.prepare",SharedRuntime.map("session","np3-session","kind","write","path",np3.toString(),"target",202),()->false));
+        Map<String,Object> report=map(np3Plan.get("compatibility"));
+        yes("NP3".equals(report.get("format")));
+        yes(((List<?>)report.get("omitted")).contains("色彩混合器：NCP 不支持，已忽略"));
+        yes(((List<?>)report.get("omitted")).contains("分区调色：NCP 不支持，已忽略"));
+        yes(!((List<?>)report.get("retained")).isEmpty()&&!((List<?>)report.get("approximated")).isEmpty());
+        yes(np3Peer.presetWrites==0&&Arrays.equals(original,Files.readAllBytes(np3)));
+        Map<String,Object> np3Result=map(np3Slots.request("camera.slots.execute",SharedRuntime.map("session","np3-session","confirmationId",np3Plan.get("confirmationId"),"confirmed",true),()->false));
+        yes(Boolean.TRUE.equals(map(np3Result.get("action")).get("presetVerified")));
+        yes(np3Peer.presetWrites==1&&np3Peer.otherSlotsIntact());np3Slots.close();
         guardChecks();System.out.println("PASS "+checks+" slot parameter boundary checks");return checks;
     }
     private static void guardChecks()throws Exception{

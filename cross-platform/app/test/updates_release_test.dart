@@ -55,26 +55,48 @@ void main() {
       'https://example.com/ios/../secret.ipa',
       'https://example.com/ios/%2e%2e/secret.ipa',
       'https://user:secret@example.com/ios/Huevia.ipa',
+      'https://example.com/ios/download.html',
     ]) {
       expect(
         () => parse({...release(), 'downloadUrl': url}),
         throwsA(isA<AppFailure>()),
       );
     }
-    final actual = parse(release());
-    expect(
-      actual.trustedRedirect(
-        Uri.parse(
-          'https://release-assets.githubusercontent.com/assets/Huevia.ipa?sig=redacted',
-        ),
-      ),
-      true,
-    );
-    expect(
-      actual.trustedRedirect(
-        Uri.parse('https://release-assets.githubusercontent.com.evil/file'),
-      ),
-      false,
-    );
   });
+  test('Official update opens the same IPA on the website file route', () {
+    const origin =
+        'nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com';
+    const id = 'dd87c30e-75e5-40a7-8eb4-e85cde60254e';
+    final manifest = Uri.https(origin, '/preset-library/ios/releases/latest');
+    final path = '/preset-library/ios/releases/$id/file';
+    IosRelease parse(Json patch) => IosRelease(
+      {...release(), 'id': id, 'downloadUrl': 'https://$origin$path', ...patch},
+      manifest: manifest,
+      bundleId: 'cc.huevia.next',
+    );
+
+    expect(parse({}).browserDownload, Uri.https('huevia.cc', path));
+    expect(
+      parse({'downloadUrl': 'https://huevia.cc$path'}).browserDownload,
+      Uri.https('huevia.cc', path),
+    );
+    for (final patch in <Json>[
+      {'id': '8c796314-d3ea-4b0f-9e22-8a1385961099'},
+      {'downloadUrl': 'https://$origin$path?redirect=untrusted'},
+      {'downloadUrl': 'https://$origin/preset-library/ios/releases/latest'},
+      {'downloadUrl': 'https://huevia.cc.evil$path'},
+      {'downloadUrl': 'https://$origin${path.replaceFirst('/ios/', '/next/')}'},
+    ]) {
+      expect(() => parse(patch), throwsA(isA<AppFailure>()));
+    }
+  });
+
+  test(
+    'A build increment remains visible when the display name is unchanged',
+    () {
+      expect(updateVersionLabel('0.31.0', 239), '0.31.0 · 构建 239');
+      expect(updateVersionLabel('0.31.0', '241'), '0.31.0 · 构建 241');
+      expect(updateVersionLabel('0.31.1', 242), '0.31.1 · 构建 242');
+    },
+  );
 }

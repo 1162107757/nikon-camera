@@ -8,4 +8,5 @@
 - (instancetype)initWithRoot:(NSString *)root runtime:(CcHueviaSharedSharedRuntime *)runtime;
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result;
 - (NSDictionary *)publish:(NSDictionary *)payload task:(HueviaTask *)task;
+- (NSDictionary *)publishExport:(NSDictionary *)payload task:(HueviaTask *)task;
 @end

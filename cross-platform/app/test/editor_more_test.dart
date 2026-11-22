@@ -14,6 +14,7 @@ void main() {
       '收藏照片',
       '直方图',
       '照片版本',
+      '照片信息',
       '查看细节',
       '全部滤镜',
       '快速优化',
@@ -26,7 +27,7 @@ void main() {
       '还原原图',
       '删除照片',
     ]);
-    expect(all.map((e) => e.group), [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]);
+    expect(all.map((e) => e.group), [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3]);
     final scope = rows(
       const EditorMoreState(
         showFavourite: false,

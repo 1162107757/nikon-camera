@@ -74,7 +74,7 @@ HueviaRaster *compose(HueviaRaster *input,CcHueviaNcpPhotoGeometry *geometry,NSS
 NSDictionary *captureData(NSDictionary *props){
   NSDictionary *tiff=props[(__bridge id)kCGImagePropertyTIFFDictionary]?:@{},*exif=props[(__bridge id)kCGImagePropertyExifDictionary]?:@{};NSMutableDictionary *data=[NSMutableDictionary dictionary];
   for(NSString *key in @[@"Make",@"Model"]){id value=tiff[key];if(value)data[key]=[value description];}
-  for(NSString *key in @[@"FocalLength",@"FNumber",@"ExposureTime",@"PhotographicSensitivity",@"ISOSpeedRatings",@"DateTimeOriginal",@"DateTimeDigitized"]){id value=exif[key];if([value isKindOfClass:NSArray.class])value=[value firstObject];if(value)data[key]=[value description];}
+  for(NSString *key in @[@"FocalLength",@"FNumber",@"ExposureTime",@"PhotographicSensitivity",@"ISOSpeedRatings",@"DateTimeOriginal",@"DateTimeDigitized",@"LensModel"]){id value=exif[key];if([value isKindOfClass:NSArray.class])value=[value firstObject];if(value)data[key]=[value description];}
   return data;
 }
 NSDictionary *safeMetadata(NSDictionary *source,int width,int height,double quality){
@@ -84,6 +84,13 @@ NSDictionary *safeMetadata(NSDictionary *source,int width,int height,double qual
   for(NSString *key in @[@"Make",@"Model",@"DateTime"]){if(originalTiff[key])tiff[key]=originalTiff[key];}
   exif[(__bridge id)kCGImagePropertyExifPixelXDimension]=@(width);exif[(__bridge id)kCGImagePropertyExifPixelYDimension]=@(height);tiff[(__bridge id)kCGImagePropertyTIFFOrientation]=@1;
   return @{(__bridge id)kCGImagePropertyExifDictionary:exif,(__bridge id)kCGImagePropertyTIFFDictionary:tiff,(__bridge id)kCGImagePropertyOrientation:@1,(__bridge id)kCGImageDestinationLossyCompressionQuality:@(quality),(__bridge id)kCGImageDestinationEmbedThumbnail:@NO};
+}
+NSDictionary *exportGPS(NSDictionary *metadata){
+  NSDictionary *gps=metadata[(id)kCGImagePropertyGPSDictionary];
+  if(![gps isKindOfClass:NSDictionary.class])return nil;
+  id latitude=gps[(id)kCGImagePropertyGPSLatitude],longitude=gps[(id)kCGImagePropertyGPSLongitude];
+  if(![latitude isKindOfClass:NSNumber.class]||![longitude isKindOfClass:NSNumber.class])return nil;
+  return std::abs([latitude doubleValue])<=90&&std::abs([longitude doubleValue])<=180?gps:nil;
 }
 void encode(HueviaRaster *raster,NSString *path,BOOL png,NSDictionary *metadata){
   CGImageDestinationRef destination=CGImageDestinationCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:path],png?CFSTR("public.png"):CFSTR("public.jpeg"),1,NULL);if(!destination)fail(@"无法创建照片输出文件。");
@@ -418,14 +425,15 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     }@finally{[files removeItemAtPath:temporary error:nil];}
   }
   if([operation isEqualToString:@"media.info"]){
-    if(raw){HueviaRawInfo info;char error[1024];if(HueviaRawInspect(path.fileSystemRepresentation,&info,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);return @{@"width":@(info.width),@"height":@(info.height),@"raw":@YES,@"make":[NSString stringWithUTF8String:info.make]?:@"",@"model":[NSString stringWithUTF8String:info.model]?:@""};}
-    int width=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],height=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue],orientation=[metadata[(__bridge id)kCGImagePropertyOrientation] intValue];if(orientation<1||orientation>8)orientation=1;validSize(width,height);return @{@"width":@(width),@"height":@(height),@"raw":@NO,@"orientation":@(orientation)};
+    id hasLocation=metadata?@(exportGPS(metadata)!=nil):NSNull.null;
+    if(raw){HueviaRawInfo info;char error[1024];if(HueviaRawInspect(path.fileSystemRepresentation,&info,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);return @{@"width":@(info.width),@"height":@(info.height),@"raw":@YES,@"make":[NSString stringWithUTF8String:info.make]?:@"",@"model":[NSString stringWithUTF8String:info.model]?:@"",@"hasLocation":hasLocation};}
+    int width=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],height=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue],orientation=[metadata[(__bridge id)kCGImagePropertyOrientation] intValue];if(orientation<1||orientation>8)orientation=1;validSize(width,height);return @{@"width":@(width),@"height":@(height),@"raw":@NO,@"orientation":@(orientation),@"hasLocation":hasLocation};
   }
   if([operation isEqualToString:@"media.borderInfo"]){
     NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];
     CcHueviaSharedSharedCaptureInfo *capture=[[CcHueviaSharedSharedCaptureInfo alloc] initWithNSString:json(captureData(metadata))];NSMutableArray *fields=[NSMutableArray array];
     for(int i=0;i<5;i++)[fields addObject:[capture fieldWithCcHueviaNcpPhotoBorder:CcHueviaNcpPhotoBorder_get_NONE() withInt:i]];
-    check(task);[_runtime guardOwnerWithNSString:owner];return @{@"brand":capture->brand_,@"model":capture->model_,@"fields":fields};
+    check(task);[_runtime guardOwnerWithNSString:owner];return @{@"brand":capture->brand_,@"model":capture->model_,@"fields":fields,@"lens":capture->lens_};
   }
   if([operation isEqualToString:@"media.rawReferenceInfo"]){
     if(!raw)fail(@"请选择 RAW 原文件。");NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];
@@ -524,6 +532,22 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   CcHueviaAlbumPhotoExportSpec *spec=detail?[CcHueviaAlbumPhotoExportSpec full]:(preview||[p[@"size"] isEqual:@"share"]?[CcHueviaAlbumPhotoExportSpec share]:[CcHueviaAlbumPhotoExportSpec full]);
   if(!preview&&!detail&&[p[@"size"] isEqual:@"custom"]){if(![p[@"longEdge"] isKindOfClass:NSNumber.class]||![p[@"quality"] isKindOfClass:NSNumber.class])fail(@"自定义导出设置无效。");spec=[CcHueviaAlbumPhotoExportSpec customWithInt:[p[@"longEdge"] intValue] withInt:[p[@"quality"] intValue]];}
   CcHueviaAlbumPhotoExportSpec_Resolved *resolved=[spec resolveWithInt:working.pixelWidth withInt:working.pixelHeight];working=scaled(working,resolved->width_,resolved->height_,_root);check(task);
+  NSMutableDictionary *exportMetadata=[safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0) mutableCopy];
+  NSString *locationSHA=@"";
+  if(!preview&&!detail&&![p[@"preserveLocation"] isEqual:@NO]){
+    NSDictionary *gps=exportGPS(metadata);
+    if(gps)locationSHA=frozen->sourceSha_;
+    else if([p[@"locationSource"] isKindOfClass:NSDictionary.class]){
+      NSDictionary *linked=p[@"locationSource"];
+      if(![linked[@"path"] isKindOfClass:NSString.class]||![linked[@"sha256"] isKindOfClass:NSString.class])fail(@"位置来源文件校验无效。");
+      NSString *original=[[_runtime exportLocationSourceWithNSString:linked[@"path"] withNSString:linked[@"sha256"]] getPath];
+      if(original)gps=exportGPS(properties(original));
+      if(gps)locationSHA=linked[@"sha256"];
+    }
+    if(gps)exportMetadata[(id)kCGImagePropertyGPSDictionary]=gps;
+  }
+  NSString *exportSpec=[CcHueviaSharedSharedExportModel specificationWithNSString:[resolved identity] withNSString:locationSHA];
+  NSString *exportModel=[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved withNSString:exportSpec];
   NSString *directory=[_root stringByAppendingPathComponent:preview||detail?@"previews":@"exports"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建照片导出目录。");
   NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];
   if(detail){
@@ -555,19 +579,20 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     session.jpeg=[session.folder stringByAppendingPathComponent:@"encoded.jpg"];session.reference=[session.folder stringByAppendingPathComponent:@"reference.png"];
     @try{
       encode(working,session.reference,YES,@{});check(task);
-      encode(working,session.jpeg,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);
+      encode(working,session.jpeg,NO,exportMetadata);check(task);
+      if(locationSHA.length&&!exportGPS(properties(session.jpeg)))fail(@"导出文件的位置未能通过校验。");
       [_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];
       session.before=working;session.after=load(session.jpeg,_root,0);session.sourceAttributes=[NSFileManager.defaultManager attributesOfItemAtPath:path error:nil];
       if(session.before.pixelWidth!=session.after.pixelWidth||session.before.pixelHeight!=session.after.pixelHeight)fail(@"成品与编码前尺寸不符。");
-      session.model=[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved];session.spec=[resolved identity];
+      session.model=exportModel;session.spec=exportSpec;
       double overviewScale=std::min(1.0,256.0/std::max(working.pixelWidth,working.pixelHeight));
       int ow=std::max(1,(int)std::round(working.pixelWidth*overviewScale)),oh=std::max(1,(int)std::round(working.pixelHeight*overviewScale));
       NSString *overview=[self exportFrame:session.after width:ow height:oh scale:std::min(ow/(double)working.pixelWidth,oh/(double)working.pixelHeight) cx:working.pixelWidth/2.0 cy:working.pixelHeight/2.0 folder:session.folder task:task];
       _exportSession=session;return @{@"id":session.identifier,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"overview":overview,@"bytes":[NSFileManager.defaultManager attributesOfItemAtPath:session.jpeg error:nil][NSFileSize]?:@0,@"quality":@(resolved->quality_),@"sha256":hashFile(session.jpeg,task),@"exportSpec":session.spec};
     }@catch(id error){if(_exportSession==session)_exportSession=nil;[NSFileManager.defaultManager removeItemAtPath:session.folder error:nil];@throw error;}
   }
-  @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);[_runtime guardOwnerWithNSString:owner];if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
-  [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];NSDictionary *result=@{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"geometryWidth":@(fullPlan->width_),@"geometryHeight":@(fullPlan->height_),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":preview?[profile modelVersion]:[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved],@"exportSpec":preview?@"":[resolved identity],@"rawColorStatus":colorStatus};
+  @try{encode(working,temporary,NO,exportMetadata);check(task);if(locationSHA.length&&!exportGPS(properties(temporary)))fail(@"导出文件的位置未能通过校验。");[_runtime guardOwnerWithNSString:owner];if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
+  [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];NSDictionary *result=@{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"geometryWidth":@(fullPlan->width_),@"geometryHeight":@(fullPlan->height_),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":preview?[profile modelVersion]:exportModel,@"exportSpec":preview?@"":exportSpec,@"rawColorStatus":colorStatus};
   if(!preview){@try{NSString *saved=[_runtime commitVersionWithNSString:path withNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen withNSString:target withNSString:json(result) withJavaUtilFunctionBooleanSupplier:task];if(!snapshot)[_runtime markEditExportedWithNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen];return [NSJSONSerialization JSONObjectWithData:[saved dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];}@finally{[NSFileManager.defaultManager removeItemAtPath:target error:nil];}}
   NSMutableDictionary *withSource=[result mutableCopy];withSource[@"sourceWidth"]=@(uncomposed->width_);withSource[@"sourceHeight"]=@(uncomposed->height_);return withSource;
 }

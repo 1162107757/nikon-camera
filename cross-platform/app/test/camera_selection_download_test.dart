@@ -22,6 +22,11 @@ class SelectionCameraCore extends fixtures.ReconnectCore226 {
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (operation == 'gallery.exportAlbums') {
+      return {
+        'items': ['DCIM/旅行/'],
+      };
+    }
     if (operation == 'camera.page') {
       calls.add((operation, Map<String, dynamic>.of(payload), jobId));
       return {
@@ -119,7 +124,9 @@ void main() {
   testWidgets(
     'Long press selects camera photos in place and downloads through the approved floating circle',
     (tester) async {
-      final core = SelectionCameraCore()..connected = true;
+      final core = SelectionCameraCore()
+        ..connected = true
+        ..platform = 'android';
       final state = fixtures.ReconnectState226(core);
       addTearDown(() => fixtures.closeReconnect226(tester, state, core));
       await fixtures.mountCamera226(tester, state);
@@ -151,7 +158,23 @@ void main() {
         () => find.text('接收原文件到哪里').hitTestable().evaluate().isNotEmpty,
         'The floating action must use the real download destination flow',
       );
-      expect(find.text('应用相册'), findsOneWidget);
+      final destinationDialog = find.byType(SimpleDialog);
+      final destinations = find.descendant(
+        of: destinationDialog,
+        matching: find.byType(SimpleDialogOption),
+      );
+      expect(
+        find.descendant(of: destinations.at(0), matching: find.text('应用相册')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(of: destinations.at(1), matching: find.text('系统相册')),
+        findsOneWidget,
+      );
+      await tester.tap(find.text('应用相册 + 系统相册'));
+      await tester.pumpAndSettle();
+      expect(find.text('选择手机相册'), findsOneWidget);
+      expect(find.text('旅行'), findsOneWidget);
       Navigator.of(tester.element(find.byType(Dialog))).pop();
       await tester.pumpAndSettle();
       expect(find.text('已选 2 张'), findsOneWidget);

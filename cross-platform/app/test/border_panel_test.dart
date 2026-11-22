@@ -19,16 +19,17 @@ class BorderCore extends WorkspaceCore {
     Json payload = const {},
     String? jobId,
   ]) async {
-    if (operation == 'media.preview') previewJobs.add(jobId);
+    if (operation == 'media.reviewPreview') previewJobs.add(jobId);
     if (operation == 'media.borderInfo') {
       calls.add((operation, object(jsonDecode(jsonEncode(payload)))));
       return {
         'brand': 'NIKON',
         'model': 'NIKON Z 6_3',
+        'lens': 'NIKKOR Z 24-70mm f/4 S',
         'fields': ['50mm', 'F1.8', '1/125s', 'ISO200', '2026-11-11 12:34:56'],
       };
     }
-    if (operation == 'media.preview' && delayedPreview != null) {
+    if (operation == 'media.reviewPreview' && delayedPreview != null) {
       calls.add((operation, object(jsonDecode(jsonEncode(payload)))));
       return delayedPreview!.future;
     }
@@ -72,6 +73,76 @@ void main() {
       }
     });
   }
+
+  testWidgets('Lens information is opt-in and a manual label survives hiding', (
+    tester,
+  ) async {
+    final core = BorderCore(
+      Directory.systemTemp.createTempSync('huevia-lens-'),
+    );
+    final state = WorkspaceState(core);
+    final recipe = <String, dynamic>{
+      'border': <String, dynamic>{'template': 3},
+      'geometry': <String, dynamic>{},
+      'values': List.filled(17, 0),
+    };
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: StatefulBuilder(
+            builder: (context, refresh) => SizedBox(
+              height: 360,
+              child: BorderPanel(
+                state: state,
+                photo: Photo(core.source.path, 'source.png', {}),
+                owner: '',
+                recipe: recipe,
+                enabled: true,
+                canUndo: false,
+                canRedo: false,
+                onUndo: () {},
+                onRedo: () {},
+                onDragStart: () {},
+                onChanged: (border, _) =>
+                    refresh(() => recipe['border'] = border),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await settle(tester);
+    await settle(tester);
+    final scroll = find
+        .descendant(
+          of: find.byKey(const Key('border-information-list')),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    final toggle = find.byKey(const Key('border-show-lens'));
+    await tester.scrollUntilVisible(toggle, 100, scrollable: scroll);
+    await tester.pumpAndSettle();
+    expect(tester.widget<Checkbox>(toggle).value, false);
+    await tester.tap(toggle);
+    await settle(tester);
+    expect(object(recipe['border'])['showLens'], true);
+    await tester.tap(find.byKey(const Key('border-lens-edit')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'NIKKOR Z 85mm f/1.8 S');
+    await tester.tap(find.widgetWithText(TextButton, '应用'));
+    await tester.pumpAndSettle();
+    await settle(tester);
+    expect(object(recipe['border'])['lens'], 'NIKKOR Z 85mm f/1.8 S');
+    await tester.ensureVisible(toggle);
+    await tester.tap(toggle);
+    await settle(tester);
+    expect(object(recipe['border'])['showLens'], false);
+    expect(object(recipe['border'])['lens'], 'NIKKOR Z 85mm f/1.8 S');
+    expect(core.calls.where((c) => c.$1 == 'media.preview'), isEmpty);
+    expect(core.calls.any((c) => c.$1 == 'media.reviewPreview'), true);
+    await cleanup(tester, core.directory);
+    state.dispose();
+  });
 
   for (final setting in [
     (const Size(375, 812), 1.0),
@@ -140,7 +211,7 @@ void main() {
         await settle(tester);
         await settle(tester);
         final previews = core.calls
-            .where((c) => c.$1 == 'media.preview')
+            .where((c) => c.$1 == 'media.reviewPreview')
             .toList();
         expect(previews, hasLength(4));
         expect(
@@ -156,7 +227,10 @@ void main() {
         await tester.tap(find.bySemanticsLabel('模糊居中'));
         await settle(tester);
         expect(object(recipe['border'])['template'], 1);
-        expect(core.calls.where((c) => c.$1 == 'media.preview'), hasLength(4));
+        expect(
+          core.calls.where((c) => c.$1 == 'media.reviewPreview'),
+          hasLength(4),
+        );
         expect(object(recipe['geometry'])['left'], 123456);
 
         expect(
@@ -478,7 +552,10 @@ void main() {
       await tester.pump();
       expect(changes, 0);
       expect(File(stale).existsSync(), false);
-      expect(core.calls.where((c) => c.$1 == 'media.preview'), hasLength(1));
+      expect(
+        core.calls.where((c) => c.$1 == 'media.reviewPreview'),
+        hasLength(1),
+      );
       await cleanup(tester, core.directory);
       state.dispose();
     },

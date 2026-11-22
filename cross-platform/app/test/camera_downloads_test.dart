@@ -141,6 +141,7 @@ class DownloadCore extends HueviaCore {
           if (op.startsWith('files.')) 'targetId': payload['targetId'],
           if (op.startsWith('files.')) 'uri': 'content://documents/verified',
           if (op.startsWith('gallery.')) 'identifier': 'asset/L0/001',
+          if (payload['albumPath'] != null) 'albumPath': payload['albumPath'],
         };
       case 'downloads.item':
         if (payload['phase'] == 'completed' &&
@@ -280,6 +281,58 @@ void main() {
     expect(queue.done, 1);
     expect(state.registered, hasLength(1));
   });
+
+  test('camera downloads keep the selected phone album in the original publication', () async {
+    final (core, _, queue) = await fixture();
+    core.platform = 'android';
+    core.queue['target'] = {'kind': 'system', 'albumPath': 'DCIM/Camera/'};
+    await queue.resume('a' * 32);
+    final publication = core.calls
+        .singleWhere((c) => c.$1 == 'gallery.publishOriginal')
+        .$2;
+    expect(publication['albumPath'], 'DCIM/Camera/');
+    expect(publication['expectedSourceSha'], core.sha);
+    expect(queue.done, 1);
+  });
+  test(
+    'system-only queue publishes staged bytes without registering an app photo',
+    () async {
+      final (core, state, queue) = await fixture();
+      core.platform = 'ios';
+      final staged = File(
+        p.join(
+          core.root,
+          'camera-downloads',
+          'owner',
+          'a' * 32,
+          '${'b' * 32}-${core.sha}.jpg',
+        ),
+      );
+      await staged.parent.create(recursive: true);
+      await core.file.copy(staged.path);
+      core.row['receipt'] = {...core.receipt, 'path': staged.path};
+      core.queue['target'] = {
+        'kind': 'systemOnly',
+        'albumId': 'local/L0/040',
+        'albumTitle': '旅行',
+      };
+      await queue.resume('a' * 32);
+      final publication = core.calls
+          .singleWhere((c) => c.$1 == 'gallery.publishOriginal')
+          .$2;
+      expect(publication['queueId'], 'a' * 32);
+      expect(publication['albumId'], 'local/L0/040');
+      expect(publication['path'], staged.path);
+      expect(queue.done, 1);
+      expect(state.registered, isEmpty);
+      expect(
+        core.calls.any(
+          (c) => c.$1 == 'media.info' || c.$1 == 'camera.download',
+        ),
+        false,
+      );
+    },
+  );
   test('folder target preserves the selected capability and the same readback operation', () async {
     final (core, _, queue) = await fixture();
     core.queue['target'] = {'kind': 'folder', 'id': 'chosen-capability'};

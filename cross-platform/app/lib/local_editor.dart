@@ -326,19 +326,35 @@ extension _LocalWorkspace on _EditorPageState {
     }
     if (quickJob != null) cancelQuick();
     if (leaving || exporting || managingTools || analyzingCleanup) return;
+    final route = ModalRoute.of(context);
+    if (route?.isCurrent != true) return;
     leaving = true;
-    try {
-      if (restored && sameOwner) await saveDraft();
-      if (!mounted) return;
-      refreshWorkspace(() => allowPop = true);
-      // PopScope registers the new disposition during the next frame.
-      await WidgetsBinding.instance.endOfFrame;
-      if (mounted) Navigator.pop(context);
-    } catch (failure) {
-      if (mounted) report(context, failure);
-    } finally {
-      leaving = false;
+    debounce?.cancel();
+    previewQueue.reset();
+    if (activeJob case final job?) {
+      activeJob = null;
+      unawaited(widget.state.core.cancel(job).catchError((_) {}));
     }
+    pauseEditorDetails(retire: true);
+    histogram.invalidate();
+    final draft = queueClosingDraft();
+    if (draft != null) {
+      final messenger = ScaffoldMessenger.maybeOf(context);
+      unawaited(draft.catchError((Object failure) {
+        if (messenger != null && messenger.mounted) {
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text('编辑草稿未能保存：$failure'),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }));
+    }
+    refreshWorkspace(() => allowPop = true);
+    // PopScope registers the new disposition during the next frame.
+    await WidgetsBinding.instance.endOfFrame;
+    if (mounted && route?.isCurrent == true) Navigator.pop(context);
   }
 
   Future<void> resetPhoto() async {
@@ -588,7 +604,7 @@ extension _LocalWorkspace on _EditorPageState {
     }
   }
 
-  Future<void> openLegacyTools() async {
+  Future<void> openLegacyTools({bool lighting = false}) async {
     if (!toolsEnabled) return;
     debounce?.cancel();
     revision++;
@@ -631,6 +647,22 @@ extension _LocalWorkspace on _EditorPageState {
       );
       if (!mounted || !current()) return;
       final result = await openEmbeddedWorkspace<Json>((finish, backReady) {
+        if (lighting) {
+          final page = LightWorkspace(
+            state: widget.state,
+            photo: widget.photo,
+            owner: owner,
+            recipe: frozen,
+            localState: base,
+            frame: frame,
+            isCurrent: current,
+            onFinished: finish,
+            onBackReady: backReady,
+            layoutBuilder: embeddedWorkspaceLayout,
+          );
+          ownedFrame = null;
+          return page;
+        }
         final page = LegacyLocalWorkspace(
           state: widget.state,
           photo: widget.photo,

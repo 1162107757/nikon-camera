@@ -365,7 +365,7 @@ class SettingsPage extends StatelessWidget {
                   () => hueRootPage<void>(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => UpdatesPage(state: state),
+                      builder: (_) => const UpdatesPage(),
                     ),
                   ),
                 ),

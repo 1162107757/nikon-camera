@@ -26,6 +26,7 @@ public final class UpdatePolicy {
     /** A fresh process checks once; resume checks are throttled, including failed requests. */
     public static boolean automaticDue(long now, long lastAttempt, long lastSuccess, boolean required, boolean first) {
         if (now < 0) return false;
+        if (first) return true;
         long sinceAttempt = now >= lastAttempt ? now - lastAttempt : Long.MAX_VALUE;
         if (lastAttempt > 0 && sinceAttempt < RETRY_INTERVAL_MS) return false;
         if (first || required || lastAttempt > lastSuccess) return true;

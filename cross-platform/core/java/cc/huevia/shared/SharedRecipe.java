@@ -30,7 +30,7 @@ public final class SharedRecipe {
             geometry=new PhotoGeometry(n(g,"turns",0),n(g,"angle",0),n(g,"left",0),n(g,"top",0),n(g,"right",PhotoGeometry.UNIT),n(g,"bottom",PhotoGeometry.UNIT),n(g,"horizontalPerspective",0),n(g,"verticalPerspective",0),Boolean.TRUE.equals(g.get("mirrored")));
             String[] fields=new String[5];for(int i=0;i<5;i++)fields[i]="";
             if(b.get("fields")!=null){List<?> f=list(b.get("fields"),5);for(int i=0;i<5;i++){if(!(f.get(i) instanceof String))throw new IOException("边框文字无效。");fields[i]=(String)f.get(i);}}
-            border=new PhotoBorder(n(b,"template",0),!Boolean.FALSE.equals(b.get("automatic")),SharedRuntime.text(b,"brand",96),SharedRuntime.text(b,"model",96),fields,n(b,"visible",63),n(b,"logo",0),n(b,"margin",100),n(b,"corner",100),n(b,"shadow",100),n(b,"blur",100));
+            border=new PhotoBorder(n(b,"template",0),!Boolean.FALSE.equals(b.get("automatic")),SharedRuntime.text(b,"brand",96),SharedRuntime.text(b,"model",96),fields,n(b,"visible",63),n(b,"logo",0),n(b,"margin",100),n(b,"corner",100),n(b,"shadow",100),n(b,"blur",100),Boolean.TRUE.equals(b.get("showLens")),SharedRuntime.text(b,"lens",96));
             String localData=SharedRuntime.text(p,"localData",2*1024*1024);
             if(localData.isEmpty())local=PhotoLocalEdits.NONE;
             else try(DataInputStream in=stream(localData,1024*1024)){local=PhotoLocalEdits.read(in);if(in.available()!=0)throw new IOException("局部编辑含多余字节。");}

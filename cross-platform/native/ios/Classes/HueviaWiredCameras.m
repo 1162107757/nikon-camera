@@ -4,6 +4,7 @@
 #import "cc/huevia/ptp/PtpResponseException.h"
 #import "cc/huevia/ptp/PtpContainer.h"
 #import "cc/huevia/shared/SharedSlotTransportGuard.h"
+#import "cc/huevia/shared/SharedWiredRemote.h"
 #import "java/io/IOException.h"
 #import "java/io/OutputStream.h"
 #import "java/lang/Runnable.h"
@@ -19,7 +20,7 @@ static void append32(NSMutableData *data,uint32_t value){uint8_t bytes[4]={value
 static NSString *deviceID(ICDevice *device){return [NSString stringWithFormat:@"usb-%u-%@",(unsigned)device.usbLocationID,device.UUIDString?:@""];}
 static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDevice.class]&&device.usbVendorID==0x04b0&&[device.transportType isEqualToString:ICTransportTypeUSB];}
 
-@interface HueviaWiredClient : NSObject <CcHueviaAlbumPhotoCameraClient,ICCameraDeviceDelegate>
+@interface HueviaWiredClient : NSObject <CcHueviaAlbumPhotoCameraClient,CcHueviaSharedSharedWiredRemote_Wire,ICCameraDeviceDelegate>
 @property(nonatomic,strong) ICCameraDevice *device;
 @property(atomic) BOOL open;
 @property(atomic,strong) id<JavaLangRunnable> closed;
@@ -86,6 +87,10 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   if(![client.device.capabilities containsObject:ICCameraDeviceCanAcceptPTPCommands])wiredFailure(@"此相机未提供系统 PTP 命令通道，未打开优化校准会话。");
   HueviaWiredSlots *slots=[[HueviaWiredSlots alloc] init];slots.client=client;slots.guard=[[CcHueviaSharedSharedSlotTransportGuard alloc] init];self.slots=slots;return slots;
 }
+- (id<CcHueviaSharedSharedSlots_Transport>)adoptSlotsWithNSString:(NSString *)identity withCcHueviaAlbumPhotoCameraClient:(id<CcHueviaAlbumPhotoCameraClient>)photo {return nil;}
+- (id<CcHueviaSharedSharedWiredRemote_Wire>)remoteWireWithCcHueviaAlbumPhotoCameraClient:(id<CcHueviaAlbumPhotoCameraClient>)photo {
+  return photo==self.active&&self.active.open?self.active:nil;
+}
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didAddDevice:(ICDevice *)device moreComing:(BOOL)moreComing {if(self.discovery&&supported(device))dispatch_semaphore_signal(self.discovery);}
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didRemoveDevice:(ICDevice *)device moreGoing:(BOOL)moreGoing {if(self.active.device==device)[self.active close];}
 - (void)dealloc {
@@ -149,6 +154,34 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   if(bytes.length>(NSUInteger)limit)wiredFailure(@"USB 相机返回的数据超出范围。");return javaBytes(bytes?:[NSData data]);
 }
 - (IOSByteArray *)getLargeThumbnailWithLong:(jlong)handle {@throw [[CcHueviaPtpPtpResponseException alloc] initWithInt:0x2005 withLong:0];}
+- (IOSByteArray *)exchangeWithInt:(jint)operation withInt:(jint)maximum withByteArray:(IOSByteArray *)outgoing withLongArray:(IOSLongArray *)parameters {
+  if(!self.open)wiredFailure(@"USB 遥控连接已关闭。");
+  uint32_t tx=++self.transaction;
+  IOSByteArray *encoded=[[CcHueviaPtpPtpContainer commandWithInt:operation withLong:tx withLongArray:parameters] toBytes];
+  NSData *command=[NSData dataWithBytes:encoded->buffer_ length:encoded->size_];
+  NSData *outData=outgoing?[NSData dataWithBytes:outgoing->buffer_ length:outgoing->size_]:nil;
+  dispatch_semaphore_t done=dispatch_semaphore_create(0);
+  __block NSData *response=nil,*bytes=nil;
+  __block NSError *failure=nil;
+  mainSync(^{
+    if(!self.open||(self.cancellation&&[self.cancellation getAsBoolean])){dispatch_semaphore_signal(done);return;}
+    [self.device requestSendPTPCommand:command outData:outData completion:^(NSData *reply,NSData *data,NSError *error){
+      response=reply;bytes=data;failure=error;dispatch_semaphore_signal(done);
+    }];
+  });
+  [self wait:done];
+  const uint8_t *r=response.bytes;
+  if(failure||response.length<12||response.length>32||(response.length-12)%4
+      ||little32(r)!=response.length||r[4]!=3||r[5]!=0||little32(r+8)!=tx){
+    [self close];wiredFailure(@"USB 遥控响应未确认，请重新连接后核对相机。");
+  }
+  int code=r[6]|(int)r[7]<<8;
+  if(code!=0x2001)@throw [[CcHueviaPtpPtpResponseException alloc] initWithInt:code withLong:tx];
+  if(bytes.length>(NSUInteger)maximum||(maximum>0&&bytes.length==0)){
+    [self close];wiredFailure(@"USB 遥控返回的数据大小无效。");
+  }
+  return javaBytes(bytes?:[NSData data]);
+}
 - (jlong)readToWithInt:(jint)operation withJavaIoOutputStream:(JavaIoOutputStream *)destination withLong:(jlong)maximum withLong:(jlong)expected withCcHueviaAlbumPhotoCameraClient_Progress:(id<CcHueviaAlbumPhotoCameraClient_Progress>)progress withLongArray:(IOSLongArray *)parameters {
   if(operation!=0x1009||parameters->size_!=1||expected<4||expected>maximum||expected>512LL*1024*1024)wiredFailure(@"USB 原文件请求无效。");
   jlong handle=IOSLongArray_Get(parameters,0);__block ICCameraFile *file=nil;
@@ -213,6 +246,8 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 
 /** ICC owns the PTP session. Logical session operations map to actual, awaited OS operations. */
 @implementation HueviaWiredSlots
+- (jlong)inheritedTransaction {return 0;}
+- (id<CcHueviaAlbumPhotoCameraClient>)releaseAlbumWithLong:(jlong)next {return nil;}
 - (bool)isSessionManaged {return true;}
 - (bool)isOpen {return self.client!=nil&&self.client.open;}
 - (void)authorizeDeletionWithInt:(jint)target {[self.guard authorizeDeletionWithInt:target];}

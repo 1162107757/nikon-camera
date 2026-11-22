@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'camera_live.dart';
+import 'camera_live_culling.dart';
 import 'camera_transfer.dart';
 import 'domain.dart';
 import 'theme.dart';
@@ -73,7 +74,7 @@ class _CameraLivePanelState extends State<CameraLivePanel> {
   bool get hasPreset => widget.hasPreset;
 
   Future<void> start() async {
-    if (checking || selected.isEmpty) return;
+    if (!widget.enabled || checking || selected.isEmpty) return;
     final state = widget.state;
     final selectedProject = selected,
         selectedLabel = label,
@@ -90,6 +91,7 @@ class _CameraLivePanelState extends State<CameraLivePanel> {
 
     bool current() =>
         mounted &&
+        widget.enabled &&
         identical(widget.state, state) &&
         accountCurrent &&
         state.session['logoutPending'] != true &&
@@ -749,6 +751,34 @@ class _CameraLivePanelState extends State<CameraLivePanel> {
                 const SizedBox(height: 8),
                 action(live),
               ],
+              if (selected.isNotEmpty)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton.icon(
+                    key: const Key('live-transfer-culling'),
+                    onPressed: widget.state.session['logoutPending'] == true
+                        ? null
+                        : () {
+                            final projectId = selected;
+                            unawaited(
+                              hueRootPage<void>(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => CameraLiveCullingPage(
+                                    state: widget.state,
+                                    projectId: projectId,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(48, 48),
+                    ),
+                    icon: const Icon(Icons.photo_library_outlined, size: 20),
+                    label: const Text('拍摄选片'),
+                  ),
+                ),
               if (receiving) ...[
                 const SizedBox(height: 8),
                 LinearProgressIndicator(value: progress, minHeight: 3),

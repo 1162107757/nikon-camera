@@ -10,10 +10,18 @@ import 'package:huevia/editor.dart';
 import 'package:huevia/theme.dart';
 
 class PreviewCall {
-  PreviewCall(this.recipe, this.edge, this.job);
+  PreviewCall(
+    this.recipe,
+    this.edge,
+    this.job, {
+    this.snapshot = false,
+    this.sourceSha,
+  });
   final Json recipe;
   final int edge;
   final String? job;
+  final bool snapshot;
+  final String? sourceSha;
   final result = Completer<Json>();
   int get exposure => (recipe['values'] as List)[1] as int;
 }
@@ -73,6 +81,8 @@ class RealtimeCore extends HueviaCore {
         object(jsonDecode(jsonEncode(payload['recipe']))),
         payload['maxEdge'] as int,
         jobId,
+        snapshot: payload['snapshot'] == true,
+        sourceSha: payload['expectedSourceSha'] as String?,
       );
       calls.add(pending);
       if (!gate) return image();
@@ -172,6 +182,19 @@ void main() {
       final first = core.calls.last;
       expect(first.exposure, 10);
       expect(first.edge, 640);
+      expect(first.snapshot, isTrue);
+      expect(first.sourceSha, 'fixture-sha');
+      await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .handlePlatformMessage(
+            'cc.huevia/events',
+            const StandardMethodCodec().encodeSuccessEnvelope({
+              'jobId': first.job,
+              'progress': .5,
+            }),
+            (_) {},
+          );
+      await tester.pump();
+      expect(editor.progress, 0);
       change(20);
       await tester.pump(const Duration(milliseconds: 30));
       final firstImage = core.image();
@@ -205,6 +228,8 @@ void main() {
       final finalCall = core.calls.last;
       expect(finalCall.exposure, 40);
       expect(finalCall.edge, 1280);
+      expect(finalCall.snapshot, isFalse);
+      expect(finalCall.sourceSha, isNull);
       final finalImage = core.image();
       finalCall.result.complete(finalImage);
       await tester.pump();
@@ -215,6 +240,31 @@ void main() {
       await close(tester, fixture.state);
     },
   );
+
+  testWidgets('The original compare frame never replaces the edited draft', (
+    tester,
+  ) async {
+    final fixture = await open(tester), core = fixture.core;
+    final dynamic editor = fixture.editor;
+    editor.recipe.setValue(1, 30);
+    await tester.tap(find.byKey(const Key('editor-compare-toggle')));
+    await tester.pump();
+    final effect = core.calls.last;
+    expect(effect.exposure, 30);
+    expect(effect.snapshot, isFalse);
+    effect.result.complete(core.image());
+    await tester.pump();
+
+    final reference = core.calls.last;
+    expect(reference.exposure, 0);
+    expect(reference.snapshot, isTrue);
+    expect(reference.sourceSha, 'fixture-sha');
+    final frame = core.image();
+    reference.result.complete(frame);
+    await tester.pump();
+    expect(editor.comparison, frame['path']);
+    await close(tester, fixture.state);
+  });
 
   testWidgets(
     'Owner change discards a late native frame and never starts pending adjustments',

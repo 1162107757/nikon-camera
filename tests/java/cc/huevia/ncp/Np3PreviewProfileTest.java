@@ -17,6 +17,7 @@ public final class Np3PreviewProfileTest {
         curveInterpolationUsesSamplesAndIsNotAppliedTwice();
         basicToneAndSaturationAffectPixels();
         contrastUsesSharedInputLumaAndKeepsGrayBoundsAndAlpha();
+        lowerToneControlsPreserveColourDifferencesAndLeaveHighlightsAlone();
         blenderBrightnessUsesOriginalInputSaturation();
         curveToneIsRetainedWithSourceWeightedBrightnessAndExtremeEdits();
         allEightColorBlenderAnchorsAndHueWrapWork();
@@ -199,6 +200,33 @@ public final class Np3PreviewProfileTest {
         }
     }
 
+    private static void lowerToneControlsPreserveColourDifferencesAndLeaveHighlightsAlone() throws Exception {
+        for (int[] edit : new int[][] {{27, -70}, {27, 45}, {29, -15}, {29, -20}}) {
+            byte[] bytes = identityNp3(); field(bytes, edit[0], 0, 128 + edit[1]);
+            Np3PreviewProfile profile = Np3PreviewProfile.fromNp3(bytes);
+            for (int rgb : new int[] {0x684b32, 0x36547c, 0x597346}) {
+                int input = 0x7f000000 | rgb, result = profile.applyArgb(input);
+                equal(127, result >>> 24);
+                int dr = red(result) - red(input), dg = green(result) - green(input), db = blue(result) - blue(input);
+                check(edit[1] > 0 ? dr > 0 : dr < 0, "Lower tone edit changes brightness in the stored direction");
+                check(Math.abs(dr - dg) <= 1 && Math.abs(dr - db) <= 1,
+                        "Unclipped lower tone edits preserve RGB differences instead of warming colours");
+            }
+            int previous = -1;
+            for (int gray = 0; gray < 256; gray++) {
+                int result = profile.applyArgb(0xff000000 | gray * 0x010101);
+                equal(red(result), green(result)); equal(red(result), blue(result));
+                check(red(result) >= previous, "Lower tone edits retain a monotone gray axis"); previous = red(result);
+                equal(red(result), (int) Math.round(255 * profile.mapTone(gray / 255.0)));
+            }
+            if (edit[0] == 27) {
+                equal(0xffd0c0b0, profile.applyArgb(0xffd0c0b0));
+                equal(0xff000000, profile.applyArgb(0xff000000));
+            }
+            equal(0xffffffff, profile.applyArgb(0xffffffff));
+        }
+    }
+
     private static void blenderBrightnessUsesOriginalInputSaturation() throws Exception {
         for (int amount : new int[] {-20, 20}) {
             byte[] bytes = identityNp3(); setBlenderBrightness(bytes, amount);
@@ -311,11 +339,12 @@ public final class Np3PreviewProfileTest {
         int tinted = blue.applyArgb(0x7f808080);
         equal(127, tinted >>> 24);
         check(blue(tinted) > red(tinted) && blue(tinted) > green(tinted), "Grading tints neutral pixels");
-        byte[] shadowBlue = identityNp3(); field(shadowBlue, 32, 9, 240); field(shadowBlue, 32, 10, 228);
+        // Actual NX Studio UI confirms the first stored zone is shadows, last highlights.
+        byte[] shadowBlue = identityNp3(); field(shadowBlue, 32, 1, 240); field(shadowBlue, 32, 2, 228);
         Np3PreviewProfile shadow = Np3PreviewProfile.fromNp3(shadowBlue);
         int dark = shadow.applyArgb(0xff303030), light = shadow.applyArgb(0xffd0d0d0);
         check(blue(dark) - red(dark) > blue(light) - red(light), "Shadow colour preferentially affects shadows");
-        byte[] highlightRed = identityNp3(); field(highlightRed, 32, 2, 228);
+        byte[] highlightRed = identityNp3(); field(highlightRed, 32, 10, 228);
         Np3PreviewProfile highlight = Np3PreviewProfile.fromNp3(highlightRed);
         dark = highlight.applyArgb(0xff303030); light = highlight.applyArgb(0xffd0d0d0);
         check(red(light) - blue(light) > red(dark) - blue(dark), "Highlight colour preferentially affects highlights");

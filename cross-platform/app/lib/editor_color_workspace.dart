@@ -38,6 +38,9 @@ extension _EditorColorWorkspace on _EditorPageState {
     VoidCallback? onUndo,
     VoidCallback? onRedo,
     ValueChanged<bool>? onExpanded,
+    bool compactPalette = false,
+    ValueChanged<bool>? onPaletteGesture,
+    bool showPaletteReadouts = true,
   }) {
     if (page == 5) {
       return Padding(
@@ -86,9 +89,17 @@ extension _EditorColorWorkspace on _EditorPageState {
         amount: value['amount'] as int? ?? 100,
         scope: adjustmentScope,
         padHeight: paletteHeight,
+        compact: compactPalette,
+        showReadouts: showPaletteReadouts,
         enabled: toolsEnabled,
-        onStart: beginColorGesture,
-        onEnd: endParameterGesture,
+        onStart: () {
+          onPaletteGesture?.call(true);
+          beginColorGesture();
+        },
+        onEnd: () {
+          endParameterGesture();
+          onPaletteGesture?.call(false);
+        },
         onUndo: onUndo,
         onRedo: onRedo,
         onChanged: (color, tone, amount) => changeAdjustment(() {
@@ -98,18 +109,7 @@ extension _EditorColorWorkspace on _EditorPageState {
             'amount': amount,
           };
         }, snapshot: false),
-        onReset: () {
-          beginColorGesture();
-          changeAdjustment(
-            () => adjustmentRecipe.data['palette'] = {
-              'color': 0,
-              'tone': 0,
-              'amount': 100,
-            },
-            snapshot: false,
-          );
-          endParameterGesture();
-        },
+        onReset: resetPalette,
       );
     }
     final value = object(adjustmentRecipe.data['cleanup'] ?? {});
@@ -203,7 +203,7 @@ extension _EditorColorWorkspace on _EditorPageState {
       colorToolActive = true;
       compare = false;
     });
-    var expanded = false, working = false, closing = false, held = false;
+    var expanded = false, working = false, closing = false;
     final title = {2: '调色盘', 5: '曲线', 6: 'HSL', 7: '去灰'}[page]!;
     if (page == 7 &&
         (adjustmentRecipe.data['cleanupData'] as String? ?? '').isEmpty) {
@@ -214,6 +214,7 @@ extension _EditorColorWorkspace on _EditorPageState {
       });
     }
     bool? applied;
+    int? nextColorTool;
     var changed = false;
     try {
       applied = await openEmbeddedWorkspace<bool>(
@@ -224,7 +225,6 @@ extension _EditorColorWorkspace on _EditorPageState {
                 if (working || closing) return;
                 refresh(() {
                   working = true;
-                  held = false;
                 });
                 if (!accept && analyzingCleanup) {
                   final job = activeJob;
@@ -319,46 +319,72 @@ extension _EditorColorWorkspace on _EditorPageState {
                           ),
                         ),
                       );
-                      Widget photo() => Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          photoViewport(
-                            heldComparison: held ? entryImage : null,
-                            heldComparisonRecipe: held ? before.data : null,
-                            viewContext: toolContext,
-                            showCompareButton: page != 2 && page != 7,
+                      Widget photo() => photoViewport(
+                        viewContext: toolContext,
+                        compareButtonAtBottom: page == 2 || page == 7,
+                        compareReadOnly: true,
+                      );
+                      if (page == 2) {
+                        final palette = object(
+                          adjustmentRecipe.data['palette'] ?? {},
+                        );
+                        return PaletteWorkspace(
+                          key: const Key('palette-workspace'),
+                          enabled: !working && !closing && sameOwner,
+                          working: working,
+                          scope: adjustmentScope,
+                          color: palette['color'] as int? ?? 0,
+                          tone: palette['tone'] as int? ?? 0,
+                          amount: palette['amount'] as int? ?? 100,
+                          photo: KeyedSubtree(
+                            key: const Key('legacy-color-photo-stage'),
+                            child: photo(),
                           ),
-                          if ((page == 2 || page == 7) && entryImage != null)
-                            Positioned(
-                              right: 12,
-                              bottom: 12,
-                              child: Semantics(
-                                button: true,
-                                label: '按住对比进入$title前的效果',
-                                child: GestureDetector(
-                                  onTapDown: working
-                                      ? null
-                                      : (_) => refresh(() => held = true),
-                                  onTapUp: (_) => refresh(() => held = false),
-                                  onTapCancel: () =>
-                                      refresh(() => held = false),
-                                  child: Material(
-                                    color: const Color(0x99101412),
-                                    shape: const CircleBorder(),
-                                    child: const SizedBox(
-                                      width: 48,
-                                      height: 48,
-                                      child: Icon(
-                                        Icons.compare,
-                                        color: _editorWhite,
-                                      ),
-                                    ),
-                                  ),
+                          controls: (height, onGesture, showReadouts) =>
+                              AbsorbPointer(
+                                absorbing: working || closing || !sameOwner,
+                                child: legacyColorControls(
+                                  2,
+                                  paletteHeight: height,
+                                  compactPalette: true,
+                                  onPaletteGesture: onGesture,
+                                  showPaletteReadouts: showReadouts,
+                                  onUndo: undo.isNotEmpty
+                                      ? () => unawaited(stepHistory(false))
+                                      : null,
+                                  onRedo: redo.isNotEmpty
+                                      ? () => unawaited(stepHistory(true))
+                                      : null,
                                 ),
                               ),
-                            ),
-                        ],
-                      );
+                          readouts: (onGesture) => (legacyColorControls(
+                            2,
+                            compactPalette: true,
+                            onPaletteGesture: onGesture,
+                            onUndo: undo.isNotEmpty
+                                ? () => unawaited(stepHistory(false))
+                                : null,
+                            onRedo: redo.isNotEmpty
+                                ? () => unawaited(stepHistory(true))
+                                : null,
+                          ) as LegacyPaletteControls).readouts(toolContext),
+                          onScope: (anchor) =>
+                              unawaited(showRegionScope(anchorContext: anchor)),
+                          onCancel: () => unawaited(finish(false)),
+                          onApply: () => unawaited(finish(true)),
+                          onReset: resetPalette,
+                          onUndo: undo.isNotEmpty
+                              ? () => unawaited(stepHistory(false))
+                              : null,
+                          onRedo: redo.isNotEmpty
+                              ? () => unawaited(stepHistory(true))
+                              : null,
+                          onTool: (next) {
+                            nextColorTool = next;
+                            unawaited(finish(true));
+                          },
+                        );
+                      }
                       final header = SizedBox(
                         height: 48,
                         child: Row(
@@ -515,5 +541,22 @@ extension _EditorColorWorkspace on _EditorPageState {
         }
       }
     }
+    if (nextColorTool != null && applied == true && mounted && sameOwner) {
+      await advancedColorTool(nextColorTool!);
+    }
+  }
+
+  void resetPalette() {
+    if (!toolsEnabled) return;
+    beginColorGesture();
+    changeAdjustment(
+      () => adjustmentRecipe.data['palette'] = {
+        'color': 0,
+        'tone': 0,
+        'amount': 100,
+      },
+      snapshot: false,
+    );
+    endParameterGesture();
   }
 }

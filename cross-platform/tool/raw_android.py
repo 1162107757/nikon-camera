@@ -23,7 +23,12 @@ adapted=adapted.replace('#include <libraw/libraw.h>', '#include <libraw/libraw.h
 old='double gain=std::pow(2,exposure/10.0),linear=std::min(8.0,std::max(.25,gain));params.exp_correc=exposure!=0;params.exp_shift=static_cast<float>(linear);params.exp_preser=0;params.bright=static_cast<float>(gain/linear);'
 if adapted.count(old)!=1:raise SystemExit('RAW exposure adapter requires review')
 adapted=adapted.replace(old,'hueviaRawSafety(raw,exposure,highlights);')
-adapted=adapted.replace('return env->NewStringUTF(LibRaw::version());','return env->NewStringUTF(LIBRAW_VERSION_STR \"-huevia-safe-ev-v3\");')
+unpack='result=raw.unpack();if(result!=LIBRAW_SUCCESS){resultError(env,result,"RAW sensor decoding failed");return nullptr;}'
+if adapted.count(unpack)!=1:raise SystemExit('RAW sensor integrity adapter requires review')
+# LibRaw can report success despite recoverable decoder errors, leaving visibly
+# damaged pixels. Decline to produce or cache a preview/export from those pixels.
+adapted=adapted.replace(unpack,unpack+'if(raw.error_count()!=0){io(env,"RAW 传感器数据损坏，请重新传输原文件。");return nullptr;}')
+adapted=adapted.replace('return env->NewStringUTF(LibRaw::version());','return env->NewStringUTF(LIBRAW_VERSION_STR \"-huevia-safe-ev-v3-checked-unpack-v1\");')
 preview_start=adapted.index('extern "C" JNIEXPORT jobject JNICALL Java_cc_huevia_album_RawDeveloper_nativeDevelop(')
 preview=adapted[preview_start:]
 preview=preview.replace('Java_cc_huevia_album_RawDeveloper_nativeDevelop','Java_cc_huevia_sharedapp_NativeRawThumbnail_preview',1).replace('params.half_size=0;','params.half_size=1;params.user_flip=0;',1)

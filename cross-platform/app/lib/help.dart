@@ -29,7 +29,8 @@ Future<Json> diagnosticSnapshot(AppState state) async {
     read('camera.diagnostics'),
     AppStability.snapshot(),
   ]);
-  final gallery = values[0], camera = values[1];
+  final gallery = values[0], camera = values[1], appStability = values[2];
+  final android = Platform.isAndroid || appStability['platform'] == 'android';
   // Both producers are bounded. Keep a strict token alphabet as a second
   // boundary: filenames, endpoint addresses and exception text are excluded.
   final trace = (camera['trace'] as String? ?? '')
@@ -47,8 +48,8 @@ Future<Json> diagnosticSnapshot(AppState state) async {
     'schema': 1,
     'createdAt': DateTime.now().toUtc().toIso8601String(),
     'application': {
-      'version': hueviaVersion,
-      'build': hueviaBuild,
+      'version': android ? appStability['currentAppVersion'] : hueviaVersion,
+      'build': android ? appStability['currentAppBuild'] : hueviaBuild,
       'platform': Platform.operatingSystem,
       'systemVersion': Platform.operatingSystemVersion,
     },
@@ -87,7 +88,7 @@ Future<Json> diagnosticSnapshot(AppState state) async {
           : 0,
       'trace': trace,
     },
-    'appStability': values[2],
+    'appStability': appStability,
     'operations': core.recentOperations
         .take(128)
         .map(
@@ -113,7 +114,7 @@ class HelpPage extends StatelessWidget {
       children: [
         _HelpCard(
           '预设与在线库',
-          '在「预设」添加 NCP、NP3，或切换「在线预设」浏览已发布内容。在线预设下载后可离线编辑；在我的预设中长按卡片或打开详情，可置顶多个预设，最近置顶的排在前面。筛选中的风格、格式和下载状态会分别记住。',
+          '在「预设」添加 NCP、NP2、NP3，或切换「在线预设」浏览已发布内容。在线预设下载后可离线编辑；在我的预设中长按卡片或打开详情，可置顶多个预设，最近置顶的排在前面。筛选中的风格、格式和下载状态会分别记住。',
         ),
         _HelpCard(
           '手机照片与权限',
@@ -153,7 +154,7 @@ class HelpPage extends StatelessWidget {
         ),
         _HelpCard(
           '更新与旧版资料',
-          '在设置中检查更新，Android 下载核对后打开系统安装；iOS 下载未签名 IPA 后自行签名安装。旧 Android 先安装同签名维护版导出资料包，iOS 可从文件中的旧版资料导入。迁入前可检查清单，旧账号需重新登录。',
+          '在设置中检查更新，Android 下载核对后打开系统安装；iOS 在浏览器下载 IPA 后自行签名安装。旧 Android 先安装同签名维护版导出资料包，iOS 可从文件中的旧版资料导入。迁入前可检查清单，旧账号需重新登录。',
         ),
         const SizedBox(height: 8),
         FilledButton(

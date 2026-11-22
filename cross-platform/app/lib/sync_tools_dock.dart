@@ -13,12 +13,14 @@ class SyncToolsDock extends StatefulWidget {
     required this.onDownloads,
     required this.onRemote,
     required this.onSlots,
+    this.onLocation,
     this.downloadActive = false,
     this.downloadRemaining = 0,
     this.selectionCount = 0,
     this.onDownloadSelection,
   });
   final VoidCallback? onDownloads, onRemote, onSlots;
+  final VoidCallback? onLocation;
   final bool downloadActive;
   final int downloadRemaining;
   final int selectionCount;
@@ -229,6 +231,13 @@ class _SyncToolsDockState extends State<SyncToolsDock> {
                     '查看与写入 C1–C9',
                     widget.onSlots,
                   ),
+                  if (widget.onLocation != null)
+                    tool(
+                      Icons.location_on_outlined,
+                      '蓝牙定位同步',
+                      '把手机位置发送给相机',
+                      widget.onLocation,
+                    ),
                 ],
               ),
             ),

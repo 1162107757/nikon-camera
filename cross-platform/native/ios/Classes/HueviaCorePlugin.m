@@ -25,6 +25,7 @@
 #import "HueviaConnectionProtection.h"
 #import "HueviaPublicInternetQueues.h"
 #import "HueviaCameraPresentation.h"
+#import "HueviaCameraLocation.h"
 #import "cc/huevia/account/AccountException.h"
 #import "java/lang/Runnable.h"
 
@@ -56,6 +57,7 @@
 @property(nonatomic,strong) HueviaOriginalFiles *originalFiles;
 @property(nonatomic,strong) HueviaAlbumOperations *albumOperations;
 @property(nonatomic,strong) HueviaConnectionProtection *protection;
+@property(nonatomic,strong) HueviaCameraLocation *cameraLocation;
 @property(atomic) BOOL maintenanceAllowed;
 @property(nonatomic) BOOL maintenanceDetached;
 @property(nonatomic) BOOL maintenanceObserved;
@@ -72,6 +74,7 @@
   [HueviaDistribution registerWithRegistrar:registrar];
   [HueviaLegacyFiles registerWithRegistrar:registrar];
   HueviaCorePlugin *host=[[self alloc] init];
+  host.cameraLocation=[[HueviaCameraLocation alloc] initWithMessenger:registrar.messenger];
   host.queue=dispatch_queue_create("cc.huevia.shared.worker",DISPATCH_QUEUE_SERIAL);
   host.publicInternetQueues=[[HueviaPublicInternetQueues alloc] init];
   host.publicInternetJobs=[NSMutableSet set];
@@ -280,6 +283,7 @@
         stage=operation;
         if([operation hasPrefix:@"media."]){NSDictionary *data=[self.media request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation isEqualToString:@"files.publishOriginal"]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];NSDictionary *data=[self.originalFiles publish:p task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
+        else if([operation isEqualToString:@"files.publishExport"]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];NSDictionary *data=[self.originalFiles publishExport:p task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation isEqualToString:@"gallery.delete"]||[operation isEqualToString:@"gallery.publishedCopies"]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];NSDictionary *data=[self.albumOperations request:operation payload:p task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation hasPrefix:@"gallery."]){NSDictionary *data=[self.gallery request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation hasPrefix:@"camera."]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(p[@"queueId"])[self.runtime guardOwnerWithNSString:p[@"owner"]];self.sockets.cancellation=task;self.sockets.progress=task;[self.wired prepareRequestWithCancellation:task];value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];}
@@ -318,6 +322,8 @@
   else dispatch_async(self.queue,perform);
 }
 - (void)detachFromEngineForRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+  [self.cameraLocation detach];
+  self.cameraLocation=nil;
   self.protection.maintenanceChanged=nil;
   self.events=nil;
   CcHueviaSharedSharedCamera *camera;

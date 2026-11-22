@@ -124,6 +124,7 @@ public final class CameraSessionBoundaryTest {
         yes(unpublished.socketEntered.await(3,TimeUnit.SECONDS));localCamera.closeTransport();unpublished.socketRelease.countDown();localWorker.join(3000);
         yes(!localWorker.isAlive());yes(localError.get() instanceof IOException);yes(unpublished.sockets.size()==2);yes(unpublished.closed()==2);yes(Boolean.FALSE.equals(status(localCamera).get("connected")));localCamera.disconnect();
         scopedDisconnectChecks(root);
+        scopedReconnectChecks(root);
         System.out.println("PASS "+checks+" camera session ownership checks; lazy inventory, real PTP/IP handoff, recovery, scoped disconnect, stale/active cancel and verified-write guards");return checks;
     }
     private static void scopedDisconnectChecks(File parent)throws Exception{
@@ -150,6 +151,19 @@ public final class CameraSessionBoundaryTest {
         String newPhoto=(String)connect(camera).get("session"),slotC=(String)call(camera,"camera.slots.open",scope(newPhoto),"slot-c").get("session");
         result=call(camera,"camera.disconnect",scope(slotB),"previous-owner-slot-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.TRUE.equals(result.get("slotsConnected")));yes(result.get("session").equals(slotC));yes(slotsSecond.closed()==0);
         result=call(camera,"camera.disconnect",scope(slotC),"final-current-slot-disconnect");yes(Boolean.TRUE.equals(result.get("disconnected")));yes(result.get("mode").equals("none"));yes(slotsSecond.closed()==2);camera.disconnect();
+    }
+    private static void scopedReconnectChecks(File parent)throws Exception{
+        File root=new File(parent,"scoped-reconnect");yes(root.mkdirs());
+        Peer[] peers={new Peer(),new Peer(),new Peer()};AtomicInteger connections=new AtomicInteger();
+        SharedCamera camera=new SharedCamera(root.getPath(),(h,p,f)->peers[connections.getAndIncrement()]::socket);
+        String first=(String)connect(camera).get("session"),current=(String)connect(camera).get("session");
+        Map<String,Object> stale=SharedRuntime.map("host","192.168.1.1","port",15740,"protocol","nikon","replaceSession",first);
+        rejects(()->call(camera,"camera.connect",stale,"stale-reconnect"));
+        yes(status(camera).get("session").equals(current));yes(peers[1].closed()==0);yes(connections.get()==2);
+        Map<String,Object> owned=SharedRuntime.map("host","192.168.1.1","port",15740,"protocol","nikon","replaceSession",current);
+        Map<String,Object> replacement=call(camera,"camera.connect",owned,"owned-reconnect");
+        yes(Boolean.TRUE.equals(replacement.get("connected")));yes(!replacement.get("session").equals(current));
+        yes(peers[1].closed()==2);yes(peers[2].closed()==0);camera.disconnect();
     }
     private static Map<String,Object> connect(SharedCamera camera)throws IOException{return call(camera,"camera.connect",SharedRuntime.map("host","192.168.1.1","port",15740,"protocol","nikon"),"connect");}
     private static Map<String,Object> status(SharedCamera camera)throws IOException{return call(camera,"camera.status",SharedRuntime.map(),"status");}

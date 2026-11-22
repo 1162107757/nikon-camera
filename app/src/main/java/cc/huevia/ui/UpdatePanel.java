@@ -33,9 +33,7 @@ public final class UpdatePanel implements AutoCloseable {
     private final Activity activity;
     private final Host host;
     private final AppUpdateManager updates;
-    private final SharedPreferences promptPrefs;
     private final Handler main = new Handler(Looper.getMainLooper());
-    private static final long REMIND_AFTER = 8L * 60 * 60 * 1000;
     private UiPalette colors;
     private boolean open, waitingPermission, pendingResume, hostVisible, closed, openingPrompt, promptMandatory;
     private AlertDialog prompt;
@@ -58,7 +56,6 @@ public final class UpdatePanel implements AutoCloseable {
     public UpdatePanel(Activity activity, Host host) {
         this.activity = activity; this.host = host;
         colors = new UiPalette(activity);
-        promptPrefs = activity.getSharedPreferences("app-update-prompts", Activity.MODE_PRIVATE);
         updates = new AppUpdateManager(activity, new AppUpdateManager.Listener() {
             @Override public void changed() { refresh(); }
             @Override public void available() { maybePrompt(); }
@@ -73,6 +70,7 @@ public final class UpdatePanel implements AutoCloseable {
     }
     public void automaticCheck() {
         if (closed || !hostVisible) return;
+        cc.huevia.usage.AppUsageReporter.report(activity);
         updates.autoCheck(host.idleForAutomaticCheck() || updates.mandatory()); maybePrompt();
     }
     public void onResume() {
@@ -199,8 +197,7 @@ public final class UpdatePanel implements AutoCloseable {
         if (required ? !host.readyForMandatoryUpdate() : !host.idleForAutomaticCheck()) return;
         if (!required) {
             if (open || !updates.metadataChecked() || updates.checking || updates.downloading || updates.verifying) return;
-            long elapsed = System.currentTimeMillis() - promptPrefs.getLong("shownAt", 0);
-            if (releaseKey().equals(promptPrefs.getString("release", "")) && elapsed >= 0 && elapsed < REMIND_AFTER) return;
+            if (!cc.huevia.usage.AppUsageReporter.claimOptionalPrompt(activity)) return;
         }
         showPrompt(required);
     }
@@ -245,7 +242,6 @@ public final class UpdatePanel implements AutoCloseable {
                 if (required) activity.finishAndRemoveTask(); else dismissPrompt();
             });
             if (required) dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(v -> updates.check(false));
-            else promptPrefs.edit().putString("release", key).putLong("shownAt", System.currentTimeMillis()).apply();
             refreshPrompt();
         } finally { openingPrompt = false; }
     }

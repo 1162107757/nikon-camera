@@ -19,6 +19,10 @@
 	<string>用于识别通过数据线连接的相机，并将原始照片导入 Huevia。</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>连接相机 Wi-Fi、读取照片与传输预设。</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>配对尼康相机，并在开启拍摄位置同步时向相机发送位置。</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>在使用拍摄位置同步时，将手机位置通过蓝牙发给相机，用于记录拍摄地点。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>选择照片以编辑和管理原图。</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

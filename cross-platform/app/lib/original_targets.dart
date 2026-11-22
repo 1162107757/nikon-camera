@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'domain.dart';
+import 'export_album.dart';
+import 'saved_photo_result.dart';
 import 'original_files.dart';
 import 'original_save.dart';
 
@@ -95,6 +97,11 @@ class _OriginalTargetsPageState extends State<OriginalTargetsPage> {
       await chooseFolder();
       return;
     }
+    ExportAlbum? album;
+    if (save == null && target == 'gallery') {
+      album = await chooseExportAlbum(context, widget.state.core);
+      if (!mounted || !current || album == null || target != 'gallery') return;
+    }
     save ??= OriginalSave(
       widget.state,
       owner,
@@ -102,6 +109,7 @@ class _OriginalTargetsPageState extends State<OriginalTargetsPage> {
       widget.sourceSha,
       widget.filename,
       targetId: target == 'files' ? folder!['id'] as String : null,
+      albumPath: album?.path,
     )..addListener(changed);
     await save!.run();
   }
@@ -204,10 +212,22 @@ class _OriginalTargetsPageState extends State<OriginalTargetsPage> {
                   ),
                 ),
               ),
-            if (keptInApp || save?.done == true)
+            if (save?.receipt case final receipt?)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: SavedPhotoResult(
+                  core: widget.state.core,
+                  receipt: receipt,
+                  destination: target == 'files'
+                      ? "已保存到 ${(folder?['name'] as String?) ?? '所选文件夹'}"
+                      : '已保存到 ${systemAlbumLabel(widget.state.core, save?.albumPath)}',
+                  fallbackName: save?.filename,
+                ),
+              )
+            else if (keptInApp)
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
-                child: Text('原始文件已保存并保留完整格式。'),
+                child: Text('原始文件已保留在应用相册。'),
               ),
             const SizedBox(height: 16),
             FilledButton.icon(

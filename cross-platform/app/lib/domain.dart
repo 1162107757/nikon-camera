@@ -11,6 +11,7 @@ import 'package:path/path.dart' as p;
 
 import 'camera_live.dart';
 import 'camera_downloads.dart';
+import 'camera_location.dart';
 import 'connection_protection.dart';
 
 typedef Json = Map<String, dynamic>;
@@ -36,11 +37,51 @@ class HueviaCore {
   String platform = '';
   Json schema = {};
   final previewRevision = ValueNotifier<int>(0);
+  final editRevision = ValueNotifier<int>(0);
   int publicImageGeneration = 0;
   bool customTemplate = false;
   final List<Json> recentOperations = [];
+  final _closingDrafts = <(String, String), Future<void>>{};
+
+  Future<void> queueClosingDraft(
+    String path,
+    String owner,
+    Future<void> Function() write,
+  ) {
+    final key = (path, owner);
+    final previous = _closingDrafts[key] ?? Future<void>.value();
+    final result = previous.then((_) => write());
+    late final Future<void> settled;
+    settled = result
+        .then<void>((_) {}, onError: (Object _, StackTrace _) {})
+        .whenComplete(() {
+          if (identical(_closingDrafts[key], settled)) {
+            _closingDrafts.remove(key);
+          }
+        });
+    _closingDrafts[key] = settled;
+    return result;
+  }
+
+  Future<void> waitForClosingDraft(String path, String owner) async {
+    final key = (path, owner);
+    var pending = _closingDrafts[key];
+    while (pending != null) {
+      await pending;
+      pending = _closingDrafts[key];
+    }
+  }
+
   Future<void> requestUsbPermission(String id) async {
     await _invoke('cameraUsbPermission', {'id': id});
+  }
+
+  Future<void> requestCameraWifiPermission() async {
+    await _invoke('cameraWifiPermission', {});
+  }
+
+  Future<void> openPublishedPhoto(String uri) async {
+    await _invoke('openPublishedPhoto', {'uri': uri});
   }
 
   Future<void> openCameraSettings() =>
@@ -72,6 +113,13 @@ class HueviaCore {
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (operation == 'draft.load' && payload['path'] is String) {
+      final owner = payload['owner'];
+      await waitForClosingDraft(
+        payload['path'] as String,
+        owner is String ? owner : '',
+      );
+    }
     if (const {
       'account.login',
       'account.register',
@@ -96,6 +144,7 @@ class HueviaCore {
         customTemplate = result['custom'] == true;
         previewRevision.value++;
       }
+      if (operation == 'draft.save') editRevision.value++;
       status = 'complete';
       return result;
     } finally {
@@ -187,9 +236,10 @@ class HueviaCore {
     final length = await selected.length();
     final limit = preset ? 1024 * 1024 : 1024 * 1024 * 1024;
     if (length < 1 || length > limit) throw const AppFailure('文件大小超出允许范围。');
-    final extension = p.extension(selected.name).toLowerCase();
+    final filename = preset ? selected.name.trim() : selected.name;
+    final extension = p.extension(filename).toLowerCase();
     final allowed = preset
-        ? {'.ncp', '.np3'}
+        ? {'.ncp', '.np2', '.np3'}
         : {
             '.jpg',
             '.jpeg',
@@ -209,7 +259,10 @@ class HueviaCore {
             '.pef',
             '.srw',
           };
-    if (!allowed.contains(extension)) throw const AppFailure('请选择受支持的文件格式。');
+    final extensionlessPreset = preset && !filename.contains('.');
+    if (!allowed.contains(extension) && !extensionlessPreset) {
+      throw const AppFailure('请选择受支持的文件格式。');
+    }
     final directory = Directory(p.join(root, preset ? 'inbox' : 'originals'));
     await directory.create(recursive: true);
     final temporary = File(
@@ -309,14 +362,21 @@ class AppState extends ChangeNotifier {
   CameraDownloads get cameraDownloads =>
       _cameraDownloads ??= CameraDownloads(this);
   bool get cameraDownloadsActive => _cameraDownloads?.busy ?? false;
+  CameraLocationSession? _cameraLocation;
+  CameraLocationSession get cameraLocation =>
+      _cameraLocation ??= CameraLocationSession();
+  Future<void> stopCameraLocation() async {
+    await _cameraLocation?.stopForCameraConnection();
+  }
+
   bool _cameraManualTransfer = false;
   Object? _cameraManualLease;
   String _cameraManualSession = '';
-  Future<void> Function()? _cameraManualStop;
+  Future<void> Function({required bool preserveConnection})? _cameraManualStop;
   bool get cameraManualTransferActive => _cameraManualTransfer;
   bool claimCameraTransfer({
     String session = '',
-    Future<void> Function()? onStop,
+    Future<void> Function({required bool preserveConnection})? onStop,
   }) {
     if (_cameraManualTransfer || cameraLiveActive || cameraDownloadsActive) {
       return false;
@@ -339,7 +399,10 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  Future<void> stopCameraManualTransfer({String? expectedSession}) async {
+  Future<void> stopCameraManualTransfer({
+    String? expectedSession,
+    bool preserveConnection = false,
+  }) async {
     final lease = _cameraManualLease, stop = _cameraManualStop;
     if (lease == null ||
         stop == null ||
@@ -355,7 +418,15 @@ class AppState extends ChangeNotifier {
 
     addListener(changed);
     try {
-      await stop().timeout(const Duration(seconds: 2));
+      final stopping = stop(preserveConnection: preserveConnection);
+      if (preserveConnection) {
+        // The active USB PTP request already has native I/O deadlines.
+        await stopping;
+        changed();
+        await released.future;
+        return;
+      }
+      await stopping.timeout(const Duration(seconds: 2));
       changed();
       await released.future.timeout(const Duration(seconds: 2));
     } on TimeoutException {
@@ -372,6 +443,7 @@ class AppState extends ChangeNotifier {
   void dispose() {
     _cameraLive?.dispose();
     _cameraDownloads?.dispose();
+    _cameraLocation?.dispose();
     _connectionProtection?.dispose();
     cameraVisible.dispose();
     super.dispose();
@@ -558,23 +630,36 @@ class AppState extends ChangeNotifier {
     final file = await core.importFile(selected, preset: true);
     await core.call('library.import', {
       'path': file,
-      'name': selected.name,
+      'name': selected.name.trim().isEmpty ? '导入预设' : selected.name,
       'owner': owner,
     });
     await refreshLibrary();
   }
 
-  Future<bool> pickPreset() async {
+  Future<Preset?> pickPreset() async {
     final owner = session['user']?['id'] as String? ?? '';
+    final revision = _sessionRevision;
+    bool sameOwner() =>
+        revision == _sessionRevision &&
+        session['logoutPending'] != true &&
+        owner == (session['user']?['id'] as String? ?? '');
     final selected = await core.pickFile(preset: true);
-    if (selected == null) return false;
-    await core.call('library.import', {
+    if (selected == null) return null;
+    final result = await core.call('library.import', {
       'path': selected['path'],
       'name': selected['name'],
       'owner': owner,
     });
+    if (!sameOwner()) return null;
+    final raw = result['record'];
+    if (raw is! Map || raw['id'] is! String || (raw['id'] as String).isEmpty) {
+      throw const AppFailure('无法确认已导入的预设。');
+    }
+    final imported = Preset(object(raw));
     await refreshLibrary();
-    return true;
+    if (!sameOwner()) return null;
+    return presets.where((preset) => preset.id == imported.id).firstOrNull ??
+        imported;
   }
 
   Future<Photo?> pickPhoto() async {
@@ -596,39 +681,58 @@ class AppState extends ChangeNotifier {
     await refreshLibrary();
   }
 
-  Future<Photo> importPhoto(XFile selected, {String? displayName}) =>
-      _serialPhotos(() async {
-        final name = displayName ?? p.basename(selected.name);
-        if (name.trim().isEmpty ||
-            name.length > 240 ||
-            RegExp(r'[\x00-\x1f\x7f/\\]').hasMatch(name)) {
-          throw const AppFailure('照片名称无效。');
-        }
-        final path = await core.importFile(selected, preset: false);
-        final existing = photos.where((photo) => photo.path == path);
-        if (existing.isNotEmpty) {
-          final current = existing.first;
-          if (displayName == null || current.name == name) return current;
-          final renamed = Photo(path, name, current.info);
-          final next = photos
-              .map((photo) => photo.path == path ? renamed : photo)
-              .toList();
-          await _persistPhotos(next);
-          photos = next;
-          notifyListeners();
-          return renamed;
-        }
-        final info = await core.call('media.info', {'path': path});
-        final photo = Photo(path, name, {
-          ...info,
-          'addedAt': DateTime.now().millisecondsSinceEpoch,
-        });
-        final next = [photo, ...photos];
-        await _persistPhotos(next);
-        photos = next;
-        notifyListeners();
-        return photo;
-      });
+  Future<Photo> importPhoto(
+    XFile selected, {
+    String? displayName,
+    bool Function()? isCurrent,
+  }) => _serialPhotos(() async {
+    void checkImport() {
+      if (isCurrent != null && !isCurrent()) throw const AppFailure('照片导入已取消。');
+    }
+
+    Future<void> persistImport(List<Photo> next) async {
+      checkImport();
+      await _persistPhotos(next);
+      if (isCurrent != null && !isCurrent()) {
+        await _persistPhotos(List<Photo>.from(photos));
+        throw const AppFailure('照片导入已取消。');
+      }
+    }
+
+    checkImport();
+    final name = displayName ?? p.basename(selected.name);
+    if (name.trim().isEmpty ||
+        name.length > 240 ||
+        RegExp(r'[\x00-\x1f\x7f/\\]').hasMatch(name)) {
+      throw const AppFailure('照片名称无效。');
+    }
+    final path = await core.importFile(selected, preset: false);
+    checkImport();
+    final existing = photos.where((photo) => photo.path == path);
+    if (existing.isNotEmpty) {
+      final current = existing.first;
+      if (displayName == null || current.name == name) return current;
+      final renamed = Photo(path, name, current.info);
+      final next = photos
+          .map((photo) => photo.path == path ? renamed : photo)
+          .toList();
+      await persistImport(next);
+      photos = next;
+      notifyListeners();
+      return renamed;
+    }
+    final info = await core.call('media.info', {'path': path});
+    checkImport();
+    final photo = Photo(path, name, {
+      ...info,
+      'addedAt': DateTime.now().millisecondsSinceEpoch,
+    });
+    final next = [photo, ...photos];
+    await persistImport(next);
+    photos = next;
+    notifyListeners();
+    return photo;
+  });
 
   Future<Photo> registerPhoto(String path, String name, Json info) =>
       _serialPhotos(() async {
@@ -664,6 +768,58 @@ class AppState extends ChangeNotifier {
         notifyListeners();
         return updated;
       });
+
+  bool phonePhotoMatches(Photo photo, Json row) =>
+      (photo.info['gallerySources'] as List? ?? const []).whereType<Map>().any(
+        (source) =>
+            source['id'] == row['id'] &&
+            source['name'] == row['name'] &&
+            source['bytes'] == row['bytes'] &&
+            source['modified'] == row['modified'],
+      );
+
+  Future<Photo> linkPhonePhoto(Photo photo, Json row) async {
+    if (phonePhotoMatches(photo, row)) return photo;
+    final id = row['id'];
+    if (id is! String || id.isEmpty || id.length > 2048) return photo;
+    final sources = [
+      ...((photo.info['gallerySources'] as List? ?? const [])
+          .whereType<Map>()
+          .where((source) => source['id'] != id)
+          .take(15)
+          .map(object)),
+      {
+        'id': id,
+        'name': row['name'],
+        'bytes': row['bytes'],
+        'modified': row['modified'],
+      },
+    ];
+    return updatePhoto(photo, {'gallerySources': sources});
+  }
+
+  Photo? workingPhotoFor(Photo raw) {
+    final expected = raw.info['lastDevelopment'];
+    final candidates =
+        photos
+            .where(
+              (photo) =>
+                  photo.info['rawSource'] == raw.path &&
+                  (expected is! Map ||
+                      photo.info['development'] is Map &&
+                          mapEquals(
+                            object(expected),
+                            object(photo.info['development']),
+                          )),
+            )
+            .toList()
+          ..sort(
+            (a, b) => ((b.info['addedAt'] as num?) ?? 0).compareTo(
+              (a.info['addedAt'] as num?) ?? 0,
+            ),
+          );
+    return candidates.firstOrNull;
+  }
 
   Future<void> savePhotos() =>
       _serialPhotos(() => _persistPhotos(List<Photo>.from(photos)));

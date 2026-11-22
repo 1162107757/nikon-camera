@@ -14,6 +14,7 @@ class OriginalSave extends ChangeNotifier {
     this.sourceSha,
     this.filename, {
     this.targetId,
+    this.albumPath,
   }) : operation = List.generate(
          16,
          (_) => Random.secure().nextInt(256),
@@ -23,6 +24,7 @@ class OriginalSave extends ChangeNotifier {
   final AppState state;
   final String owner, operation;
   final String? targetId;
+  final String? albumPath;
   String source, sourceSha, filename;
   bool busy = false, stopped = false, invalid = false, _alive = true;
   String? error, job;
@@ -94,6 +96,7 @@ class OriginalSave extends ChangeNotifier {
           'filename': filename,
           'operationId': operation,
           'targetId': ?targetId,
+          'albumPath': ?albumPath,
         },
         identity,
       );
@@ -107,6 +110,9 @@ class OriginalSave extends ChangeNotifier {
               value['sha256'] != sourceSha ||
               value['targetId'] != targetId)) {
         throw const AppFailure('文件夹保存尚未通过原字节读回核对，请重试此任务。');
+      }
+      if (albumPath != null && value['albumPath'] != albumPath) {
+        throw const AppFailure('手机相册保存收据与所选相册不一致。');
       }
       receipt = Map<String, dynamic>.from(value);
     } catch (failure) {

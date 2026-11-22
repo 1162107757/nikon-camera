@@ -185,6 +185,22 @@ public final class SharedRuntime {
                 PhotoStarStore stars=new PhotoStarStore(root);stars.setStarred(PhotoStarStore.localKey(source),(Boolean)p.get("starred"));
                 result=map("keys",new ArrayList<>(stars.snapshot()));break;
             }
+            case "draft.statuses":{
+                String owner=text(p,"owner",64);guardOwner(owner);
+                Object paths=p.get("paths");if(!(paths instanceof List)||((List<?>)paths).size()>100)throw new IOException("照片编辑状态请求过多。");
+                List<File> sources=new ArrayList<>();for(Object path:(List<?>)paths){
+                    if(!(path instanceof String)||((String)path).length()>4096)throw new IOException("照片路径无效。");
+                    File requested=new File((String)path),canonical=requested.getCanonicalFile();
+                    if(!canonical.toPath().startsWith(root.toPath())||Files.isSymbolicLink(requested.toPath()))throw new IOException("文件不在应用资料目录内。");
+                    sources.add(canonical.exists()?privateFile((String)path):canonical);
+                }
+                List<Object> statuses=new ArrayList<>();for(File source:sources){
+                    if(cancel.getAsBoolean())throw new java.io.InterruptedIOException("读取照片编辑状态已取消。");
+                    try{if(!source.isFile())throw new IOException("照片原文件暂不可读取。");statuses.add(edits.albumStatus(source,owner));}
+                    catch(IOException unavailable){statuses.add(map("path",source.getPath(),"edited",false,"unavailable",true));}
+                }
+                guardOwner(owner);result=map("items",statuses);break;
+            }
             case "draft.load":{
                 String owner=text(p,"owner",64);guardOwner(owner);File source=privateFile(text(p,"path",4096));
                 PhotoEditStore.Draft draft=edits.load(source,owner);
@@ -357,6 +373,15 @@ public final class SharedRuntime {
         if(!file.toPath().startsWith(new File(root,"originals").getCanonicalFile().toPath()))throw new IOException("只能选择应用原图库中的照片。");
         return file;
     }
+    public File exportLocationSource(String path, String expectedSha)throws IOException {
+        if (!expectedSha.matches("[a-f0-9]{64}") || !new File(path).getName().startsWith(expectedSha + ".")) {
+            throw new IOException("位置来源文件校验无效。");
+        }
+        if (!new File(path).exists()) return null;
+        File source = originalPhoto(path);
+        validateSource(source.getPath(), expectedSha);
+        return source;
+    }
     private Map<String,Object> inspectOriginal(Map<String,Object> p,BooleanSupplier cancel)throws IOException {
         if(cancel.getAsBoolean())throw new InterruptedIOException("原始文件检查已取消。");
         String owner=text(p,"owner",64);guardOwner(owner);File source=privateFile(text(p,"path",4096));
@@ -380,6 +405,15 @@ public final class SharedRuntime {
         Map<String,Object> p=SharedJson.object(json);String owner=text(p,"owner",64);guardOwner(owner);
         if(!(p.get("bytes") instanceof Number))throw new IOException("原始文件保存大小无效。");
         SharedOriginalPublication.release(root,owner,text(p,"operationId",32),text(p,"sha256",64),((Number)p.get("bytes")).longValue());
+    }
+    public synchronized String prepareQueuedGalleryPublication(String json,BooleanSupplier cancel)throws IOException {
+        Map<String,Object> p=SharedJson.object(json);
+        String owner=text(p,"owner",64);
+        guardOwner(owner);
+        Map<String,Object> inspected=SharedDownloads.inspectGalleryTransfer(root,p,cancel);
+        Map<String,Object> prepared=SharedOriginalPublication.prepare(root,owner,inspected,text(p,"operationId",32),cancel);
+        guardOwner(owner);
+        return SharedJson.encode(prepared);
     }
     public File privateFile(String path)throws IOException {
         File original=new File(path),file=original.getCanonicalFile();

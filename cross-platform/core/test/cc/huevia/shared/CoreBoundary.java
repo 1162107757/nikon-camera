@@ -100,6 +100,7 @@ public final class CoreBoundary {
             checks+=CleanupBoundaryTest.run();
             checks+=PhotoBoundaryTest.run(temporary);
             checks+=ImportBoundaryTest.run(temporary);
+            checks+=AlbumEditStatusBoundaryTest.run(temporary);
             checks+=ExportBoundaryTest.run(temporary);
             checks+=OriginalPublicationBoundaryTest.run(temporary);
             checks+=RegistrationBoundaryTest.run(temporary);
@@ -112,6 +113,8 @@ public final class CoreBoundary {
             checks+=CameraSessionBoundaryTest.run(temporary);
             checks+=CameraTransferBoundaryTest.run(temporary);
             checks+=CameraControlsBoundaryTest.run(temporary);
+            checks+=cc.huevia.ncp.CameraPresetProjectionTest.run();
+            checks+=cc.huevia.ncp.Np2SupportTest.run();
             checks+=CameraMaintenanceBoundaryTest.run(temporary.resolve("camera-maintenance"));
             checks+=SlotParametersBoundaryTest.run(temporary.resolve("slot-parameters"));
             checks+=CameraRawBoundaryTest.run(temporary);
@@ -133,6 +136,7 @@ public final class CoreBoundary {
             checks+=SubmissionBoundaryTest.run(temporary);
             checks+=ProfileBoundaryTest.run(temporary);
             checks+=LocalEditsBoundaryTest.run(temporary);
+            checks+=LensBorderBoundaryTest.run(temporary);
             System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{

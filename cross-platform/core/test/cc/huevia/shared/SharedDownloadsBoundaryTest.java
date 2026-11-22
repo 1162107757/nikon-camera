@@ -51,13 +51,16 @@ public final class SharedDownloadsBoundaryTest {
         byte[] modified=bytes.clone();modified[3]++;Files.write(original,modified);rejects(()->request(restarted,"downloads.item",SharedRuntime.map("owner","","id",folderId,"itemId",folderItem,"phase","completed","publication",publication)));Files.write(original,bytes);
         request(restarted,"downloads.item",SharedRuntime.map("owner","","id",folderId,"itemId",folderItem,"phase","completed","publication",publication));request(restarted,"downloads.finish",SharedRuntime.map("owner","","id",folderId));yes(map(first(request(runtime(root),"downloads.get",SharedRuntime.map("owner","","id",folderId))).get("publication")).get("targetId").equals(FOLDER));
         // Explicitly confirmed camera rebinding changes neither descriptors nor the frozen target.
-        Map<String,Object> rebound=create(restarted,row,SharedRuntime.map("kind","system"));String reboundId=(String)rebound.get("id");Map<String,Object> reboundScope=scope(rebound);String reboundItem=(String)reboundScope.get("itemId");
+        String albumPath="DCIM/Camera/";
+        Map<String,Object> rebound=create(restarted,row,SharedRuntime.map("kind","system","albumPath",albumPath));String reboundId=(String)rebound.get("id");Map<String,Object> reboundScope=scope(rebound);String reboundItem=(String)reboundScope.get("itemId");
+        yes(albumPath.equals(map(rebound.get("target")).get("albumPath")));
         Map<String,Object> bind=SharedRuntime.map("owner","","id",reboundId,"cameraId",OTHER,"session","session-b","trusted",true,"target",SharedRuntime.map("kind","app"));rejects(()->request(restarted,"downloads.bind",bind));bind.put("confirmed",true);rebound=request(restarted,"downloads.bind",bind);yes(map(rebound.get("target")).get("kind").equals("system"));
         request(restarted,"downloads.resume",SharedRuntime.map("owner","","id",reboundId));request(restarted,"downloads.item",SharedRuntime.map("owner","","id",reboundId,"itemId",reboundItem,"phase","receiving"));
         SharedDownloads.validateTransfer(root.toFile(),reboundScope,OTHER,true,"session-after-reconnect",object);checks++;
         rejects(()->SharedDownloads.validateTransfer(root.toFile(),reboundScope,OTHER,false,"session-after-reconnect",object));
         request(restarted,"downloads.pause",SharedRuntime.map("owner","","id",reboundId));rejects(()->SharedDownloads.validateTransfer(root.toFile(),reboundScope,OTHER,true,"session-b",object));
         rejects(()->create(restarted,row,SharedRuntime.map("kind","folder","id","../outside")));
+        rejects(()->create(restarted,row,SharedRuntime.map("kind","system","albumPath","DCIM/../")));
         Map<String,Object> tooMany=SharedRuntime.map("owner","","cameraId",CAMERA,"trusted",true,"session","s","target",SharedRuntime.map("kind","app"),"items",Collections.nCopies(101,row));rejects(()->request(restarted,"downloads.create",tooMany));
         tooMany.put("items",List.of(row,row));rejects(()->request(restarted,"downloads.create",tooMany));
         // A corrupt record is preserved and does not hide independent valid queues.
@@ -66,7 +69,44 @@ public final class SharedDownloadsBoundaryTest {
         for(Map<String,Object> bad:damaged){Files.write(queuePath,SharedJson.encode(bad).getBytes(StandardCharsets.UTF_8));rejects(()->request(restarted,"downloads.get",SharedRuntime.map("owner","","id",reboundId)));}
         Map<String,Object> list=request(restarted,"downloads.list",SharedRuntime.map("owner",""));yes(((List<?>)list.get("items")).size()==2);yes(((List<?>)list.get("issues")).size()==1);yes(Files.exists(queuePath));Files.write(queuePath,valid);
         try(java.util.stream.Stream<Path> files=Files.list(queuePath.getParent())){yes(files.noneMatch(path->path.getFileName().toString().endsWith(".part")));}
-        yes(Arrays.equals(Files.readAllBytes(original),bytes));System.out.println("PASS "+checks+" durable download queue checks; owner/camera/session/descriptor guards, native-first receipts, restart, terminal idempotence, frozen target evidence and corrupt-log isolation");return checks;
+        systemOnly(restarted,root,row,object,original);
+        yes(Arrays.equals(Files.readAllBytes(original),bytes));System.out.println("PASS "+checks+" durable download queue checks; ownership, restart, verified target receipts, system-only staging and cleanup");return checks;
+    }
+    private static void systemOnly(SharedRuntime runtime,Path root,Map<String,Object> row,PtpObjectInfo object,Path original)throws IOException {
+        try{
+            String album="DCIM/Camera/";
+            Map<String,Object> created=create(runtime,row,SharedRuntime.map("kind","systemOnly","albumPath",album));
+            Map<String,Object> scope=scope(created);
+            String id=(String)created.get("id"),item=(String)scope.get("itemId");
+            request(runtime,"downloads.resume",SharedRuntime.map("owner","","id",id));
+            request(runtime,"downloads.item",SharedRuntime.map("owner","","id",id,"itemId",item,"phase","receiving"));
+            byte[] jpeg={(byte)255,(byte)216,(byte)255,2,3,4,(byte)255,(byte)217};
+            String sha=PhotoEditStore.hash(jpeg);
+            File staged=SharedDownloads.validateTransfer(root.toFile(),scope,CAMERA,false,"session-a",object);
+            yes(!staged.toPath().startsWith(original.getParent()));
+            Path source=Files.createDirectory(staged.toPath()).resolve(item+"-"+sha+".jpg");
+            Files.write(source,jpeg);
+            Map<String,Object> receipt=SharedRuntime.map("path",source.toString(),"name",object.filename(),"sha256",sha,"bytes",jpeg.length,"raw",false);
+            rejects(()->SharedDownloads.recordTransfer(root.toFile(),scope,changed(receipt,"path",original.toString())));
+            SharedDownloads.recordTransfer(root.toFile(),scope,receipt);
+            Map<String,Object> p=SharedRuntime.map("owner","","queueId",id,"operationId",item,"path",source.toString(),"expectedSourceSha",sha,"filename",object.filename(),"albumPath",album);
+            rejects(()->runtime.prepareQueuedGalleryPublication(SharedJson.encode(changed(p,"albumPath","DCIM/Other/")),()->false));
+            Map<String,Object> prepared=SharedJson.object(runtime.prepareQueuedGalleryPublication(SharedJson.encode(p),()->false));
+            yes(Arrays.equals(Files.readAllBytes(Path.of((String)prepared.get("path"))),jpeg));
+            request(runtime,"downloads.item",SharedRuntime.map("owner","","id",id,"itemId",item,"phase","failed"));
+            yes(Files.exists(source));
+            yes(prepared.equals(SharedJson.object(runtime.prepareQueuedGalleryPublication(SharedJson.encode(p),()->false))));
+            runtime.releaseOriginalPublication(SharedJson.encode(SharedRuntime.map("owner","","operationId",item,"sha256",sha,"bytes",jpeg.length)));
+            Map<String,Object> saved=SharedRuntime.map("owner","","operationId",item,"sha256",sha,"bytes",jpeg.length,"targetKind","system","albumPath",album,"published",true,"verified",true,"uri","content://media/external/images/media/9");
+            Map<String,Object> complete=SharedRuntime.map("owner","","id",id,"itemId",item,"phase","completed","publication",saved);
+            request(runtime,"downloads.item",complete);
+            yes(!Files.exists(source)&&Files.isRegularFile(original));
+            request(runtime,"downloads.item",complete);
+            request(runtime,"downloads.finish",SharedRuntime.map("owner","","id",id));
+            yes(first(request(runtime,"downloads.get",SharedRuntime.map("owner","","id",id))).get("phase").equals("completed"));
+            request(runtime,"downloads.remove",SharedRuntime.map("owner","","id",id));
+            yes(!staged.exists());
+        }catch(Exception failure){throw new IOException("System-only camera queue",failure);}
     }
     private static SharedRuntime runtime(Path root)throws IOException{return new SharedRuntime(root.toString(),new AccountRepository.Store(){public byte[] read(){return null;}public void write(byte[] bytes){}public void clear(){}},(m,p,t,b)->{throw new AssertionError("Queue used network");});}
     private static Map<String,Object> create(SharedRuntime runtime,Map<String,Object> row,Map<String,Object> target)throws IOException{return request(runtime,"downloads.create",SharedRuntime.map("owner","","cameraId",CAMERA,"trusted",false,"session","session-a","target",target,"items",List.of(row)));}

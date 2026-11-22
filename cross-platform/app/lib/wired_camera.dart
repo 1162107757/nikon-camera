@@ -13,6 +13,7 @@ class WiredCameraPicker extends StatefulWidget {
     this.compact = false,
     this.onBusyChanged,
     this.active = false,
+    this.preferredId,
     this.builder,
   });
   final bool compact;
@@ -22,6 +23,7 @@ class WiredCameraPicker extends StatefulWidget {
   /// transport. Device selection never asks for permission in this layout.
   final Widget Function(BuildContext, Widget content, Widget primary)? builder;
   final bool active;
+  final String? preferredId;
   final HueviaCore core;
   final bool enabled;
   final Future<void> Function(String id) onConnect;
@@ -38,6 +40,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
   @override
   void initState() {
     super.initState();
+    selectedId = widget.preferredId;
     request = CameraConnectionRequest(widget.core)
       ..addListener(progressChanged);
     scheduleDetection();

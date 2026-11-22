@@ -6,9 +6,64 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:path/path.dart' as p;
+import 'package:file_selector/file_selector.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  test(
+    'NP2 document staging preserves exact bytes and uses an np2 private file',
+    () async {
+      final root = Directory.systemTemp.createTempSync('huevia-np2-import-');
+      addTearDown(() => root.deleteSync(recursive: true));
+      final source = File(
+        p.join('..', 'core', 'test-fixtures', 'np2', 'HV240_NP2_STD.NP2'),
+      );
+      final bytes = await source.readAsBytes();
+      final core = HueviaCore()..root = root.path;
+      final path = await core.importFile(
+        XFile(source.path, name: '晴空.NP2'),
+        preset: true,
+      );
+      expect(p.extension(path), '.np2');
+      expect(await File(path).readAsBytes(), orderedEquals(bytes));
+      expect(await source.readAsBytes(), orderedEquals(bytes));
+    },
+  );
+  test('Import returns the chosen NP3 even when a pinned preset is first', () async {
+    final imported = {'id': 'b' * 64, 'displayName': '旅行', 'fileFormat': 'NP3'};
+    final pinned = {'id': 'a' * 64, 'displayName': '置顶预设', 'pinned': true};
+    final root = Directory.systemTemp.createTempSync('huevia-import-result-');
+    final state = AppState(HueviaCore()..root = root.path);
+    addTearDown(() {
+      state.dispose();
+      root.deleteSync();
+    });
+    final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+    messenger.setMockMethodCallHandler(HueviaCore.channel, (call) async {
+      if (call.method == 'pickFile') {
+        return jsonEncode({
+          'path': p.join(root.path, 'incoming', '${'b' * 64}.np3'),
+          'name': '旅行.np3',
+          'sha256': 'b' * 64,
+        });
+      }
+      final args = object(call.arguments);
+      switch (args['operation']) {
+        case 'library.import':
+          return jsonEncode({'record': imported, 'added': false});
+        case 'library.list':
+          return jsonEncode({'items': [pinned, imported]});
+        default:
+          throw StateError('Unexpected channel operation');
+      }
+    });
+    addTearDown(() => messenger.setMockMethodCallHandler(HueviaCore.channel, null));
+    final choice = await state.pickPreset();
+    expect(state.presets.first.id, pinned['id']);
+    expect(choice?.id, imported['id']);
+    expect(choice?.format, 'NP3');
+  });
+
   test('Native document import keeps the provider filename and the owner from picker opening', () async {
     final root = Directory.systemTemp.createTempSync('huevia-native-import-');
     addTearDown(() => root.deleteSync(recursive: true));

@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'export_album.dart';
 import 'camera_transfer.dart';
 import 'original_files.dart';
+import 'saved_photo_result.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -185,7 +187,9 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
     try {
       current = await call('downloads.get', {'owner': owner, 'id': id}, epoch);
       final target = object(current!['target']);
-      if (target['kind'] == 'system') {
+      final systemOnly = target['kind'] == 'systemOnly';
+      final system = systemOnly || target['kind'] == 'system';
+      if (system) {
         final permission = await state.core.gallerySavePermission();
         check(epoch);
         if (permission['granted'] != true) {
@@ -288,28 +292,38 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
           receipt = object(stored);
         }
         final path = receipt['path'], sha = receipt['sha256'];
+        final extension = row['raw'] == true ? 'nef' : 'jpg';
         if (path is! String ||
             sha is! String ||
             !RegExp(r'^[a-f0-9]{64}$').hasMatch(sha) ||
-            !p.isWithin(p.join(state.core.root, 'originals'), path) ||
-            p.basename(path) != '$sha.${row['raw'] == true ? 'nef' : 'jpg'}' ||
+            !p.isWithin(
+              p.join(
+                state.core.root,
+                systemOnly ? 'camera-downloads' : 'originals',
+              ),
+              path,
+            ) ||
+            p.basename(path) !=
+                (systemOnly ? '$itemId-$sha.$extension' : '$sha.$extension') ||
             receipt['bytes'] != total ||
             receipt['raw'] != row['raw'] ||
             !await File(path).exists()) {
           throw const AppFailure('已接收的原件记录无效，请核对原文件。');
         }
-        phase = 'importing';
         received = total;
-        changed();
-        final info = await call('media.info', {'path': path}, epoch);
-        info['cameraSource'] = {
-          'cameraId': current!['cameraId'],
-          'descriptor': row['descriptor'],
-          'storage': row['storage'],
-          'trusted': current!['trusted'] == true,
-        };
-        await state.registerPhoto(path, row['name'] as String, info);
-        check(epoch);
+        if (!systemOnly) {
+          phase = 'importing';
+          changed();
+          final info = await call('media.info', {'path': path}, epoch);
+          info['cameraSource'] = {
+            'cameraId': current!['cameraId'],
+            'descriptor': row['descriptor'],
+            'storage': row['storage'],
+            'trusted': current!['trusted'] == true,
+          };
+          await state.registerPhoto(path, row['name'] as String, info);
+          check(epoch);
+        }
         Json? publication;
         if (target['kind'] != 'app') {
           phase = 'publishing';
@@ -325,6 +339,11 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
               'filename': row['name'],
               'operationId': itemId,
               if (target['kind'] == 'folder') 'targetId': target['id'],
+              if (systemOnly) 'queueId': id,
+              if (system && target['albumPath'] != null)
+                'albumPath': target['albumPath'],
+              if (system && target['albumId'] != null)
+                'albumId': target['albumId'],
               'verifyReadback': true,
             },
             epoch,
@@ -665,6 +684,63 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
     }
   }
 
+  String get destination {
+    final target = object(queue.current!['target']);
+    return switch (target['kind']) {
+      'systemOnly' || 'system' =>
+        target['albumTitle'] as String? ??
+            systemAlbumLabel(widget.state.core, target['albumPath'] as String?),
+      'folder' => target['name'] as String? ?? '所选文件夹',
+      _ => '应用相册',
+    };
+  }
+
+  bool get onlySaving {
+    final remaining = queue.items.where(
+      (item) => !['completed', 'skipped'].contains(item['phase']),
+    );
+    return remaining.isNotEmpty &&
+        remaining.every((item) => item['receipt'] is Map);
+  }
+
+  Widget resultRow(Json item, Map<String, Photo> photos) {
+    final kind = object(queue.current!['target'])['kind'];
+    final systemOnly = kind == 'systemOnly';
+    final original = item['receipt'];
+    final photo = original is Map ? photos[original['path']] : null;
+    final completed = item['phase'] == 'completed';
+    final publication = item['publication'];
+    final confirmation = [
+      if (!systemOnly) '已进应用相册',
+      kind == 'folder' ? '已存文件夹' : '已存手机相册',
+      if (destination != '手机相册') destination,
+    ].join(' · ');
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(item['name'] as String),
+      subtitle: publication is Map
+          ? SavedPhotoResult(
+              core: widget.state.core,
+              receipt: object(publication),
+              destination: confirmation,
+            )
+          : Text(
+              [
+                if (!systemOnly && (completed || photo != null))
+                  '已进应用相册'
+                else if (original is Map)
+                  '原文件已接收'
+                else if (item['phase'] == 'skipped')
+                  '已跳过'
+                else
+                  '待接收',
+                if (!completed && original is Map) '可继续保存',
+                if (photo?.info['hasLocation'] == true) '原片含位置',
+              ].join(' · '),
+            ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!widget.compact) return fullPage(context);
@@ -761,150 +837,162 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
       ],
     ),
     body: AnimatedBuilder(
-      animation: queue,
-      builder: (context, _) => ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
-        children: [
-          Text(
-            '接收后保留原文件，中断可继续未完成的照片。',
-            style: TextStyle(
-              fontSize: 13,
-              height: 1.5,
-              color: HuePalette.of(context).secondary,
-            ),
-          ),
-          if (queue.issues.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: Text(
-                '有 ${queue.issues.length} 项下载记录无法读取，其他有效任务仍可继续。${queue.issues.first['error'] ?? ''}',
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
+      animation: Listenable.merge([queue, widget.state]),
+      builder: (context, _) {
+        final photos = {
+          for (final photo in widget.state.photos) photo.path: photo,
+        };
+        return ListView(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+          children: [
+            Text(
+              '接收后保留原文件，中断可继续未完成的照片。',
+              style: TextStyle(
+                fontSize: 13,
+                height: 1.5,
+                color: HuePalette.of(context).secondary,
               ),
             ),
-          if (queue.current != null) ...[
-            const SizedBox(height: 16),
-            Text('已完成 ${queue.done} / ${queue.items.length}'),
-            const SizedBox(height: 10),
-            if (queue.busy)
-              LinearProgressIndicator(
-                value: queue.total > 0 && queue.phase == 'receiving'
-                    ? queue.received / queue.total
-                    : null,
+            if (queue.issues.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text(
+                  '有 ${queue.issues.length} 项下载记录无法读取，其他有效任务仍可继续。${queue.issues.first['error'] ?? ''}',
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ),
-            if (queue.busy) const SizedBox(height: 10),
-            if (queue.busy)
-              Text(
-                '${queue.phase == 'receiving'
-                    ? '接收原文件'
-                    : queue.phase == 'stopping'
-                    ? '完成当前传输后暂停'
-                    : queue.phase == 'checking'
-                    ? '核对相机目录'
-                    : queue.phase == 'publishing'
-                    ? '保存到目标位置'
-                    : '校验与保存'} · ${cameraByteCount(queue.received)} / ${cameraByteCount(queue.total)}',
-              ),
-            if (queue.error != null)
-              Text(
-                queue.error!,
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
-            if (queue.bindingNeeded)
-              OutlinedButton(
-                onPressed: () async {
-                  final confirmed = await showDialog<bool>(
-                    context: context,
-                    builder: (c) => AlertDialog(
-                      title: const Text('核对当前相机'),
-                      content: const Text(
-                        '请确认连接的是原相机和原存储卡。仍将逐张核对稳定描述，名称相同不会代替原照片。',
+            if (queue.current != null) ...[
+              const SizedBox(height: 16),
+              Text('已完成 ${queue.done} / ${queue.items.length}'),
+              Text('保存位置  $destination'),
+              const SizedBox(height: 10),
+              if (queue.busy)
+                LinearProgressIndicator(
+                  value: queue.total > 0 && queue.phase == 'receiving'
+                      ? queue.received / queue.total
+                      : null,
+                ),
+              if (queue.busy) const SizedBox(height: 10),
+              if (queue.busy)
+                Text(
+                  '${queue.phase == 'receiving'
+                      ? '接收原文件'
+                      : queue.phase == 'stopping'
+                      ? '完成当前传输后暂停'
+                      : queue.phase == 'checking'
+                      ? '核对相机目录'
+                      : queue.phase == 'publishing'
+                      ? '保存到目标位置'
+                      : '校验与保存'} · ${cameraByteCount(queue.received)} / ${cameraByteCount(queue.total)}',
+                ),
+              if (queue.error != null)
+                Text(
+                  queue.error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
+              if (queue.bindingNeeded)
+                OutlinedButton(
+                  onPressed: () async {
+                    final confirmed = await showDialog<bool>(
+                      context: context,
+                      builder: (c) => AlertDialog(
+                        title: const Text('核对当前相机'),
+                        content: const Text(
+                          '请确认连接的是原相机和原存储卡。仍将逐张核对稳定描述，名称相同不会代替原照片。',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(c, false),
+                            child: const Text('取消'),
+                          ),
+                          FilledButton(
+                            onPressed: () => Navigator.pop(c, true),
+                            child: const Text('已核对'),
+                          ),
+                        ],
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(c, false),
-                          child: const Text('取消'),
-                        ),
-                        FilledButton(
-                          onPressed: () => Navigator.pop(c, true),
-                          child: const Text('已核对'),
-                        ),
-                      ],
-                    ),
-                  );
-                  if (confirmed == true) {
-                    try {
-                      await queue.bindCurrent();
-                    } catch (e) {
-                      if (context.mounted) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text('$e')));
+                    );
+                    if (confirmed == true) {
+                      try {
+                        await queue.bindCurrent();
+                      } catch (e) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text('$e')));
+                        }
                       }
+                    }
+                  },
+                  child: const Text('核对并绑定当前相机'),
+                ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 8),
+                child: FilledButton(
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(48, 50),
+                  ),
+                  onPressed: queue.phase == 'stopping'
+                      ? null
+                      : queue.busy
+                      ? changeQueue
+                      : queue.current!['phase'] == 'done' ||
+                            widget.state.cameraLiveActive ||
+                            widget.state.cameraManualTransferActive
+                      ? null
+                      : changeQueue,
+                  child: Text(
+                    queue.phase == 'stopping'
+                        ? '正在暂停队列'
+                        : queue.busy
+                        ? '停止队列'
+                        : onlySaving
+                        ? '继续保存'
+                        : '继续未完成项',
+                  ),
+                ),
+              ),
+              for (final item in queue.items) resultRow(item, photos),
+            ],
+            if (queue.queues.isEmpty)
+              const Padding(
+                padding: EdgeInsets.all(20),
+                child: Text('还没有下载队列。请在相机照片中多选并接收。'),
+              ),
+            for (final item in queue.queues)
+              ListTile(
+                title: Text('${item['done']} / ${item['count']} 张'),
+                subtitle: Text(item['phase'] == 'done' ? '已完成' : '已保存，可继续'),
+                trailing: const Icon(Icons.chevron_right),
+                enabled: !queue.busy,
+                onTap: () async {
+                  final expectedOwner = queue.currentOwner;
+                  final expectedGeneration = queue.generation;
+                  try {
+                    final value = await widget.state.core.call(
+                      'downloads.get',
+                      {'owner': expectedOwner, 'id': item['id']},
+                    );
+                    if (!mounted ||
+                        !context.mounted ||
+                        expectedOwner != queue.currentOwner ||
+                        expectedGeneration != queue.generation ||
+                        queue.busy) {
+                      return;
+                    }
+                    queue.current = value;
+                    queue.error = null;
+                    queue.changed();
+                  } catch (failure) {
+                    if (context.mounted &&
+                        expectedOwner == queue.currentOwner) {
+                      report(context, failure);
                     }
                   }
                 },
-                child: const Text('核对并绑定当前相机'),
               ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 8),
-              child: FilledButton(
-                style: FilledButton.styleFrom(minimumSize: const Size(48, 50)),
-                onPressed: queue.phase == 'stopping'
-                    ? null
-                    : queue.busy
-                    ? changeQueue
-                    : queue.current!['phase'] == 'done' ||
-                          widget.state.cameraLiveActive ||
-                          widget.state.cameraManualTransferActive
-                    ? null
-                    : changeQueue,
-                child: Text(
-                  queue.phase == 'stopping'
-                      ? '正在暂停队列'
-                      : queue.busy
-                      ? '停止队列'
-                      : '继续未完成项',
-                ),
-              ),
-            ),
           ],
-          if (queue.queues.isEmpty)
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Text('还没有下载队列。请在相机照片中多选并接收。'),
-            ),
-          for (final item in queue.queues)
-            ListTile(
-              title: Text('${item['done']} / ${item['count']} 张'),
-              subtitle: Text(item['phase'] == 'done' ? '已完成' : '已保存，可继续'),
-              trailing: const Icon(Icons.chevron_right),
-              enabled: !queue.busy,
-              onTap: () async {
-                final expectedOwner = queue.currentOwner;
-                final expectedGeneration = queue.generation;
-                try {
-                  final value = await widget.state.core.call('downloads.get', {
-                    'owner': expectedOwner,
-                    'id': item['id'],
-                  });
-                  if (!mounted ||
-                      !context.mounted ||
-                      expectedOwner != queue.currentOwner ||
-                      expectedGeneration != queue.generation ||
-                      queue.busy) {
-                    return;
-                  }
-                  queue.current = value;
-                  queue.error = null;
-                  queue.changed();
-                } catch (failure) {
-                  if (context.mounted && expectedOwner == queue.currentOwner) {
-                    report(context, failure);
-                  }
-                }
-              },
-            ),
-        ],
-      ),
+        );
+      },
     ),
   );
 }
@@ -920,6 +1008,10 @@ Future<Json?> chooseDownloadTarget(BuildContext context, AppState state) async {
           child: const Text('应用相册'),
         ),
         SimpleDialogOption(
+          onPressed: () => Navigator.pop(c, 'systemOnly'),
+          child: const Text('系统相册'),
+        ),
+        SimpleDialogOption(
           onPressed: () => Navigator.pop(c, 'system'),
           child: const Text('应用相册 + 系统相册'),
         ),
@@ -931,6 +1023,23 @@ Future<Json?> chooseDownloadTarget(BuildContext context, AppState state) async {
     ),
   );
   if (kind == null) return null;
+  if (kind == 'system' || kind == 'systemOnly') {
+    if (!context.mounted) return null;
+    final album = await chooseExportAlbum(
+      context,
+      state.core,
+      iosCollections: true,
+    );
+    if (album == null) return null;
+    return {
+      'kind': kind,
+      'albumPath': ?album.path,
+      if (album.collectionId != null) ...{
+        'albumId': album.collectionId,
+        'albumTitle': album.collectionTitle,
+      },
+    };
+  }
   if (kind == 'folder') {
     final chosen = await OriginalFiles.chooseTarget(
       state.session['user']?['id'] as String? ?? '',

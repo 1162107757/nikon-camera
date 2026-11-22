@@ -27,10 +27,14 @@ public final class SharedImport {
         try(InputStream source=Objects.requireNonNull(input)){
             check(cancel);
             boolean submission=!submissionKind.isEmpty(),avatar=submissionKind.equals("avatar");
+            boolean localPreset=preset&&!submission;
             if(submission){cc.huevia.community.CommunityRepository.id(owner);if(!submissionKind.equals("ncp")&&!submissionKind.equals("preview")&&!avatar)throw new IOException("投稿文件类型无效。");}
+            if(localPreset&&(name==null||name.trim().isEmpty()))name="导入预设";
             if(name==null||name.isEmpty()||name.length()>1024||name.indexOf('/')>=0||name.indexOf('\\')>=0||!StandardCharsets.UTF_8.newEncoder().canEncode(name)||name.codePoints().anyMatch(Character::isISOControl))throw new IOException("所选文件名称无效。");
+            if(localPreset)name=name.trim();
             int dot=name.lastIndexOf('.');String ext=dot<0?"":name.substring(dot+1).toLowerCase(Locale.ROOT);
-            if(!avatar&&(submission?(preset?!ext.equals("ncp"):!Arrays.asList("jpg","jpeg","png","webp").contains(ext)):(preset?!ext.equals("ncp")&&!ext.equals("np3"):!PHOTOS.contains(ext))))throw new IOException("请选择受支持的文件格式。");
+            boolean detectPreset=localPreset&&dot<0;
+            if(!avatar&&!detectPreset&&(submission?(preset?!ext.equals("ncp"):!Arrays.asList("jpg","jpeg","png","webp").contains(ext)):(preset?!ext.equals("ncp")&&!ext.equals("np2")&&!ext.equals("np3"):!PHOTOS.contains(ext))))throw new IOException("请选择受支持的文件格式。");
             if(avatar&&ext.isEmpty())ext="image";
             long limit=preset?1024*1024:avatar?20L*1024*1024:submission?4L*1024*1024:1024L*1024*1024;
             File base=new File(directory).getCanonicalFile();
@@ -44,6 +48,13 @@ public final class SharedImport {
                 try(FileOutputStream output=new FileOutputStream(temp)){
                     int count;while((count=source.read(buffer))!=-1){check(cancel);if(count==0)continue;size+=count;if(size>limit)throw new IOException("文件大小超出允许范围。");output.write(buffer,0,count);digest.update(buffer,0,count);}
                     if(size==0)throw new IOException("所选文件为空。");output.getFD().sync();
+                }
+                if(detectPreset){
+                    check(cancel);
+                    cc.huevia.library.PresetFile detected=cc.huevia.library.PresetFile.validate(Files.readAllBytes(temp.toPath()));
+                    String extension=cc.huevia.library.PresetFile.extension(detected.fileFormat);
+                    ext=extension.substring(1);
+                    name+=extension;
                 }
                 StringBuilder sha=new StringBuilder();for(byte value:digest.digest())sha.append(String.format(Locale.ROOT,"%02x",value&255));
                 File target=new File(folder,sha+"."+ext);boolean created=false;check(cancel);

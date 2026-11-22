@@ -481,7 +481,7 @@ void main() {
     expect(
       state.claimCameraTransfer(
         session: 'old-session',
-        onStop: () async {
+        onStop: ({required preserveConnection}) async {
           oldStops++;
           await oldGate.future;
         },
@@ -505,7 +505,7 @@ void main() {
     expect(
       state.claimCameraTransfer(
         session: 'new-session',
-        onStop: () async {
+        onStop: ({required preserveConnection}) async {
           newStops++;
           state.releaseCameraTransfer();
         },

@@ -16,12 +16,16 @@ namespace {
 #include "HueviaWhiteBalance.inc"
 void bounded(int width,int height){if(width<1||height<1||width>65535||height>65535||uint64_t(width)*height>60000000)throw std::runtime_error("RAW image exceeds the 60 megapixel limit");}
 void checked(int code,const char *stage){if(code!=LIBRAW_SUCCESS)throw std::runtime_error(std::string(stage)+": "+LibRaw::strerror(code));}
+void unpackSensor(LibRaw &raw){
+  checked(raw.unpack(),"RAW unpack failed");
+  if(raw.error_count()!=0)throw std::runtime_error("RAW 传感器数据损坏，请重新传输原文件。");
+}
 void message(char *output,int capacity,const char *text){if(output&&capacity>0)std::snprintf(output,size_t(capacity),"%s",text);}
 struct Callback {HueviaRawProgress progress;void *context;};
 int report(void *opaque,LibRaw_progress stage,int iteration,int expected){auto *cb=static_cast<Callback *>(opaque);if(!cb->progress)return 0;unsigned flags=unsigned(stage);int index=0;while(flags>1){flags>>=1;index++;}double local=expected>0?std::clamp(iteration/double(expected),0.0,1.0):0;return cb->progress(cb->context,.025+.80*std::min(1.0,(index+local)/20.0));}
 void dimensions(LibRaw &raw,int &width,int &height,int &colors,int &bits){raw.get_mem_image_format(&width,&height,&colors,&bits);bounded(width,height);}
 }
-extern "C" const char *HueviaRawVersion(){return LibRaw::version();}
+extern "C" const char *HueviaRawVersion(){return LIBRAW_VERSION_STR "-huevia-checked-unpack-v1";}
 extern "C" int HueviaRawEmbeddedJpeg(const char *path,uint8_t **bytes,int *length){
   if(!bytes||!length)return -1;*bytes=nullptr;*length=0;
   try{
@@ -52,7 +56,7 @@ extern "C" int HueviaRawThumbnail(const char *path,int edge,uint32_t **pixels,in
     raw.imgdata.rawparams.max_raw_memory_mb=512;Callback cb{progress,context};raw.set_progress_handler(report,&cb);
     auto &p=raw.imgdata.params;p.half_size=1;p.user_flip=0;p.output_bps=8;p.output_color=1;p.user_qual=0;p.highlight=2;p.use_camera_matrix=3;p.gamm[0]=1/2.4;p.gamm[1]=12.92;
     hueviaRawSafety(raw,0,2);checked(raw.open_file(path),"RAW open failed");int width,height,colors,bits;dimensions(raw,width,height,colors,bits);sharedWhiteBalance(raw,0,5500,0);
-    checked(raw.unpack(),"RAW thumbnail unpack failed");checked(raw.dcraw_process(),"RAW thumbnail processing failed");
+    unpackSensor(raw);checked(raw.dcraw_process(),"RAW thumbnail processing failed");
     int code=0;std::unique_ptr<libraw_processed_image_t,void(*)(libraw_processed_image_t*)> image(raw.dcraw_make_mem_image(&code),LibRaw::dcraw_clear_mem);
     if(!image||code!=LIBRAW_SUCCESS||image->type!=LIBRAW_IMAGE_BITMAP||image->bits!=8||(image->colors!=1&&image->colors!=3))throw std::runtime_error("RAW thumbnail format unsupported");
     bounded(image->width,image->height);uint64_t required=uint64_t(image->width)*image->height*image->colors;if(required!=image->data_size)throw std::runtime_error("RAW thumbnail length mismatch");
@@ -75,7 +79,7 @@ extern "C" int HueviaRawDevelop(const char *path,const HueviaRawSettings *settin
     auto &p=raw.imgdata.params;p.half_size=0;p.output_bps=8;p.output_color=1;p.no_auto_bright=1;p.user_qual=s.quality;p.highlight=s.highlights;p.use_camera_matrix=3;p.gamm[0]=1/2.4;p.gamm[1]=12.92;p.use_fuji_rotate=1;p.no_interpolation=0;p.no_auto_scale=0;
     hueviaRawSafety(raw,s.exposureTenths,s.highlights);
     checked(raw.open_file(path),"RAW open failed");int width,height,colors,bits;dimensions(raw,width,height,colors,bits);sharedWhiteBalance(raw,s.whiteBalance,s.kelvin,s.tint);
-    checked(raw.unpack(),"RAW unpack failed");checked(raw.dcraw_process(),"RAW demosaic/color processing failed");dimensions(raw,width,height,colors,bits);
+    unpackSensor(raw);checked(raw.dcraw_process(),"RAW demosaic/color processing failed");dimensions(raw,width,height,colors,bits);
     if(width!=requestedWidth||height!=requestedHeight||bits!=8||(colors!=1&&colors!=3))throw std::runtime_error("RAW output dimensions or colour format changed");
     checked(raw.copy_mem_image(argb,width*4,0),"RAW pixel transfer failed");
     for(int y=0;y<height;y++){

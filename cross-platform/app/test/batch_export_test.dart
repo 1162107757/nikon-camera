@@ -25,6 +25,7 @@ class BatchCore extends HueviaCore {
   final calls = <String>[];
   final recipes = <Json>[];
   bool failSecond = false;
+  bool realOutputs = false;
   int secondExposure = 3;
   Future<void> Function()? afterFirst;
   @override
@@ -47,6 +48,12 @@ class BatchCore extends HueviaCore {
       if (path.endsWith('a.jpg')) await afterFirst?.call();
       if (path.endsWith('b.jpg') && failSecond) {
         throw const AppFailure('测试编码失败');
+      }
+      if (realOutputs) {
+        final file = File(p.join(root, 'photo-versions', p.basename(path)));
+        await file.parent.create(recursive: true);
+        await file.writeAsBytes([1, 2, 3]);
+        return {'path': file.path};
       }
       return {'path': '/private/versions/${path.split('/').last}'};
     }
@@ -101,6 +108,82 @@ void main() {
       isTrue,
     );
     expect(batch.completed, 2);
+  });
+
+  test('A new current-effect export snapshots fresh edits after the previous export completed', () async {
+    final (state, core, rows) = setup();
+    core.realOutputs = true;
+    final first = BatchExport(state, rows, phone: false, currentEffects: true);
+    await first.run();
+    expect(first.done, isTrue);
+    final operations = first.items.map((item) => item.operation).toList();
+    first.dispose();
+    core.secondExposure = 12;
+    final next = BatchExport(state, rows, phone: false, currentEffects: true);
+    expect(next.locked, isFalse);
+    expect(
+      next.items.every((item) => item.recipe == null && item.output == null),
+      isTrue,
+    );
+    expect(
+      next.items.map((item) => item.operation).toList(),
+      isNot(operations),
+    );
+    await next.run();
+    expect((core.recipes.last['values'] as List)[0], 12);
+    expect(next.done, isTrue);
+    next.dispose();
+    state.dispose();
+  });
+
+  test('Current-effect export cannot silently replace the selected photos with a unified preset', () async {
+    final (state, core, rows) = setup();
+    final batch = BatchExport(state, rows, phone: false, currentEffects: true);
+    await expectLater(
+      batch.run(presetId: 'replacement'),
+      throwsA(isA<AppFailure>()),
+    );
+    expect(core.recipes, isEmpty);
+    batch.dispose();
+    state.dispose();
+  });
+
+  test('RAW current-effect export reuses the existing developed photo and its saved adjustments', () async {
+    final (state, core, _) = setup();
+    final directory = Directory(p.join(core.root, 'originals'))..createSync();
+    final source = File(p.join(directory.path, 'raw.nef'))
+      ..writeAsBytesSync([9, 8, 7]);
+    final working = File(p.join(directory.path, 'working.jpg'))
+      ..writeAsBytesSync([3, 2, 1]);
+    const settings = {'quality': 3, 'whiteBalance': 'CAMERA'};
+    state.photos = [
+      Photo(source.path, 'RAW.NEF', {'raw': true, 'lastDevelopment': settings}),
+      Photo(working.path, 'RAW.jpg', {
+        'rawSource': source.path,
+        'development': settings,
+      }),
+    ];
+    final batch = BatchExport(
+      state,
+      [
+        {'id': source.path},
+      ],
+      phone: false,
+      currentEffects: true,
+    );
+    await batch.prepare(batch.items.single);
+    expect(batch.items.single.photo!.path, working.path);
+    expect(
+      (batch.items.single.recipe!['values'] as List)[0],
+      core.secondExposure,
+    );
+    expect(
+      core.calls.any((call) => call.startsWith('media.rawDevelop')),
+      isFalse,
+    );
+    expect(source.readAsBytesSync(), [9, 8, 7]);
+    batch.dispose();
+    state.dispose();
   });
   test('Batch retries failures without repeating completed outputs or changing frozen settings', () async {
     final (state, core, rows) = setup();

@@ -6,9 +6,12 @@ import 'package:huevia/camera_slots.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/theme.dart';
 
-class _SlotsCore extends HueviaCore {
+class SlotsTestCore extends HueviaCore {
   final calls = <(String, Json)>[];
   String phase = 'verified';
+  String explanation = '完整转换参数已核对';
+  String presetFormat = 'NCP';
+  Json? compatibility;
   bool parametersUncertain = false;
   Completer<Json>? execution;
   Json get state => {
@@ -82,7 +85,8 @@ class _SlotsCore extends HueviaCore {
           'beforeName': '预设${(payload['target'] as int) - 200}',
           'overwrite': payload['target'] != 202,
           'name': '标准曲线',
-          'explanation': '完整转换参数已核对',
+          'explanation': explanation,
+          if (compatibility != null) 'compatibility': compatibility,
           'parameterSummary': '按所选参数处理',
         };
       case 'camera.slots.execute':
@@ -109,11 +113,69 @@ class _SlotsCore extends HueviaCore {
   }
 }
 
+class RepeatedDeleteCore extends SlotsTestCore {
+  final cleared = <int>{202};
+  bool inSlots = false, failReopen = false;
+  int lease = 0, target = 201;
+  @override
+  Json get state => {
+    ...super.state,
+    'session': 'slots-$lease',
+    'items': [
+      for (var i = 201; i <= 209; i++)
+        {
+          'target': i,
+          'label': 'C${i - 200}',
+          'name': cleared.contains(i) ? '' : '预设${i - 200}',
+          'empty': cleared.contains(i),
+          'sha256': 'a' * 64,
+        },
+    ],
+  };
+  @override
+  Future<Json> call(
+    String operation, [
+    Json payload = const {},
+    String? jobId,
+  ]) async {
+    if (operation == 'camera.status') {
+      calls.add((operation, Map.of(payload)));
+      return {
+        'connected': true,
+        'mode': inSlots ? 'slots' : 'photos',
+        'session': inSlots ? 'slots-$lease' : 'photo-owned',
+        'transport': 'usb',
+      };
+    }
+    if (operation == 'camera.slots.open') {
+      calls.add((operation, Map.of(payload)));
+      if (failReopen && lease > 0) throw const AppFailure('测试读取失败');
+      lease++;
+      inSlots = true;
+      return state;
+    }
+    if (operation == 'camera.slots.close') {
+      calls.add((operation, Map.of(payload)));
+      inSlots = false;
+      return {'closed': true};
+    }
+    if (operation == 'camera.slots.prepare') target = payload['target'] as int;
+    if (operation == 'camera.slots.execute') {
+      calls.add((operation, Map.of(payload)));
+      if (phase == 'verified' || phase == 'verifiedByReadback') {
+        cleared.add(target);
+      }
+      return outcome();
+    }
+    return super.call(operation, payload, jobId);
+  }
+}
+
 void main() {
-  late _SlotsCore core;
+  late SlotsTestCore core;
   late AppState model;
   setUp(() {
-    core = _SlotsCore();
+    core = SlotsTestCore();
     model = AppState(core)
       ..session = {
         'user': {'id': 'alice'},
@@ -135,7 +197,7 @@ void main() {
               ? Preset({
                   'id': 'b' * 64,
                   'displayName': '标准曲线',
-                  'fileFormat': 'NCP',
+                  'fileFormat': core.presetFormat,
                 })
               : null,
         ),
@@ -157,6 +219,156 @@ void main() {
     button.onPressed!();
     if (doubleConfirm) button.onPressed!();
     await tester.pump(const Duration(milliseconds: 350));
+  }
+
+  testWidgets(
+    'verified deletion stays on the nine-slot grid and permits another separately confirmed deletion',
+    (tester) async {
+      final deleting = RepeatedDeleteCore();
+      core = deleting;
+      model.dispose();
+      model = AppState(core)
+        ..session = {
+          'user': {'id': 'alice'},
+        };
+      await open(tester, importing: false);
+      for (final target in [201, 203]) {
+        await tester.tap(find.byKey(ValueKey('camera-slot-$target')));
+        await tester.pump();
+        await tester.tap(find.byKey(const ValueKey('camera-slot-delete')));
+        await tester.pumpAndSettle();
+        expect(find.text('删除 C${target - 200}？'), findsOneWidget);
+        await tester.tap(find.text('确认删除此槽位'));
+        await tester.pumpAndSettle();
+        expect(find.text('相机预设槽位'), findsOneWidget);
+        expect(find.text('删除结果'), findsNothing);
+        expect(find.byKey(const ValueKey('camera-slot-209')), findsOneWidget);
+        expect(find.text('C${target - 200}\n空槽位'), findsOneWidget);
+        expect(find.byKey(const ValueKey('camera-slot-delete')), findsNothing);
+      }
+      expect(deleting.lease, 3);
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.slots.execute'),
+        hasLength(2),
+      );
+      expect(
+        core.calls
+            .where((call) => call.$1 == 'camera.slots.prepare')
+            .map((call) => call.$2['target']),
+        [201, 203],
+      );
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.disconnect'),
+        isEmpty,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'delete readback uncertainty retains reconciliation and never automatically reopens for another mutation',
+    (tester) async {
+      final deleting = RepeatedDeleteCore()..phase = 'resultUnknown';
+      core = deleting;
+      model.dispose();
+      model = AppState(core)
+        ..session = {
+          'user': {'id': 'alice'},
+        };
+      await open(tester, importing: false);
+      await tester.tap(find.byKey(const ValueKey('camera-slot-delete')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('确认删除此槽位'));
+      await tester.pumpAndSettle();
+      expect(find.text('删除结果'), findsOneWidget);
+      expect(find.text('结果待核对'), findsOneWidget);
+      expect(deleting.lease, 1);
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.slots.close'),
+        isEmpty,
+      );
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.slots.execute'),
+        hasLength(1),
+      );
+    },
+  );
+
+  testWidgets(
+    'failed refresh after a confirmed deletion stays on grid and read-only reconnect can recover',
+    (tester) async {
+      final deleting = RepeatedDeleteCore()..failReopen = true;
+      core = deleting;
+      model.dispose();
+      model = AppState(core)
+        ..session = {
+          'user': {'id': 'alice'},
+        };
+      await open(tester, importing: false);
+      await tester.tap(find.byKey(const ValueKey('camera-slot-delete')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('确认删除此槽位'));
+      await tester.pumpAndSettle();
+      expect(find.text('相机预设槽位'), findsOneWidget);
+      expect(find.text('测试读取失败'), findsOneWidget);
+      expect(find.text('C1\n空槽位'), findsOneWidget);
+      deleting.failReopen = false;
+      await tester.ensureVisible(find.text('重新连接并读取槽位'));
+      await tester.tap(find.text('重新连接并读取槽位'));
+      await tester.pumpAndSettle();
+      expect(deleting.lease, 2);
+      expect(find.text('测试读取失败'), findsNothing);
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.slots.execute'),
+        hasLength(1),
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  for (final format in ['NP2', 'NP3']) {
+    testWidgets(
+      '$format omitted parameters stay informative and allow explicit import',
+      (tester) async {
+        core.presetFormat = format;
+        core.explanation =
+            'NP3 已转换为兼容 NCP，原文件保留。\n保留：曲线与锐化\n不导入：色彩混合器、分区调色\n可继续导入以上兼容部分。';
+        core.compatibility = {
+          'format': format,
+          'omitted': ['色彩混合器：NCP 不支持，已忽略', '分区调色：NCP 不支持，已忽略'],
+          'approximated': ['灵活色彩基底改为自然'],
+          'retained': ['曲线', '锐化'],
+        };
+        await open(tester);
+        await tester.tap(find.byKey(const ValueKey('camera-slot-import')));
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(Key('${format.toLowerCase()}-compatibility-table')),
+          findsOneWidget,
+        );
+        expect(find.text('$format 兼容情况'), findsOneWidget);
+        expect(find.text('色彩混合器：NCP 不支持，已忽略'), findsOneWidget);
+        expect(find.text('分区调色：NCP 不支持，已忽略'), findsOneWidget);
+        expect(find.text('跳过'), findsNWidgets(2));
+        expect(find.text('近似转换'), findsOneWidget);
+        expect(
+          core.calls.where((c) => c.$1 == 'camera.slots.execute'),
+          isEmpty,
+        );
+        final button = tester.widget<FilledButton>(
+          find.widgetWithText(FilledButton, '确认写入此槽位'),
+        );
+        expect(button.onPressed, isNotNull);
+        button.onPressed!();
+        await tester.pumpAndSettle();
+        expect(
+          core.calls.where((c) => c.$1 == 'camera.slots.execute'),
+          hasLength(1),
+        );
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+      },
+    );
   }
 
   testWidgets(
@@ -261,6 +473,7 @@ void main() {
         'path': '/private/test.ncp',
         'middleQuarter': 4,
         'clarityQuarter': 0,
+        'detailOverride': false,
         'parameters': <String, dynamic>{},
       });
       expect(

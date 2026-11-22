@@ -18,6 +18,7 @@ class PhotoMasonry extends StatelessWidget {
     required this.onLongPress,
     this.onMore,
     this.selected,
+    this.edited = const {},
     this.onGroup,
     this.bottomPadding,
     this.loadingMore = false,
@@ -29,6 +30,7 @@ class PhotoMasonry extends StatelessWidget {
   final Future<void> Function(Json) onOpen, onLongPress;
   final VoidCallback? onMore;
   final Set<String>? selected;
+  final Set<String> edited;
   final void Function(List<Json>)? onGroup;
   final double? bottomPadding;
   final bool loadingMore;
@@ -36,8 +38,9 @@ class PhotoMasonry extends StatelessWidget {
 
   Widget tile(BuildContext context, Json row, double ratio) {
     final p = HuePalette.of(context);
+    final video = row['mediaType'] == 'video';
     final image = phone
-        ? _GalleryThumbnail(core: core, id: row['id'] as String)
+        ? GalleryThumbnail(core: core, id: row['id'] as String)
         : row['raw'] == true
         ? _RawThumbnail(core: core, source: row['id'] as String)
         : Image.file(
@@ -55,7 +58,7 @@ class PhotoMasonry extends StatelessWidget {
           excludeSemantics: true,
           onTap: () => onOpen(row),
           onLongPress: () => onLongPress(row),
-          label: row['name'] as String,
+          label: '${row['name']}${edited.contains(row['id']) ? '，已编辑' : ''}',
           button: true,
           selected: selected?.contains(row['id']),
           child: GestureDetector(
@@ -68,7 +71,18 @@ class PhotoMasonry extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   image,
-                  if (selected != null)
+                  if (selected?.contains(row['id']) == true)
+                    Positioned.fill(
+                      child: IgnorePointer(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17),
+                            border: Border.all(color: p.primary, width: 2),
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (selected != null && !video)
                     Positioned(
                       right: 9,
                       top: 9,
@@ -78,7 +92,7 @@ class PhotoMasonry extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: selected!.contains(row['id'])
-                              ? p.ink
+                              ? p.primary
                               : const Color(0x66333333),
                           border: Border.all(color: Colors.white, width: 1.5),
                         ),
@@ -86,7 +100,7 @@ class PhotoMasonry extends StatelessWidget {
                             ? HueIcon(
                                 HueIconKind.check,
                                 size: 16,
-                                color: p.card,
+                                color: p.onPrimary,
                               )
                             : null,
                       ),
@@ -103,17 +117,41 @@ class PhotoMasonry extends StatelessWidget {
                         color: const Color(0xb3232521),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: Text(
-                        photoFormatLabel(
-                          filePath: row['id'] as String,
-                          name: row['name'] as String,
-                        ),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          height: 1.3,
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: edited.contains(row['id']) && !video
+                          ? const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.tune_rounded,
+                                  color: Colors.white,
+                                  size: 14,
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  '已编辑',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    height: 1.3,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              video
+                                  ? '视频'
+                                  : row['live'] == true
+                                  ? '实况'
+                                  : photoFormatLabel(
+                                      filePath: row['id'] as String,
+                                      name: row['name'] as String,
+                                    ),
+                              style: const TextStyle(
+                                fontSize: 10,
+                                height: 1.3,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ),
                 ],
@@ -192,34 +230,100 @@ class PhotoMasonry extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        section.$1!,
-                        style: TextStyle(
-                          fontSize: 13,
-                          height: 1.35,
-                          fontWeight: FontWeight.bold,
-                          color: p.ink,
-                        ),
-                      ),
+                      child: phone
+                          ? Row(
+                              children: [
+                                Text(
+                                  section.$1!,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    height: 1.35,
+                                    fontWeight: FontWeight.w600,
+                                    color: p.ink,
+                                  ),
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 13,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  color: p.outline,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    '${section.$3} ${section.$2.any((row) => row['mediaType'] == 'video') ? '项' : '张'}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: p.secondary,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              section.$1!,
+                              style: TextStyle(
+                                fontSize: 13,
+                                height: 1.35,
+                                fontWeight: FontWeight.bold,
+                                color: p.ink,
+                              ),
+                            ),
                     ),
                     if (selected != null)
                       IconButton(
                         tooltip: '${section.$1}，共 ${section.$3} 张，选择整组',
-                        onPressed: () => onGroup?.call(section.$2),
+                        onPressed:
+                            section.$2.any((row) => row['mediaType'] != 'video')
+                            ? () => onGroup?.call(section.$2)
+                            : null,
                         icon: Icon(
-                          section.$2.every(
-                                (row) => selected!.contains(row['id']),
-                              )
+                          section.$2
+                                  .where((row) => row['mediaType'] != 'video')
+                                  .every((row) => selected!.contains(row['id']))
                               ? Icons.check_circle
                               : Icons.circle_outlined,
                           size: 21,
+                        ),
+                      )
+                    else if (phone)
+                      TextButton(
+                        onPressed:
+                            section.$2.any((row) => row['mediaType'] != 'video')
+                            ? () => onGroup?.call(section.$2)
+                            : null,
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          minimumSize: const Size(56, 48),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 13,
+                            vertical: 5,
+                          ),
+                          decoration: ShapeDecoration(
+                            color: p.container,
+                            shape: const StadiumBorder(),
+                          ),
+                          child: Text(
+                            '选择',
+                            style: TextStyle(fontSize: 13, color: p.ink),
+                          ),
                         ),
                       )
                     else
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          '${section.$3} 张照片',
+                          phone &&
+                                  section.$2.any(
+                                    (row) => row['mediaType'] == 'video',
+                                  )
+                              ? '${section.$3} 项'
+                              : '${section.$3} 张照片',
                           style: TextStyle(fontSize: 11, color: p.secondary),
                         ),
                       ),
@@ -342,15 +446,15 @@ class _RawThumbnailState extends State<_RawThumbnail> {
   );
 }
 
-class _GalleryThumbnail extends StatefulWidget {
-  const _GalleryThumbnail({required this.core, required this.id});
+class GalleryThumbnail extends StatefulWidget {
+  const GalleryThumbnail({super.key, required this.core, required this.id});
   final HueviaCore core;
   final String id;
   @override
-  State<_GalleryThumbnail> createState() => _GalleryThumbnailState();
+  State<GalleryThumbnail> createState() => _GalleryThumbnailState();
 }
 
-class _GalleryThumbnailState extends State<_GalleryThumbnail> {
+class _GalleryThumbnailState extends State<GalleryThumbnail> {
   late Future<String?> image = load();
   Future<String?> load() {
     final identity = widget.id;
@@ -369,9 +473,9 @@ class _GalleryThumbnailState extends State<_GalleryThumbnail> {
   }
 
   @override
-  void didUpdateWidget(covariant _GalleryThumbnail old) {
-    super.didUpdateWidget(old);
-    if (old.id != widget.id) image = load();
+  void didUpdateWidget(covariant GalleryThumbnail oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.id != widget.id) image = load();
   }
 
   @override

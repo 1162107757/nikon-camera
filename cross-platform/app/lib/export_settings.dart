@@ -10,13 +10,16 @@ import 'appearance.dart';
 import 'domain.dart';
 import 'export_preview.dart';
 import 'export_save.dart';
+import 'export_album.dart';
+import 'saved_photo_result.dart';
 import 'export_settings_model.dart';
+import 'original_files.dart';
 import 'original_save.dart';
 import 'original_targets.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
-enum _ExportAction { save, more, versions, original }
+enum _ExportAction { save, saveToFolder, more, versions, original }
 
 Brightness _exportBrightness(BuildContext context) =>
     switch (appearanceMode.value) {
@@ -68,12 +71,26 @@ Future<void> showLegacyExport(
     final action = await Navigator.of(context, rootNavigator: true).push(route);
     await route.completed;
     if (!context.mounted || !model.current || action == null) return;
+    Json? folder;
+    ExportAlbum? album;
+    if (action == _ExportAction.saveToFolder) {
+      try {
+        folder = await OriginalFiles.chooseTarget(model.owner);
+      } catch (failure) {
+        if (context.mounted && model.current) report(context, failure);
+      }
+      if (!context.mounted || !model.current) return;
+      if (folder == null) continue;
+    }
+    if (action == _ExportAction.save) {
+      album = await chooseExportAlbum(context, model.state.core);
+      if (!context.mounted || !model.current) return;
+      if (album == null) continue;
+    }
     final items = await model.freezeSelected();
     if (!context.mounted || !model.current) return;
-    if (action == _ExportAction.save) {
-      if (context.mounted && model.current) {
-        await _save(context, model, items, theme);
-      }
+    if (action == _ExportAction.save || action == _ExportAction.saveToFolder) {
+      await _save(context, model, items, theme, folder: folder, album: album);
       return;
     }
     (String, String?)? original;
@@ -103,9 +120,18 @@ Future<void> _save(
   BuildContext context,
   ExportSettings settings,
   List<ExportItem> values,
-  ThemeData theme,
-) async {
-  final queue = ExportSave(settings.state, settings.owner, values);
+  ThemeData theme, {
+  Json? folder,
+  ExportAlbum? album,
+}) async {
+  final queue = ExportSave(
+    settings.state,
+    settings.owner,
+    values,
+    targetId: folder?['id'] as String?,
+    targetName: folder?['name'] as String?,
+    albumPath: album?.path,
+  );
   try {
     await hueDialog<void>(
       context: context,
@@ -131,6 +157,13 @@ Future<void> _saveOriginal(
       context.mounted &&
       model.current &&
       ModalRoute.of(context)?.isCurrent == true;
+  final linkedPhoto = model.state.photos
+      .where((photo) => photo.path == source)
+      .firstOrNull;
+  final filename = source == model.photo.path
+      ? model.photo.name
+      : linkedPhoto?.name ??
+            '${path.basenameWithoutExtension(model.photo.name)}${path.extension(source)}';
   Future<T?> dialog<T>(WidgetBuilder builder) => hueDialog<T>(
     context: context,
     barrierColor: Colors.black.withValues(
@@ -161,21 +194,22 @@ Future<void> _saveOriginal(
               state: model.state,
               source: checked['path'] as String,
               sourceSha: checked['sourceSha'] as String,
-              filename: source == model.photo.path
-                  ? model.photo.name
-                  : path.basename(source),
+              filename: filename,
             ),
           ),
         );
         return;
       }
       if (accepted != 'gallery') return;
+      final album = await chooseExportAlbum(context, model.state.core);
+      if (album == null || !context.mounted || !current()) return;
       final save = OriginalSave(
         model.state,
         model.owner,
         checked['path'] as String,
         checked['sourceSha'] as String,
-        source == model.photo.path ? model.photo.name : path.basename(source),
+        filename,
+        albumPath: album.path,
       );
       try {
         await dialog<void>((_) => _OriginalProgress(save: save));
@@ -189,9 +223,7 @@ Future<void> _saveOriginal(
             state: model.state,
             source: checked['path'] as String,
             sourceSha: checked['sourceSha'] as String,
-            filename: source == model.photo.path
-                ? model.photo.name
-                : path.basename(source),
+            filename: filename,
           ),
         ),
       );
@@ -200,11 +232,7 @@ Future<void> _saveOriginal(
         ShareParams(
           sharePositionOrigin: shareAnchor(context),
           files: [XFile(checked['path'] as String)],
-          fileNameOverrides: [
-            source == model.photo.path
-                ? model.photo.name
-                : path.basename(source),
-          ],
+          fileNameOverrides: [filename],
         ),
       );
     }
@@ -643,6 +671,17 @@ class _QuickExport extends StatelessWidget {
                     height: 52,
                     radius: 14,
                   ),
+                  if (OriginalFiles.canChooseTarget) ...[
+                    const SizedBox(height: 8),
+                    _exportButton(
+                      '导出到文件夹',
+                      valid ? () => finish(_ExportAction.saveToFolder) : null,
+                      p,
+                      chevron: true,
+                      height: 48,
+                      radius: 14,
+                    ),
+                  ],
                 ],
               ],
             ),
@@ -852,7 +891,7 @@ class _AdvancedExportState extends State<_AdvancedExport> {
     super.dispose();
   }
 
-  Future<void> act({required bool preview}) async {
+  Future<void> act({required bool preview, bool chooseFolder = false}) async {
     if (!valid) return;
     FocusScope.of(context).unfocus();
     setState(() {
@@ -863,6 +902,20 @@ class _AdvancedExportState extends State<_AdvancedExport> {
       // Settle focus and the editable controls before covering their route.
       await WidgetsBinding.instance.endOfFrame;
       if (!mounted || !model.current) return;
+      final folder = chooseFolder
+          ? await OriginalFiles.chooseTarget(model.owner)
+          : null;
+      if (!mounted || !model.current || (chooseFolder && folder == null)) {
+        return;
+      }
+      final album = !preview && !chooseFolder
+          ? await chooseExportAlbum(context, model.state.core)
+          : null;
+      if (!mounted ||
+          !model.current ||
+          (!preview && !chooseFolder && album == null)) {
+        return;
+      }
       final items = await model.freezeSelected(options: options);
       if (!mounted || !model.current) return;
       if (preview) {
@@ -901,7 +954,14 @@ class _AdvancedExportState extends State<_AdvancedExport> {
           ),
         );
       } else {
-        await _save(context, model, items, Theme.of(context));
+        await _save(
+          context,
+          model,
+          items,
+          Theme.of(context),
+          folder: folder,
+          album: album,
+        );
         if (mounted) Navigator.pop(context);
       }
     } catch (failure) {
@@ -1168,7 +1228,7 @@ class _AdvancedExportState extends State<_AdvancedExport> {
                               ),
                             ),
                             const SizedBox(height: 12),
-                            _copy('保留拍摄信息 · 不含定位', 12, p.secondary),
+                            _copy('保留原片的拍摄信息与已有位置', 12, p.secondary),
                             const SizedBox(height: 16),
                             _exportButton(
                               model.chosen.length == 1 ? '查看成品预览' : '逐张查看成品预览',
@@ -1260,16 +1320,34 @@ class _AdvancedExportState extends State<_AdvancedExport> {
                       horizontal: 20,
                       vertical: 12,
                     ),
-                    child: _exportButton(
-                      model.chosen.length == 1
-                          ? '导出到手机相册'
-                          : '导出 ${model.chosen.length} 张到相册',
-                      usable ? () => act(preview: false) : null,
-                      p,
-                      primary: true,
-                      height: 52,
-                      radius: 16,
-                      primaryWeight: FontWeight.w500,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _exportButton(
+                          model.chosen.length == 1
+                              ? '导出到手机相册'
+                              : '导出 ${model.chosen.length} 张到相册',
+                          usable ? () => act(preview: false) : null,
+                          p,
+                          primary: true,
+                          height: 52,
+                          radius: 16,
+                          primaryWeight: FontWeight.w500,
+                        ),
+                        if (OriginalFiles.canChooseTarget) ...[
+                          const SizedBox(height: 8),
+                          _exportButton(
+                            '导出到文件夹',
+                            usable
+                                ? () => act(preview: false, chooseFolder: true)
+                                : null,
+                            p,
+                            chevron: true,
+                            height: 48,
+                            radius: 16,
+                          ),
+                        ],
+                      ],
                     ),
                   ),
                 ),
@@ -1500,7 +1578,15 @@ class _OriginalProgressState extends State<_OriginalProgress> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (!save.invalid) Text(save.filename),
+                if (save.receipt case final receipt?)
+                  SavedPhotoResult(
+                    core: save.state.core,
+                    receipt: receipt,
+                    destination: systemAlbumLabel(save.state.core, save.albumPath),
+                    fallbackName: save.filename,
+                  )
+                else if (!save.invalid)
+                  Text(save.filename),
                 if (save.busy)
                   const Padding(
                     padding: EdgeInsets.only(top: 16),
@@ -1560,7 +1646,9 @@ class _ExportProgressState extends State<_ExportProgress> {
             q.invalid
                 ? '账号已变化'
                 : q.done
-                ? '已保存到手机相册'
+                ? q.targetId == null
+                      ? '已保存到手机相册'
+                      : '已保存到文件夹'
                 : '导出照片',
           ),
           content: SizedBox(
@@ -1571,6 +1659,10 @@ class _ExportProgressState extends State<_ExportProgress> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (!q.invalid) Text('${q.completed} / ${q.items.length}'),
+                  if (!q.invalid)
+                    Text(q.targetId == null
+                        ? systemAlbumLabel(q.state.core, q.albumPath)
+                        : q.targetName ?? '所选文件夹'),
                   if (q.busy)
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
@@ -1580,7 +1672,10 @@ class _ExportProgressState extends State<_ExportProgress> {
                     for (final item in q.items)
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Text('${item.input.label} · ${item.phase}'),
+                        child: item.receipt != null
+                            ? SavedPhotoResult(core: q.state.core, receipt: item.receipt!,
+                                fallbackName: item.input.label)
+                            : Text('${item.input.label} · ${item.phase}'),
                       ),
                   if (q.error != null && !q.invalid) Text(q.error!),
                   if (q.invalid) const Text('请返回后重新打开照片。'),

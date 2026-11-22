@@ -116,7 +116,11 @@ def render_product(a_path, recipe, output, jdk):
     if not profile_proof["verified_srgb"]:
         raise ValueError("A needs a recognized embedded sRGB ICC or PNG sRGB chunk before product rendering")
     java, javac = binaries(jdk)
-    sources = sorted((REPO / "app/src/main/java/cc/huevia/ncp").glob("*.java")) + [HERE / "CalibrationRender.java"]
+    sources = sorted((REPO / "app/src/main/java/cc/huevia/ncp").glob("*.java")) + [
+        REPO / "app/src/main/java/cc/huevia/library/PresetFile.java",
+        REPO / "app/src/main/java/cc/huevia/library/LibraryJson.java",
+        HERE / "CalibrationRender.java",
+    ]
     if not any(p.name == "SpatialPreviewFilter.java" for p in sources):
         raise ValueError("Unified spatial renderer source is missing; refusing a point-only substitute")
     import PIL

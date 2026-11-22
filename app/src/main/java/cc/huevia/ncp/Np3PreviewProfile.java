@@ -19,8 +19,9 @@ import java.nio.charset.StandardCharsets;
  * to RGB; its editor control points/levels/Gamma metadata are validated and are not
  * applied again to its baked samples. Without a custom curve, contrast adds the common
  * RGB offset -.0008*contrast*sin(2*pi*Y), where Y is original encoded Rec.709 luma.
- * Highlights/shadows and white/black lifts retain their smooth masks over each original
- * channel. The combined tone result is clamped and quantized to 8 bits once before HSL.
+ * Shadows and black level add common RGB offsets over original encoded luma, with a
+ * bounded lower-tone shadow mask. Highlights and white lift retain per-channel masks.
+ * The combined tone result is clamped and quantized to 8 bits once before HSL.
  * mapTone exposes the corresponding grayscale section, not a per-channel colour LUT.</p>
  *
  * <p>Colour is approximated in HSL: saturation is multiplied by 1+saturation/100.
@@ -50,7 +51,7 @@ import java.nio.charset.StandardCharsets;
  * A successful parse is not a claim of colour equivalence with NX Studio.</p>
  */
 public final class Np3PreviewProfile implements PresetPreviewProfile {
-    public static final String MODEL_VERSION = "np3-0310-encoded-hsl-zones-spatial-v4";
+    public static final String MODEL_VERSION = "np3-0310-encoded-hsl-zones-spatial-v5";
     private static final int MAX_BYTES = 1024 * 1024;
     private static final double[] ANCHORS = {0, 30, 60, 120, 180, 240, 270, 300, 360};
     private final String registrationName;
@@ -58,6 +59,7 @@ public final class Np3PreviewProfile implements PresetPreviewProfile {
     private final int[] samples;
     private final int[] basic = new int[5];
     private final int[] tone = new int[256];
+    private final double[] shadowTable = new double[1025];
     private final int[][] blender = new int[8][3];
     private final double[][] grade = new double[3][3];
     private final double[][] gradingTable;
@@ -91,7 +93,9 @@ public final class Np3PreviewProfile implements PresetPreviewProfile {
             require(hue <= 360, "调色器色相超出 0–360。");
             int chroma = signed(fields[32], offset + 2, -100, 100, "调色器浓度");
             int brightness = signed(fields[32], offset + 3, -100, 100, "调色器亮度");
-            // Precompute a luma-neutral tint for this zone (highlight, midtone, shadow).
+            // Stored order is shadow, midtone, highlight, verified in NX Studio 1.11.
+            // Its UI shows hue 25/chroma 20 in highlights and 100/7 in shadows for
+            // the Negative Cyan reference; the prior implementation reversed them.
             int rgb = hsl(hue, 1, .5);
             double r = ((rgb >>> 16) & 255) / 255.0, g = ((rgb >>> 8) & 255) / 255.0, b = (rgb & 255) / 255.0;
             double luma = .2126 * r + .7152 * g + .0722 * b;
@@ -112,8 +116,15 @@ public final class Np3PreviewProfile implements PresetPreviewProfile {
                 double h = gaussian(luma - 1, sigma), m = gaussian(luma - .5, sigma), s = gaussian(luma, sigma);
                 double total = h + m + s;
                 for (int channel = 0; channel < 3; channel++)
-                    gradingTable[channel][i] = (grade[0][channel] * h + grade[1][channel] * m + grade[2][channel] * s) / total;
+                    gradingTable[channel][i] = (grade[2][channel] * h + grade[1][channel] * m + grade[0][channel] * s) / total;
             }
+        }
+        // NX 1.11 single-control -70 export: equal RGB deltas, fading out near Y=.63.
+        // A smooth bounded approximation, checked against a separate RAW at +45.
+        // This is not Nikon's proprietary tone function or a preset-specific correction.
+        for (int i = 0; i < shadowTable.length; i++) {
+            double y = i / 1024.0;
+            shadowTable[i] = basic[2] / 100.0 * y * Math.pow(Math.max(0, 1 - y / .63), 1.7);
         }
         for (int i = 0; i < tone.length; i++) tone[i] = channel(mapTone(i / 255.0));
     }
@@ -215,16 +226,25 @@ public final class Np3PreviewProfile implements PresetPreviewProfile {
             return (samples[lower] + (samples[lower + 1] - samples[lower]) * (position - lower)) / 32767.0;
         }
         double x = normalized;
-        return clamp(mapOriginalNonContrastBasic(x) - .0008 * basic[0] * Math.sin(2 * Math.PI * x));
+        return clamp(mapOriginalNonContrastBasic(x) + shadowOffset(x) + blackOffset(x)
+                - .0008 * basic[0] * Math.sin(2 * Math.PI * x));
     }
 
-    // The four non-contrast terms consume the original encoded channel, before clamping.
+    // The channel-specific terms consume the original encoded channel, before clamping.
     private double mapOriginalNonContrastBasic(double x) {
-        double upper = smooth(x), lower = smooth(1 - x);
+        double upper = smooth(x);
         return x + basic[1] / 250.0 * upper * (1 - x)
-                + basic[2] / 250.0 * lower * x
-                + basic[3] / 500.0 * x * x
-                + basic[4] / 500.0 * (1 - x) * (1 - x);
+                + basic[3] / 500.0 * x * x;
+    }
+
+    // Common offset follows the observed nearly linear lower-end lift in NX's
+    // isolated -15 export. Using one luma mask avoids introducing a warm cast.
+    private double blackOffset(double y) { return basic[4] / 275.0 * (1 - y); }
+
+    private double shadowOffset(double y) {
+        double position = y * 1024;
+        int lower = Math.min(1023, (int) position);
+        return mix(shadowTable[lower], shadowTable[lower + 1], position - lower);
     }
 
     /** Transform one unpremultiplied ARGB pixel, preserving alpha exactly. */
@@ -248,11 +268,12 @@ public final class Np3PreviewProfile implements PresetPreviewProfile {
             double originalG = ((argb >>> 8) & 255) / 255.0;
             double originalB = (argb & 255) / 255.0;
             double y = .2126 * originalR + .7152 * originalG + .0722 * originalB;
-            double contrastOffset = -.0008 * basic[0] * Math.sin(2 * Math.PI * y);
+            double commonOffset = shadowOffset(y) + blackOffset(y)
+                    - .0008 * basic[0] * Math.sin(2 * Math.PI * y);
             // Keep the original tone-stage clamp/8-bit quantization, once, before HSL.
-            r = channel(mapOriginalNonContrastBasic(originalR) + contrastOffset) / 255.0;
-            g = channel(mapOriginalNonContrastBasic(originalG) + contrastOffset) / 255.0;
-            b = channel(mapOriginalNonContrastBasic(originalB) + contrastOffset) / 255.0;
+            r = channel(mapOriginalNonContrastBasic(originalR) + commonOffset) / 255.0;
+            g = channel(mapOriginalNonContrastBasic(originalG) + commonOffset) / 255.0;
+            b = channel(mapOriginalNonContrastBasic(originalB) + commonOffset) / 255.0;
         }
         double max = Math.max(r, Math.max(g, b)), min = Math.min(r, Math.min(g, b));
         double delta = max - min, light = (max + min) / 2;

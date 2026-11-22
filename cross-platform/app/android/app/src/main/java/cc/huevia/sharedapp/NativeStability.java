@@ -1,6 +1,8 @@
 package cc.huevia.sharedapp;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.os.Build;
 import cc.huevia.AppCrashDiagnostics;
 import org.json.JSONObject;
 import java.io.*;
@@ -33,6 +35,11 @@ final class NativeStability {
     }
     synchronized String snapshot(){
         JSONObject result=AppCrashDiagnostics.snapshot(context);
+        try{
+            PackageInfo installed=context.getPackageManager().getPackageInfo(context.getPackageName(),0);
+            long build=Build.VERSION.SDK_INT>=28?installed.getLongVersionCode():installed.versionCode;
+            result.put("currentAppBuild",build);
+        }catch(Exception|LinkageError unavailable){/* An unknown build is omitted. */}
         try{
             result.put("platform","android");File file=record();
             if(file.isFile()&&file.length()<=LIMIT)result.put("lastFlutterError",new JSONObject(new String(Files.readAllBytes(file.toPath()),StandardCharsets.UTF_8)));

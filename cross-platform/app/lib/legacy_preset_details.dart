@@ -413,7 +413,7 @@ class _PresetTonePainter extends CustomPainter {
     }
 
     text(
-      format == 'NP3' ? '手机色调映射' : '色调曲线',
+      format != 'NCP' ? '手机色调映射' : '色调曲线',
       16,
       14,
       13,

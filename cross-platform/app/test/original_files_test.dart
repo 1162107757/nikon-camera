@@ -240,7 +240,7 @@ void main() {
         hasLength(1),
       );
       expect(core.permissions, 0);
-      expect(find.text('原始文件已保存并保留完整格式。'), findsOneWidget);
+      expect(find.text('已保存到 RAW folder'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
     },

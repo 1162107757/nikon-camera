@@ -26,6 +26,7 @@ class SplitCompare extends StatefulWidget {
     this.originalDetailController,
     this.viewportState,
     this.viewportPlane,
+    this.fitPreview = false,
   });
   final String effect;
   final String? original;
@@ -41,12 +42,17 @@ class SplitCompare extends StatefulWidget {
       originalDetailController;
   final EditingViewportState? viewportState;
   final EditingViewportPlane? viewportPlane;
+  final bool fitPreview;
   @override
   State<SplitCompare> createState() => _SplitCompareState();
 }
 
 class _SplitCompareState extends State<SplitCompare> {
   final transform = TransformationController();
+  TransformationController? fitTransform;
+  TransformationController get displayTransform => widget.fitPreview
+      ? (fitTransform ??= TransformationController())
+      : transform;
   late EditingViewportBinding viewportBinding;
   final ownViewport = EditingViewportState();
   double divider = .5;
@@ -73,10 +79,10 @@ class _SplitCompareState extends State<SplitCompare> {
       return;
     }
     final visible = Rect.fromPoints(
-      transform.toScene(Offset.zero),
-      transform.toScene(Offset(viewport.width, viewport.height)),
+      displayTransform.toScene(Offset.zero),
+      displayTransform.toScene(Offset(viewport.width, viewport.height)),
     ).intersect(imageRect);
-    final scale = transform.value.getMaxScaleOnAxis();
+    final scale = displayTransform.value.getMaxScaleOnAxis();
     final region = visible.isEmpty
         ? Rect.zero
         : Rect.fromLTRB(
@@ -132,6 +138,7 @@ class _SplitCompareState extends State<SplitCompare> {
     viewportBinding.dispose();
     transform.removeListener(reportViewport);
     transform.dispose();
+    fitTransform?.dispose();
     super.dispose();
   }
 
@@ -175,14 +182,28 @@ class _SplitCompareState extends State<SplitCompare> {
         imageRect: imageRect,
         plane: widget.viewportPlane,
         active:
+            !widget.fitPreview &&
             TickerMode.valuesOf(context).enabled &&
             (ModalRoute.of(context)?.isCurrent ?? true),
       );
       reportAfterLayout();
       void adjust(double value) =>
           setState(() => divider = value.clamp(0.0, 1.0));
+      final gestures = MediaQuery.systemGestureInsetsOf(context);
+      // The clipping line can reach either endpoint; its 48dp grip stays fully
+      // inside the viewport, beyond the system's edge-back gesture areas.
+      final gripWidth = box.maxWidth.clamp(0.0, 48.0);
+      final maxLeft = (box.maxWidth - gripWidth).clamp(0.0, double.infinity);
+      final safeLeft = (gestures.left + 12).clamp(0.0, maxLeft / 2);
+      final safeRight = (gestures.right + 12).clamp(0.0, maxLeft / 2);
+      final gripLeft = (box.maxWidth * divider - gripWidth / 2).clamp(
+        safeLeft,
+        maxLeft - safeRight,
+      );
       Widget surface(String path) => InteractiveViewer(
-        transformationController: transform,
+        transformationController: displayTransform,
+        panEnabled: !widget.fitPreview,
+        scaleEnabled: !widget.fitPreview,
         minScale: 1,
         maxScale: 32,
         child: SizedBox(
@@ -271,9 +292,9 @@ class _SplitCompareState extends State<SplitCompare> {
               child: ClipRect(
                 clipper: _FractionClip(divider),
                 child: AnimatedBuilder(
-                  animation: transform,
+                  animation: displayTransform,
                   builder: (_, _) => Transform(
-                    transform: transform.value,
+                    transform: displayTransform.value,
                     alignment: Alignment.topLeft,
                     child: image(
                       widget.original!,
@@ -284,13 +305,22 @@ class _SplitCompareState extends State<SplitCompare> {
               ),
             ),
             Positioned(
-              left: (box.maxWidth * divider - 24).clamp(
-                -24.0,
-                box.maxWidth - 24,
-              ),
+              left: box.maxWidth * divider,
               top: 0,
               bottom: 0,
-              width: 48,
+              child: const IgnorePointer(
+                child: SizedBox(
+                  key: ValueKey('compare-line'),
+                  width: 1,
+                  child: ColoredBox(color: Colors.white),
+                ),
+              ),
+            ),
+            Positioned(
+              left: gripLeft,
+              top: 0,
+              bottom: 0,
+              width: gripWidth,
               child: Focus(
                 onKeyEvent: (_, event) {
                   if (event is! KeyDownEvent) return KeyEventResult.ignored;
@@ -322,7 +352,6 @@ class _SplitCompareState extends State<SplitCompare> {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Container(width: 1, color: Colors.white),
                         Container(
                           width: 36,
                           height: 48,

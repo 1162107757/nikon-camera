@@ -3,6 +3,57 @@ import 'package:flutter/material.dart';
 import 'camera_connection.dart';
 import 'legacy_glass_sheet.dart';
 import 'theme.dart';
+import 'widgets.dart';
+
+typedef FujifilmWifiChoice = ({String ssid, String password});
+
+Future<FujifilmWifiChoice?> showFujifilmWifiDialog(BuildContext context) {
+  var ssid = '', password = '';
+  final form = GlobalKey<FormState>();
+  return hueDialog<FujifilmWifiChoice>(
+    context: context,
+    builder: (dialog) => AlertDialog(
+      title: const Text('选择富士相机 Wi-Fi'),
+      content: SingleChildScrollView(
+        child: Form(
+          key: form,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('在 X-T20 回放菜单中开启「无线通信」，填写手机 Wi-Fi 列表里显示的相机网络名称。'),
+              const SizedBox(height: 14),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Wi-Fi 名称（SSID）'),
+                autocorrect: false,
+                onChanged: (value) => ssid = value.trim(),
+                validator: (_) => ssid.isEmpty ? '请输入相机 Wi-Fi 名称' : null,
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Wi-Fi 密码（无密码可留空）'),
+                obscureText: true,
+                autocorrect: false,
+                onChanged: (value) => password = value,
+              ),
+            ],
+          ),
+        ),
+      ),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(dialog), child: const Text('取消')),
+        FilledButton(
+          onPressed: () {
+            if (form.currentState?.validate() == true) {
+              Navigator.pop(dialog, (ssid: ssid, password: password));
+            }
+          },
+          child: const Text('连接热点'),
+        ),
+      ],
+    ),
+  );
+}
 
 /// Presentation only. The caller retains the bounded, cancellable connection.
 class CameraConnectionView extends StatelessWidget {
@@ -10,6 +61,7 @@ class CameraConnectionView extends StatelessWidget {
     super.key,
     required this.usb,
     required this.busy,
+    this.closingWiredSession = false,
     required this.usbBusy,
     required this.connected,
     required this.model,
@@ -25,6 +77,7 @@ class CameraConnectionView extends StatelessWidget {
     required this.onTransportChanged,
     required this.onProtocol,
     required this.onConnect,
+    this.onChooseFujifilmWifi,
     required this.onCancel,
     required this.onSettings,
     required this.onPermissionSettings,
@@ -33,12 +86,14 @@ class CameraConnectionView extends StatelessWidget {
     required this.onDiagnostics,
   });
   final bool usb, busy, usbBusy, connected, settingsExpanded;
+  final bool closingWiredSession;
   final String model, protocol;
   final String? error;
   final CameraConnectionRequest request;
   final TextEditingController host, port;
   final Widget usbPicker, usbPrimaryAction, transferCard;
   final ValueChanged<bool> onTransportChanged;
+  final VoidCallback? onChooseFujifilmWifi;
   final VoidCallback onProtocol,
       onConnect,
       onCancel,
@@ -199,7 +254,9 @@ class CameraConnectionView extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 18),
                 children: [
                   transferCard,
-                  if (connected) ...[
+                  if (closingWiredSession && !request.busy)
+                    const WiredSessionClosingStatus()
+                  else if (connected) ...[
                     const SizedBox(height: 30),
                     const Icon(Icons.check_circle_outline, size: 40),
                     const SizedBox(height: 18),
@@ -291,6 +348,19 @@ class CameraConnectionView extends StatelessWidget {
                                   color: p.secondary,
                                 ),
                               ),
+                              if (!usb && protocol == 'fujifilm' &&
+                                  error!.contains('命令通道连接被拒绝'))
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 8),
+                                  child: Text('请从 X-T20 回放菜单打开「无线通信」。如果机身显示旧手机，按机身提示切换接入设备。'),
+                                ),
+                              if (!usb && protocol == 'fujifilm' &&
+                                  onChooseFujifilmWifi != null)
+                                TextButton.icon(
+                                  onPressed: locked ? null : onChooseFujifilmWifi,
+                                  icon: const Icon(Icons.wifi_rounded, size: 17),
+                                  label: const Text('指定相机 Wi-Fi'),
+                                ),
                               TextButton(
                                 onPressed: onDiagnostics,
                                 child: const Text('导出诊断报告'),
@@ -345,12 +415,24 @@ class CameraConnectionView extends StatelessWidget {
                       const SizedBox(height: 18),
                       usbPicker,
                     ] else ...[
-                      step(context, 1, '在相机上开启 Wi-Fi', '保持机身的无线连接界面开启。'),
+                      step(
+                        context, 1,
+                        protocol == 'fujifilm' ? '在 X-T20 打开「无线通信」' : '在相机上开启 Wi-Fi',
+                        protocol == 'fujifilm' ? '从相机的回放菜单进入，并保持该画面开启。' : '保持机身的无线连接界面开启。',
+                      ),
                       step(
                         context,
                         2,
                         '让手机连接相机的 Wi-Fi',
-                        '在系统 Wi-Fi 设置中选择相机网络。',
+                        onChooseFujifilmWifi != null && protocol == 'fujifilm'
+                            ? '可在系统 Wi-Fi 设置中连接，也可以在 Huevia 内指定相机热点。'
+                            : '在系统 Wi-Fi 设置中选择相机网络。',
+                        action: onChooseFujifilmWifi != null && protocol == 'fujifilm' && error == null
+                            ? TextButton(
+                                onPressed: locked ? null : onChooseFujifilmWifi,
+                                child: const Text('指定相机 Wi-Fi'),
+                              )
+                            : null,
                       ),
                       step(
                         context,
@@ -358,7 +440,7 @@ class CameraConnectionView extends StatelessWidget {
                         '回到 Huevia，开始连接',
                         protocol == 'nikon'
                             ? '机身出现连接提示时，请在相机上确认。'
-                            : '请在 X-T20 机身按 OK；当前支持 JPEG 浏览和下载。',
+                            : '机身出现连接提示时，请在相机上确认；当前支持 JPEG 浏览和下载。',
                       ),
                       const SizedBox(height: 24),
                       Material(
@@ -379,7 +461,7 @@ class CameraConnectionView extends StatelessWidget {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(protocol == 'nikon' ? '尼康' : '富士 X-T20'),
+                              Text(protocol == 'nikon' ? '尼康' : '富士'),
                               const SizedBox(width: 8),
                               const Icon(Icons.chevron_right, size: 20),
                             ],
@@ -539,4 +621,22 @@ class CameraConnectionView extends StatelessWidget {
       ),
     );
   }
+}
+
+class WiredSessionClosingStatus extends StatelessWidget {
+  const WiredSessionClosingStatus({super.key});
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    liveRegion: true,
+    child: const Column(
+      children: [
+        LinearProgressIndicator(minHeight: 2),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: Text('正在结束传输并关闭 USB 会话…'),
+        ),
+      ],
+    ),
+  );
 }
