@@ -92,7 +92,8 @@ public final class SharedDownloadsBoundaryTest {
             Map<String,Object> p=SharedRuntime.map("owner","","queueId",id,"operationId",item,"path",source.toString(),"expectedSourceSha",sha,"filename",object.filename(),"albumPath",album);
             rejects(()->runtime.prepareQueuedGalleryPublication(SharedJson.encode(changed(p,"albumPath","DCIM/Other/")),()->false));
             Map<String,Object> prepared=SharedJson.object(runtime.prepareQueuedGalleryPublication(SharedJson.encode(p),()->false));
-            yes(Arrays.equals(Files.readAllBytes(Path.of((String)prepared.get("path"))),jpeg));
+            Path preparedPath=new File((String)prepared.get("path")).toPath();
+            yes(Arrays.equals(Files.readAllBytes(preparedPath),jpeg));
             request(runtime,"downloads.item",SharedRuntime.map("owner","","id",id,"itemId",item,"phase","failed"));
             yes(Files.exists(source));
             yes(prepared.equals(SharedJson.object(runtime.prepareQueuedGalleryPublication(SharedJson.encode(p),()->false))));
