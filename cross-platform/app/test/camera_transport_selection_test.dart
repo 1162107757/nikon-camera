@@ -9,7 +9,6 @@ import 'package:huevia/theme.dart';
 import 'camera_intent_test.dart' as intent;
 
 class _TransportCore extends intent.IntentCameraCore {
-  String transport = 'wifi';
   int permissions = 0;
   Completer<Json>? discovery;
   bool denied = false;
