@@ -7,11 +7,15 @@ import 'batch_export.dart';
 import 'editor.dart';
 import 'album_operations.dart';
 import 'domain.dart';
+import 'export_album.dart';
+import 'saved_photo_result.dart';
+import 'export_save.dart';
+import 'original_files.dart';
 import 'photo_grid.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
-/// Lets the shell hide its navigation while the album keeps its existing grid.
+/// Reports selection while keeping the album grid and shell navigation mounted.
 class AlbumSelectionChanged extends Notification {
   const AlbumSelectionChanged(this.active);
   final bool active;
@@ -177,11 +181,12 @@ class AlbumSelectionDock extends StatelessWidget {
     required this.onPressed,
     this.onExport,
     this.onDelete,
+    this.onCollage,
     this.inline = false,
     this.phone = false,
   });
   final VoidCallback? onPressed;
-  final VoidCallback? onExport, onDelete;
+  final VoidCallback? onExport, onDelete, onCollage;
   final bool inline, phone;
   @override
   Widget build(BuildContext context) {
@@ -228,6 +233,7 @@ class AlbumSelectionDock extends StatelessWidget {
                           ('导出', HueIconKind.download, onExport),
                         if (inline && !phone)
                           ('删除', HueIconKind.delete, onDelete),
+                        if (inline) ('拼接', HueIconKind.grid, onCollage),
                       ])
                         Expanded(
                           child: TextButton(
@@ -286,33 +292,50 @@ class BatchExportPage extends StatefulWidget {
     required this.rows,
     required this.phone,
     this.saveToGallery = false,
+    this.currentEffects = false,
   });
   final AppState state;
   final List<Json> rows;
   final bool phone;
   final bool saveToGallery;
+  final bool currentEffects;
   @override
   State<BatchExportPage> createState() => _BatchExportPageState();
 }
+
+enum _BatchDestination { app, album, folder }
 
 class _BatchExportPageState extends State<BatchExportPage> {
   late final BatchExport batch = BatchExport(
     widget.state,
     widget.rows,
     phone: widget.phone,
+    currentEffects: widget.currentEffects,
   );
   String preset = '__keep__', size = 'full';
   double strength = 100;
-  bool sharing = false, editing = false, systemAlbum = false;
+  bool sharing = false, editing = false, choosingTarget = false;
+  late _BatchDestination destination;
+  String? folderId, folderName;
+  String? albumPath;
   @override
   void initState() {
     super.initState();
-    systemAlbum = widget.saveToGallery;
+    destination = widget.saveToGallery
+        ? _BatchDestination.album
+        : _BatchDestination.app;
     if (batch.locked) {
       preset = batch.preset ?? '__keep__';
       size = batch.size;
       strength = batch.strength.toDouble();
-      systemAlbum = batch.saveToGallery;
+      folderId = batch.targetId;
+      folderName = batch.targetName;
+      albumPath = batch.albumPath;
+      destination = folderId != null
+          ? _BatchDestination.folder
+          : batch.saveToGallery
+          ? _BatchDestination.album
+          : _BatchDestination.app;
     }
   }
 
@@ -323,15 +346,58 @@ class _BatchExportPageState extends State<BatchExportPage> {
   }
 
   Future<void> run() async {
+    if (choosingTarget) return;
     try {
       await batch.run(
         presetId: preset == '__keep__' ? null : preset,
         amount: strength.round(),
         exportSize: size,
-        systemAlbum: systemAlbum,
+        systemAlbum: destination == _BatchDestination.album,
+        targetId: folderId,
+        targetName: folderName,
+        albumPath: destination == _BatchDestination.album ? albumPath : null,
       );
     } catch (failure) {
       if (mounted) report(context, failure);
+    }
+  }
+
+  Future<void> selectDestination(_BatchDestination? value) async {
+    if (value == null || batch.locked || choosingTarget) return;
+    if (value != _BatchDestination.folder) {
+      setState(() {
+        destination = value;
+        folderId = null;
+        folderName = null;
+      });
+      return;
+    }
+    setState(() => choosingTarget = true);
+    try {
+      final target = await OriginalFiles.chooseTarget(batch.owner);
+      if (target == null || !mounted || batch.accountInvalid) return;
+      setState(() {
+        destination = value;
+        folderId = target['id'] as String;
+        folderName = target['name'] as String;
+      });
+    } catch (failure) {
+      if (mounted && !batch.accountInvalid) report(context, failure);
+    } finally {
+      if (mounted) setState(() => choosingTarget = false);
+    }
+  }
+
+  Future<void> selectAlbum() async {
+    if (batch.locked || choosingTarget) return;
+    setState(() => choosingTarget = true);
+    try {
+      final selected = await chooseExportAlbum(context, widget.state.core);
+      if (mounted && !batch.accountInvalid && selected != null) {
+        setState(() => albumPath = selected.path);
+      }
+    } finally {
+      if (mounted) setState(() => choosingTarget = false);
     }
   }
 
@@ -360,13 +426,24 @@ class _BatchExportPageState extends State<BatchExportPage> {
     if (sharing || batch.busy || batch.accountInvalid) return;
     setState(() => sharing = true);
     try {
+      final items = batch.items.where((item) => item.output != null).toList();
+      final nextNumbers = <String, int>{};
+      final names = items.map((item) {
+        final originalName =
+            item.photo?.name ?? item.row['name'] as String? ?? '照片';
+        final key = exportJpegName(originalName).toLowerCase();
+        final number = nextNumbers.update(
+          key,
+          (last) => last + 1,
+          ifAbsent: () => 1,
+        );
+        return exportJpegName(originalName, number: number);
+      }).toList();
       await SharePlus.instance.share(
         ShareParams(
           sharePositionOrigin: shareAnchor(context),
-          files: batch.items
-              .where((item) => item.output != null)
-              .map((item) => XFile(item.output!))
-              .toList(),
+          files: items.map((item) => XFile(item.output!)).toList(),
+          fileNameOverrides: names,
         ),
       );
     } catch (failure) {
@@ -385,7 +462,10 @@ class _BatchExportPageState extends State<BatchExportPage> {
         if (!didPop && batch.busy) report(context, '请先停止批量处理，再返回。');
       },
       child: Scaffold(
-        appBar: const HueHeader(title: '批量编辑', back: true),
+        appBar: HueHeader(
+          title: widget.currentEffects ? '导出照片' : '批量编辑',
+          back: true,
+        ),
         body: ListView(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
           children: [
@@ -394,34 +474,46 @@ class _BatchExportPageState extends State<BatchExportPage> {
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 8),
-            const Text('点击照片逐张使用完整编辑器，返回后按各自草稿统一导出。任务开始后会冻结全部设置，可停止后继续。'),
+            Text(
+              widget.currentEffects
+                  ? batch.locked
+                        ? '继续上次未完成的导出，沿用任务开始时固定的效果和保存位置；之后新增的调整不会替换本次任务。'
+                        : '按各张照片当前的调整效果导出，原图保留。开始后会固定本次效果，可停止后继续。'
+                  : '点击照片逐张使用完整编辑器，返回后按各自草稿统一导出。任务开始后会冻结全部设置，可停止后继续。',
+            ),
             if (widget.rows.any((row) => row['raw'] == true))
               const Padding(
                 padding: EdgeInsets.only(top: 8),
                 child: Text('RAW 使用上次显影设置；首次使用相机白平衡和高光保护，生成 JPEG 工作副本。'),
               ),
             const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              initialValue: preset,
-              isExpanded: true,
-              decoration: const InputDecoration(labelText: '统一预设'),
-              items: [
-                const DropdownMenuItem(
-                  value: '__keep__',
-                  child: Text('保留各自编辑'),
-                ),
-                const DropdownMenuItem(value: '', child: Text('无滤镜 · 保留其他调节')),
-                for (final item in widget.state.presets)
-                  DropdownMenuItem(
-                    value: item.id,
-                    child: Text(item.name, overflow: TextOverflow.ellipsis),
+            if (!widget.currentEffects)
+              DropdownButtonFormField<String>(
+                initialValue: preset,
+                isExpanded: true,
+                decoration: const InputDecoration(labelText: '统一预设'),
+                items: [
+                  const DropdownMenuItem(
+                    value: '__keep__',
+                    child: Text('保留各自编辑'),
                   ),
-              ],
-              onChanged: batch.locked
-                  ? null
-                  : (value) => setState(() => preset = value!),
-            ),
-            if (preset != '__keep__' && preset.isNotEmpty) ...[
+                  const DropdownMenuItem(
+                    value: '',
+                    child: Text('无滤镜 · 保留其他调节'),
+                  ),
+                  for (final item in widget.state.presets)
+                    DropdownMenuItem(
+                      value: item.id,
+                      child: Text(item.name, overflow: TextOverflow.ellipsis),
+                    ),
+                ],
+                onChanged: batch.locked
+                    ? null
+                    : (value) => setState(() => preset = value!),
+              ),
+            if (!widget.currentEffects &&
+                preset != '__keep__' &&
+                preset.isNotEmpty) ...[
               const SizedBox(height: 12),
               Text('预设强度 ${strength.round()}%'),
               Slider(
@@ -446,18 +538,70 @@ class _BatchExportPageState extends State<BatchExportPage> {
                   : (value) => setState(() => size = value.single),
             ),
             const SizedBox(height: 20),
-            DropdownButtonFormField<bool>(
-              initialValue: systemAlbum,
-              isExpanded: true,
+            InputDecorator(
               decoration: const InputDecoration(labelText: '保存目标'),
-              items: const [
-                DropdownMenuItem(value: false, child: Text('应用成品')),
-                DropdownMenuItem(value: true, child: Text('同时保存手机相册')),
-              ],
-              onChanged: batch.locked || editing
-                  ? null
-                  : (value) => setState(() => systemAlbum = value!),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<_BatchDestination>(
+                  value: destination,
+                  isExpanded: true,
+                  items: [
+                    const DropdownMenuItem(
+                      value: _BatchDestination.app,
+                      child: Text('应用成品'),
+                    ),
+                    const DropdownMenuItem(
+                      value: _BatchDestination.album,
+                      child: Text('同时保存手机相册'),
+                    ),
+                    if (OriginalFiles.canChooseTarget || folderId != null)
+                      const DropdownMenuItem(
+                        value: _BatchDestination.folder,
+                        child: Text('导出到文件夹'),
+                      ),
+                  ],
+                  onChanged: batch.locked || editing || choosingTarget
+                      ? null
+                      : selectDestination,
+                ),
+              ),
             ),
+            if (destination == _BatchDestination.album &&
+                widget.state.core.platform == 'android')
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.photo_album_outlined),
+                title: Text(
+                  ExportAlbum(albumPath).name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: batch.locked
+                    ? null
+                    : TextButton(
+                        onPressed: editing || choosingTarget
+                            ? null
+                            : selectAlbum,
+                        child: const Text('选择相册'),
+                      ),
+              ),
+            if (folderName != null)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.folder_outlined),
+                title: Text(
+                  folderName!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                trailing: batch.locked
+                    ? null
+                    : TextButton(
+                        onPressed: editing || choosingTarget
+                            ? null
+                            : () => selectDestination(_BatchDestination.folder),
+                        child: const Text('更换文件夹'),
+                      ),
+              ),
             const SizedBox(height: 16),
             if (batch.busy || editing) const LinearProgressIndicator(),
             if (batch.recoveryError != null)
@@ -470,7 +614,11 @@ class _BatchExportPageState extends State<BatchExportPage> {
               child: Text(
                 batch.accountInvalid
                     ? '账号已改变，任务停止。请重新选择照片。'
-                    : '已保存成品 ${batch.completed}/${batch.items.length} 张${batch.saveToGallery ? ' · 手机相册 ${batch.published}/${batch.items.length}' : ''}${batch.failed > 0 ? ' · ${batch.failed} 张未完成' : ''}${batch.stopped ? ' · 已停止' : ''}',
+                    : '已保存成品 ${batch.completed}/${batch.items.length} 张${batch.targetId != null
+                          ? ' · 文件夹 ${batch.published}/${batch.items.length}'
+                          : batch.saveToGallery
+                          ? ' · 手机相册 ${batch.published}/${batch.items.length}'
+                          : ''}${batch.failed > 0 ? ' · ${batch.failed} 张未完成' : ''}${batch.stopped ? ' · 已停止' : ''}',
               ),
             ),
             for (final item in batch.items)
@@ -481,7 +629,15 @@ class _BatchExportPageState extends State<BatchExportPage> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                subtitle: Text(item.error ?? item.phase),
+                subtitle: item.receipt == null
+                    ? Text(item.error ?? item.phase)
+                    : SavedPhotoResult(
+                        core: widget.state.core,
+                        receipt: item.receipt!,
+                        destination: batch.targetId != null
+                            ? batch.targetName ?? '所选文件夹'
+                            : systemAlbumLabel(widget.state.core, batch.albumPath),
+                      ),
                 onTap: batch.locked || editing
                     ? null
                     : () => unawaited(edit(item)),
@@ -508,7 +664,9 @@ class _BatchExportPageState extends State<BatchExportPage> {
                   )
                 else if (!batch.done)
                   FilledButton(
-                    onPressed: batch.accountInvalid || editing ? null : run,
+                    onPressed: batch.accountInvalid || editing || choosingTarget
+                        ? null
+                        : run,
                     child: Text(batch.locked ? '继续处理未完成项' : '开始批量导出'),
                   ),
                 if (batch.completed > 0 && !batch.busy)

@@ -17,6 +17,8 @@ void main() {
       (_) async => jsonEncode({
         'platform': 'android',
         'sdk': 31,
+        'currentAppVersion': '0.31.1-dev',
+        'currentAppBuild': 244,
         'lastJavaCrash': 'java.lang.IllegalStateException: secret-crash-message private-crash-path\n\tat cc.huevia.sharedapp.NativeMedia.render(NativeMedia.java:20)',
         'fingerprint': 'private-device-id',
       }),
@@ -66,6 +68,8 @@ void main() {
       expect(encoded.contains(secret), false);
     }
     expect((snapshot['operations'] as List).length, 128);
+    expect(snapshot['application']['version'], '0.31.1-dev');
+    expect(snapshot['application']['build'], 244);
     expect(snapshot['camera']['trace'].length, 2);
     expect(snapshot['camera']['observedObjects'], 2);
     expect(snapshot['gallery']['access'], 'limited');

@@ -3,10 +3,12 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/export_settings.dart';
 import 'package:huevia/export_settings_model.dart';
+import 'package:huevia/original_files.dart';
 import 'package:huevia/theme.dart';
 
 import 'export_settings_model_test.dart' show ExportFormCore, ExportFormState;
@@ -264,6 +266,40 @@ void main() {
       expect(core.calls.map((c) => c.$1), isNot(contains('draft.save')));
       await tester.ensureVisible(find.byTooltip('取消导出，返回照片'));
       await tester.tap(find.byTooltip('取消导出，返回照片'));
+      await tester.pumpAndSettle();
+    },
+  );
+  testWidgets(
+    'cancelling the folder picker keeps the selected export versions',
+    (tester) async {
+      final calls = <MethodCall>[];
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      messenger.setMockMethodCallHandler(OriginalFiles.channel, (call) async {
+        calls.add(call);
+        return null;
+      });
+      addTearDown(
+        () => messenger.setMockMethodCallHandler(OriginalFiles.channel, null),
+      );
+      final (core, model) = await open(tester);
+      await tester.tap(find.text('原图'));
+      await tester.pumpAndSettle();
+      final folder = find.text('导出到文件夹');
+      await tester.ensureVisible(folder);
+      await tester.tap(folder);
+      await tester.pump(const Duration(milliseconds: 450));
+      await reach(tester, folder);
+      expect(calls.map((call) => call.method), ['chooseTarget']);
+      expect(calls.single.arguments, {'owner': model.owner});
+      expect(model.selected, {'current', 'original'});
+      expect(
+        core.calls.map((call) => call.$1),
+        isNot(contains('media.export')),
+      );
+      final close = find.byTooltip('取消导出，返回照片');
+      await tester.ensureVisible(close);
+      await tester.tap(close);
       await tester.pumpAndSettle();
     },
   );

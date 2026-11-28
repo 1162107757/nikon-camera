@@ -61,18 +61,24 @@ void main() {
         await tester.pumpAndSettle();
       }
 
-      await show();
-      final hold = await tester.startGesture(
-        tester.getCenter(
+      Future<void> openPhotoStarMenu() async {
+        await tester.longPress(
           find.byKey(const ValueKey('photo-/private/originals/first.jpg')),
-        ),
-      );
-      await tester.pump(const Duration(seconds: 1));
-      await hold.up();
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.byTooltip('所选照片更多操作'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('照片星标'));
+        await tester.pumpAndSettle();
+      }
+
+      await show();
+      await openPhotoStarMenu();
       await tester.tap(find.text('标记星标'));
       await tester.pumpAndSettle();
       expect(model.starredPhotos, hasLength(1));
+      await tester.tap(find.byTooltip('取消选择'));
+      await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('相册更多操作'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('只看星标照片'));
@@ -88,10 +94,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
       await show();
-      await tester.longPress(
-        find.byKey(const ValueKey('photo-/private/originals/first.jpg')),
-      );
-      await tester.pumpAndSettle();
+      await openPhotoStarMenu();
       expect(find.text('取消星标'), findsOneWidget);
       await tester.tapAt(const Offset(10, 10));
       await tester.pumpAndSettle();

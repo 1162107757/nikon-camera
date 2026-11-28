@@ -21,6 +21,7 @@ public final class SharedDownloads {
                 List<Object> summaries=new ArrayList<>(),issues=new ArrayList<>();File[] files=directory.listFiles((d,n)->n.matches("[a-f0-9]{32}\\.json"));
                 if(files==null)throw new IOException("下载记录目录不可用。");Arrays.sort(files,Comparator.comparingLong(File::lastModified).reversed());
                 for(File file:files){if(summaries.size()>=32)break;try{Map<String,Object> q=read(file,owner);int done=0;for(Object v:rows(q)){String phase=(String)SharedRuntime.object(v).get("phase");if(phase.equals("completed")||phase.equals("skipped"))done++;}
+                    cleanTerminalStaging(runtime.root(),q);
                     summaries.add(SharedRuntime.map("id",q.get("id"),"phase",q.get("phase"),"count",rows(q).size(),"done",done,"cameraId",q.get("cameraId"),"target",q.get("target"),"createdAt",q.get("createdAt")));}
                     catch(IOException corrupt){issues.add(SharedRuntime.map("id",file.getName().substring(0,32),"error","记录损坏或不可读取；保留原文件，未恢复或重传。"));}}
                 return SharedRuntime.map("items",summaries,"issues",issues);
@@ -42,8 +43,8 @@ public final class SharedDownloads {
                 write(child(directory,id+".json"),q);return q;
             }
             String id=hex(SharedRuntime.text(p,"id",32),32);File file=child(directory,id+".json");Map<String,Object> q=read(file,owner);
-            if(operation.equals("downloads.get"))return q;
-            if(operation.equals("downloads.remove")){if(q.get("phase").equals("running"))throw new IOException("请先停止下载。");Files.delete(file.toPath());return SharedRuntime.map("removed",true);}
+            if(operation.equals("downloads.get")){cleanTerminalStaging(runtime.root(),q);return q;}
+            if(operation.equals("downloads.remove")){if(q.get("phase").equals("running"))throw new IOException("请先停止下载。");removeStaging(runtime.root(),q);Files.delete(file.toPath());return SharedRuntime.map("removed",true);}
             if(operation.equals("downloads.bind")){
                 if(!Boolean.TRUE.equals(p.get("confirmed")))throw new IOException("请明确核对当前相机后再恢复。");
                 q.put("cameraId",hex(SharedRuntime.text(p,"cameraId",64),64));String session=SharedRuntime.text(p,"session",64);if(session.isEmpty()||!(p.get("trusted") instanceof Boolean))throw new IOException("当前相机记录无效。");q.put("session",session);q.put("trusted",p.get("trusted"));
@@ -55,8 +56,8 @@ public final class SharedDownloads {
                 Map<String,Object> row=item(q,SharedRuntime.text(p,"itemId",32));String phase=SharedRuntime.text(p,"phase",32);
                 if(!operation.equals("downloads.item")||!Arrays.asList("receiving","completed","failed","skipped").contains(phase))throw new IOException("下载队列操作无效。");
                 if(row.get("phase").equals("completed")&&!phase.equals("completed"))throw new IOException("已完成记录不可改成待下载。");
-                if(phase.equals("completed")){
-                    Map<String,Object> receipt=SharedRuntime.object(row.get("receipt"));validateReceipt(runtime.root(),row,receipt,cancel);
+                if(phase.equals("completed")&&!row.get("phase").equals("completed")){
+                    Map<String,Object> receipt=SharedRuntime.object(row.get("receipt"));validateReceipt(runtime.root(),q,row,receipt,cancel);
                     if(!SharedRuntime.object(q.get("target")).get("kind").equals("app")){
                         Map<String,Object> saved=SharedRuntime.object(p.get("publication"));validatePublication(q,row,receipt,saved);row.put("publication",new LinkedHashMap<>(saved));
                     }
@@ -65,48 +66,112 @@ public final class SharedDownloads {
                 if(phase.equals("receiving")&&row.containsKey("receipt"))throw new IOException("原文件已经接收，请从校验入库阶段恢复。");
                 row.put("phase",phase);row.put("error",SharedRuntime.text(p,"error",500));
             }
-            check(cancel);write(file,q);return q;
+            check(cancel);write(file,q);cleanTerminalStaging(runtime.root(),q);return q;
         }
     }
-    public static void validateTransfer(File root,Map<String,Object> p,String cameraId,boolean trusted,String session,PtpObjectInfo info)throws IOException {
-        if(!p.containsKey("queueId"))return;
+    public static File validateTransfer(File root,Map<String,Object> p,String cameraId,boolean trusted,String session,PtpObjectInfo info)throws IOException {
+        if(!p.containsKey("queueId"))return new File(root,"originals");
         synchronized(LOCK){String owner=SharedRuntime.text(p,"owner",64);Map<String,Object> q=read(queueFile(root,owner,SharedRuntime.text(p,"queueId",32)),owner);
             if(!q.get("phase").equals("running"))throw new IOException("此下载队列尚未开始或已经停止。");
             if(!q.get("cameraId").equals(cameraId)||!(Boolean.TRUE.equals(q.get("trusted"))&&trusted||q.get("session").equals(session)))throw new IOException("下载队列的相机身份已变化，请明确核对后恢复。");
             Map<String,Object> row=item(q,SharedRuntime.text(p,"itemId",32));String descriptor=PhotoEditStore.hash(info.toBytes());
             if(!row.get("descriptor").equals(descriptor)||((Number)row.get("bytes")).longValue()!=info.compressedSize()||((Number)row.get("storage")).longValue()!=info.storageId()||!Objects.equals(row.get("raw"),SharedCamera.photoFormat(info)==cc.huevia.album.PhotoFormat.NEF)||!row.get("name").equals(info.filename())||!row.get("phase").equals("receiving"))throw new IOException("队列照片已经变化或不在接收阶段。");
+            return systemOnly(q)?staging(root,q):new File(root,"originals");
         }
     }
-    public static void recordTransfer(File root,Map<String,Object> p,Map<String,Object> receipt)throws IOException {
-        if(!p.containsKey("queueId"))return;
+    public static boolean recordTransfer(File root,Map<String,Object> p,Map<String,Object> receipt)throws IOException {
+        if(!p.containsKey("queueId"))return true;
         synchronized(LOCK){String owner=SharedRuntime.text(p,"owner",64);File file=queueFile(root,owner,SharedRuntime.text(p,"queueId",32));Map<String,Object> q=read(file,owner),row=item(q,SharedRuntime.text(p,"itemId",32));
-            validateReceipt(root,row,receipt,()->false);
-            if(row.containsKey("receipt")){if(!SharedRuntime.object(row.get("receipt")).get("sha256").equals(receipt.get("sha256")))throw new IOException("已接收原文件摘要不匹配，未替换原记录。");return;}
-            if(Arrays.asList("completed","skipped").contains(row.get("phase")))return; // Late native acknowledgements never regress a terminal GUI receipt.
+            if(row.containsKey("receipt")&&!SharedRuntime.object(row.get("receipt")).get("sha256").equals(receipt.get("sha256")))
+                throw new IOException("已接收原文件摘要不匹配，未替换原记录。");
+            if(Arrays.asList("completed","skipped").contains(row.get("phase")))return false;
+            if(row.containsKey("receipt"))return true;
             if(!row.get("phase").equals("receiving"))throw new IOException("原文件不在此队列的接收阶段，未覆盖记录。");
+            validateReceipt(root,q,row,receipt,()->false);
             row.put("receipt",new LinkedHashMap<>(receipt));row.put("phase","received");row.put("error","");write(file,q);
+            return true;
         }
     }
-    private static void validateReceipt(File root,Map<String,Object> row,Map<String,Object> value,BooleanSupplier cancel)throws IOException {
-        File source=receiptSource(root,row,value);String sha=(String)value.get("sha256");
+    private static void validateReceipt(File root,Map<String,Object> q,Map<String,Object> row,Map<String,Object> value,BooleanSupplier cancel)throws IOException {
+        File source=receiptSource(root,q,row,value);String sha=(String)value.get("sha256");
         if(!source.isFile()||source.length()!=((Number)row.get("bytes")).longValue())throw new IOException("接收原文件的记录无效。");
         check(cancel);if(!sha.equals(PhotoEditStore.hashFile(source)))throw new IOException("接收原文件已变化，未标记完成。");check(cancel);
     }
-    private static File receiptSource(File root,Map<String,Object> row,Map<String,Object> value)throws IOException {
+    private static File receiptSource(File root,Map<String,Object> q,Map<String,Object> row,Map<String,Object> value)throws IOException {
         String sha=hex(SharedRuntime.text(value,"sha256",64),64),extension=Boolean.TRUE.equals(row.get("raw"))?".nef":".jpg";
-        File base=root.getCanonicalFile(),originals=new File(base,"originals"),source=new File(SharedRuntime.text(value,"path",32768)),expected=new File(originals,sha+extension).getCanonicalFile();
-        if(Files.isSymbolicLink(originals.toPath())||!originals.getCanonicalFile().getParentFile().equals(base)||Files.isSymbolicLink(source.toPath())||!source.getCanonicalFile().equals(expected)||number(value,"bytes",4,512L*1024*1024)!=((Number)row.get("bytes")).longValue()||!Objects.equals(row.get("raw"),value.get("raw"))||!row.get("name").equals(SharedRuntime.text(value,"name",255)))throw new IOException("原文件路径、格式或长度与队列不一致。");return source;
+        File directory=systemOnly(q)?staging(root,q):child(root.getCanonicalFile(),"originals");
+        String name=(systemOnly(q)?row.get("id")+"-":"")+sha+extension;
+        File source=new File(SharedRuntime.text(value,"path",32768)),expected=child(directory,name);
+        if(Files.isSymbolicLink(source.toPath())||!source.getCanonicalFile().equals(expected.getCanonicalFile())||number(value,"bytes",4,512L*1024*1024)!=((Number)row.get("bytes")).longValue()||!Objects.equals(row.get("raw"),value.get("raw"))||!row.get("name").equals(SharedRuntime.text(value,"name",255)))throw new IOException("原文件路径、格式或长度与队列不一致。");return source;
+    }
+    static Map<String,Object> inspectGalleryTransfer(File root,Map<String,Object> p,BooleanSupplier cancel)throws IOException {
+        synchronized(LOCK){
+            String owner=SharedRuntime.text(p,"owner",64),operation=SharedRuntime.text(p,"operationId",32);
+            Map<String,Object> q=read(queueFile(root,owner,SharedRuntime.text(p,"queueId",32)),owner);
+            Map<String,Object> row=item(q,operation),target=SharedRuntime.object(q.get("target"));
+            if(!systemOnly(q)||!q.get("phase").equals("running")||!Arrays.asList("received","failed").contains(row.get("phase"))
+                    ||!Objects.equals(target.get("albumPath"),p.get("albumPath"))||!Objects.equals(target.get("albumId"),p.get("albumId"))
+                    ||!row.get("name").equals(p.get("filename")))
+                throw new IOException("相册保存位置或接收记录已变化。");
+            Map<String,Object> receipt=SharedRuntime.object(row.get("receipt"));
+            if(!Objects.equals(receipt.get("sha256"),p.get("expectedSourceSha"))||!Objects.equals(receipt.get("path"),p.get("path")))
+                throw new IOException("接收原文件与相册保存请求不一致。");
+            validateReceipt(root,q,row,receipt,cancel);
+            return SharedRuntime.map("path",receipt.get("path"),"sourceSha",receipt.get("sha256"),"bytes",receipt.get("bytes"),
+                    "format",Boolean.TRUE.equals(receipt.get("raw"))?"NEF":"JPEG");
+        }
+    }
+    private static boolean systemOnly(Map<String,Object> q)throws IOException {
+        return "systemOnly".equals(SharedRuntime.object(q.get("target")).get("kind"));
+    }
+    private static File staging(File root,Map<String,Object> q)throws IOException {
+        File parent=directory(root,(String)q.get("owner"));
+        return child(parent,hex((String)q.get("id"),32));
+    }
+    private static void cleanTerminalStaging(File root,Map<String,Object> q)throws IOException {
+        if(!systemOnly(q))return;
+        for(Object entry:rows(q)){
+            Map<String,Object> row=SharedRuntime.object(entry);
+            if(Arrays.asList("completed","skipped").contains(row.get("phase"))&&row.containsKey("receipt")){
+                File source=receiptSource(root,q,row,SharedRuntime.object(row.get("receipt")));
+                try{Files.deleteIfExists(source.toPath());}catch(IOException retryLater){/* Retry on the next journal access. */}
+            }
+        }
+    }
+    private static void removeStaging(File root,Map<String,Object> q)throws IOException {
+        if(!systemOnly(q))return;
+        File directory=staging(root,q);if(!directory.exists())return;
+        File[] files=directory.listFiles();
+        if(files==null)throw new IOException("无法读取队列暂存目录。");
+        for(File file:files)if(file.getName().matches("(?:[a-f0-9]{32}-[a-f0-9]{64}\\.(?:jpg|nef)|camera-[0-9]+\\.part)"))
+            Files.deleteIfExists(file.toPath());
+        Files.delete(directory.toPath());
     }
     private static Map<String,Object> target(Map<String,Object> value)throws IOException {
-        String kind=SharedRuntime.text(value,"kind",16);if(!Arrays.asList("app","system","folder").contains(kind))throw new IOException("请选择有效保存位置。");
-        Map<String,Object> result=SharedRuntime.map("kind",kind);if(kind.equals("folder")){result.put("id",hex(SharedRuntime.text(value,"id",32),32));String name=SharedRuntime.text(value,"name",256);if(!name.isEmpty())result.put("name",name);}return result;
+        String kind=SharedRuntime.text(value,"kind",16);if(!Arrays.asList("app","system","systemOnly","folder").contains(kind))throw new IOException("请选择有效保存位置。");
+        Map<String,Object> result=SharedRuntime.map("kind",kind);if(kind.equals("folder")){result.put("id",hex(SharedRuntime.text(value,"id",32),32));String name=SharedRuntime.text(value,"name",256);if(!name.isEmpty())result.put("name",name);}
+        if(value.containsKey("albumPath")){
+            String path=SharedRuntime.text(value,"albumPath",512);
+            if(!kind.equals("system")&&!kind.equals("systemOnly")||!path.matches("(?:Pictures|DCIM)/(?:[^/\\p{Cntrl}\\\\:*?\"<>|]+/)+"))throw new IOException("手机相册位置无效，请重新选择。");
+            for(String component:path.split("/"))if(component.trim().isEmpty()||component.startsWith("."))throw new IOException("手机相册位置无效，请重新选择。");
+            result.put("albumPath",path);
+        }
+        if(value.containsKey("albumId")){
+            String id=SharedRuntime.text(value,"albumId",256),title=SharedRuntime.text(value,"albumTitle",256);
+            if((!kind.equals("system")&&!kind.equals("systemOnly"))||value.containsKey("albumPath")
+                    ||id.isEmpty()||id.matches(".*\\p{Cntrl}.*")||title.isEmpty())throw new IOException("系统相册位置无效，请重新选择。");
+            result.put("albumId",id);result.put("albumTitle",title);
+        }
+        return result;
     }
     private static void validatePublication(Map<String,Object> q,Map<String,Object> row,Map<String,Object> source,Map<String,Object> saved)throws IOException {
-        Map<String,Object> destination=SharedRuntime.object(q.get("target"));String kind=(String)destination.get("kind");
+        Map<String,Object> destination=SharedRuntime.object(q.get("target"));String kind=systemOnly(q)?"system":(String)destination.get("kind");
         String uri=SharedRuntime.text(saved,"uri",4096),identifier=SharedRuntime.text(saved,"identifier",4096),address=uri.isEmpty()?identifier:uri;
         if(!Boolean.TRUE.equals(saved.get("published"))||!Boolean.TRUE.equals(saved.get("verified"))||address.isEmpty()||address.matches(".*[\\p{Cntrl}].*")||!q.get("owner").equals(saved.get("owner"))||!row.get("id").equals(saved.get("operationId"))||!source.get("sha256").equals(saved.get("sha256"))||number(saved,"bytes",4,512L*1024*1024)!=((Number)source.get("bytes")).longValue()||!kind.equals(saved.get("targetKind")))throw new IOException("目标位置的原字节收据未通过身份、长度或 SHA 核对。");
         if(kind.equals("folder")&&(!destination.get("id").equals(saved.get("targetId"))||!uri.matches("(?:content|file)://.+")))throw new IOException("文件夹保存收据与已确认目标不一致。");
         if(kind.equals("system")&&!uri.isEmpty()&&!uri.matches("content://media/(external|external_primary)/images/media/[0-9]+"))throw new IOException("系统相册保存地址无效。");
+        if(kind.equals("system")&&!Objects.equals(destination.get("albumPath"),saved.get("albumPath")))throw new IOException("系统相册保存收据与已选相册不一致。");
+        if(kind.equals("system")&&!Objects.equals(destination.get("albumId"),saved.get("albumId")))throw new IOException("系统相册保存收据与已选相册不一致。");
     }
     @SuppressWarnings("unchecked") private static List<Object> rows(Map<String,Object> q)throws IOException{Object value=q.get("items");if(!(value instanceof List)||((List<?>)value).isEmpty()||((List<?>)value).size()>100)throw new IOException("下载记录损坏。");return (List<Object>)value;}
     private static Map<String,Object> item(Map<String,Object> q,String id)throws IOException{hex(id,32);for(Object value:rows(q)){Map<String,Object> row=SharedRuntime.object(value);if(id.equals(row.get("id")))return row;}throw new IOException("照片不属于此下载队列。");}
@@ -118,7 +183,7 @@ public final class SharedDownloads {
         for(Object value:rows(q)){Map<String,Object> row=SharedRuntime.object(value);String id=hex(SharedRuntime.text(row,"id",32),32),descriptor=hex(SharedRuntime.text(row,"descriptor",64),64),name=SharedRuntime.text(row,"name",255),phase=SharedRuntime.text(row,"phase",32);
             if(!ids.add(id)||!descriptors.add(descriptor)||name.isEmpty()||name.matches(".*[/\\\\\\p{Cntrl}].*")||!(row.get("raw") instanceof Boolean)||!Arrays.asList("pending","receiving","received","completed","failed","skipped").contains(phase))throw new IOException("下载照片记录损坏。");
             number(row,"handle",1,0xfffffffeL);number(row,"storage",0,0xffffffffL);number(row,"bytes",4,512L*1024*1024);SharedRuntime.text(row,"error",500);
-            Map<String,Object> receipt=null;if(row.containsKey("receipt")){receipt=SharedRuntime.object(row.get("receipt"));receiptSource(root,row,receipt);if(phase.equals("pending")||phase.equals("receiving"))throw new IOException("下载阶段与原文件收据不一致。");}
+            Map<String,Object> receipt=null;if(row.containsKey("receipt")){receipt=SharedRuntime.object(row.get("receipt"));receiptSource(root,q,row,receipt);if(phase.equals("pending")||phase.equals("receiving"))throw new IOException("下载阶段与原文件收据不一致。");}
             if((phase.equals("received")||phase.equals("completed"))&&receipt==null)throw new IOException("下载阶段缺少原文件收据。");
             if(phase.equals("completed")&&!SharedRuntime.object(q.get("target")).get("kind").equals("app"))validatePublication(q,row,receipt,SharedRuntime.object(row.get("publication")));
             if(!phase.equals("completed")&&!phase.equals("skipped"))terminal=false;

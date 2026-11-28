@@ -1,3 +1,5 @@
+import 'camera_conversion_report.dart';
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -32,10 +34,12 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
   String? error;
   bool busy = false, leaving = false, choosing = false;
   int selectedTarget = 201, middle = 4, clarity = 0;
+  bool detailOverride = false;
   String? sourcePath, sourceName;
   int? sourceTarget;
   Json parameters = {}, resultRecord = {};
   bool resultVisible = false;
+  bool restartAfterDeletion = false;
   String resultKind = 'write',
       resultName = '',
       resultTarget = '',
@@ -60,6 +64,10 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
       widget.initialPreset != null ||
       sourcePath != null ||
       sourceTarget != null;
+  bool get modernPresetSource =>
+      {'NP2', 'NP3'}.contains(widget.initialPreset?.format) ||
+      RegExp(r'\.np[23]$')
+          .hasMatch((sourceName ?? sourcePath ?? '').toLowerCase());
   Json? get selectedSlot {
     for (final slot in slots) {
       if (slot['target'] == selectedTarget) return slot;
@@ -131,7 +139,10 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
     }
   }
 
-  Future<void> open() => run(() async {
+  Future<void> open() =>
+      restartAfterDeletion ? reopenDeletedSlots() : run(readSlots);
+
+  Future<void> readSlots() async {
     if (session.isEmpty) {
       final status = await core.call('camera.status');
       if (!current) return;
@@ -153,20 +164,72 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
         slots.isNotEmpty) {
       selectedTarget = slots.first['target'] as int;
     }
+  }
+
+  bool get verifiedDeletion =>
+      resultKind == 'delete' &&
+      resultError.isEmpty &&
+      error == null &&
+      action['pending'] != true &&
+      action['parametersPending'] != true &&
+      (resultRecord['presetVerified'] == true ||
+          (resultRecord['presetVerified'] != false &&
+              (resultRecord['phase'] == 'verified' ||
+                  resultRecord['phase'] == 'verifiedByReadback'))) &&
+      selectedSlot?['empty'] == true;
+
+  Future<void> reopenDeletedSlots() => run(() async {
+    final expected = session;
+    final status = await core.call('camera.status');
+    if (!current) return;
+    if (status['mode'] == 'slots' || status['session'] == expected) {
+      if (status['session'] != expected) {
+        throw const AppFailure('相机会话已变化，请重新连接后读取槽位。');
+      }
+      await core.call('camera.slots.close', {'session': expected});
+      if (!current) return;
+    }
+    session = '';
+    await readSlots();
+    if (!current) return;
+    if (data['consumed'] == true) {
+      throw const AppFailure('槽位已删除，新的操作会话尚未就绪，请重新读取槽位。');
+    }
+    restartAfterDeletion = false;
+    resultRecord = {};
   });
 
-  Future<void> refresh({bool reconcile = false}) => run(() async {
-    final value = await core.call(
-      reconcile ? 'camera.slots.reconcile' : 'camera.slots.refresh',
-      {'session': session},
-    );
-    if (!current) return;
-    data = value;
-    if (resultVisible) {
-      resultRecord = action;
-      resultError = '';
+  Future<void> continueAfterDeletion() async {
+    if (!current || !verifiedDeletion) return;
+    setState(() {
+      resultVisible = false;
+      restartAfterDeletion = true;
+    });
+    final label = resultTarget;
+    await reopenDeletedSlots();
+    if (mounted && current && error == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('已删除 $label，可继续选择其他槽位')));
     }
-  });
+  }
+
+  Future<void> refresh({bool reconcile = false}) async {
+    await run(() async {
+      final value = await core.call(
+        reconcile ? 'camera.slots.reconcile' : 'camera.slots.refresh',
+        {'session': session},
+      );
+      if (!current) return;
+      data = value;
+      if (resultVisible) {
+        resultRecord = action;
+        resultError = '';
+      }
+    });
+    if (current && resultVisible && verifiedDeletion) {
+      await continueAfterDeletion();
+    }
+  }
 
   Future<void> prepare(Json slot, String kind) async {
     if (busy || choosing || !current) return;
@@ -202,6 +265,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
       payload.addAll({
         'middleQuarter': middle,
         'clarityQuarter': clarity,
+        'detailOverride': detailOverride,
         'parameters': Map<String, dynamic>.of(parameters),
       });
     }
@@ -234,7 +298,18 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
                   '当前：${confirmation['beforeName'] == '' ? '空槽位' : confirmation['beforeName']}',
                 ),
                 if (kind == 'write') Text('写入：${confirmation['name']}'),
-                if (confirmation['explanation'] is String &&
+                if (confirmation['compatibility'] is Map &&
+                    {
+                      'NP2',
+                      'NP3',
+                    }.contains(object(confirmation['compatibility'])['format']))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: CameraConversionReport(
+                      report: object(confirmation['compatibility']),
+                    ),
+                  )
+                else if (confirmation['explanation'] is String &&
                     confirmation['explanation'] != '')
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
@@ -296,6 +371,10 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
     });
     if (!attempted) return;
     if (current) {
+      if (verifiedDeletion) {
+        await continueAfterDeletion();
+        return;
+      }
       setState(() {
         resultVisible = true;
         resultError = error ?? '';
@@ -333,8 +412,8 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
                   const ListTile(title: Text('选择导入来源')),
                   ListTile(
                     leading: const Icon(Icons.file_open_outlined),
-                    title: const Text('从文件选择 NCP'),
-                    subtitle: const Text('沿用原版兼容适配；写入前展示完整适配说明'),
+                    title: const Text('从文件选择 NCP / NP2 / NP3'),
+                    subtitle: const Text('NP2 / NP3 转换兼容部分；写入前列出不支持的参数'),
                     onTap: () => complete(context, 0),
                   ),
                   for (final item in sources)
@@ -509,6 +588,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
       setState(() {
         middle = value['middleQuarter'] as int;
         clarity = value['clarityQuarter'] as int;
+        detailOverride = true;
       });
     } finally {
       if (mounted) setState(() => choosing = false);
@@ -1241,7 +1321,9 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
                                   ],
                                 ),
                                 Text(
-                                  '中等范围锐化 ${_quarter(middle)} / 清晰度 ${_quarter(clarity)}',
+                                  detailOverride || !modernPresetSource
+                                      ? '中等范围锐化 ${_quarter(middle)} / 清晰度 ${_quarter(clarity)}'
+                                      : 'NP2 / NP3 沿用可转换的锐化与清晰度；可手动调整',
                                   style: TextStyle(
                                     fontSize: 13,
                                     color: p.secondary,
@@ -1250,7 +1332,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
                                 const SizedBox(height: 6),
                                 Text(
                                   sourceTarget == null
-                                      ? '保留曲线、锐化、饱和度与色相；机身效果仍需试拍确认。'
+                                      ? 'NP2 / NP3 会转换为兼容 NCP。不支持的参数会跳过并在写入前列出，仍可继续导入其余部分。'
                                       : '按当前相机槽位数据复制，不会自动应用此预设。',
                                   style: TextStyle(
                                     fontSize: 12,

@@ -3,16 +3,21 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'camera_remote_preview.dart';
+import 'camera_remote_settings.dart';
 import 'camera_transfer.dart';
 import 'domain.dart';
 import 'editor_histogram.dart';
 
-const _background = Color(0xff171816);
+const _background = Color(0xff202925);
 const _text = Color(0xfff6f1eb);
-const _secondary = Color(0xffbeb9b2);
-const _accent = Color(0xfff3b493);
+const _secondary = Color(0xffc7cec2);
+const _accent = Color(0xffd6ecbb);
+const _shutter = Color(0xfffaf8ec);
+const _overlay = Color(0xbe131d18);
+const _overlayBorder = Color(0x40eff7ef);
 
 class CameraRemotePage extends StatefulWidget {
   const CameraRemotePage({
@@ -34,13 +39,22 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     with WidgetsBindingObserver {
   Json data = {}, frame = {};
   String? error, job, operationInFlight, busyLabel;
+  String? captureNotice, previousCaptureId, pendingAtOpenId;
+  String? operationNotice;
+  int? adjusting;
+  bool temperatureTab = false;
+  final settingChoices = <int, List<int>>{};
   Completer<void>? pollCompletion;
   bool busy = false, leaving = false, foreground = true;
-  bool grid = true, histogram = false, transferAfterCapture = false;
+  RemoteGrid grid = RemoteGrid.thirds;
+  bool histogram = true, histogramRgb = false;
+  bool showFullLandscapeFrame = false, transferAfterCapture = false;
+  bool orientationOverride = false;
   bool uncertain = false;
-  Timer? timer;
+  Timer? timer, captureWatch;
   DateTime? frameReceivedAt;
-  int ticks = 0, sequence = 0;
+  int ticks = 0, sequence = 0, captureTicks = 0;
+  int captureCheckFailures = 0;
   late final String owner;
   late final CameraTransfer transfer;
   final ValueNotifier<int> updates = ValueNotifier<int>(0);
@@ -55,9 +69,23 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       widget.state.session['logoutPending'] != true;
   Json get scope => {'session': data['session'], 'remoteId': data['remoteId']};
   Json get action => data['action'] is Map ? object(data['action']) : {};
-  List<Json> get photos =>
-      (action['photos'] as List? ?? []).map(object).toList();
+  List<Json> get photos => action['phase'] == 'verified'
+      ? (action['photos'] as List? ?? []).map(object).toList()
+      : [];
   bool get pending => action['pending'] == true || uncertain;
+  bool get previousShotPending =>
+      pendingAtOpenId != null &&
+      action['pending'] == true &&
+      action['actionId'] == pendingAtOpenId;
+  bool get blocksPreview => pending && !previousShotPending;
+  bool get offersContinuation =>
+      action['pending'] == true &&
+      action['actionId'] is String &&
+      (previousShotPending || captureWatch == null);
+  bool get captureAvailable =>
+      !busy && data['connected'] == true && data['capture'] == true;
+  bool get canShoot => captureAvailable && error == null && !pending;
+  bool get canContinue => captureAvailable && offersContinuation;
 
   @override
   void initState() {
@@ -82,6 +110,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       return;
     }
     timer?.cancel();
+    stopCaptureWatch();
     final lease = Map<String, dynamic>.of(scope);
     final waiting = pollCompletion?.future;
     leaving = true;
@@ -164,6 +193,9 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       transport = status['transport'] as String? ?? '';
       data = await call('camera.remote.open', {'session': status['session']});
       importedAction = action['actionId'] as String? ?? '';
+      pendingAtOpenId = action['pending'] == true
+          ? action['actionId'] as String?
+          : null;
       if (data['liveView'] == true && foreground) {
         data = await call('camera.remote.view', {...scope, 'enabled': true});
       }
@@ -178,6 +210,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
         }
         unawaited(poll());
       });
+      startCaptureWatch();
     }
   }
 
@@ -185,20 +218,28 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       widget.state.cameraLiveActive ||
       widget.state.cameraDownloadsActive ||
       widget.state.cameraManualTransferActive;
-  String get statusText =>
-      error ??
-      (busy
-          ? busyLabel ?? '正在处理相机操作'
-          : pending
-          ? '拍摄结果待核对'
-          : action['phase'] == 'verified'
-          ? '已确认新照片'
-          : '相机就绪');
+  String get statusText => busy
+      ? busyLabel ?? '正在处理相机操作'
+      : previousShotPending
+      ? '上次拍摄未核对'
+      : captureWatch != null
+      ? action['phase'] == 'waitingForJpeg'
+            ? 'RAW 已保存，正在等待配套 JPEG'
+            : '正在等待相机保存照片'
+      : error ??
+            captureNotice ??
+            operationNotice ??
+            (pending
+                ? '拍摄结果待核对'
+                : action['phase'] == 'verified'
+                ? '已确认新照片'
+                : '相机就绪');
 
   Future<void> run(
     Future<void> Function() operation, {
     String label = '正在处理相机操作',
     bool allowBackground = false,
+    bool allowAfterReadError = false,
   }) async {
     if (busy || !current) return;
     if (conflictingWork) {
@@ -211,11 +252,13 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       busy = true;
       busyLabel = waiting == null ? label : '等待相机完成当前读取';
       error = null;
+      captureNotice = null;
+      operationNotice = null;
     });
     try {
       if (waiting != null) await waiting;
       if (!current) return;
-      if (waiting != null && error != null) return;
+      if (waiting != null && error != null && !allowAfterReadError) return;
       if (!foreground && !allowBackground) {
         throw const AppFailure('应用已进入后台，本次操作未发送。');
       }
@@ -243,37 +286,83 @@ class _CameraRemotePageState extends State<CameraRemotePage>
 
   Future<void> request(String operation, [Json payload = const {}]) => run(
     () async {
-      data = await call(operation, {...scope, ...payload});
+      final next = await call(operation, {...scope, ...payload});
+      operationNotice = next['notice'] as String?;
+      data = {...next}..remove('notice');
       if (operation == 'camera.remote.check' ||
           operation == 'camera.remote.acknowledge') {
         uncertain = false;
+        error = null;
+        reconcileCaptureWatch();
+        if (operation == 'camera.remote.check') startCaptureWatch();
       }
       await importVerifiedIfEnabled();
     },
     label: switch (operation) {
       'camera.remote.focus' => '正在对焦',
+      'camera.remote.exposure.set' => '正在调整曝光',
       'camera.remote.check' => '正在核对拍摄结果',
-      'camera.remote.acknowledge' => '正在确认拍摄结果',
+      'camera.remote.acknowledge' =>
+        payload['continueWithoutConfirming'] == true ? '正在恢复拍摄' : '正在确认拍摄结果',
       'camera.remote.view' => payload['enabled'] == true ? '正在开启取景' : '正在暂停取景',
       _ => '正在处理相机操作',
     },
     allowBackground:
         operation == 'camera.remote.view' && payload['enabled'] == false,
+    allowAfterReadError: operation == 'camera.remote.acknowledge',
   );
 
-  Future<void> capture() => run(() async {
-    if (pending) throw const AppFailure('上次拍摄结果待核对，未发送快门。');
-    if (data['connected'] != true || data['capture'] != true) {
-      throw const AppFailure('相机当前不可拍摄，请核对机身状态。');
-    }
-    uncertain = true;
-    data = await call('camera.remote.capture', scope);
-    uncertain = false;
-    if (action['pending'] == true) {
-      data = await call('camera.remote.check', scope);
-    }
-    await importVerifiedIfEnabled();
-  }, label: '正在拍摄');
+  Future<void> capture() async {
+    var attempted = false;
+    await run(() async {
+      if (pending) throw const AppFailure('上次拍摄结果待核对，未发送快门。');
+      if (data['connected'] != true || data['capture'] != true) {
+        throw const AppFailure('相机当前不可拍摄，请核对机身状态。');
+      }
+      attempted = true;
+      previousCaptureId = action['actionId'] as String?;
+      uncertain = true;
+      final next = await call('camera.remote.capture', scope);
+      captureNotice = next['notice'] as String?;
+      data = {...next}..remove('notice');
+      uncertain = false;
+    }, label: '正在拍摄');
+    if (attempted && startCaptureWatch()) await poll(checkNow: true);
+  }
+
+  bool get canWatchCapture =>
+      pending &&
+      data['connected'] == true &&
+      data['capture'] == true &&
+      action['canCheck'] != false &&
+      action['phase'] != 'multipleExposures';
+
+  // The journal is authoritative after a lost response. A check can confirm a
+  // recorded shot or show that the request ended before sending the shutter.
+  bool startCaptureWatch() {
+    if (!current || !canWatchCapture || captureWatch != null) return false;
+    captureTicks = 0;
+    captureCheckFailures = 0;
+    captureWatch = Timer(const Duration(seconds: 60), () {
+      stopCaptureWatch();
+      if (current) {
+        setState(() {});
+        updates.value++;
+      }
+    });
+    setState(() {});
+    updates.value++;
+    return true;
+  }
+
+  void stopCaptureWatch() {
+    captureWatch?.cancel();
+    captureWatch = null;
+  }
+
+  void reconcileCaptureWatch() {
+    if (!canWatchCapture) stopCaptureWatch();
+  }
 
   Future<void> importVerifiedIfEnabled() async {
     final id = action['actionId'] as String? ?? '';
@@ -294,42 +383,69 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     }
   }
 
-  Future<void> poll() async {
+  Future<void> poll({bool checkNow = false}) async {
+    final watchingCapture = captureWatch != null;
     if (!current ||
         !foreground ||
         busy ||
         pollCompletion != null ||
         data['remoteId'] is! String ||
-        error != null ||
+        (error != null && !watchingCapture) ||
         conflictingWork) {
       return;
     }
-    final refresh = ++ticks % 8 == 0;
-    if (!refresh && data['viewing'] != true) return;
+    final checkingCapture =
+        watchingCapture && (checkNow || ++captureTicks % 3 == 0);
+    final refresh = !watchingCapture && ++ticks % 8 == 0;
+    if (!checkingCapture &&
+        !refresh &&
+        (blocksPreview || data['viewing'] != true)) {
+      return;
+    }
     final completion = Completer<void>();
     pollCompletion = completion;
     var changed = false;
     try {
-      if (refresh) {
-        final next = await call('camera.remote.status', scope);
+      if (checkingCapture || refresh) {
+        final next = await call(
+          checkingCapture ? 'camera.remote.check' : 'camera.remote.status',
+          scope,
+        );
         if (jsonEncode(next) != jsonEncode(data)) {
           data = next;
           changed = true;
         }
-        if (!foreground || data['viewing'] != true) return;
-        if (action['pending'] == true) {
-          final checked = await call('camera.remote.check', scope);
-          if (jsonEncode(checked) != jsonEncode(data)) {
-            data = checked;
+        if (checkingCapture) {
+          if (uncertain) {
+            changed = true;
+            if (action['pending'] != true &&
+                (action['phase'] != 'verified' ||
+                    action['actionId'] == previousCaptureId)) {
+              // A successful journal read found no new shot to finish.
+              // Show the failed attempt without locking out the next shot.
+              captureNotice = error;
+              error = null;
+            }
+          }
+          uncertain = false;
+          captureCheckFailures = 0;
+          if (error != null &&
+              (action['pending'] == true || action['phase'] == 'verified')) {
+            error = null;
             changed = true;
           }
+          reconcileCaptureWatch();
+          if (foreground && action['pending'] != true) {
+            await importVerifiedIfEnabled();
+          }
+          return;
         }
-        await importVerifiedIfEnabled();
       }
-      if (!foreground || data['viewing'] != true) return;
+      if (busy || !foreground || blocksPreview || data['viewing'] != true) {
+        return;
+      }
       final next = await call('camera.remote.frame', scope);
       if (next['ready'] == true) {
-        await FileImage(File(next['path'] as String)).evict();
         if (current && foreground) {
           frame = next;
           frameReceivedAt = DateTime.now();
@@ -338,7 +454,19 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       }
     } catch (failure) {
       if (current) {
-        error = '$failure';
+        // A transient read failure is not a second shutter attempt. Bound the
+        // retries and keep the existing manual confirmation route available.
+        if (checkingCapture &&
+            captureWatch != null &&
+            ++captureCheckFailures < 3) {
+          return;
+        }
+        if (checkingCapture) stopCaptureWatch();
+        if (checkingCapture && previousShotPending) {
+          captureNotice = '$failure';
+        } else {
+          error = '$failure';
+        }
         changed = true;
       }
     } finally {
@@ -435,6 +563,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     final waiting = pollCompletion?.future;
     setState(() => leaving = true);
     timer?.cancel();
+    stopCaptureWatch();
     try {
       if (data['remoteId'] != null) {
         await closeLease(lease, waiting);
@@ -450,12 +579,17 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     }
   }
 
-  Future<void> acknowledge() async {
+  Future<void> acknowledge({bool continueWithoutConfirming = false}) async {
+    final actionId = action['actionId'];
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
-        title: const Text('已在相机核对拍摄结果？'),
-        content: const Text('请先查看相机中的最近照片。确认后可再次按快门；应用不会自动重拍上次操作。'),
+        title: Text(continueWithoutConfirming ? '继续新的拍摄？' : '已在相机核对拍摄结果？'),
+        content: Text(
+          continueWithoutConfirming
+              ? '上次结果会标记为未确认。返回后，按下快门才会拍下一张。'
+              : '请先查看相机中的最近照片。确认后可再次按快门。',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialog, false),
@@ -463,27 +597,40 @@ class _CameraRemotePageState extends State<CameraRemotePage>
           ),
           FilledButton(
             onPressed: () => Navigator.pop(dialog, true),
-            child: const Text('已核对'),
+            child: Text(continueWithoutConfirming ? '继续拍摄' : '已核对'),
           ),
         ],
       ),
     );
-    if (confirmed == true && current) {
+    if (confirmed == true &&
+        current &&
+        pending &&
+        actionId == action['actionId']) {
       await request('camera.remote.acknowledge', {
-        'confirmedOnCamera': true,
-        'actionId': action['actionId'],
+        if (continueWithoutConfirming)
+          'continueWithoutConfirming': true
+        else
+          'confirmedOnCamera': true,
+        'actionId': actionId,
       });
     }
   }
 
   @override
   void dispose() {
+    if (orientationOverride) {
+      unawaited(
+        SystemChrome.setPreferredOrientations(const [])
+            .catchError((Object _) {}),
+      );
+    }
     final lease = !leaving && data['remoteId'] != null
         ? Map<String, dynamic>.of(scope)
         : null;
     final waiting = pollCompletion?.future;
     leaving = true;
     timer?.cancel();
+    stopCaptureWatch();
     widget.state.removeListener(accountChanged);
     WidgetsBinding.instance.removeObserver(this);
     transfer.removeListener(transferChanged);
@@ -512,23 +659,150 @@ class _CameraRemotePageState extends State<CameraRemotePage>
 
   String value(int code) {
     final n = reading(code);
-    if (n == null) return '—';
+    return n == null ? '—' : formatValue(code, n);
+  }
+
+  String formatValue(int code, int n) {
     return switch (code) {
       0x5001 => n >= 0 && n <= 100 ? '$n%' : '—',
-      0x5007 => 'F${(n / 100).toStringAsFixed(1)}',
+      0x5007 => n == 0 || n == 65535 ? '—' : 'F${(n / 100).toStringAsFixed(1)}',
       0x500d =>
         n >= 0xfffffffe
             ? 'Bulb / Time'
             : n > 0 && n < 10000
             ? '1/${(10000 / n).round()}'
             : '${n / 10000}s',
-      0x500f => '$n',
-      0x5010 => '${(n / 1000).toStringAsFixed(1)} EV',
+      0x500f => n == 65535 ? '自动' : '$n',
+      0x5010 => '${n > 0 ? '+' : ''}${(n / 1000).toStringAsFixed(1)} EV',
+      remoteWhiteBalance =>
+        n == remoteTemperatureMode && reading(remoteTemperature) != null
+            ? '${reading(remoteTemperature)} K'
+            : remoteWhiteBalanceLabels[n] ?? '—',
+      remoteTemperature => '$n K',
       0x500e => const {1: 'M', 2: 'P', 3: 'A', 4: 'S'}[n] ?? '$n',
       0x5013 => n == 1 ? '单张' : '请在机身切为单张',
-      0x500a => const {1: '手动', 2: '自动', 3: '自动微距'}[n] ?? '$n',
+      0x500a =>
+        const {
+              1: 'MF',
+              2: 'AF',
+              3: '自动微距',
+              0x8010: 'AF-S',
+              0x8011: 'AF-C',
+              0x8012: 'AF-A',
+              0x8013: 'AF-F',
+            }[n] ??
+            '—',
       _ => '$n',
     };
+  }
+
+  bool canEditExposure(int code) =>
+      data['exposureControls'] == true &&
+      data['connected'] == true &&
+      foreground &&
+      !busy &&
+      !pending &&
+      error == null &&
+      reading(code) != null;
+
+  Future<void> editExposure(int code, String label) async {
+    if (!canEditExposure(code)) return;
+    if (adjusting == code) {
+      closeAdjustment();
+      return;
+    }
+    setState(() {
+      adjusting = code;
+      temperatureTab = false;
+      settingChoices.clear();
+    });
+    await run(() async {
+      await loadSetting(code);
+      if (code == remoteWhiteBalance &&
+          reading(remoteWhiteBalance) == remoteTemperatureMode &&
+          foreground &&
+          !pending) {
+        temperatureTab = true;
+        await loadSetting(remoteTemperature);
+      }
+    }, label: '正在读取$label档位');
+  }
+
+  void closeAdjustment() {
+    setState(() {
+      adjusting = null;
+      temperatureTab = false;
+      settingChoices.clear();
+    });
+  }
+
+  Future<void> loadSetting(int code) async {
+    final reply = await call('camera.remote.exposure.options', {
+      ...scope,
+      'code': code,
+    });
+    final choices = (reply['choices'] as List? ?? const [])
+        .whereType<int>()
+        .where((value) => code != 0x5007 || (value > 0 && value < 65535))
+        .toSet();
+    settingChoices[code] = code == remoteWhiteBalance
+        ? remoteWhiteBalanceLabels.keys.where(choices.contains).toList()
+        : (choices.toList()..sort());
+    if (reply['value'] case final int actual) {
+      data = {
+        ...data,
+        'parameters': [
+          for (final parameter in (data['parameters'] as List? ?? const []))
+            if (parameter is Map && parameter['code'] != code) parameter,
+          {'code': code, 'value': actual},
+        ],
+      };
+    }
+    operationNotice = settingChoices[code]!.isEmpty
+        ? reply['notice'] as String? ?? '当前机身模式下不可调节。'
+        : null;
+  }
+
+  Future<void> writeSetting(int code, int selected) async {
+    if (!foreground || pending) return;
+    final next = await call('camera.remote.exposure.set', {
+      ...scope,
+      'code': code,
+      'value': selected,
+    });
+    operationNotice = next['notice'] as String?;
+    data = {...next}..remove('notice');
+  }
+
+  Future<void> selectSetting(int code, int selected) async {
+    if (!canEditExposure(adjusting ?? -1) ||
+        !(settingChoices[code]?.contains(selected) ?? false) ||
+        selected == reading(code)) {
+      return;
+    }
+    final label = remoteSettingTitles[code] ?? '色温';
+    await run(() => writeSetting(code, selected), label: '正在调整$label');
+  }
+
+  Future<void> switchWhiteBalance(bool temperature) async {
+    if (!canEditExposure(remoteWhiteBalance) || temperature == temperatureTab) {
+      return;
+    }
+    setState(() {
+      temperatureTab = temperature;
+      settingChoices.remove(remoteTemperature);
+    });
+    if (!temperature) return;
+    await run(() async {
+      if (reading(remoteWhiteBalance) != remoteTemperatureMode) {
+        await writeSetting(remoteWhiteBalance, remoteTemperatureMode);
+      }
+      if (reading(remoteWhiteBalance) == remoteTemperatureMode &&
+          foreground &&
+          !pending) {
+        await loadSetting(remoteTemperature);
+      }
+    }, label: '正在读取色温档位');
   }
 
   Future<void> sheet(
@@ -597,9 +871,11 @@ class _CameraRemotePageState extends State<CameraRemotePage>
   Future<void> parameters() => sheet(
     '机身当前参数',
     (_) => [
-      const Text(
-        '参数只读，请在相机上调整。未提供的项目显示 —。',
-        style: TextStyle(color: _secondary),
+      Text(
+        data['exposureControls'] == true
+            ? '点底部的参数查看当前机身允许的档位。'
+            : '当前连接只提供参数读取，请在机身上调整。',
+        style: const TextStyle(color: _secondary),
       ),
       detail('机型', data['model'] as String? ?? '—'),
       for (final row in const [
@@ -608,6 +884,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
         (0x5007, '光圈'),
         (0x500f, 'ISO'),
         (0x5010, '曝光补偿'),
+        (remoteWhiteBalance, '白平衡'),
         (0x500a, '对焦模式'),
         (0x5013, '释放模式'),
       ])
@@ -622,12 +899,22 @@ class _CameraRemotePageState extends State<CameraRemotePage>
         title: const Text('实时取景'),
         subtitle: Text(data['liveView'] == true ? '仅控制当前遥控取景' : '相机未提供此能力'),
         value: data['viewing'] == true,
-        onChanged: busy || data['liveView'] != true
+        onChanged: busy || pending || data['liveView'] != true
             ? null
             : (on) {
                 Navigator.pop(context);
                 unawaited(request('camera.remote.view', {'enabled': on}));
               },
+      ),
+      SwitchListTile(
+        contentPadding: EdgeInsets.zero,
+        title: const Text('横屏完整画幅'),
+        subtitle: const Text('打开后，横屏取景也会保留画面的完整边缘。'),
+        value: showFullLandscapeFrame,
+        onChanged: (on) {
+          setState(() => showFullLandscapeFrame = on);
+          change(() {});
+        },
       ),
       SwitchListTile(
         contentPadding: EdgeInsets.zero,
@@ -647,36 +934,45 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       ),
     ],
   );
-  Future<void> showHistogram(EditorHistogramData? measured) =>
-      sheet('取景直方图', (change) {
-        return [
-          const Text(
-            '根据当前相机取景帧统计，非 RAW 原始数据。',
-            style: TextStyle(color: _secondary),
-          ),
-          const SizedBox(height: 12),
-          for (final rgb in [false, true]) ...[
-            Text(rgb ? 'RGB · 共用纵轴' : '亮度'),
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 100,
-              child: CustomPaint(
-                painter: EditorHistogramPainter(data: measured, rgb: rgb),
-              ),
-            ),
-            const SizedBox(height: 16),
-          ],
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: const Text('显示在取景页'),
-            value: histogram,
-            onChanged: (on) {
-              setState(() => histogram = on);
-              change(() {});
-            },
-          ),
-        ];
-      });
+  Future<void> showHistogram(EditorHistogramData? measured) => sheet('取景直方图', (
+    change,
+  ) {
+    return [
+      SegmentedButton<bool>(
+        showSelectedIcon: false,
+        segments: const [
+          ButtonSegment(value: false, label: Text('亮度')),
+          ButtonSegment(value: true, label: Text('RGB')),
+        ],
+        selected: {histogramRgb},
+        onSelectionChanged: (selected) {
+          setState(() => histogramRgb = selected.single);
+          change(() {});
+        },
+      ),
+      const SizedBox(height: 12),
+      SizedBox(
+        height: 120,
+        child: CustomPaint(
+          painter: EditorHistogramPainter(data: measured, rgb: histogramRgb),
+        ),
+      ),
+      const SizedBox(height: 8),
+      Text(
+        histogramRgb ? '整张取景帧 · RGB 共用纵轴' : '整张取景帧的亮度分布',
+        style: const TextStyle(color: _secondary, fontSize: 12),
+      ),
+      SwitchListTile(
+        contentPadding: EdgeInsets.zero,
+        title: const Text('显示在取景页'),
+        value: histogram,
+        onChanged: (on) {
+          setState(() => histogram = on);
+          change(() {});
+        },
+      ),
+    ];
+  });
   Future<void> recent() => sheet(
     '最近拍摄',
     (_) => [
@@ -730,10 +1026,14 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     '核对拍摄结果',
     (_) => [
       const Text('快门结果尚未核对。为避免重复拍摄，不会自动重发。请查看相机中的最近照片。'),
+      if (action['canCheck'] == false)
+        const Text('此记录暂不能读取，请在拍摄时使用的相机上查看最近照片。'),
       if (error != null)
         Text(error!, style: const TextStyle(color: Color(0xffffb4a7))),
+      if (captureNotice != null)
+        Text(captureNotice!, style: const TextStyle(color: Color(0xffffb4a7))),
       TextButton(
-        onPressed: busy
+        onPressed: busy || action['canCheck'] == false
             ? null
             : () {
                 Navigator.pop(context);
@@ -753,412 +1053,907 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     ],
   );
 
-  Widget tools() => Row(
-    children: [
-      Expanded(
-        child: Text(
-          '${value(0x500e)}  ${value(0x500a)} · ${value(0x5013)}',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 11),
-        ),
-      ),
-      IconButton(
-        tooltip: '拍摄设置',
-        onPressed: settings,
-        icon: const Icon(Icons.tune),
-      ),
-      IconButton(
-        tooltip: '显示或收起直方图',
-        isSelected: histogram,
-        onPressed: () => setState(() => histogram = !histogram),
-        icon: const Icon(Icons.bar_chart),
-      ),
-      IconButton(
-        tooltip: '切换构图网格',
-        isSelected: grid,
-        onPressed: () => setState(() => grid = !grid),
-        icon: const Icon(Icons.grid_3x3),
-      ),
-    ],
-  );
-  Widget preview() {
-    final viewing =
-        data['viewing'] == true &&
-        foreground &&
-        remoteFrameIsFresh(frameReceivedAt, DateTime.now());
-    return Stack(
-      fit: StackFit.expand,
+  Future<void> switchOrientation(bool landscape) async {
+    orientationOverride = true;
+    try {
+      await SystemChrome.setPreferredOrientations(
+        landscape
+            ? const [DeviceOrientation.portraitUp]
+            : const [
+                DeviceOrientation.landscapeLeft,
+                DeviceOrientation.landscapeRight,
+              ],
+      );
+    } on PlatformException {
+      if (!mounted) return;
+      ScaffoldMessenger.maybeOf(context)
+          ?.showSnackBar(const SnackBar(content: Text('当前设备暂无法切换屏幕方向。')));
+    }
+  }
+
+  Widget header(bool landscape) {
+    final connected = data['connected'] == true;
+    final link = switch (transport) {
+      'usb' => 'USB',
+      'wifi' => 'Wi-Fi',
+      _ => '相机',
+    };
+    final battery = value(0x5001);
+    return Row(
       children: [
-        CameraRemotePreview(
-          frame: frame,
-          busy: busy,
-          available: data.isEmpty || data['liveView'] == true,
-          viewing: data['viewing'] == true,
-          foreground: foreground,
-          fresh: remoteFrameIsFresh(frameReceivedAt, DateTime.now()),
-          grid: grid,
-          histogram: histogram,
-          onFocus:
-              error == null &&
-                  !pending &&
-                  viewing &&
-                  data['pointFocus'] == true &&
-                  frame['pointFocus'] == true
-              ? (x, y) =>
-                    unawaited(request('camera.remote.focus', {'x': x, 'y': y}))
-              : null,
-          onHistogram: (measured) => unawaited(showHistogram(measured)),
-          onResume: data['liveView'] == true
-              ? () =>
-                    unawaited(request('camera.remote.view', {'enabled': true}))
-              : null,
-        ),
-        if (viewing)
-          Positioned(
-            right: 14,
-            bottom: 13,
-            child: TextButton.icon(
-              onPressed: busy
-                  ? null
-                  : () => request('camera.remote.view', {'enabled': false}),
-              style: TextButton.styleFrom(
-                foregroundColor: _text,
-                backgroundColor: const Color(0xcc171816),
-                minimumSize: const Size(68, 44),
-                shape: const StadiumBorder(),
+        SizedBox(
+          width: landscape ? 100 : 54,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: viewfinderSurface(
+              radius: 24,
+              child: IconButton(
+                key: const Key('remote-close'),
+                tooltip: '返回同步',
+                onPressed: busy ? null : finish,
+                icon: Icon(widget.embedded ? Icons.close : Icons.arrow_back),
               ),
-              icon: const Icon(Icons.pause_rounded, size: 16),
-              label: const Text('暂停', style: TextStyle(fontSize: 11)),
             ),
           ),
+        ),
+        Expanded(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Tooltip(
+                message: '查看机身参数',
+                child: viewfinderSurface(
+                  radius: 28,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(28),
+                    onTap: parameters,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minWidth: 144,
+                        minHeight: 46,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 11,
+                          vertical: 5,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    data['model'] as String? ?? '遥控拍照',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 3),
+                                const Icon(Icons.keyboard_arrow_down, size: 12),
+                              ],
+                            ),
+                            const SizedBox(height: 3),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  size: 6,
+                                  color: connected ? _accent : _secondary,
+                                ),
+                                const SizedBox(width: 6),
+                                Flexible(
+                                  child: Text(
+                                    connected
+                                        ? '$link 已连接'
+                                        : busy
+                                        ? '读取相机中'
+                                        : '相机未连接',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 10),
+                                  ),
+                                ),
+                                if (battery != '—') ...[
+                                  const SizedBox(width: 6),
+                                  const Icon(Icons.battery_std, size: 12),
+                                  Text(
+                                    battery,
+                                    style: const TextStyle(fontSize: 10),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 5,
+          children: [
+            viewfinderSurface(
+              radius: 24,
+              child: Tooltip(
+                message: landscape ? '切换到竖屏' : '切换到横屏',
+                child: InkWell(
+                  key: const Key('remote-rotate'),
+                  onTap: () => switchOrientation(landscape),
+                  child: SizedBox.square(
+                    dimension: 48,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RotatedBox(
+                          quarterTurns: landscape ? 0 : 1,
+                          child: const Icon(
+                            Icons.stay_current_portrait,
+                            size: 17,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          landscape ? '竖屏' : '横屏',
+                          style: const TextStyle(fontSize: 9),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            viewfinderSurface(
+              radius: 24,
+              child: IconButton(
+                tooltip: '拍摄设置',
+                onPressed: settings,
+                icon: const Icon(Icons.tune, size: 21),
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
 
-  Widget controls() => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        child: Row(
+  Widget viewfinderSurface({required double radius, required Widget child}) =>
+      Material(
+        color: _overlay,
+        textStyle: const TextStyle(color: _text, fontSize: 14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(radius),
+          side: const BorderSide(color: _overlayBorder),
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: child,
+      );
+
+  Widget toolFace(
+    IconData icon,
+    String label, {
+    bool selected = false,
+    bool enabled = true,
+  }) => Ink(
+    decoration: BoxDecoration(
+      color: selected ? const Color(0x28d6ecbb) : null,
+      borderRadius: BorderRadius.circular(13),
+    ),
+    child: SizedBox(
+      width: 46,
+      height: 44,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 17,
+            color: !enabled
+                ? _secondary.withValues(alpha: .6)
+                : selected
+                ? _accent
+                : _text,
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 9,
+              color: selected ? _accent : _secondary,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Widget viewfinderTool(
+    IconData icon,
+    String label,
+    String tooltip,
+    VoidCallback? action, {
+    bool selected = false,
+  }) => Tooltip(
+    message: tooltip,
+    child: Semantics(
+      selected: selected,
+      button: true,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(13),
+        onTap: action,
+        child: toolFace(
+          icon,
+          label,
+          selected: selected,
+          enabled: action != null,
+        ),
+      ),
+    ),
+  );
+
+  Widget gridTool(bool horizontal) => PopupMenuButton<RemoteGrid>(
+    tooltip: '切换构图网格',
+    position: PopupMenuPosition.under,
+    offset: horizontal ? const Offset(0, 2) : const Offset(-116, -44),
+    initialValue: grid,
+    color: const Color(0xff202b25),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
+    onSelected: (choice) => setState(() => grid = choice),
+    itemBuilder: (_) => [
+      for (final choice in RemoteGrid.values)
+        PopupMenuItem(
+          key: ValueKey('remote-grid-option-${choice.name}'),
+          value: choice,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 8,
+            children: [
+              Text(choice.label),
+              if (choice == grid)
+                const Icon(Icons.check, size: 16, color: _accent),
+            ],
+          ),
+        ),
+    ],
+    child: toolFace(
+      switch (grid) {
+        RemoteGrid.thirds => Icons.grid_3x3,
+        RemoteGrid.quarters => Icons.grid_4x4,
+        RemoteGrid.off => Icons.grid_off,
+      },
+      grid == RemoteGrid.off ? '网格' : grid.label,
+      selected: grid != RemoteGrid.off,
+    ),
+  );
+
+  Widget tools(bool horizontal) {
+    final viewing = data['viewing'] == true;
+    return viewfinderSurface(
+      radius: 20,
+      child: Padding(
+        padding: const EdgeInsets.all(3),
+        child: Flex(
+          direction: horizontal ? Axis.horizontal : Axis.vertical,
+          mainAxisSize: MainAxisSize.min,
+          spacing: 5,
           children: [
-            for (final row in const [
-              (0x500d, '快门'),
-              (0x5007, '光圈'),
-              (0x500f, 'ISO'),
-              (0x5010, '曝光补偿'),
-            ])
-              Expanded(
-                child: Column(
-                  children: [
-                    Text(
-                      value(row.$1),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      row.$2,
-                      style: const TextStyle(fontSize: 11, color: _secondary),
-                    ),
-                  ],
-                ),
-              ),
+            gridTool(horizontal),
+            viewfinderTool(
+              Icons.bar_chart,
+              '直方图',
+              '显示或收起直方图',
+              () => setState(() => histogram = !histogram),
+              selected: histogram,
+            ),
+            viewfinderTool(
+              viewing ? Icons.pause_rounded : Icons.play_arrow_rounded,
+              viewing ? '暂停' : '恢复',
+              viewing ? '暂停取景' : '恢复实时取景',
+              busy || !foreground || blocksPreview || data['liveView'] != true
+                  ? null
+                  : () => request('camera.remote.view', {'enabled': !viewing}),
+            ),
           ],
         ),
       ),
-      const Divider(height: 1),
-      InkWell(
-        onTap: pending
-            ? reviewResult
-            : () => sheet(
-                '拍摄状态',
-                (_) => [
+    );
+  }
+
+  Widget shootingMode() {
+    final mode = value(0x500e);
+    final focus = value(0x500a);
+    if (mode == '—' && focus == '—') return const SizedBox.shrink();
+    return viewfinderSurface(
+      radius: 22,
+      child: InkWell(
+        onTap: parameters,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 44, maxWidth: 128),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Align(
+              widthFactor: 1,
+              heightFactor: 1,
+              child: Text(
+                [if (mode != '—') mode, if (focus != '—') focus].join(' · '),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget preview(
+    bool landscape,
+    EdgeInsets frameInsets,
+    EdgeInsets histogramInsets,
+  ) {
+    final fresh = remoteFrameIsFresh(frameReceivedAt, DateTime.now());
+    final viewing = data['viewing'] == true && foreground && fresh;
+    return CameraRemotePreview(
+      frame: frame,
+      busy: busy,
+      available: data.isEmpty || data['liveView'] == true,
+      viewing: data['viewing'] == true,
+      foreground: foreground,
+      fresh: fresh,
+      fit: landscape && !showFullLandscapeFrame ? BoxFit.cover : BoxFit.contain,
+      frameInsets: frameInsets,
+      grid: grid,
+      histogram: histogram,
+      histogramRgb: histogramRgb,
+      histogramInsets: histogramInsets,
+      onFocus:
+          error == null &&
+              !pending &&
+              viewing &&
+              data['pointFocus'] == true &&
+              frame['pointFocus'] == true
+          ? (x, y) =>
+                unawaited(request('camera.remote.focus', {'x': x, 'y': y}))
+          : null,
+      onHistogram: (measured) => unawaited(showHistogram(measured)),
+      onResume: !blocksPreview && data['liveView'] == true
+          ? () => unawaited(request('camera.remote.view', {'enabled': true}))
+          : null,
+    );
+  }
+
+  Widget exposureControl(int code, String label) {
+    final editable = canEditExposure(code);
+    final selected = adjusting == code;
+    final mode = reading(0x500e);
+    final automatic =
+        code == 0x5007 && (mode == 2 || mode == 4) ||
+        code == 0x500d && (mode == 2 || mode == 3);
+    final corner = BorderRadius.circular(14);
+    return Semantics(
+      selected: selected,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: selected ? const Color(0x30d6ecbb) : null,
+          border: selected ? Border.all(color: const Color(0x80d6ecbb)) : null,
+          borderRadius: corner,
+        ),
+        child: InkWell(
+          key: ValueKey('remote-exposure-$code'),
+          onTap: editable ? () => editExposure(code, label) : null,
+          borderRadius: corner,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 52),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
-                    error ??
-                        (action['phase'] == 'verified'
-                            ? '已从相机库存确认新照片。'
-                            : '准备就绪，请在机身调整参数。'),
+                    automatic ? '$label 自动' : label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 10, color: _secondary),
                   ),
-                  if (error != null && data.isEmpty)
+                  const SizedBox(height: 2),
+                  SizedBox(
+                    height: 22,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        value(code),
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: selected ? _accent : _text,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget settingPanel(int code) {
+    final whiteBalance = code == remoteWhiteBalance;
+    final property = whiteBalance && temperatureTab ? remoteTemperature : code;
+    final available = settingChoices[property] ?? const <int>[];
+    final presets = whiteBalance && !temperatureTab;
+    final choices = presets
+        ? available.where((value) => value != remoteTemperatureMode).toList()
+        : available;
+    final editable =
+        canEditExposure(code) &&
+        (property != remoteTemperature ||
+            reading(remoteWhiteBalance) == remoteTemperatureMode);
+    final balanceModes = settingChoices[remoteWhiteBalance] ?? const <int>[];
+    final canSelectTemperature =
+        balanceModes.contains(remoteTemperatureMode) ||
+        reading(remoteWhiteBalance) == remoteTemperatureMode;
+    final onChanged = editable
+        ? (int value) => selectSetting(property, value)
+        : null;
+    final title = remoteSettingTitles[code]!;
+    final maximumAperture = code == 0x5007 && choices.isNotEmpty
+        ? choices.first
+        : null;
+    Widget card(Widget child, {Widget? readout}) => CameraRemoteSettingCard(
+      title: title,
+      readout: readout,
+      onClose: busy ? null : closeAdjustment,
+      tabs: whiteBalance
+          ? SegmentedButton<bool>(
+              showSelectedIcon: false,
+              style: SegmentedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                textStyle: const TextStyle(fontSize: 11),
+                visualDensity: VisualDensity.compact,
+              ),
+              segments: [
+                const ButtonSegment(value: false, label: Text('预设')),
+                ButtonSegment(
+                  value: true,
+                  enabled: canSelectTemperature || temperatureTab,
+                  label: const Text('色温'),
+                ),
+              ],
+              selected: {temperatureTab},
+              onSelectionChanged: canEditExposure(code)
+                  ? (value) => switchWhiteBalance(value.single)
+                  : null,
+            )
+          : null,
+      action: maximumAperture == null
+          ? null
+          : TextButton(
+              key: const Key('remote-maximum-aperture'),
+              onPressed: onChanged == null
+                  ? null
+                  : () => onChanged(maximumAperture),
+              child: Text(
+                '最大光圈 ${formatValue(code, maximumAperture)}',
+                style: const TextStyle(fontSize: 11),
+              ),
+            ),
+      child: child,
+    );
+    if (choices.isEmpty) {
+      return card(
+        Padding(
+          padding: const EdgeInsets.fromLTRB(4, 4, 4, 10),
+          child: Text(
+            busy ? busyLabel ?? '正在读取档位' : operationNotice ?? '当前机身模式下不可调节。',
+            style: const TextStyle(fontSize: 12, color: _secondary),
+          ),
+        ),
+      );
+    }
+    return presets
+        ? card(
+            CameraRemoteWhiteBalancePresets(
+              presets: choices,
+              selected: reading(code),
+              onChanged: onChanged,
+            ),
+          )
+        : CameraRemoteRuler(
+            key: ValueKey(property),
+            title: property == remoteTemperature ? '色温' : title,
+            temperature: property == remoteTemperature,
+            values: choices,
+            actual: reading(property),
+            formatValue: (value) => formatValue(property, value),
+            onChanged: onChanged,
+            buildCard: card,
+          );
+  }
+
+  Widget captureStatus({bool compact = false}) {
+    final warning =
+        error != null ||
+        captureNotice != null ||
+        operationNotice != null ||
+        transfer.error != null ||
+        pending;
+    final transferStatus = transfer.error ?? transfer.title;
+    final showTransfer =
+        transfer.visible &&
+        !pending &&
+        !busy &&
+        captureWatch == null &&
+        error == null &&
+        captureNotice == null &&
+        operationNotice == null;
+    final text = showTransfer ? transferStatus : statusText;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          height: 2,
+          child: transfer.busy
+              ? LinearProgressIndicator(value: transfer.fraction, minHeight: 2)
+              : null,
+        ),
+        InkWell(
+          onTap: pending
+              ? reviewResult
+              : () => sheet(
+                  '拍摄状态',
+                  (_) => [
+                    Text(
+                      transfer.error ??
+                          error ??
+                          captureNotice ??
+                          operationNotice ??
+                          (transfer.visible
+                              ? transferStatus
+                              : action['phase'] == 'verified'
+                              ? '已从相机库存确认新照片。'
+                              : transferAfterCapture
+                              ? '拍摄后的新 JPEG 会传入 App，原文件保留在相机。'
+                              : '照片保存在相机。'),
+                    ),
+                    if (error != null && data.isEmpty)
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          unawaited(open());
+                        },
+                        child: const Text('重试遥控连接'),
+                      ),
+                  ],
+                ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: compact ? 32 : 46),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  if (busy)
+                    const SizedBox.square(
+                      dimension: 12,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  else
+                    Icon(
+                      Icons.circle,
+                      size: 6,
+                      color: warning ? const Color(0xffffc29f) : _accent,
+                    ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      text,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: warning ? const Color(0xffffc29f) : _secondary,
+                      ),
+                    ),
+                  ),
+                  if (offersContinuation)
                     TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        unawaited(open());
-                      },
-                      child: const Text('重试遥控连接'),
+                      key: const Key('remote-continue'),
+                      onPressed: canContinue
+                          ? () => acknowledge(continueWithoutConfirming: true)
+                          : null,
+                      child: const Text('继续拍摄'),
+                    )
+                  else
+                    const Icon(
+                      Icons.chevron_right,
+                      size: 16,
+                      color: _secondary,
                     ),
                 ],
               ),
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            children: [
-              if (busy)
-                const Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: SizedBox(
-                    width: 14,
-                    height: 14,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  ),
-                ),
-              Expanded(
-                child: Text(
-                  statusText,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: error != null || pending
-                        ? const Color(0xffffb4a7)
-                        : _secondary,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const Icon(Icons.chevron_right, size: 18, color: _secondary),
-            ],
+            ),
           ),
         ),
+      ],
+    );
+  }
+
+  Widget captureActions({bool landscape = false}) {
+    final path = transfer.importedPhoto?.path;
+    final shutterEnabled = canShoot || canContinue;
+    final recentButton = TextButton(
+      onPressed: recent,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (path == null)
+            const Icon(Icons.photo_outlined, size: 23)
+          else
+            ClipOval(
+              child: Image.file(
+                File(path),
+                width: 30,
+                height: 30,
+                fit: BoxFit.cover,
+                cacheWidth: 90,
+                errorBuilder: (_, _, _) =>
+                    const Icon(Icons.photo_outlined, size: 23),
+              ),
+            ),
+          const SizedBox(height: 4),
+          const Text('最近拍摄', style: TextStyle(fontSize: 10)),
+        ],
       ),
-      if (transfer.visible)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(
-            children: [
-              Text(transfer.title, style: const TextStyle(fontSize: 12)),
-              if (transfer.busy)
-                LinearProgressIndicator(value: transfer.fraction),
-              if (transfer.error != null)
-                Text(
-                  transfer.error!,
-                  style: const TextStyle(color: Color(0xffffb4a7)),
-                ),
-            ],
+    );
+    final shutterButton = SizedBox.square(
+      dimension: landscape ? 62 : 68,
+      child: IconButton(
+        key: const Key('remote-shutter'),
+        tooltip: canContinue ? '继续拍摄' : '拍照',
+        onPressed: canShoot
+            ? capture
+            : canContinue
+            ? () => acknowledge(continueWithoutConfirming: true)
+            : null,
+        style: IconButton.styleFrom(
+          padding: const EdgeInsets.all(6),
+          shape: const CircleBorder(),
+          side: BorderSide(
+            color: _shutter.withValues(alpha: shutterEnabled ? .86 : .38),
           ),
         ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: TextButton(
-                onPressed: photos.isNotEmpty || pending ? recent : null,
-                child: const Column(
-                  children: [
-                    Icon(Icons.photo_outlined),
-                    SizedBox(height: 4),
-                    Text('最近拍摄', style: TextStyle(fontSize: 11)),
-                  ],
-                ),
-              ),
-            ),
-            Semantics(
-              button: true,
-              label: '拍照',
-              enabled:
-                  !busy && error == null && !pending && data['capture'] == true,
-              child: SizedBox(
-                width: 78,
-                height: 78,
-                child: IconButton(
-                  key: const Key('remote-shutter'),
-                  tooltip: '拍照',
-                  onPressed:
-                      busy ||
-                          error != null ||
-                          pending ||
-                          data['capture'] != true ||
-                          data['connected'] != true
-                      ? null
-                      : capture,
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    disabledBackgroundColor: Colors.transparent,
-                    foregroundColor: const Color(0xff352016),
-                    padding: const EdgeInsets.all(6),
-                    shape: const CircleBorder(
-                      side: BorderSide(color: _accent, width: 2),
-                    ),
-                  ),
-                  icon: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color:
-                          busy ||
-                              error != null ||
-                              pending ||
-                              data['capture'] != true ||
-                              data['connected'] != true
-                          ? _accent.withValues(alpha: .3)
-                          : _accent,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed:
-                    busy ||
-                        error != null ||
-                        pending ||
-                        data['autoFocus'] != true
-                    ? null
-                    : () => request('camera.remote.focus'),
-                child: const Column(
-                  children: [
-                    Icon(Icons.center_focus_strong),
-                    SizedBox(height: 4),
-                    Text('对焦', style: TextStyle(fontSize: 11)),
-                  ],
-                ),
-              ),
-            ),
-          ],
+        icon: Container(
+          width: landscape ? 49 : 54,
+          height: landscape ? 49 : 54,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _shutter.withValues(alpha: shutterEnabled ? 1 : .31),
+          ),
+          child: canContinue
+              ? const Icon(Icons.priority_high, color: _background, size: 19)
+              : null,
         ),
       ),
-    ],
+    );
+    final focusButton = TextButton(
+      onPressed: busy || error != null || pending || data['autoFocus'] != true
+          ? null
+          : () => request('camera.remote.focus'),
+      child: const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.center_focus_strong, size: 23),
+          SizedBox(height: 4),
+          Text('对焦', style: TextStyle(fontSize: 10)),
+        ],
+      ),
+    );
+    return Padding(
+      padding: landscape
+          ? const EdgeInsets.symmetric(vertical: 6)
+          : const EdgeInsets.fromLTRB(9, 6, 9, 2),
+      child: landscape
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 4,
+              children: [recentButton, shutterButton, focusButton],
+            )
+          : Row(
+              children: [
+                Expanded(child: recentButton),
+                shutterButton,
+                Expanded(child: focusButton),
+              ],
+            ),
+    );
+  }
+
+  Widget exposureBar() => Padding(
+    padding: const EdgeInsets.fromLTRB(4, 4, 4, 3),
+    child: Row(
+      children: [
+        for (final entry in remoteSettingTitles.entries)
+          Expanded(child: exposureControl(entry.key, entry.value)),
+      ],
+    ),
   );
+
+  Widget portraitControls() => viewfinderSurface(
+    radius: 23,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        exposureBar(),
+        const Divider(
+          color: _overlayBorder,
+          height: 1,
+          indent: 12,
+          endIndent: 12,
+        ),
+        captureActions(),
+        captureStatus(),
+      ],
+    ),
+  );
+
+  Widget viewfinder() => LayoutBuilder(
+    builder: (context, box) {
+      final safe = MediaQuery.paddingOf(context);
+      final width = box.maxWidth - safe.horizontal;
+      final height = box.maxHeight - safe.vertical;
+      final landscape = width > height;
+      final compact = height < 540;
+      final toolbarBelowHeader = landscape && width < 740;
+      const railWidth = 78.0;
+      const railMargin = railWidth + 24.0;
+      final dockWidth = (width - railMargin - 12).clamp(1.0, 550.0);
+      final dockLeft = ((width - dockWidth) / 2).clamp(
+        12.0,
+        (width - railMargin - dockWidth).clamp(12.0, double.infinity),
+      );
+      final frameInsets =
+          safe +
+          (landscape
+              ? const EdgeInsets.fromLTRB(12, 65, railMargin, 112)
+              : EdgeInsets.only(
+                  top: compact ? 128 : (height * .28).clamp(220.0, 248.0),
+                  bottom: 200,
+                ));
+      final histogramInsets = EdgeInsets.fromLTRB(
+        safe.left + 13,
+        safe.top + 76,
+        safe.right + (landscape ? railMargin : 70),
+        safe.bottom + (landscape ? 116 : 194),
+      );
+      final horizontalTools = landscape || compact;
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          preview(landscape, frameInsets, histogramInsets),
+          SafeArea(
+            child: Stack(
+              children: [
+                Positioned(
+                  top: landscape ? 62 : 0,
+                  left: landscape ? dockLeft : 12,
+                  width: landscape ? dockWidth : null,
+                  right: landscape ? null : 12,
+                  bottom: landscape ? 8 : 12,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (adjusting case final code?)
+                        Flexible(
+                          child: SingleChildScrollView(
+                            reverse: true,
+                            child: settingPanel(code),
+                          ),
+                        ),
+                      if (landscape) ...[
+                        viewfinderSurface(radius: 16, child: exposureBar()),
+                        const SizedBox(height: 4),
+                        viewfinderSurface(
+                          radius: 8,
+                          child: captureStatus(compact: true),
+                        ),
+                      ] else
+                        portraitControls(),
+                    ],
+                  ),
+                ),
+                if (landscape)
+                  Positioned(
+                    top: 62,
+                    bottom: 8,
+                    right: 12,
+                    width: railWidth,
+                    child: Align(
+                      child: SingleChildScrollView(
+                        child: viewfinderSurface(
+                          radius: 23,
+                          child: SizedBox(
+                            width: railWidth,
+                            child: captureActions(landscape: true),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                Positioned(
+                  right: landscape ? 120 : 12,
+                  top: landscape ? (toolbarBelowHeader ? 65 : 7) : 76,
+                  child: tools(horizontalTools),
+                ),
+                Positioned(
+                  left: 13,
+                  top: histogram ? 154 : 76,
+                  child: shootingMode(),
+                ),
+                Positioned(
+                  top: 7,
+                  left: 12,
+                  right: 12,
+                  child: header(landscape),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
     final theme = ThemeData.dark(useMaterial3: true).copyWith(
       scaffoldBackgroundColor: _background,
       colorScheme: const ColorScheme.dark(
         primary: _accent,
-        onPrimary: Color(0xff352016),
+        onPrimary: Color(0xff263621),
         surface: _background,
         onSurface: _text,
       ),
     );
     final content = Theme(
       data: theme,
-      child: ColoredBox(
+      child: Material(
         color: _background,
-        child: SafeArea(
-          top: false,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    key: const Key('remote-close'),
-                    tooltip: '返回同步',
-                    onPressed: busy ? null : finish,
-                    icon: Icon(
-                      widget.embedded ? Icons.close : Icons.arrow_back,
-                    ),
-                  ),
-                  const Expanded(
-                    child: Text(
-                      '遥控拍照',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    tooltip: '查看机身参数',
-                    onPressed: parameters,
-                    icon: const Icon(Icons.info_outline),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '${data['connected'] == true ? '•  ' : ''}${data['model'] ?? '正在读取相机能力'}${transport == 'usb'
-                            ? ' · USB'
-                            : transport == 'wifi'
-                            ? ' · Wi-Fi'
-                            : ''}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 11, color: _secondary),
-                      ),
-                    ),
-                    const Icon(Icons.battery_std, size: 16, color: _secondary),
-                    const SizedBox(width: 4),
-                    Text(
-                      value(0x5001),
-                      style: const TextStyle(fontSize: 11, color: _secondary),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, box) {
-                    final landscape =
-                        box.maxWidth >= 700 && box.maxHeight >= 240;
-                    final stage = Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: tools(),
-                        ),
-                        Expanded(child: preview()),
-                      ],
-                    );
-                    if (landscape) {
-                      return Row(
-                        children: [
-                          Expanded(child: stage),
-                          SizedBox(
-                            width: 240,
-                            child: SingleChildScrollView(child: controls()),
-                          ),
-                        ],
-                      );
-                    }
-                    if (box.maxHeight >= 520 &&
-                        MediaQuery.textScalerOf(context).scale(1) <= 1.3) {
-                      return Column(
-                        children: [
-                          Expanded(child: stage),
-                          controls(),
-                        ],
-                      );
-                    }
-                    return ListView(
-                      padding: EdgeInsets.zero,
-                      children: [
-                        SizedBox(
-                          height: (box.maxWidth * 2 / 3 + 48)
-                              .clamp(220, 480)
-                              .toDouble(),
-                          child: stage,
-                        ),
-                        controls(),
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
+        textStyle: theme.textTheme.bodyMedium!.copyWith(color: _text),
+        child: viewfinder(),
       ),
     );
     return PopScope(
       canPop: !busy,
       child: widget.embedded
           ? content
-          : Scaffold(
-              backgroundColor: _background,
-              body: SafeArea(child: content),
+          : AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light.copyWith(
+                statusBarColor: Colors.transparent,
+                systemNavigationBarColor: Colors.transparent,
+                systemNavigationBarContrastEnforced: false,
+              ),
+              child: Scaffold(backgroundColor: _background, body: content),
             ),
     );
   }

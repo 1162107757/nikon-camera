@@ -72,7 +72,7 @@ final class SharedVersions {
     private static void validateSpec(Map<String,Object> details)throws IOException{
         String spec=SharedRuntime.text(details,"exportSpec",128);
         int width=SharedRuntime.integer(details,"width",0),height=SharedRuntime.integer(details,"height",0);
-        if(width<1||height<1||width>65535||height>65535||(long)width*height>100_000_000||!spec.matches("jpeg-srgb-v1:"+width+"x"+height+":q(7[0-9]|8[0-9]|9[0-9]|100):capture-no-gps-v1"))throw new IOException("成品编码规格无效。");
+        if(width<1||height<1||width>65535||height>65535||(long)width*height>100_000_000||!spec.matches("jpeg-srgb-v1:"+width+"x"+height+":q(7[0-9]|8[0-9]|9[0-9]|100):capture-(no-gps-v1|gps-v[12]-[a-f0-9]{64})"))throw new IOException("成品编码规格无效。");
     }
     Map<String,Object> commit(File source,String owner,PhotoEditStore.Draft frozen,File rendered,Map<String,Object> details,BooleanSupplier cancel)throws IOException{
         check(cancel);checked(source);checked(rendered);

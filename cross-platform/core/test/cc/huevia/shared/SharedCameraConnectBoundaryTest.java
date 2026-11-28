@@ -66,8 +66,48 @@ final class SharedCameraConnectBoundaryTest {
         retiredClockCannotCloseSuccess(root,payload);
         expiredCompletionCannotPublish(root,payload);
         timeoutCloseBlocksSameFacadeReuse(root,payload);
+        fujiDefaultEndpoint(root);
+        fujiSelectedWifiRelease(root);
         System.out.println("PASS "+checks+" camera connection checks; phase, whole-attempt deadline, blocked IO cancel and job ownership");
         return checks;
+    }
+    private static void fujiDefaultEndpoint(File root)throws Exception{
+        AtomicReference<String> endpoint=new AtomicReference<>();FakeClient peer=new FakeClient();
+        SharedCamera camera=new SharedCamera(root.getPath(),(host,port,fuji)->{yes(fuji);endpoint.set(host+":"+port);return null;},(connector,fuji)->peer);
+        camera.request("camera.connect",SharedJson.encode(SharedRuntime.map("protocol","fujifilm","host","")),"fuji-empty",()->false,v->{});
+        yes("192.168.0.1:55740".equals(endpoint.get()));yes(Boolean.TRUE.equals(status(camera).get("connected")));camera.disconnect();
+        endpoint.set(null);final FakeClient explicit=new FakeClient();
+        camera=new SharedCamera(root.getPath(),(host,port,fuji)->{endpoint.set(host+":"+port);return null;},(connector,fuji)->explicit);
+        camera.request("camera.connect",SharedJson.encode(SharedRuntime.map("protocol","fujifilm","host","192.168.0.2","port",55741)),"fuji-explicit",()->false,v->{});
+        yes("192.168.0.2:55741".equals(endpoint.get()));camera.disconnect();
+        final FakeClient automatic=new FakeClient();
+        camera=new SharedCamera(root.getPath(),(host,port,fuji)->{throw new IOException("Should use the bound hotspot route");},(connector,fuji)->automatic);
+        camera.setFujifilmRoute(port->{yes(port==55740);return new SharedCamera.WifiEndpoint("192.168.186.1",null);});
+        camera.request("camera.connect",SharedJson.encode(SharedRuntime.map("protocol","fujifilm","host","192.168.0.1","automaticHost",true)),"fuji-gateway",()->false,v->{});
+        yes("192.168.186.1".equals(automatic.requestedHost));camera.disconnect();
+    }
+    private static void fujiSelectedWifiRelease(File root)throws Exception{
+        FakeClient first=new FakeClient(),second=new FakeClient();second.blockConnect=true;
+        AtomicInteger created=new AtomicInteger(),released=new AtomicInteger();
+        SharedCamera camera=new SharedCamera(root.getPath(),
+                (host,port,fuji)->{throw new IOException("The selected network must supply its own connector");},
+                (connector,fuji)->created.getAndIncrement()==0?first:second);
+        camera.setFujifilmWifiJoin((ssid,password,port,cancel)->{
+            yes("FUJIFILM-X-T20".equals(ssid)&&password.isEmpty()&&port==55740);
+            return new SharedCamera.WifiEndpoint("192.168.186.1",null,released::incrementAndGet);
+        });
+        Map<String,Object> params=SharedRuntime.map("protocol","fujifilm","wifiSsid","FUJIFILM-X-T20",
+                "host","192.168.0.1","automaticHost",true);
+        camera.request("camera.connect",SharedJson.encode(params),"explicit-first",()->false,v->{});
+        yes("192.168.186.1".equals(first.requestedHost)&&first.open&&released.get()==0);
+        camera.closeTransport();
+        yes(!first.open&&released.get()==1);
+        AtomicReference<Throwable> failure=new AtomicReference<>();
+        Thread worker=request(camera,params,"explicit-cancel",()->false,v->{},failure);
+        yes(second.entered.await(3,TimeUnit.SECONDS));
+        camera.cancel("explicit-cancel");worker.join(3000);
+        yes(failure.get() instanceof InterruptedIOException&&!worker.isAlive());
+        yes(!second.open&&released.get()==2);
     }
     private static void retiredClockCannotCloseSuccess(File parent,Map<String,Object> payload)throws Exception{
         File root=new File(parent,"retired-clock");yes(root.mkdirs());PausedWatchdogClock clock=new PausedWatchdogClock();FakeClient peer=new FakeClient();peer.blockConnect=true;
@@ -118,8 +158,10 @@ final class SharedCameraConnectBoundaryTest {
         final CountDownLatch entered=new CountDownLatch(1),proceed=new CountDownLatch(1);
         final CountDownLatch closeEntered=new CountDownLatch(1),closeRelease=new CountDownLatch(1);final AtomicBoolean closing=new AtomicBoolean();
         final List<Integer> operations=new ArrayList<>();
+        String requestedHost;
         public void setConnectionStageListener(Consumer<ConnectionStage> value){listener=value;}
         public byte[] connect(String host,int port,byte[] guid,String name)throws IOException{
+            requestedHost=host;
             open=true;if(listener!=null){listener.accept(ConnectionStage.CONNECTING_CAMERA);listener.accept(ConnectionStage.WAITING_CONFIRMATION);}
             if(blockConnect)await();if(!open)throw new IOException("Closed during handshake");
             if(listener!=null)listener.accept(ConnectionStage.CONNECTING_CAMERA);return info();

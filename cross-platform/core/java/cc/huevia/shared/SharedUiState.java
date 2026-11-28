@@ -40,7 +40,7 @@ final class SharedUiState {
             Map<String,Object> input=SharedRuntime.object(raw);keys(input,"category","format","download");
             String category=SharedRuntime.text(input,"category",96);
             if(category.codePointCount(0,category.length())>24||category.codePoints().anyMatch(Character::isISOControl))throw new IOException("筛选分类无效。");
-            return SharedRuntime.map("category",category,"format",choice(input.get("format"),"","NCP","NP3"),"download",choice(input.get("download"),"all","saved","missing"));
+            return SharedRuntime.map("category",category,"format",choice(input.get("format"),"","NCP","NP2","NP3"),"download",choice(input.get("download"),"all","saved","missing"));
         }
         if(key.equals("album")){
             Map<String,Object> input=SharedRuntime.object(raw);keys(input,"source","filter","added","oldest");

@@ -13,6 +13,9 @@ class WiredCameraPicker extends StatefulWidget {
     this.compact = false,
     this.onBusyChanged,
     this.active = false,
+    this.preferredId,
+    this.recoverId,
+    this.onRecover,
     this.builder,
   });
   final bool compact;
@@ -22,9 +25,12 @@ class WiredCameraPicker extends StatefulWidget {
   /// transport. Device selection never asks for permission in this layout.
   final Widget Function(BuildContext, Widget content, Widget primary)? builder;
   final bool active;
+  final String? preferredId;
+  final String? recoverId;
   final HueviaCore core;
   final bool enabled;
   final Future<void> Function(String id) onConnect;
+  final Future<void> Function(String id)? onRecover;
   @override
   State<WiredCameraPicker> createState() => _WiredCameraPickerState();
 }
@@ -38,6 +44,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
   @override
   void initState() {
     super.initState();
+    selectedId = widget.preferredId;
     request = CameraConnectionRequest(widget.core)
       ..addListener(progressChanged);
     scheduleDetection();
@@ -100,7 +107,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
     }
   }
 
-  Future<void> connect(Json device) async {
+  Future<void> connect(Json device, {bool recover = false}) async {
     if (busy || !widget.enabled) return;
     final id = device['id'];
     if (id is! String || id.isEmpty) return;
@@ -112,7 +119,16 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
     try {
       await widget.core.requestUsbPermission(id);
       if (!mounted) return;
-      await widget.onConnect(id);
+      setState(() {
+        devices = devices?.map((row) {
+          return row['id'] == id ? {...row, 'permission': true} : row;
+        }).toList();
+      });
+      if (recover) {
+        await widget.onRecover?.call(id);
+      } else {
+        await widget.onConnect(id);
+      }
     } catch (failure) {
       if (mounted) setState(() => error = '$failure');
     } finally {
@@ -187,6 +203,10 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
         .where((device) => device['id'] == selectedId)
         .firstOrNull;
     final disabled = busy || !widget.enabled;
+    final recover =
+        widget.onRecover != null &&
+        selected != null &&
+        selected['id'] == widget.recoverId;
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -266,7 +286,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
             ? null
             : selected == null
             ? detect
-            : () => connect(selected),
+            : () => connect(selected, recover: recover),
         style: FilledButton.styleFrom(
           backgroundColor: p.action,
           foregroundColor: p.onAction,
@@ -280,6 +300,8 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
               ? '正在连接…'
               : selected == null
               ? '检测 USB 相机'
+              : recover
+              ? '恢复 USB 会话'
               : selected['permission'] == true
               ? '连接相机'
               : '授权并连接',

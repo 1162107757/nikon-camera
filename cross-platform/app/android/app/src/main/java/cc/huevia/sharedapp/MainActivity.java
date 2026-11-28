@@ -1,5 +1,10 @@
 package cc.huevia.sharedapp;
 
+import android.app.ComponentCaller;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import cc.huevia.account.*;
@@ -25,6 +30,9 @@ public final class MainActivity extends FlutterActivity {
     private NativeOriginalFiles originalFiles;
     private NativeAlbumOperations albumOperations;
     private BinaryMessenger messenger;
+    private MethodChannel usbAttachmentChannel;
+    private String pendingUsbCamera;
+    private boolean connectAttachedUsb;
     private MainActivity eventTarget;
     private volatile SharedRuntime runtime;
     private NativeMedia media;
@@ -38,10 +46,37 @@ public final class MainActivity extends FlutterActivity {
     private NativeGallery gallery;
     private NativeQqAuthorization qqAuthorization;
     private NativeUpdates updates;
+    private NativeCameraLocation cameraLocation;
     private NativeLegacyFiles legacyFiles;
     private MethodChannel.Result galleryPermission;
+    private MethodChannel.Result cameraWifiPermission;
+    private static final int CAMERA_WIFI_PERMISSION=49327;
     private MethodChannel.Result gallerySavePermission;
     private volatile EventChannel.EventSink events;
+    @Override protected void onCreate(Bundle savedState){
+        super.onCreate(savedState);
+        if(savedState==null)offerUsbAttachment(getIntent(),true);
+    }
+    @Override public void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        offerUsbAttachment(intent,false);
+    }
+    private void offerUsbAttachment(Intent intent, boolean initial){
+        if(usbCamera==null||usbAttachmentChannel==null)return;
+        String id=usbCamera.authorizedAttachment(intent);
+        if(id==null)return;
+        pendingUsbCamera=id;
+        connectAttachedUsb=Build.VERSION.SDK_INT>=35&&launchedByAndroid(initial);
+        usbAttachmentChannel.invokeMethod("attachmentAvailable",null);
+    }
+    @android.annotation.TargetApi(35)
+    private boolean launchedByAndroid(boolean initial){
+        // On older Android versions the user confirms Connect in Huevia.
+        try{
+            ComponentCaller caller=initial?getInitialCaller():getCurrentCaller();
+            return caller!=null&&getPackageManager().checkSignatures(android.os.Process.SYSTEM_UID,caller.getUid())==PackageManager.SIGNATURE_MATCH;
+        }catch(RuntimeException unavailable){return false;}
+    }
     @Override public FlutterEngine provideFlutterEngine(android.content.Context context){return NativeConnectionProtection.cachedEngine();}
     @Override public boolean shouldDestroyEngineWithHost(){return ownsBackend&&!NativeConnectionProtection.keepEngine();}
     // Flutter calls this only after its route stack has handled Back. Keep the
@@ -63,6 +98,12 @@ public final class MainActivity extends FlutterActivity {
           }
         }
         messenger=engine.getDartExecutor().getBinaryMessenger();
+        if(prior!=null&&prior!=this&&prior.cameraLocation!=null){
+            prior.cameraLocation.dispose();
+            prior.cameraLocation=null;
+        }
+        if(cameraLocation!=null)cameraLocation.dispose();
+        cameraLocation=new NativeCameraLocation(this,messenger);
         protection=new NativeConnectionProtection(this,engine);
         prepareCameraMaintenance();
         if(qqAuthorization!=null)qqAuthorization.close();
@@ -83,6 +124,13 @@ public final class MainActivity extends FlutterActivity {
             catch(RejectedExecutionException busy){reply.error("BUSY","请等待当前操作完成后再读取诊断。",null);}
         });
         if(usbCamera==null)usbCamera=new NativeUsbCamera(getApplicationContext());
+        usbAttachmentChannel=new MethodChannel(messenger,"cc.huevia/usb-attachment");
+        usbAttachmentChannel.setMethodCallHandler((call,reply)->{
+            if(!call.method.equals("take")){reply.notImplemented();return;}
+            String id=pendingUsbCamera;
+            pendingUsbCamera=null;
+            reply.success(id!=null&&usbCamera.isAuthorized(id)?SharedRuntime.map("id",id,"connect",connectAttachedUsb):null);
+        });
         importPicker=new NativeImportPicker(this,worker);
         configureStorageAdapters();
         new EventChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/events").setStreamHandler(new EventChannel.StreamHandler(){
@@ -90,6 +138,30 @@ public final class MainActivity extends FlutterActivity {
             public void onCancel(Object args){events=null;}
         });
         new MethodChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/core").setMethodCallHandler((call,reply)->{
+            if(call.method.equals("openPublishedPhoto")){
+                String uri=call.argument("uri");
+                if(uri==null||!uri.matches("content://media/(external|external_primary)/images/media/[0-9]+")){
+                    reply.error("INVALID_ARGUMENT","照片保存地址无效。",null);return;
+                }
+                try{
+                    startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW)
+                            .setDataAndType(android.net.Uri.parse(uri),"image/*")
+                            .addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION));
+                    reply.success(null);
+                }catch(RuntimeException unavailable){reply.error("VIEW_UNAVAILABLE","手机暂时无法打开这张照片，请在系统相册中查看。",null);}
+                return;
+            }
+            if(call.method.equals("cameraWifiPermission")){
+                if(android.os.Build.VERSION.SDK_INT<29){reply.error("UNSUPPORTED","当前 Android 版本请从系统 Wi-Fi 设置连接相机热点。",null);return;}
+                if(cameraWifiPermission!=null){reply.error("BUSY","请完成当前 Wi-Fi 权限选择。",null);return;}
+                if(hasCameraWifiPermission()){reply.success(null);return;}
+                cameraWifiPermission=reply;
+                requestPermissions(android.os.Build.VERSION.SDK_INT>=33
+                        ? new String[]{android.Manifest.permission.NEARBY_WIFI_DEVICES}
+                        : new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        CAMERA_WIFI_PERMISSION);
+                return;
+            }
             if(call.method.equals("cameraUsbPermission")){String id=call.argument("id");if(id==null){reply.error("INVALID_ARGUMENT","请选择 USB 相机。",null);return;}usbCamera.requestPermission(id,reply);return;}
             if(call.method.equals("gallerySavePermission")){
                 if(gallery==null){reply.error("NOT_READY","应用尚未准备好。",null);return;}
@@ -102,7 +174,7 @@ public final class MainActivity extends FlutterActivity {
                 if(galleryPermission!=null||gallerySavePermission!=null){reply.error("BUSY","请完成当前照片权限选择。",null);return;}
                 galleryPermission=reply;
                 String permission=android.os.Build.VERSION.SDK_INT>=33?android.Manifest.permission.READ_MEDIA_IMAGES:android.Manifest.permission.READ_EXTERNAL_STORAGE;
-                requestPermissions(android.os.Build.VERSION.SDK_INT>=34?new String[]{permission,android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}:new String[]{permission},49318);return;
+                requestPermissions(android.os.Build.VERSION.SDK_INT>=34?new String[]{permission,android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}:android.os.Build.VERSION.SDK_INT>=33?new String[]{permission}:new String[]{permission},49318);return;
             }
             if(call.method.equals("pickAvatar")){
                 Object owner=call.argument("owner"),updatedAt=call.argument("updatedAt");
@@ -137,7 +209,10 @@ public final class MainActivity extends FlutterActivity {
                 try{
                     Object value;
                     if(call.method.equals("initialize")){
-                        if(runtime==null){android.content.Context app=getApplicationContext();AccountHttpTransport.setPublicConnectionOpener(new PublicInternetConnections(app));File root=new File(app.getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(app),new AccountHttpTransport(),AccountInstallation.id(app));media=new NativeMedia(app,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(app);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);},usbCamera);prepareCameraMaintenance();}
+                        if(runtime==null){android.content.Context app=getApplicationContext();AccountHttpTransport.setPublicConnectionOpener(new PublicInternetConnections(app));File root=new File(app.getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(app),new AccountHttpTransport(),AccountInstallation.id(app));media=new NativeMedia(app,runtime);cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(app);camera=new SharedCamera(root.getPath(),(host,port,fuji)->fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port),usbCamera);
+                            camera.setFujifilmRoute(port->{var endpoint=network.automaticFujifilmEndpoint(port);return new SharedCamera.WifiEndpoint(endpoint.host,endpoint.connector);});
+                            camera.setFujifilmWifiJoin(new cc.huevia.connection.SharedFujifilmWifi(app,network));
+                            prepareCameraMaintenance();}
                         if(gallery==null)gallery=new NativeGallery(this,runtime);
                         main.post(this::configureStorageAdapters);
                         value=SharedJson.encode(SharedRuntime.map("root",runtime.root().getPath(),"schema",SharedJson.object(CoreEngine.schema()),"platform","android"));
@@ -155,12 +230,15 @@ public final class MainActivity extends FlutterActivity {
                         if(operation.startsWith("media."))value=media.request(operation,payload,cancelled::get,progress);
                         else if(operation.startsWith("camera.")){Map<String,Object> p=SharedJson.object(payload);if(p.containsKey("queueId"))runtime.guardOwner(SharedRuntime.text(p,"owner",64));value=camera.request(operation,payload,identity,cancelled::get,progress);}
                         else if(operation.equals("files.publishOriginal")){if(originalFiles==null)throw new IOException("文件保存尚未准备好。");value=originalFiles.publish(payload,cancelled::get);}
+                        else if(operation.equals("files.publishExport")){if(originalFiles==null)throw new IOException("文件保存尚未准备好。");value=originalFiles.publishExport(payload,cancelled::get);}
                         else if(operation.equals("gallery.delete")||operation.equals("gallery.publishedCopies")){if(albumOperations==null)throw new IOException("系统相册尚未准备好。");value=albumOperations.request(operation,payload,cancelled::get);}
                         else if(operation.startsWith("gallery.")){value=gallery.request(operation,payload,cancelled::get,identity);if(operation.equals("gallery.publish")||operation.equals("gallery.publishOriginal"))main.post(()->emit(SharedRuntime.map("kind","galleryChanged")));}
                         else if(SharedRuntime.accountNetworkOperation(operation)||SharedRuntime.publicNetworkOperation(operation))value=runtime.requestPublic(operation,payload,cancelled::get);
                         else value=runtime.request(operation,payload,cancelled::get,progress);
                     }
                     complete(identity,cancelled,()->reply.success(value));
+                }catch(NativeUsbSlots.SessionOccupied error){
+                    complete(identity,cancelled,()->reply.error("USB_SESSION_OCCUPIED",error.getMessage(),SharedRuntime.map("recoverUsbSession",true)));
                 }catch(Exception error){String message=error.getMessage();complete(identity,cancelled,()->reply.error(error instanceof InterruptedIOException?"CANCELLED":"OPERATION_FAILED",message==null?"操作未完成，请重试。":message,error instanceof AccountException?SharedRuntime.map("accountCode",((AccountException)error).code,"status",((AccountException)error).status):null));}
                 catch(OutOfMemoryError exhausted){complete(identity,cancelled,()->reply.error("MEMORY_LIMIT","内存不足，请关闭其他应用后重试。",null));}
                 catch(LinkageError missing){complete(identity,cancelled,()->reply.error("INSTALLATION_ERROR","安装包中的原生组件不可用，请重新安装此版本。",null));}
@@ -208,6 +286,25 @@ public final class MainActivity extends FlutterActivity {
     @Override protected void onStart(){super.onStart();maintenanceForeground=true;updateCameraMaintenance();}
     @Override protected void onStop(){maintenanceForeground=false;updateCameraMaintenance();super.onStop();}
     @Override protected void onResume(){super.onResume();if(qqAuthorization!=null)qqAuthorization.onHostResumed();if(updates!=null)updates.onHostResumed();}
-    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49324&&protection!=null)protection.permissionResult();if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}if(request==49319&&gallerySavePermission!=null){MethodChannel.Result reply=gallerySavePermission;gallerySavePermission=null;reply.success(SharedJson.encode(SharedRuntime.map("granted",checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED)));}}
-    @Override protected void onDestroy(){if(albumOperations!=null)albumOperations.close();if(qqAuthorization!=null)qqAuthorization.close();if(updates!=null)updates.close();if(legacyFiles!=null)legacyFiles.close();if(originalFiles!=null)originalFiles.dispose();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(protection!=null)protection.detached();if(!NativeConnectionProtection.keepEngine())releaseRetainedBackend();super.onDestroy();}
+    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){
+        super.onRequestPermissionsResult(request,permissions,grants);
+        if(request==CAMERA_WIFI_PERMISSION&&cameraWifiPermission!=null){
+            MethodChannel.Result reply=cameraWifiPermission;cameraWifiPermission=null;
+            if(hasCameraWifiPermission())reply.success(null);
+            else reply.error("PERMISSION_ERROR","请在系统中允许 Huevia 的附近设备或精确定位权限，再选择相机 Wi-Fi。",null);
+        }
+        if(request==NativeCameraLocation.PERMISSION_REQUEST&&cameraLocation!=null)cameraLocation.permissionResult();
+        if(request==49324&&protection!=null)protection.permissionResult();
+        if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}
+        if(request==49319&&gallerySavePermission!=null){MethodChannel.Result reply=gallerySavePermission;gallerySavePermission=null;reply.success(SharedJson.encode(SharedRuntime.map("granted",checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED)));}
+    }
+    private boolean hasCameraWifiPermission(){
+        String permission=android.os.Build.VERSION.SDK_INT>=33?android.Manifest.permission.NEARBY_WIFI_DEVICES:android.Manifest.permission.ACCESS_FINE_LOCATION;
+        return checkSelfPermission(permission)==android.content.pm.PackageManager.PERMISSION_GRANTED;
+    }
+    @Override protected void onDestroy(){
+        if(cameraWifiPermission!=null){cameraWifiPermission.error("CANCELLED","Wi-Fi 权限选择已取消。",null);cameraWifiPermission=null;}
+        if(cameraLocation!=null){cameraLocation.dispose();cameraLocation=null;}
+        if(albumOperations!=null)albumOperations.close();if(qqAuthorization!=null)qqAuthorization.close();if(updates!=null)updates.close();if(legacyFiles!=null)legacyFiles.close();if(originalFiles!=null)originalFiles.dispose();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(protection!=null)protection.detached();if(!NativeConnectionProtection.keepEngine())releaseRetainedBackend();super.onDestroy();
+    }
 }

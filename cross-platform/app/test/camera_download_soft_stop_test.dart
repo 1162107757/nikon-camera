@@ -366,7 +366,10 @@ void main() {
         await untilSoftStop(() => core.downloads.length == 1);
         final oldJob = transfer.job;
         final before = core.file.readAsBytesSync();
-        final soft = transfer.stop();
+        final soft = state.stopCameraManualTransfer(
+          expectedSession: 'old-session',
+          preserveConnection: true,
+        );
         expect(transfer.busy, isTrue);
         expect(transfer.phase, CameraTransferPhase.stopping);
         expect(transfer.job, oldJob);

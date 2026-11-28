@@ -29,7 +29,8 @@ final class NativeRaster {
             BitmapFactory.Options options=new BitmapFactory.Options();options.inSampleSize=1;
             if(preview)while(Math.max(bounds.outWidth,bounds.outHeight)/options.inSampleSize>previewEdge)options.inSampleSize*=2;
             options.inMutable=true;options.inScaled=false;options.inPreferredConfig=Bitmap.Config.ARGB_8888;options.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);
-            bitmap=BitmapFactory.decodeFile(source.getPath(),options);if(bitmap==null||!bitmap.isMutable()||bitmap.getConfig()!=Bitmap.Config.ARGB_8888||!ColorSpace.get(ColorSpace.Named.SRGB).equals(bitmap.getColorSpace()))throw new IOException("无法读取完整 sRGB 像素。");
+            bitmap=HlgPhotoDecoder.matches(bounds)?HlgPhotoDecoder.decode(source,bounds,options.inSampleSize,cancel):BitmapFactory.decodeFile(source.getPath(),options);
+            if(bitmap==null||!bitmap.isMutable()||bitmap.getConfig()!=Bitmap.Config.ARGB_8888||!ColorSpace.get(ColorSpace.Named.SRGB).equals(bitmap.getColorSpace()))throw new IOException("无法读取完整 sRGB 像素。");
             if(!preview&&(bitmap.getWidth()!=bounds.outWidth||bitmap.getHeight()!=bounds.outHeight))throw new IOException("原图尺寸不符，未缩小图片。");
             check(cancel);progress.accept(.1);final Bitmap working=bitmap;final int exif=orientation;
             profile.renderPixels(new SpatialPreviewFilter.Pixels(){

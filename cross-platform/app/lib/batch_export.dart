@@ -9,6 +9,8 @@ import 'package:path/path.dart' as p;
 import 'package:crypto/crypto.dart';
 
 import 'domain.dart';
+import 'export_save.dart';
+import 'export_album.dart';
 import 'raw_reference.dart';
 
 class BatchPhoto {
@@ -29,9 +31,14 @@ class BatchPhoto {
 /// A bounded, sequential queue. Each recipe is frozen before any export starts;
 /// retries keep that recipe and never export a completed item twice.
 class BatchExport extends ChangeNotifier {
-  BatchExport(this.state, List<Json> rows, {required this.phone})
-    : owner = state.session['user']?['id'] as String? ?? '',
-      items = rows.map(BatchPhoto.new).toList() {
+  BatchExport(
+    this.state,
+    List<Json> rows, {
+    required this.phone,
+    this.currentEffects = false,
+    this.presetBatch = false,
+  }) : owner = state.session['user']?['id'] as String? ?? '',
+       items = rows.map(BatchPhoto.new).toList() {
     if (rows.isEmpty ||
         rows.length > 100 ||
         rows.map((row) => row['id']).toSet().length != rows.length) {
@@ -42,28 +49,35 @@ class BatchExport extends ChangeNotifier {
   }
   final AppState state;
   final bool phone;
+  final bool currentEffects;
+  final bool presetBatch;
   final String owner;
   final List<BatchPhoto> items;
   bool busy = false, locked = false, stopped = false, accountInvalid = false;
   bool _alive = true;
   String? job, preset;
+  Json? editorPreset;
   String? recoveryError;
   String size = 'full';
   int strength = 100;
   int _recipeBytes = 0;
   bool saveToGallery = false;
+  bool _orderedFilename = true;
+  String? targetId, targetName;
+  String? albumPath;
+  bool get publishesExternally => saveToGallery || targetId != null;
   Future<void> _writes = Future.value();
   File get journal => File(
     p.join(
       state.core.root,
       'batch-operations',
-      '${sha256.convert(utf8.encode(jsonEncode([owner, phone, items.map((i) => i.row['id']).toList()])))}.json',
+      '${sha256.convert(utf8.encode(jsonEncode([owner, phone, items.map((i) => i.row['id']).toList(), if (currentEffects) 'current-effects-v1', if (presetBatch) 'unified-preset-v1'])))}.json',
     ),
   );
   int get published => items.where((item) => item.receipt != null).length;
   bool get done =>
       completed == items.length &&
-      (!saveToGallery || published == items.length);
+      (!publishesExternally || published == items.length);
   void restore() {
     if (!p.isAbsolute(state.core.root)) return;
     try {
@@ -74,6 +88,16 @@ class BatchExport extends ChangeNotifier {
           value['phone'] != phone ||
           value['schema'] != 1) {
         return;
+      }
+      final savedTargetId = value['targetId'] as String?;
+      final savedAlbum = value['albumPath'] as String?;
+      if (!validExportTarget(savedTargetId)) {
+        throw const FormatException('无效的文件夹授权。');
+      }
+      if (!validExportAlbum(savedAlbum) ||
+          savedAlbum != null &&
+              (savedTargetId != null || value['saveToGallery'] != true)) {
+        throw const FormatException('无效的手机相册位置。');
       }
       final rows = value['items'] as List;
       if (rows.length != items.length) return;
@@ -103,24 +127,55 @@ class BatchExport extends ChangeNotifier {
           }
         }
         if (item.output != null && row['receipt'] != null) {
-          item.receipt = object(row['receipt']);
+          final receipt = object(row['receipt']);
+          if (savedAlbum == null ||
+              receipt['albumPath'] == savedAlbum &&
+                  receipt['verified'] == true) {
+            item.receipt = receipt;
+          }
         }
         item.phase = item.receipt != null
-            ? '已保存到系统相册'
+            ? (savedTargetId == null ? '已保存到系统相册' : '已保存到文件夹')
             : item.output != null
             ? '已保存成品'
             : '等待继续';
       }
       preset = value['preset'] as String?;
+      editorPreset = value['editorPreset'] == null
+          ? null
+          : object(value['editorPreset']);
       strength = value['strength'] as int? ?? 100;
       size = value['size'] as String? ?? 'full';
-      saveToGallery = value['saveToGallery'] == true;
+      targetId = savedTargetId;
+      targetName = savedTargetId == null
+          ? null
+          : value['targetName'] as String?;
+      saveToGallery = targetId == null && value['saveToGallery'] == true;
+      albumPath = savedAlbum;
+      _orderedFilename = targetId != null || value['orderedFilename'] == true;
       locked = value['locked'] == true;
       _recipeBytes = items
           .where((i) => i.recipe != null)
           .fold(0, (v, i) => v + utf8.encode(jsonEncode(i.recipe)).length);
+      if ((currentEffects || presetBatch) &&
+          (done || value['completed'] == true)) {
+        // A new export gesture snapshots today's edits. Completed earlier copies
+        // remain immutable, while an unfinished task still resumes its frozen recipe.
+        for (final item in items) {
+          item.operation = BatchPhoto(item.row).operation;
+          item.recipe = item.version = item.receipt = null;
+          item.output = item.error = null;
+          item.phase = '等待处理';
+        }
+        _recipeBytes = 0;
+        preset = null;
+        editorPreset = null;
+        locked = false;
+        targetId = targetName = albumPath = null;
+        saveToGallery = false;
+      }
     } catch (_) {
-      recoveryError = '上次批量任务记录无法完整读取，请核对系统相册后新建任务。';
+      recoveryError = '上次批量任务记录无法完整读取，请核对保存位置后新建任务。';
       locked = true;
     }
   }
@@ -134,10 +189,16 @@ class BatchExport extends ChangeNotifier {
       'owner': owner,
       'phone': phone,
       'preset': preset,
+      if (editorPreset != null) 'editorPreset': editorPreset,
       'strength': strength,
       'size': size,
       'saveToGallery': saveToGallery,
+      'orderedFilename': _orderedFilename,
+      'targetId': ?targetId,
+      'targetName': ?targetName,
+      'albumPath': ?albumPath,
       'locked': locked,
+      'completed': done,
       'items': [
         for (final i in items)
           {
@@ -182,7 +243,11 @@ class BatchExport extends ChangeNotifier {
       item.phase = '等待处理';
     }
     _recipeBytes = 0;
+    targetId = targetName = null;
+    albumPath = null;
+    _orderedFilename = true;
     recoveryError = null;
+    editorPreset = null;
     locked = false;
     stopped = false;
     await persist();
@@ -196,7 +261,8 @@ class BatchExport extends ChangeNotifier {
   }
 
   void accountChanged() {
-    if ((state.session['user']?['id'] as String? ?? '') != owner) {
+    if (state.session['logoutPending'] == true ||
+        (state.session['user']?['id'] as String? ?? '') != owner) {
       accountInvalid = true;
       unawaited(cancel());
     }
@@ -205,6 +271,7 @@ class BatchExport extends ChangeNotifier {
   void check() {
     if (!_alive || stopped) throw const AppFailure('批量处理已停止。');
     if (accountInvalid ||
+        state.session['logoutPending'] == true ||
         (state.session['user']?['id'] as String? ?? '') != owner) {
       throw const AppFailure('账号已改变，请重新选择照片。');
     }
@@ -251,11 +318,18 @@ class BatchExport extends ChangeNotifier {
           result['name'] as String,
           info,
         );
+        item.photo = await state.linkPhonePhoto(item.photo!, item.row);
       } else {
         item.photo = state.photos.firstWhere(
           (photo) => photo.path == item.row['id'],
           orElse: () => throw const AppFailure('照片已不在应用相册中。'),
         );
+      }
+    }
+    if (item.photo!.info['raw'] == true) {
+      final working = state.workingPhotoFor(item.photo!);
+      if (working != null && await File(working.path).exists()) {
+        item.photo = working;
       }
     }
     if (item.photo!.info['raw'] == true) {
@@ -306,6 +380,15 @@ class BatchExport extends ChangeNotifier {
       }
     }
     if (item.recipe == null) {
+      if (editorPreset != null) {
+        final prepared = await call('editor.prepare', {
+          'path': item.photo!.path,
+          'owner': owner,
+          'preset': editorPreset,
+        });
+        check();
+        if (prepared['id'] != preset) throw const AppFailure('预设身份已变化，请重新选择。');
+      }
       item.phase = '读取编辑';
       changed();
       final saved = await call('draft.load', {
@@ -332,22 +415,51 @@ class BatchExport extends ChangeNotifier {
 
   Future<void> run({
     String? presetId,
+    Json? onlinePreset,
     int amount = 100,
     String exportSize = 'full',
     bool systemAlbum = false,
+    String? targetId,
+    String? targetName,
+    String? albumPath,
   }) async {
     if (busy || accountInvalid || done) return;
     if (recoveryError != null) throw AppFailure(recoveryError!);
     if (!locked) {
+      if (currentEffects && presetId != null) {
+        throw const AppFailure('当前效果导出会保留各张照片的编辑。');
+      }
+      if (presetBatch && (presetId == null || presetId.isEmpty)) {
+        throw const AppFailure('请先选择要套用的预设。');
+      }
+      if (onlinePreset != null &&
+          (onlinePreset['sha256'] != presetId ||
+              jsonEncode(onlinePreset).length > 64 * 1024)) {
+        throw const AppFailure('在线预设记录无效，请刷新后重试。');
+      }
       if (amount < 0 ||
           amount > 100 ||
           !['full', 'share'].contains(exportSize)) {
         throw const AppFailure('批量导出设置无效。');
       }
+      if (!validExportTarget(targetId)) {
+        throw const AppFailure('文件夹授权记录无效，请重新选择。');
+      }
+      if (!validExportAlbum(albumPath) ||
+          albumPath != null && (targetId != null || !systemAlbum)) {
+        throw const AppFailure('手机相册位置无效，请重新选择。');
+      }
       preset = presetId;
+      editorPreset = onlinePreset == null
+          ? null
+          : object(jsonDecode(jsonEncode(onlinePreset)));
       strength = amount;
       size = exportSize;
-      saveToGallery = systemAlbum;
+      saveToGallery = targetId == null && systemAlbum;
+      this.targetId = targetId;
+      this.targetName = targetId == null ? null : targetName;
+      this.albumPath = albumPath;
+      _orderedFilename = true;
       locked = true;
     }
     stopped = false;
@@ -385,6 +497,7 @@ class BatchExport extends ChangeNotifier {
         try {
           final result = await call('media.export', {
             'path': item.photo!.path,
+            ...exportLocationArguments(item.photo!),
             'recipe': item.recipe!,
             'owner': owner,
             'size': size,
@@ -401,35 +514,35 @@ class BatchExport extends ChangeNotifier {
           changed();
         }
       }
-      if (saveToGallery) {
+      if (publishesExternally) {
         for (final item in items.where(
           (i) => i.version != null && i.receipt == null,
         )) {
           check();
           item.error = null;
-          item.phase = '保存到系统相册';
+          item.phase = this.targetId == null ? '保存到系统相册' : '保存到文件夹';
           changed();
           try {
             await persist();
-            final receipt = await call('gallery.publish', {
-              'owner': owner,
-              'id': item.version!['id'],
-              'filename': '${p.basenameWithoutExtension(item.photo!.name)}.jpg',
-              'extraCopy': true,
-              'operationId': item.operation,
-            });
-            if (receipt['published'] != true ||
-                (receipt['uri'] ?? receipt['identifier']) is! String) {
-              throw const AppFailure('系统相册尚未确认保存，请重试。');
-            }
+            final receipt = await publishExport(
+              call,
+              owner: owner,
+              version: item.version!['id'],
+              originalName: item.photo!.name,
+              operation: item.operation,
+              targetId: this.targetId,
+              albumPath: this.albumPath,
+              orderedFilename: _orderedFilename,
+            );
+            check();
             item.receipt = receipt;
-            item.phase = '已保存到系统相册';
+            item.phase = this.targetId == null ? '已保存到系统相册' : '已保存到文件夹';
             await persist();
             changed();
           } catch (failure) {
             if (stopped || accountInvalid || !_alive) break;
             item.error = '$failure';
-            item.phase = '相册保存未完成';
+            item.phase = this.targetId == null ? '相册保存未完成' : '文件夹保存未完成';
             changed();
             break;
           }

@@ -93,6 +93,8 @@ final class NativeExportPreview {
             PresetPreviewProfile profile=s.draft.profile();BitmapFactory.Options info=new BitmapFactory.Options();info.inJustDecodeBounds=true;BitmapFactory.decodeFile(source.getPath(),info);
             if("image/jpeg".equals(info.outMimeType))PhotoPresetRenderer.forContext(context).renderWithReference(source,s.jpeg,s.reference,profile,spec,cancel,progress::accept);
             else NativeRaster.render(context,source,s.jpeg,s.reference,profile,spec,false,cancel,progress);
+            check(cancel);
+            String locationSource=NativeExportLocation.copy(runtime,p,source,s.draft.sourceSha,s.jpeg);
             check(cancel);valid(s);runtime.validateSource(s.source,s.draft.sourceSha);
             s.orientation=new ExifInterface(s.jpeg.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
             if(s.orientation<1||s.orientation>8)s.orientation=1;
@@ -100,7 +102,9 @@ final class NativeExportPreview {
             if(s.before==null||s.after==null)throw new IOException("成品区域读取不可用。");
             if(s.before.getWidth()!=s.after.getWidth()||s.before.getHeight()!=s.after.getHeight())throw new IOException("成品与编码前尺寸不符。");
             s.width=s.orientation>=5?s.before.getHeight():s.before.getWidth();s.height=s.orientation>=5?s.before.getWidth():s.before.getHeight();
-            PhotoExportSpec.Resolved resolved=spec.resolve(s.width,s.height);s.spec=resolved.identity();s.model=SharedExportModel.of(profile,resolved);
+            PhotoExportSpec.Resolved resolved=spec.resolve(s.width,s.height);
+            s.spec=SharedExportModel.specification(resolved.identity(),locationSource);
+            s.model=SharedExportModel.of(profile,resolved,s.spec);
             double overviewScale=Math.min(1,256.0/Math.max(s.width,s.height));
             int overviewWidth=Math.max(1,(int)Math.round(s.width*overviewScale)),overviewHeight=Math.max(1,(int)Math.round(s.height*overviewScale));
             File overview=new File(s.folder,"overview.png");

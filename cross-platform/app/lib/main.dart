@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -19,6 +20,7 @@ import 'appearance.dart';
 import 'community_activity.dart';
 import 'app_stability.dart';
 import 'album_batch.dart';
+import 'app_launch_services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,8 +44,22 @@ class HueviaApp extends StatefulWidget {
   State<HueviaApp> createState() => _HueviaAppState();
 }
 
-class _HueviaAppState extends State<HueviaApp> {
+class _HueviaAppState extends State<HueviaApp> with WidgetsBindingObserver {
+  static const usbAttachments = MethodChannel('cc.huevia/usb-attachment');
+  final rootNavigatorKey = GlobalKey<NavigatorState>();
+  bool pendingUsbAttachment = true, openingUsbAttachment = false;
+  late final launchServices = AppLaunchServices(
+    state: widget.state,
+    navigatorKey: rootNavigatorKey,
+    canPrompt: () => const [
+      '/presets',
+      '/photos',
+      '/settings',
+      '/profile',
+    ].contains(router.routeInformationProvider.value.uri.path),
+  );
   late final GoRouter router = GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: '/presets',
     routes: [
       StatefulShellRoute.indexedStack(
@@ -127,15 +143,86 @@ class _HueviaAppState extends State<HueviaApp> {
         router.routeInformationProvider.value.uri.path == '/camera';
   }
 
+  void openPendingUsbAttachment() {
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    if (!mounted ||
+        !widget.state.ready ||
+        !pendingUsbAttachment ||
+        openingUsbAttachment ||
+        lifecycle != null && lifecycle != AppLifecycleState.resumed) {
+      return;
+    }
+    openingUsbAttachment = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      pendingUsbAttachment = false;
+      try {
+        final navigator = rootNavigatorKey.currentState;
+        if (!mounted || navigator == null) return;
+        final result = await usbAttachments.invokeMapMethod<String, dynamic>(
+          'take',
+        );
+        final id = result?['id'];
+        if (!mounted || !navigator.mounted || id is! String || id.isEmpty) {
+          return;
+        }
+        widget.state.cameraVisible.value = false;
+        await navigator.push<bool>(
+          MaterialPageRoute<bool>(
+            builder: (_) => CameraPage(
+              state: widget.state,
+              configuration: true,
+              attachedUsbId: id,
+              connectOnAttachment: result?['connect'] == true,
+            ),
+          ),
+        );
+      } on MissingPluginException {
+        // Opening the main app does not require the optional Android channel.
+      } on PlatformException {
+        // The USB device may have disappeared before its launch was handled.
+      } finally {
+        openingUsbAttachment = false;
+        if (mounted) {
+          routeChanged();
+          openPendingUsbAttachment();
+        }
+      }
+    });
+    WidgetsBinding.instance.ensureVisualUpdate();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) openPendingUsbAttachment();
+  }
+
   @override
   void initState() {
     super.initState();
     router.routerDelegate.addListener(routeChanged);
     routeChanged();
+    launchServices.attach();
+    if (Platform.isAndroid) {
+      usbAttachments.setMethodCallHandler((call) async {
+        if (call.method == 'attachmentAvailable') {
+          pendingUsbAttachment = true;
+          openPendingUsbAttachment();
+        }
+      });
+      WidgetsBinding.instance.addObserver(this);
+      widget.state.addListener(openPendingUsbAttachment);
+      openPendingUsbAttachment();
+    }
   }
 
   @override
   void dispose() {
+    if (Platform.isAndroid) {
+      widget.state.removeListener(openPendingUsbAttachment);
+      WidgetsBinding.instance.removeObserver(this);
+      usbAttachments.setMethodCallHandler(null);
+    }
+    launchServices.dispose();
     router.routerDelegate.removeListener(routeChanged);
     router.dispose();
     super.dispose();
@@ -216,7 +303,6 @@ class HomeFrame extends StatefulWidget {
 }
 
 class _HomeFrameState extends State<HomeFrame> {
-  bool albumSelecting = false;
   String get location => widget.location;
   Widget get child => widget.child;
   StatefulNavigationShell? get navigation => widget.navigation;
@@ -225,12 +311,7 @@ class _HomeFrameState extends State<HomeFrame> {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: NotificationListener<AlbumSelectionChanged>(
-      onNotification: (notification) {
-        if (albumSelecting != notification.active) {
-          setState(() => albumSelecting = notification.active);
-        }
-        return true;
-      },
+      onNotification: (_) => true,
       child: SafeArea(
         child: LayoutBuilder(
           builder: (context, bounds) {
@@ -270,9 +351,7 @@ class _HomeFrameState extends State<HomeFrame> {
             return Stack(
               children: [
                 Positioned.fill(
-                  left: rail && !(albumSelecting && location == '/photos')
-                      ? 80
-                      : 0,
+                  left: rail ? 80 : 0,
                   child: Center(
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 720),
@@ -280,7 +359,7 @@ class _HomeFrameState extends State<HomeFrame> {
                     ),
                   ),
                 ),
-                if (rail && !(albumSelecting && location == '/photos'))
+                if (rail)
                   Positioned(
                     left: 0,
                     top: 0,
@@ -288,7 +367,7 @@ class _HomeFrameState extends State<HomeFrame> {
                     width: 80,
                     child: ColoredBox(color: p.glass, child: navigation),
                   )
-                else if (!rail && !(albumSelecting && location == '/photos'))
+                else if (!rail)
                   Positioned(
                     left:
                         ((bounds.maxWidth - width) * density / 2).floor() /

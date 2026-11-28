@@ -15,11 +15,13 @@ import java.util.zip.ZipFile;
 /** Strict Deep Tone subset and pipeline regressions; no claim of Nikon pixel fidelity. */
 public final class Np3MonochromePreviewProfileTest {
     private static int checks;
-    private static final String FC_VERSION = "np3-0310-encoded-hsl-zones-spatial-v4";
-    // Frozen before introducing monochrome, from the previously verified v3 classes.
+    private static final String FC_VERSION = "np3-0310-encoded-hsl-zones-spatial-v5";
+    // Neutral and curve-only hashes remain frozen from v3. The basic-tone fixture
+    // has a v5 hash after the independently checked shadow/black colour correction.
+    // These hashes guard dispatch stability, not Nikon colour equivalence.
     private static final String[] FC_OUTPUT_SHA = {
         "ca3809b29422a90ad4148deaf1164beaf5fab622f918fe010c8b20f85713f310",
-        "e58e017c1216026333824006a94b675e2f16b131fba595593c81c06c530d2b2f",
+        "5392613af9e6ddde72d0e854d05a2f11edc7c62a4efa4cf87442177332545629",
         "457843d79256a1413323cc82cd9dd9f5e0bb66b55510abd609ab120146de6eed"
     };
     // Exact non-name records from the independent Dreamy byte audit. Curve samples

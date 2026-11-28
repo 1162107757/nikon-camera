@@ -20,11 +20,13 @@ extension _EditorMenuActions on _EditorPageState {
           : HueIconKind.star,
     EditorMoreAction.histogram => HueIconKind.histogram,
     EditorMoreAction.versions => HueIconKind.stack,
+    EditorMoreAction.info => HueIconKind.file,
     EditorMoreAction.detail => HueIconKind.detail,
     EditorMoreAction.allFilters => HueIconKind.grid,
     EditorMoreAction.optimize => HueIconKind.cleanup,
     EditorMoreAction.recipes || EditorMoreAction.copy => HueIconKind.recipe,
     EditorMoreAction.composition => HueIconKind.crop,
+    EditorMoreAction.lighting => HueIconKind.adjust,
     EditorMoreAction.undoCopy => HueIconKind.undo,
     EditorMoreAction.continueDraft => HueIconKind.receipts,
     EditorMoreAction.resetColour => HueIconKind.adjust,
@@ -65,6 +67,8 @@ extension _EditorMenuActions on _EditorPageState {
         histogram.toggle(recipe.clone().data, sourceSha);
       case EditorMoreAction.versions:
         await openTool(savedVersions: true);
+      case EditorMoreAction.info:
+        await showPhotoInfo();
       case EditorMoreAction.detail:
         await openDetails();
       case EditorMoreAction.allFilters:
@@ -76,6 +80,8 @@ extension _EditorMenuActions on _EditorPageState {
         await openTool();
       case EditorMoreAction.composition:
         await openCrop();
+      case EditorMoreAction.lighting:
+        await openLegacyTools(lighting: true);
       case EditorMoreAction.copy:
         await openTool(copying: true);
       case EditorMoreAction.undoCopy:
@@ -89,6 +95,58 @@ extension _EditorMenuActions on _EditorPageState {
       case EditorMoreAction.delete:
         await deleteFromEditor();
     }
+  }
+
+  Future<void> showPhotoInfo() async {
+    final photo = widget.photo;
+    Future<Object?> locate() async {
+      var result = photo.info['hasLocation'];
+      final core = widget.state.core;
+      if (result is! bool) {
+        result = (await core.call('media.info', {'path': photo.path}))['hasLocation'];
+      }
+      final raw = photo.info['rawSource'];
+      if (result != true && raw is String) {
+        final location = (await core.call('media.info', {'path': raw}))['hasLocation'];
+        if (location == true) return true;
+        if (location is! bool) return null;
+      }
+      return result;
+    }
+
+    final location = locate().catchError((Object _) => null);
+    await hueDialog<void>(
+      context: context,
+      builder: (dialog) => AlertDialog(
+        title: const Text('照片信息'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(photo.name),
+            if (photo.info['width'] case final int width)
+              if (photo.info['height'] case final int height)
+                Text('$width × $height'),
+            const SizedBox(height: 8),
+            FutureBuilder<Object?>(
+              future: location,
+              builder: (context, snapshot) => Text(
+                snapshot.connectionState != ConnectionState.done
+                    ? '正在读取原片位置'
+                    : snapshot.data == true
+                    ? '原片含位置信息'
+                    : snapshot.data == false
+                    ? '原片无位置信息'
+                    : '无法确认原片位置',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(dialog), child: const Text('完成')),
+        ],
+      ),
+    );
   }
 
   Future<void> toggleFavourite() async {

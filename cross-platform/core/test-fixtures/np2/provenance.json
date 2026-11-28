@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "created": "2026-11-18",
+  "generator": "Installed Nikon NX Studio, camera-compatible Picture Control system, Nikon D810 NEF",
+  "profiles": [
+    "[SD] Standard default",
+    "[FL] Flat default",
+    "[MC] Monochrome default"
+  ],
+  "method": "Saved as new custom Picture Controls in NX Studio, exported as .NP2 through File > Export Custom Picture Control. Binary exports unchanged. Hex copies in Np2Fixtures.java must match these SHA-256 hashes.",
+  "rawReference": {
+    "url": "https://raw.pixls.us/getfile.php/2029/nice/Nikon%20-%20D810%20-%2014bit%2014bit%20compressed%20(Lossless)%20(3:2).NEF",
+    "license": "CC0",
+    "sha256": "40a9df99865ad25a68b1131014cf954fb72da8bc32991b6a5e19d14937e21bc9"
+  },
+  "fixtures": [
+    {
+      "file": "HV240_NP2_STD.NP2",
+      "byteLength": 260,
+      "sha256": "f1a74bf6e6fbda132fed3f66d7f84b1b36656f70d4591af5c7ac37d69118df39"
+    },
+    {
+      "file": "HV240_NP2_FLAT.NP2",
+      "byteLength": 208,
+      "sha256": "38ef2adbfda40255bdde815cf474a77ab03c487c1b24ce0fb20c0f4d78eff4ab"
+    },
+    {
+      "file": "HV240_NP2_MONO.NP2",
+      "byteLength": 208,
+      "sha256": "2f069e91e69e5d6f7b2ac9d4d28faf00c0b71680a22dc9b9c2df146b64dcb44e"
+    }
+  ],
+  "coverageLimit": "Baseline exports establish 0210 layout, names, base codes, manual quarter-unit and monochrome-Off tags. Test mutations for non-default, custom curves, unknown fields and future versions are synthetic; they are not claimed as NX-exported fixtures."
+}

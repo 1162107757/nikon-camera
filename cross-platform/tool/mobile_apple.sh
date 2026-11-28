@@ -64,8 +64,12 @@ fi
 flutter analyze --no-pub > "$WORK/analyze.log" 2>&1
 unit_status=0
 flutter test --no-pub --concurrency=1 --reporter expanded > "$WORK/flutter-tests.log" 2>&1 || unit_status=$?
+echo "Flutter unit test exit: $unit_status"
+tail -n 5 "$WORK/flutter-tests.log"
 device_status=0
+echo "Beginning unsigned iOS device compilation"
 flutter build ios --release --no-codesign --no-pub > "$WORK/device-build.log" 2>&1 || device_status=$?
+echo "iOS device build exit: $device_status"
 # Collect independent native compiler failures even when a widget check fails.
 # Neither failure may produce an accepted IPA or skip the test gate.
 if [[ "$unit_status" != 0 || "$device_status" != 0 ]]; then
@@ -73,5 +77,6 @@ if [[ "$unit_status" != 0 || "$device_status" != 0 ]]; then
   exit 1
 fi
 python3 "$ROOT/cross-platform/tool/package_ipa.py"
+echo "Beginning required Apple native integration checks"
 bash "$ROOT/cross-platform/tool/apple_integration.sh"
 python3 "$ROOT/cross-platform/tool/inventory.py" --verify

@@ -19,6 +19,7 @@ class _ConnectionCore extends HueviaCore {
   final requests = <_CameraRequest>[];
   final cancelled = <String>[];
   Completer<void>? cancelGate;
+  int wifiPermissionRequests = 0;
   Json cameraStatus = {
     'connected': false,
     'session': '',
@@ -28,6 +29,11 @@ class _ConnectionCore extends HueviaCore {
   };
   @override
   Stream<dynamic> get operationProgress => events.stream;
+  @override
+  Future<void> requestCameraWifiPermission() async {
+    wifiPermissionRequests++;
+  }
+
   @override
   Future<void> cancel(String jobId) {
     cancelled.add(jobId);
@@ -50,6 +56,97 @@ class _ConnectionCore extends HueviaCore {
 }
 
 void main() {
+  testWidgets('Fuji brand selection sends a valid Wi-Fi endpoint', (
+    tester,
+  ) async {
+    final core = _ConnectionCore();
+    final state = AppState(core);
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: hueviaTheme(Brightness.light),
+        home: CameraPage(state: state, configuration: true),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await Scrollable.ensureVisible(
+      tester.element(find.byKey(const Key('camera-brand'))),
+      alignment: .15,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('camera-brand')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('富士'));
+    await tester.pumpAndSettle();
+    expect(find.text('富士'), findsOneWidget);
+    final button = find.byKey(const Key('camera-connect'));
+    await tester.ensureVisible(button);
+    await tester.tap(button);
+    await tester.pump();
+    final request = core.requests.singleWhere(
+      (request) => request.operation == 'camera.connect',
+    );
+    expect(request.payload['host'], '192.168.0.1');
+    expect(request.payload['port'], 55740);
+    expect(request.payload['protocol'], 'fujifilm');
+    request.result.completeError(const AppFailure('测试连接结束'));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+    state.dispose();
+    await core.events.close();
+  });
+
+  testWidgets(
+    'Fuji TCP refusal can retry on an explicitly named Android hotspot',
+    (tester) async {
+      final core = _ConnectionCore()..platform = 'android';
+      final state = AppState(core);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.light),
+          home: CameraPage(state: state, configuration: true),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final brand = find.byKey(const Key('camera-brand'));
+      await Scrollable.ensureVisible(tester.element(brand), alignment: .15);
+      await tester.pumpAndSettle();
+      await tester.tap(brand);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('富士'));
+      await tester.pumpAndSettle();
+      final connect = find.byKey(const Key('camera-connect'));
+      await tester.tap(connect);
+      await tester.pump();
+      core.requests.single.result.completeError(
+        const AppFailure('富士命令通道连接被拒绝'),
+      );
+      await tester.pumpAndSettle();
+      final choose = find.text('指定相机 Wi-Fi');
+      await tester.ensureVisible(choose);
+      await tester.tap(choose);
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byType(TextFormField).first,
+        'FUJIFILM-X-T20-1234',
+      );
+      await tester.tap(find.text('连接热点'));
+      await tester.pumpAndSettle();
+      expect(core.wifiPermissionRequests, 1);
+      final request = core.requests.last;
+      expect(request.payload['wifiSsid'], 'FUJIFILM-X-T20-1234');
+      expect(request.payload['wifiPassword'], '');
+      core.events.add({'jobId': request.job, 'progress': .065});
+      await tester.pump();
+      expect(find.text('等待系统连接相机 Wi-Fi'), findsOneWidget);
+      request.result.completeError(const AppFailure('测试连接结束'));
+      await tester.pumpAndSettle();
+      await tester.pumpWidget(const SizedBox());
+      state.dispose();
+      await core.events.close();
+    },
+  );
+
   testWidgets(
     'Camera handshake reports permission, confirmation, session and capabilities only for its own job',
     (tester) async {

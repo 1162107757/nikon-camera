@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'export_save.dart';
 import 'widgets.dart';
 
 class VersionsPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class VersionsPage extends StatefulWidget {
     this.state,
     this.isCurrent,
     this.expectedSourceSha,
+    this.originalName,
   });
   final HueviaCore core;
   final String owner;
@@ -24,6 +26,7 @@ class VersionsPage extends StatefulWidget {
   final AppState? state;
   final bool Function()? isCurrent;
   final String? expectedSourceSha;
+  final String? originalName;
   @override
   State<VersionsPage> createState() => _VersionsPageState();
 }
@@ -146,6 +149,9 @@ class _VersionsPageState extends State<VersionsPage> {
             ShareParams(
               sharePositionOrigin: shareAnchor(context),
               files: [XFile(checked['path'] as String)],
+              fileNameOverrides: [
+                exportJpegName(widget.originalName ?? '照片', number: 1),
+              ],
               text: '${checked['name']} · Huevia',
             ),
           );

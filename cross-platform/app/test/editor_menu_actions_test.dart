@@ -40,12 +40,27 @@ class ActionsCore extends fixture.MenuCore {
     draft['values'] = [70, 32, 80, 90, ...List.filled(13, 0)];
   }
   Completer<Json>? cleanup;
+  bool lightingFixture = false;
   @override
   Future<Json> call(
     String operation, [
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (lightingFixture && operation == 'local.describe') {
+      calls.add((operation, payload));
+      return {
+        'masks': [],
+        'clones': [],
+        'localData': 'existing-portrait-regions-patches',
+      };
+    }
+    if (lightingFixture && operation == 'media.localPreview') {
+      calls.add((operation, payload));
+      final path = '$root/previews/light-${calls.length}.png';
+      File('$root/previews/preview.png').copySync(path);
+      return {'path': path, 'width': 1, 'height': 1};
+    }
     if (operation == 'media.cleanupAnalyze') {
       calls.add((operation, payload));
       return cleanup?.future ?? {'cleanupData': 'actual-cleanup'};
@@ -149,6 +164,41 @@ void main() {
       () => Future<void>.delayed(const Duration(milliseconds: 80)),
     );
     await tester.pump();
+  }
+
+  for (final size in [
+    const Size(320, 640),
+    const Size(390, 844),
+    const Size(1024, 768),
+  ]) {
+    testWidgets('Bottom light opens directly at $size', (tester) async {
+      tester.view.physicalSize = size;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      core.lightingFixture = true;
+      await open(tester);
+      final adjust = tester.getCenter(find.text('调节').hitTestable());
+      final light = find.text('光影').hitTestable();
+      expect(light, findsOneWidget);
+      expect(tester.getCenter(light).dx, greaterThan(adjust.dx));
+      await tester.tap(light);
+      for (var i = 0; i < 12; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 25)),
+        );
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      for (final name in ['柔光', '侧光', '聚光', '阴影']) {
+        expect(find.text(name), findsOneWidget);
+      }
+      expect(
+        core.calls.where((c) => c.$1 == 'media.localPreview'),
+        hasLength(1),
+      );
+      expect(tester.takeException(), isNull);
+      await close(tester);
+    });
   }
 
   testWidgets(

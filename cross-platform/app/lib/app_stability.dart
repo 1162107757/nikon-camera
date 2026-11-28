@@ -100,6 +100,10 @@ class AppStability {
           : 'unavailable',
     };
     if (platform == 'android') {
+      final build = native['currentAppBuild'];
+      if (build is int && build > 0 && build <= 9007199254740991) {
+        result['currentAppBuild'] = build;
+      }
       for (final key in ['sdk', 'manufacturer', 'model', 'currentAppVersion']) {
         final value = native[key];
         if (value is int && value >= 0 && value <= 10000) result[key] = value;

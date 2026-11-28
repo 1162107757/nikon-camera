@@ -193,12 +193,15 @@ class _Core extends SelectionCore {
 class _RawState extends WorkspaceState {
   _RawState(super.core);
   @override
-  Future<Photo> importPhoto(XFile selected, {String? displayName}) async =>
-      Photo('${core.root}/working.jpg', displayName ?? 'working.jpg', {
-        'raw': false,
-        'width': 800,
-        'height': 600,
-      });
+  Future<Photo> importPhoto(
+    XFile selected, {
+    String? displayName,
+    bool Function()? isCurrent,
+  }) async => Photo('${core.root}/working.jpg', displayName ?? 'working.jpg', {
+    'raw': false,
+    'width': 800,
+    'height': 600,
+  });
   @override
   Future<Photo> updatePhoto(Photo photo, Json metadata) async =>
       Photo(photo.path, photo.name, {...photo.info, ...metadata});

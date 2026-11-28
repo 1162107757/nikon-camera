@@ -130,11 +130,10 @@ class CameraTransfer extends ChangeNotifier {
     }
     if (!state.claimCameraTransfer(
       session: session,
-      onStop: () async {
-        // An already verified photo can finish its local publication. A
-        // reconnect only cancels this download while it still owns camera I/O.
+      onStop: ({required preserveConnection}) async {
+        // An already verified photo can finish its local publication.
         if (canStop || busy && _stopCompletion != null) {
-          await stop(preserveConnection: false);
+          await stop(preserveConnection: preserveConnection);
         }
       },
     )) {

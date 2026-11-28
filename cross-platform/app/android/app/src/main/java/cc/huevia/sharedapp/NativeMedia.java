@@ -95,16 +95,17 @@ final class NativeMedia {
             }finally{if(blurred!=null)blurred.recycle();if(small!=null&&small!=bitmap)small.recycle();bitmap.recycle();if(!complete)Files.deleteIfExists(target.toPath());}
         }
         if(operation.equals("media.info")){
-            if(raw(source)){RawDeveloper.Info info=RawDeveloper.inspect(source);return SharedJson.encode(SharedRuntime.map("width",info.width,"height",info.height,"raw",true,"make",info.make,"model",info.model));}
+            Boolean hasLocation=NativeExportLocation.hasLocation(source);
+            if(raw(source)){RawDeveloper.Info info=RawDeveloper.inspect(source);return SharedJson.encode(SharedRuntime.map("width",info.width,"height",info.height,"raw",true,"make",info.make,"model",info.model,"hasLocation",hasLocation));}
             BitmapFactory.Options bounds=bounds(source);int orientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(orientation<1||orientation>8)orientation=1;
-            return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",orientation));
+            return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",orientation,"hasLocation",hasLocation));
         }
         if(operation.equals("media.borderInfo")){
             String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
             PhotoCaptureInfo capture=PhotoCaptureInfo.read(source);List<String> fields=new ArrayList<>();
             for(int i=0;i<5;i++)fields.add(capture.field(PhotoBorder.NONE,i));
             runtime.guardOwner(owner);
-            return SharedJson.encode(SharedRuntime.map("brand",capture.brand,"model",capture.model,"fields",fields));
+            return SharedJson.encode(SharedRuntime.map("brand",capture.brand,"model",capture.model,"fields",fields,"lens",capture.lens));
         }
         if(operation.equals("media.rawReferenceInfo")){
             if(!raw(source))throw new IOException("请选择 RAW 原文件。");runtime.guardOwner(SharedRuntime.text(p,"owner",64));
@@ -160,6 +161,8 @@ final class NativeMedia {
             if(preview||!"image/jpeg".equals(bounds(source).outMimeType))NativeRaster.render(context,source,temporary,null,profile,spec,preview,previewEdge,cancel,progress);
             else PhotoPresetRenderer.forContext(context).render(source,temporary,profile,spec,cancel,progress::accept);
             if(cancel.getAsBoolean())throw new InterruptedIOException("照片处理已取消。");
+            String locationSource = preview || detail ? "" : NativeExportLocation.copy(runtime,p,new File(original),frozen.sourceSha,temporary);
+            String exportSpec = SharedExportModel.specification(resolved.identity(),locationSource);
             BitmapFactory.Options info=bounds(temporary,100_000_000);
             int orientation=new ExifInterface(temporary.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
             int width=orientation>=5?info.outHeight:info.outWidth,height=orientation>=5?info.outWidth:info.outHeight;
@@ -168,7 +171,7 @@ final class NativeMedia {
             if(!preview)runtime.validateSource(original,frozen.sourceSha);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
             detailMoved=true;
-            Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"geometryWidth",plan.width,"geometryHeight",plan.height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity());
+            Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"geometryWidth",plan.width,"geometryHeight",plan.height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved,exportSpec),"exportSpec",preview?"":exportSpec);
             if(detail){
                 // The same full-size renderer, without the export transaction
                 // or persistent draft mutation below.

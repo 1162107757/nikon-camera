@@ -9,7 +9,6 @@ import 'package:huevia/theme.dart';
 import 'camera_intent_test.dart' as intent;
 
 class _TransportCore extends intent.IntentCameraCore {
-  String transport = 'wifi';
   int permissions = 0;
   Completer<Json>? discovery;
   bool denied = false;
@@ -165,6 +164,39 @@ void main() {
       await tester.pumpAndSettle();
       expect(core.permissions, 2);
       expect(core.calls.where((c) => c.$1 == 'camera.connect'), hasLength(1));
+    },
+  );
+
+  testWidgets(
+    'An occupied Nikon USB session can be recovered explicitly on the same device',
+    (tester) async {
+      final core = _TransportCore()
+        ..platform = 'android'
+        ..connectionError = const AppFailure(
+          '相机仍保留着 USB 会话',
+          details: {'recoverUsbSession': true},
+        );
+      await _open(tester, core);
+      await tester.tap(find.text('USB 有线'));
+      await tester.pumpAndSettle();
+      final button = find.byKey(const Key('camera-usb-connect'));
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      final first = core.calls.singleWhere((c) => c.$1 == 'camera.connect');
+      expect(first.$2['deviceId'], 'z6-two');
+      expect(first.$2.containsKey('recoverUsbSession'), isFalse);
+      expect(find.text('已检测到 · 等待授权'), findsNothing);
+      expect(find.text('恢复 USB 会话'), findsOneWidget);
+
+      core.connectionError = null;
+      await tester.tap(button);
+      await tester.pumpAndSettle();
+      final retry = core.calls.where((c) => c.$1 == 'camera.connect').toList();
+      expect(retry, hasLength(2));
+      expect(retry.last.$2['deviceId'], first.$2['deviceId']);
+      expect(retry.last.$2['recoverUsbSession'], true);
+      expect(retry.last.$2['requireDisconnected'], true);
+      expect(find.text('open'), findsOneWidget);
     },
   );
 

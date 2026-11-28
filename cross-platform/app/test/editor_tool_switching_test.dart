@@ -36,6 +36,7 @@ class _ToolsCore extends ColorWorkspaceCore {
     if (operation == 'draft.load' && initialRecipe != null) {
       return {'sourceSha': 'fixture-sha', 'recipe': initialRecipe};
     }
+    if (operation == 'media.borderInfo') return {'model': 'Nikon Z 6II'};
     if (operation.startsWith('media.retouch') ||
         operation.startsWith('toneCards.') ||
         operation == 'media.localPreview') {
@@ -511,7 +512,7 @@ void main() {
   );
 
   testWidgets(
-    'Filter adjustment and border tabs keep the same zoomed photo and route',
+    'Border uses a centered fit without discarding the zoom between other tabs',
     (tester) async {
       final core = _ToolsCore();
       final h = await _open(tester, core);
@@ -526,15 +527,81 @@ void main() {
         await tester.tap(find.text(label).hitTestable());
         await tester.pump();
         expect(h.routes.pushes, routes);
-        expect(_transform(tester), same(transform));
         expect(
           tester.getRect(find.byKey(const Key('editor-photo-viewport'))),
           photo,
         );
         _sameFocus(h.viewport, focus);
+        if (label == '边框') {
+          expect(_transform(tester), isNot(same(transform)));
+          expect(_transform(tester).value, Matrix4.identity());
+        } else {
+          expect(_transform(tester), same(transform));
+        }
         expect(transform.value.getMaxScaleOnAxis(), closeTo(3, 1e-6));
       }
       expect(tester.takeException(), isNull);
+    },
+  );
+  testWidgets(
+    'Border changes keep the full photo clear of information controls',
+    (tester) async {
+      final core = _ToolsCore();
+      final h = await _open(tester, core);
+      _zoom(tester);
+      final viewport = find.byKey(const Key('editor-photo-viewport'));
+      final photo = tester.getRect(viewport);
+      final routes = h.routes.pushes;
+      await tester.tap(find.text('边框').hitTestable());
+      await tester.pump();
+      await tester.tap(find.text('白底信息').hitTestable());
+      await _until(
+        tester,
+        () => h.editor.displayedOverlay?['recipe']?['border']?['template'] == 3,
+        'The bordered preview must be displayed',
+      );
+      expect(tester.getRect(viewport), photo);
+      expect(_transform(tester).value, Matrix4.identity());
+
+      final infoList = find.byKey(const ValueKey('border-information-list'));
+      await tester.scrollUntilVisible(
+        find.text('设置'),
+        90,
+        scrollable: find.descendant(
+          of: infoList,
+          matching: find.byType(Scrollable),
+        ),
+      continuous: true,
+      );
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('设置'));
+    await tester.pumpAndSettle();
+      await tester.tap(find.text('设置').hitTestable());
+      await tester.pump();
+      await tester.tap(find.text('信息').hitTestable());
+      await tester.pump();
+      final controls = find.byKey(const ValueKey('border-settings-body-1'));
+      expect(
+        tester.getTopLeft(controls).dy,
+        greaterThanOrEqualTo(photo.bottom),
+      );
+      final firstField = find.descendant(
+        of: controls,
+        matching: find.byType(Checkbox),
+      );
+      await tester.tap(firstField.first.hitTestable());
+      await _until(
+        tester,
+        () => h.editor.displayedOverlay?['recipe']?['border']?['visible'] == 62,
+        'The edited border information must appear in the same fit',
+      );
+      expect(tester.getRect(viewport), photo);
+      expect(_transform(tester).value, Matrix4.identity());
+      expect(h.routes.pushes, routes);
+      expect(tester.takeException(), isNull);
+      await tester.tap(find.text('滤镜').hitTestable());
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 100));
     },
   );
   testWidgets(
@@ -573,7 +640,7 @@ void main() {
     },
   );
   testWidgets(
-    'Curve HSL palette and cleanup replace only controls and retain the zoomed photo viewport',
+    'Color tools retain the zoomed photo while the dedicated palette uses its own panel height',
     (tester) async {
       final core = _ToolsCore();
       final h = await _open(tester, core);
@@ -592,10 +659,20 @@ void main() {
           routes,
           reason: '$name must stay on the editor route',
         );
-        expect(
-          tester.getRect(find.byKey(const Key('editor-photo-viewport'))),
-          photo,
+        final currentPhoto = tester.getRect(
+          find.byKey(const Key('editor-photo-viewport')),
         );
+        if (name == '调色盘') {
+          // The approved dedicated palette hides the lower toolbar and sizes
+          // its panel independently. Its photo must stay above that panel,
+          // with the same horizontal extent and retained zoom/focus.
+          expect(currentPhoto.topLeft, photo.topLeft);
+          expect(currentPhoto.width, photo.width);
+          expect(currentPhoto.height, greaterThanOrEqualTo(120));
+          expect(find.byKey(const Key('palette-workspace')), findsOneWidget);
+        } else {
+          expect(currentPhoto, photo, reason: name);
+        }
         _sameFocus(h.viewport, focus);
         await tester.tap(find.text('取消').hitTestable());
         await _until(

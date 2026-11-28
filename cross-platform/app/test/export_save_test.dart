@@ -1,13 +1,17 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
+import 'package:huevia/export_album.dart';
 import 'package:huevia/export_save.dart';
 import 'package:huevia/export_settings_model.dart';
 
 class SaveCore extends HueviaCore {
   final calls = <(String, Json)>[];
   bool failPublish = false, permitted = true;
+  String? responseTargetId;
+  String? responseAlbum;
   Completer<Json>? pending;
   final cancelled = <String>[];
   @override
@@ -20,6 +24,13 @@ class SaveCore extends HueviaCore {
   @override
   Future<Json> call(String op, [Json payload = const {}, String? jobId]) async {
     calls.add((op, exportCopy(payload)));
+    if (op == 'gallery.exportAlbums') {
+      return {
+        'supported': true,
+        'readable': true,
+        'items': ['DCIM/旅行/', 'Pictures/旅行/', 'Pictures/../'],
+      };
+    }
     if (op == 'media.export') {
       return {'id': 'a' * 64, 'path': '/private/final.jpg'};
     }
@@ -29,6 +40,20 @@ class SaveCore extends HueviaCore {
       return {
         'published': true,
         'uri': 'content://media/external/images/media/1',
+        if (payload['albumPath'] != null) ...{
+          'verified': true,
+          'albumPath': responseAlbum ?? payload['albumPath'],
+        },
+      };
+    }
+    if (op == 'files.publishExport') {
+      if (failPublish) throw const AppFailure('storage full');
+      return {
+        'published': true,
+        'verified': true,
+        'targetId': responseTargetId ?? payload['targetId'],
+        'uri': 'content://documents/1',
+        'filename': 'own_001.jpg',
       };
     }
     throw StateError(op);
@@ -44,6 +69,24 @@ class SaveState extends AppState {
 }
 
 void main() {
+  testWidgets('the phone album picker distinguishes albums with the same name', (tester) async {
+    final core = SaveCore()..platform = 'android';
+    ExportAlbum? choice;
+    await tester.pumpWidget(MaterialApp(home: Builder(builder: (context) => Scaffold(
+      body: TextButton(
+        onPressed: () async => choice = await chooseExportAlbum(context, core),
+        child: const Text('导出到手机相册'),
+      ),
+    ))));
+    await tester.tap(find.text('导出到手机相册'));
+    await tester.pumpAndSettle();
+    expect(find.text('旅行'), findsNWidgets(2));
+    expect(find.text('..'), findsNothing);
+    await tester.tap(find.text('DCIM/旅行/'));
+    await tester.pumpAndSettle();
+    expect(choice?.path, 'DCIM/旅行/');
+  });
+
   ExportItem item(String id) => ExportItem(
     id,
     id,
@@ -52,16 +95,34 @@ void main() {
     {'sourceSha': 'b' * 64},
     {'size': 'custom', 'quality': 80, 'longEdge': 1280},
   );
-  (SaveCore, SaveState, ExportSave) fixture(List<ExportItem> items) {
+  (SaveCore, SaveState, ExportSave) fixture(
+    List<ExportItem> items, {
+    String? targetId,
+    String? albumPath,
+  }) {
     final core = SaveCore();
     final actual = SaveState(core);
-    final queue = ExportSave(actual, '', items);
+    final queue = ExportSave(actual, '', items, targetId: targetId, albumPath: albumPath);
     addTearDown(() {
       queue.dispose();
       actual.dispose();
     });
     return (core, actual, queue);
   }
+
+  test('a selected phone album requires a matching publication receipt', () async {
+    const path = 'Pictures/旅拍/';
+    final (core, _, queue) = fixture([item('one')], albumPath: path);
+    core.responseAlbum = 'Pictures/其他/';
+    await queue.run();
+    expect(queue.done, isFalse);
+    core.responseAlbum = null;
+    await queue.run();
+    expect(queue.done, isTrue);
+    final writes = core.calls.where((call) => call.$1 == 'gallery.publish');
+    expect(writes.map((call) => call.$2['albumPath']), [path, path]);
+    expect(writes.map((call) => call.$2['operationId']).toSet().length, 1);
+  });
 
   test('failed album publication stops the queue and retries the same frozen version and operation', () async {
     final original = item('first');
@@ -74,6 +135,8 @@ void main() {
     expect(core.calls.map((c) => c.$1), ['media.export', 'gallery.publish']);
     final published = core.calls.last.$2;
     expect(published['extraCopy'], true);
+    expect(published['orderedFilename'], true);
+    expect(published['filename'], 'own.jpg');
     expect(published['operationId'], matches(r'^[0-9a-f]{32}$'));
     expect(core.calls.first.$2['snapshot'], true);
     expect(core.calls.first.$2['quality'], 80);
@@ -107,6 +170,33 @@ void main() {
     await queue.run();
     expect(queue.done, true);
   });
+  test(
+    'folder export skips album permission and retries its frozen destination',
+    () async {
+      const target = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+      final (core, _, queue) = fixture([item('current')], targetId: target);
+      core.permitted = false;
+      core.responseTargetId = 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
+      await queue.run();
+      expect(queue.done, false);
+      expect(queue.error, contains('文件夹'));
+      final request = core.calls.last.$2;
+      expect(request, containsPair('targetId', target));
+      expect(request, containsPair('orderedFilename', true));
+      expect(request, containsPair('filename', 'own.jpg'));
+      expect(request.containsKey('extraCopy'), false);
+      core.responseTargetId = null;
+      await queue.run();
+      expect(core.calls.map((c) => c.$1), [
+        'media.export',
+        'files.publishExport',
+        'files.publishExport',
+      ]);
+      expect(core.calls.last.$2, request);
+      expect(queue.items.single.receipt?['filename'], 'own_001.jpg');
+      expect(queue.done, true);
+    },
+  );
   test('owner change cancels a live publication and suppresses its late acknowledgement', () async {
     final (core, state, queue) = fixture([item('current')]);
     core.pending = Completer<Json>();

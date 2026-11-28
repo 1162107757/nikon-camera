@@ -7,10 +7,10 @@ import java.util.*;
 
 /** Original Android capture-label rules, fed by the platform's read-only EXIF reader. */
 public final class SharedCaptureInfo {
-    public final String brand,model;
+    public final String brand,model,lens;
     private final String[] fields;
     public SharedCaptureInfo(String json)throws IOException{
-        Map<String,Object> p=SharedJson.object(json);String make=value(p,"Make");model=value(p,"Model");brand=brandKey(make.isEmpty()?model:make);
+        Map<String,Object> p=SharedJson.object(json);String make=value(p,"Make");model=value(p,"Model");lens=value(p,"LensModel");brand=brandKey(make.isEmpty()?model:make);
         String focal=number(value(p,"FocalLength")),aperture=number(value(p,"FNumber"));double seconds=decimal(value(p,"ExposureTime"));
         String shutter=seconds>0?(seconds<1?"1/"+Math.round(1/seconds):number(Double.toString(seconds)))+"s":"";
         String iso=value(p,"PhotographicSensitivity");if(iso.isEmpty())iso=value(p,"ISOSpeedRatings");if(!iso.matches("[1-9][0-9]{0,6}"))iso="";
@@ -24,6 +24,7 @@ public final class SharedCaptureInfo {
     public String brand(PhotoBorder b){return b.automatic?brand:b.brand;}
     public String model(PhotoBorder b){return b.automatic?model:b.model;}
     public String field(PhotoBorder b,int index){return b.field(index).isEmpty()?fields[index]:b.field(index);}
-    public String parameters(PhotoBorder b){StringJoiner s=new StringJoiner("  ");for(int i=0;i<4;i++)if(b.shows(i+1)&&!field(b,i).isEmpty())s.add(field(b,i));return s.toString();}
+    public String lens(PhotoBorder b){return b.showLens?(b.lens.isEmpty()?lens:b.lens):"";}
+    public String parameters(PhotoBorder b){StringJoiner s=new StringJoiner("  ");for(int i=0;i<4;i++)if(b.shows(i+1)&&!field(b,i).isEmpty())s.add(field(b,i));if(b.template!=3&&!lens(b).isEmpty())s.add(lens(b));return s.toString();}
     public String company(PhotoBorder b){String s=brand(b);return s.equals("NIKON")?"NIKON CORPORATION":s;}
 }

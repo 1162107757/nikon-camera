@@ -6,6 +6,7 @@ const _photoExtensions = {
   'png',
   'heic',
   'heif',
+  'hif',
   'webp',
   'tif',
   'tiff',

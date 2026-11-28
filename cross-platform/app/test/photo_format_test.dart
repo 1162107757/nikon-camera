@@ -64,6 +64,13 @@ void main() {
     },
   );
 
+  test('Nikon HIF keeps its photo format label', () {
+    expect(
+      photoFormatLabel(filePath: '/private/originals/hash.HIF', name: '照片'),
+      'HIF',
+    );
+  });
+
   test('a derived JPEG identifies its NEF as a separate source', () {
     expect(
       photoEditorFormatLabel(

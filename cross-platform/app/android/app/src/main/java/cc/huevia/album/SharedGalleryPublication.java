@@ -14,11 +14,19 @@ import java.util.function.BooleanSupplier;
 public final class SharedGalleryPublication {
     private SharedGalleryPublication() {}
     public static void verify(Context context,String address,String expectedSha,long bytes,BooleanSupplier cancel)throws IOException {
+        verify(context,address,expectedSha,bytes,false,cancel);
+    }
+
+    static void verifyPending(Context context,String address,String expectedSha,long bytes,BooleanSupplier cancel)throws IOException {
+        verify(context,address,expectedSha,bytes,true,cancel);
+    }
+
+    private static void verify(Context context,String address,String expectedSha,long bytes,boolean pending,BooleanSupplier cancel)throws IOException {
         if(address==null||!address.matches("content://media/(external|external_primary)/images/media/[0-9]+")||expectedSha==null||!expectedSha.matches("[0-9a-f]{64}")||bytes<4||bytes>512L*1024*1024)throw new IOException("相册保存记录无效。");
         Uri uri=Uri.parse(address);String[] columns=Build.VERSION.SDK_INT>=29?new String[]{MediaStore.Images.Media.OWNER_PACKAGE_NAME,MediaStore.Images.Media.IS_PENDING}:new String[]{MediaStore.Images.Media._ID};
         try(Cursor row=context.getContentResolver().query(uri,columns,null,null,null)){
             if(row==null||!row.moveToFirst())throw new IOException("此前保存的副本已不可访问，请保留应用内成品并重新导出。");
-            if(Build.VERSION.SDK_INT>=29&&(!context.getPackageName().equals(row.getString(0))||row.getInt(1)!=0))throw new IOException("相册副本归属或保存状态已变化，未覆盖或重复保存。");
+            if(Build.VERSION.SDK_INT>=29&&(!context.getPackageName().equals(row.getString(0))||row.getInt(1)!=(pending?1:0)))throw new IOException("相册副本归属或保存状态已变化，未覆盖或重复保存。");
         }
         java.security.MessageDigest hash;try{hash=java.security.MessageDigest.getInstance("SHA-256");}catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
         long total=0;byte[] buffer=new byte[65536];
@@ -30,13 +38,16 @@ public final class SharedGalleryPublication {
         if(total!=bytes||!expectedSha.contentEquals(actual))throw new IOException("相册副本已被修改，未覆盖或删除。");
     }
     public static String publish(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,boolean extra,BooleanSupplier cancel)throws IOException {
-        return publish(context,verified,owner,version,filename,expectedSha,bytes,extra,false,cancel);
+        return publish(context,verified,owner,version,filename,expectedSha,bytes,extra,false,null,cancel);
     }
     /** A fresh explicit original action gets its own exact-publisher key, without EXIF rewriting. */
     public static String publishOriginal(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,BooleanSupplier cancel)throws IOException {
-        return publish(context,verified,owner,version,filename,expectedSha,bytes,false,true,cancel);
+        return publish(context,verified,owner,version,filename,expectedSha,bytes,false,true,null,cancel);
     }
-    private static String publish(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,boolean extra,boolean original,BooleanSupplier cancel)throws IOException {
+    static String publishAlbum(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,String album,BooleanSupplier cancel)throws IOException {
+        return publish(context,verified,owner,version,filename,expectedSha,bytes,false,false,album,cancel);
+    }
+    private static String publish(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,boolean extra,boolean original,String album,BooleanSupplier cancel)throws IOException {
         if(version==null||!version.matches("[0-9a-f]{64}")||expectedSha==null||!expectedSha.matches("[0-9a-f]{64}")||bytes<4||bytes>512L*1024*1024)throw new IOException("成品保存信息无效。");
         File root=context.getFilesDir().getCanonicalFile(),directory=new File(root,"photo-export-staging");
         if(Files.isSymbolicLink(directory.toPath())||(!directory.isDirectory()&&!directory.mkdirs())||!root.equals(directory.getCanonicalFile().getParentFile()))throw new IOException("相册暂存目录无效。");
@@ -66,6 +77,7 @@ public final class SharedGalleryPublication {
             while(name.getBytes(StandardCharsets.UTF_8).length>180)name=name.substring(0,name.offsetByCodePoints(name.length(),-1));
             if(!name.toLowerCase(java.util.Locale.ROOT).matches(".*\\.jpe?g"))name+=".jpg";
             PhotoLiveGallery publisher=new PhotoLiveGallery(context);DownloadedPhoto photo=new DownloadedPhoto(stage,name,"","");
+            if(album!=null){String uri=publisher.publishExact(photo,album);check(cancel);return uri;}
             String uri=original?publisher.publishExact(photo):publisher.publish(photo,extra);PhotoLiveGallery.PublicationState status=original?publisher.exactPublicationStatus(photo):publisher.publicationStatus(photo);
             if((status.status!=PhotoLiveGallery.PublicationStatus.PUBLISHED&&status.status!=PhotoLiveGallery.PublicationStatus.EXISTING_SOURCE)||!uri.equals(status.uri))throw new IOException("相册副本尚未核对完成，应用内成品仍然保留，请重试。");
             check(cancel);return uri;

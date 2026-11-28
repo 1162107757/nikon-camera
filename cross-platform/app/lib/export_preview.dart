@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'export_save.dart';
 import 'hue_icons.dart';
 import 'photo_workspace_chrome.dart';
 
@@ -117,6 +118,7 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
     try {
       final result = await core.call('media.exportPreview', {
         'path': widget.photo.path,
+        ...exportLocationArguments(widget.photo),
         'owner': widget.owner,
         'recipe': widget.recipe,
         ...widget.options,

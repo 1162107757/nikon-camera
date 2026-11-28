@@ -90,7 +90,12 @@ class _LibraryPageState extends State<LibraryPage> {
               ),
             HueSheetChoices(
               title: '预设类型',
-              values: const [('', '全部'), ('NCP', 'NCP'), ('NP3', 'NP3')],
+              values: [
+                ('', '全部'),
+                ('NCP', 'NCP'),
+                if (tab == 0) ('NP2', 'NP2'),
+                ('NP3', 'NP3'),
+              ],
               selected: nextFormat,
               onSelected: (value) => refresh(() => nextFormat = value),
             ),
@@ -388,7 +393,7 @@ class _LibraryPageState extends State<LibraryPage> {
                     leading: const HueIcon(HueIconKind.file),
                     title: const Text('从文件导入', style: TextStyle(fontSize: 14)),
                     subtitle: const Text(
-                      'NCP · NP3',
+                      'NCP · NP2 · NP3',
                       style: TextStyle(fontSize: 12),
                     ),
                     trailing: const HueIcon(HueIconKind.chevron, size: 16),
@@ -429,10 +434,8 @@ class _LibraryPageState extends State<LibraryPage> {
     if (importing) return;
     setState(() => importing = true);
     try {
-      if (!await widget.state.pickPreset()) return;
-      if (mounted && widget.state.presets.isNotEmpty) {
-        await detail(widget.state.presets.first);
-      }
+      final preset = await widget.state.pickPreset();
+      if (mounted && preset != null) await detail(preset);
     } catch (error) {
       if (mounted) report(context, error);
     } finally {
@@ -904,7 +907,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                 activeFilters && error == null
                                     ? '试试其他筛选条件。'
                                     : tab == 0
-                                    ? '添加 NCP、NP3，或从在线预设库下载喜欢的色彩。'
+                                    ? '添加 NCP、NP2、NP3，或从在线预设库下载喜欢的色彩。'
                                     : '可稍后刷新，或先使用我的预设。',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(

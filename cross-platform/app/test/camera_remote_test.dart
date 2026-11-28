@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/camera_remote.dart';
 import 'package:huevia/camera_remote_preview.dart';
@@ -12,6 +13,7 @@ class RemoteCore extends HueviaCore {
   final cancelled = <String>[];
   bool capable = true, viewing = false, verified = false;
   Json action = {};
+  Json? liveFrame;
   Completer<Json>? opening, capturing, viewingChange;
   Json remote() => {
     'session': 'photos-one',
@@ -74,7 +76,7 @@ class RemoteCore extends HueviaCore {
         action = {...action, 'pending': false};
         return remote();
       case 'camera.remote.frame':
-        return {'ready': false};
+        return liveFrame ?? {'ready': false};
       default:
         return remote();
     }
@@ -86,13 +88,190 @@ class RemoteCore extends HueviaCore {
   }
 }
 
+class RemoteSettingsCore extends RemoteCore {
+  final values = {
+    0x500d: 125,
+    0x5007: 280,
+    0x500f: 400,
+    0x5010: -333,
+    0x5005: 2,
+    0xd01e: 5500,
+  };
+  final allowed = {
+    0x500d: [100, 125, 160, 200],
+    0x5007: [200, 250, 280, 320],
+    0x500f: [200, 320, 400, 500],
+    0x5010: [-666, -333, 0, 333, 666],
+    0x5005: [2, 4, 0x8010, 0x8012],
+    0xd01e: [5400, 5500, 5600, 5700],
+  };
+  final writes = <(int, int)>[];
+
+  @override
+  Json remote() {
+    final response = super.remote();
+    return {
+      ...response,
+      'exposureControls': true,
+      'parameters': [
+        for (final row in response['parameters'] as List)
+          if (!values.containsKey(row['code'])) row,
+        for (final entry in values.entries)
+          {'code': entry.key, 'value': entry.value},
+      ],
+    };
+  }
+
+  @override
+  Future<Json> call(
+    String operation, [
+    Json payload = const {},
+    String? jobId,
+  ]) async {
+    if (operation == 'camera.remote.exposure.options') {
+      final code = payload['code'] as int;
+      if (code == 0xd01e) expect(values[0x5005], 0x8012);
+      return {'value': values[code], 'choices': allowed[code]};
+    }
+    if (operation == 'camera.remote.exposure.set') {
+      expect(payload['session'], 'photos-one');
+      expect(payload['remoteId'], 'remote-one');
+      final code = payload['code'] as int;
+      final value = payload['value'] as int;
+      expect(allowed[code], contains(value));
+      writes.add((code, value));
+      values[code] = value;
+      return remote();
+    }
+    return super.call(operation, payload, jobId);
+  }
+}
+
 Future<void> frames(WidgetTester tester) async {
   for (var i = 0; i < 12; i++) {
     await tester.pump(const Duration(milliseconds: 10));
   }
 }
 
+Future<void> waitForRemoteFrame(
+  WidgetTester tester, {
+  bool Function(RawImage image)? matches,
+}) async {
+  final image = find.byKey(const Key('remote-frame-image'));
+  for (var attempt = 0; attempt < 40; attempt++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 10)),
+    );
+    await tester.pump();
+    if (image.evaluate().isNotEmpty &&
+        (matches == null || matches(tester.widget<RawImage>(image)))) {
+      return;
+    }
+  }
+  fail('No decoded remote frame matched');
+}
+
 void main() {
+  testWidgets(
+    'The moving ruler keeps its center fixed, cancels cleanly and commits one final value',
+    (tester) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(390, 844);
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final core = RemoteSettingsCore()
+        ..values[0x5007] = 300
+        ..allowed[0x5007] = [280, 300, 320];
+      final app = AppState(core);
+      await tester.pumpWidget(MaterialApp(home: CameraRemotePage(state: app)));
+      await frames(tester);
+      final shutter = find.byKey(const Key('remote-shutter'));
+      final position = tester.getCenter(shutter);
+      final preview = find.byType(CameraRemotePreview);
+      final viewfinder = tester.getRect(preview);
+      expect(viewfinder.size, const Size(390, 844));
+      expect(tester.widget<CameraRemotePreview>(preview).fit, BoxFit.contain);
+      expect(
+        tester.widget<CameraRemotePreview>(preview).grid,
+        RemoteGrid.thirds,
+      );
+      expect(tester.widget<CameraRemotePreview>(preview).histogram, isTrue);
+      final grid = tester.getRect(find.byTooltip('切换构图网格'));
+      final chart = tester.getRect(find.byTooltip('显示或收起直方图'));
+      expect(chart.top - grid.bottom, greaterThanOrEqualTo(5));
+      const rulerKey = Key('remote-setting-ruler');
+      final ruler = find.byKey(rulerKey);
+      for (final code in [0x500d, 0x5007, 0x500f, 0x5010]) {
+        await tester.tap(find.byKey(ValueKey('remote-exposure-$code')));
+        await frames(tester);
+        expect(find.byKey(rulerKey), findsOneWidget);
+        expect(find.byType(AlertDialog), findsNothing);
+        expect(tester.getCenter(shutter), position);
+        expect(tester.getRect(preview), viewfinder);
+        if (code == 0x5007) {
+          expect(find.text('最大光圈 F2.8'), findsOneWidget);
+          await tester.tap(find.byKey(const Key('remote-maximum-aperture')));
+          await frames(tester);
+          expect(core.writes.single, (0x5007, 280));
+          core.writes.clear();
+        }
+      }
+      expect(find.byTooltip('曝光补偿加一档'), findsNothing);
+      expect(find.byTooltip('曝光补偿减一档'), findsNothing);
+      final marker = find.byKey(const Key('remote-ruler-marker'));
+      final center = tester.getCenter(marker);
+      final motion =
+          tester
+                  .widget<AnimatedBuilder>(
+                    find.byKey(const Key('remote-ruler-motion')),
+                  )
+                  .listenable
+              as Animation<double>;
+      final startingIndex = motion.value;
+      final canceled = await tester.startGesture(tester.getCenter(ruler));
+      await canceled.moveBy(const Offset(-23, 0));
+      await canceled.moveBy(const Offset(15, 0));
+      await tester.pump();
+      expect(motion.value, greaterThan(startingIndex));
+      expect(motion.value, lessThan(startingIndex + .5));
+      expect(tester.getCenter(marker), center);
+      expect(core.writes, isEmpty);
+      await canceled.cancel();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 220));
+      expect(motion.value, startingIndex);
+      expect(core.writes, isEmpty);
+
+      final handle = await tester.startGesture(tester.getCenter(ruler));
+      await handle.moveBy(const Offset(-27, 0));
+      await tester.pump();
+      expect(motion.value, closeTo(startingIndex + .9, .05));
+      expect(tester.getCenter(marker), center);
+      expect(core.writes, isEmpty);
+      await handle.up();
+      await frames(tester);
+      expect(core.writes, [(0x5010, 0)]);
+      await tester.pump(const Duration(milliseconds: 220));
+      expect(motion.value, startingIndex + 1);
+
+      await tester.tap(find.byKey(const ValueKey('remote-exposure-20485')));
+      await frames(tester);
+      await tester.tap(find.text('晴天'));
+      await frames(tester);
+      expect(core.writes.last, (0x5005, 4));
+      await tester.tap(find.text('色温'));
+      await frames(tester);
+      expect(core.writes.last, (0x5005, 0x8012));
+      await tester.tapAt(tester.getCenter(ruler) + const Offset(30, 0));
+      await frames(tester);
+      expect(core.writes.last, (0xd01e, 5600));
+      expect(find.text('5600 K'), findsWidgets);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      app.dispose();
+    },
+  );
+
   test(
     'Remote geometry respects letterboxing and camera-reported rotation',
     () {
@@ -112,6 +291,13 @@ void main() {
         remoteFrameRect(const Size(400, 400), {'width': 0, 'height': 300}),
         Rect.zero,
       );
+      expect(
+        remoteFrameRect(const Size(300, 400), {
+          'width': 600,
+          'height': 400,
+        }, fit: BoxFit.cover),
+        const Rect.fromLTWH(-150, 0, 600, 400),
+      );
     },
   );
   test('Only a frame received within three seconds is marked live', () {
@@ -127,10 +313,125 @@ void main() {
     );
   });
   testWidgets(
+    'Remote direction switching preserves the 16-cell grid and the camera aspect',
+    (tester) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(390, 844);
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final orientationCalls = <List<String>>[];
+      final messenger =
+          TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+      messenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+        if (call.method == 'SystemChrome.setPreferredOrientations') {
+          orientationCalls.add(List<String>.from(call.arguments as List));
+        }
+        return null;
+      });
+      addTearDown(
+        () => messenger.setMockMethodCallHandler(SystemChannels.platform, null),
+      );
+      final core = RemoteCore()
+        ..liveFrame = {
+          'ready': true,
+          'path': File(
+            '../../docs/design-review/remote-capture-20261024/assets/live-view.png',
+          ).absolute.path,
+          // The actual image is 1448 × 1086. A wrong ratio must not stretch it.
+          'width': 1920,
+          'height': 1080,
+          'pointFocus': true,
+          'sequence': 1,
+        };
+      final app = AppState(core);
+      await tester.pumpWidget(MaterialApp(home: CameraRemotePage(state: app)));
+      await frames(tester);
+      await tester.pump(const Duration(milliseconds: 380));
+      await waitForRemoteFrame(tester);
+
+      final picture = find.byKey(const Key('remote-frame-image'));
+      final rotation = find.byKey(const Key('remote-rotate'));
+      final grid = find.byKey(const Key('remote-grid'));
+      final shutter = find.byKey(const Key('remote-shutter'));
+      final firstParameter = find.byKey(
+        const ValueKey('remote-exposure-20493'),
+      );
+      final portrait = tester.getRect(picture);
+      expect(portrait.width, closeTo(390, .01));
+      expect(portrait.width / portrait.height, closeTo(4 / 3, .003));
+      expect(portrait.bottom, lessThan(tester.getTopLeft(firstParameter).dy));
+      expect(grid, paintsExactlyCountTimes(#drawLine, 4));
+      await tester.tap(find.byTooltip('切换构图网格'));
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.byKey(const ValueKey('remote-grid-option-quarters')),
+      );
+      await tester.pumpAndSettle();
+      expect(grid, paintsExactlyCountTimes(#drawLine, 6));
+      await tester.tapAt(portrait.center);
+      await tester.pump();
+      expect(
+        core.calls.where((call) => call.operation == 'camera.remote.focus'),
+        isEmpty,
+      );
+
+      await tester.tap(rotation);
+      await tester.pump();
+      expect(orientationCalls.single, [
+        'DeviceOrientation.landscapeLeft',
+        'DeviceOrientation.landscapeRight',
+      ]);
+      tester.view.physicalSize = const Size(844, 390);
+      await tester.pump();
+      final landscape = tester.getRect(picture);
+      expect(landscape.width, closeTo(844, .01));
+      expect(landscape.width / landscape.height, closeTo(4 / 3, .003));
+      expect(tester.getCenter(shutter).dx, greaterThan(720));
+      expect(grid, paintsExactlyCountTimes(#drawLine, 6));
+
+      await tester.tap(find.byTooltip('拍摄设置'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('横屏完整画幅'));
+      await tester.pumpAndSettle();
+      await tester.binding.handlePopRoute();
+      await tester.pumpAndSettle();
+      final full = tester.getRect(picture);
+      expect(full.width / full.height, closeTo(4 / 3, .003));
+      expect(full.bottom, lessThan(tester.getTopLeft(firstParameter).dy));
+      await tester.tap(find.byTooltip('切换构图网格'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('remote-grid-option-off')));
+      await tester.pumpAndSettle();
+      expect(grid, findsNothing);
+
+      await tester.tap(rotation);
+      await tester.pump();
+      expect(orientationCalls.last, ['DeviceOrientation.portraitUp']);
+      tester.view.physicalSize = const Size(390, 844);
+      await tester.pump();
+      expect(tester.getRect(picture), portrait);
+      expect(grid, findsNothing);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump();
+      expect(orientationCalls.last, isEmpty);
+      app.dispose();
+    },
+  );
+
+  testWidgets(
     'Grid and draggable measured-histogram overlay do not send false focus taps',
     (tester) async {
       final taps = <Offset>[];
       var measuredPixels = 0;
+      final frame = ValueNotifier<Json>({
+        'path': File(
+          '../../app/src/main/assets/preset-showcase/portrait-smile.jpg',
+        ).absolute.path,
+        'width': 640,
+        'height': 960,
+        'sequence': 1,
+      });
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -139,28 +440,26 @@ void main() {
               child: SizedBox(
                 width: 400,
                 height: 400,
-                child: CameraRemotePreview(
-                  frame: {
-                    'path': File(
-                      '../../app/src/main/assets/preset-showcase/portrait-smile.jpg',
-                    ).absolute.path,
-                    'width': 640,
-                    'height': 960,
-                    'sequence': 1,
-                  },
-                  viewing: true,
-                  busy: false,
-                  grid: true,
-                  histogram: true,
-                  onFocus: (x, y) => taps.add(Offset(x, y)),
-                  onHistogram: (data) => measuredPixels = data?.pixelCount ?? 0,
-                  onResume: null,
+                child: ValueListenableBuilder<Json>(
+                  valueListenable: frame,
+                  builder: (context, value, child) => CameraRemotePreview(
+                    frame: value,
+                    viewing: true,
+                    busy: false,
+                    grid: RemoteGrid.thirds,
+                    histogram: true,
+                    onFocus: (x, y) => taps.add(Offset(x, y)),
+                    onHistogram: (data) =>
+                        measuredPixels = data?.pixelCount ?? 0,
+                    onResume: null,
+                  ),
                 ),
               ),
             ),
           ),
         ),
       );
+      await waitForRemoteFrame(tester);
       final origin = tester.getTopLeft(
         find.byKey(const Key('remote-frame-focus')),
       );
@@ -186,7 +485,36 @@ void main() {
       }
       expect(measuredPixels, greaterThan(0));
       expect(taps, hasLength(1));
+      final presented = find.byKey(const Key('remote-frame-image'));
+      final originalImage = tester.widget<RawImage>(presented).image;
+      final originalRect = tester.getRect(presented);
+      frame.value = {...frame.value, 'sequence': 2, 'rotation': 90};
+      await tester.pump();
+      expect(tester.widget<RawImage>(presented).image, same(originalImage));
+      expect(tester.getRect(presented), originalRect);
+
+      frame.value = {...frame.value, 'sequence': 3, 'rotation': 0};
+      await tester.pump();
+      expect(tester.widget<RawImage>(presented).image, same(originalImage));
+      await waitForRemoteFrame(
+        tester,
+        matches: (image) => image.image != originalImage,
+      );
+      expect(tester.getRect(presented), originalRect);
+
+      final upright = tester.widget<RawImage>(presented).image;
+      frame.value = {...frame.value, 'sequence': 4, 'rotation': 90};
+      await tester.pump();
+      expect(tester.getRect(presented), originalRect);
+      frame.value = {...frame.value, 'sequence': 5};
+      await tester.pump();
+      await waitForRemoteFrame(
+        tester,
+        matches: (image) => image.image != upright,
+      );
+      expect(tester.getRect(presented).width, closeTo(400, .01));
       await tester.pumpWidget(const SizedBox());
+      frame.dispose();
     },
   );
 
@@ -268,7 +596,7 @@ void main() {
         core.calls.where((c) => c.operation == 'camera.remote.check').length,
         1,
       );
-      expect(find.text('拍摄结果待核对'), findsOneWidget);
+      expect(find.text('正在等待相机保存照片'), findsOneWidget);
       expect(
         tester
             .widget<IconButton>(find.byKey(const Key('remote-shutter')))
@@ -355,6 +683,11 @@ void main() {
       await mount(tester, core);
       await tester.tap(find.byKey(const Key('remote-shutter')));
       await tester.pump();
+      core.action = {
+        'pending': true,
+        'phase': 'resultUnknown',
+        'actionId': 'shot-one',
+      };
       await tester.pump(const Duration(seconds: 76));
       await frames(tester);
       expect(core.cancelled, hasLength(1));
@@ -369,7 +702,12 @@ void main() {
         isNull,
       );
       core.capturing!.complete(core.remote());
+      core.verified = true;
+      for (var i = 0; i < 3; i++) {
+        await tester.pump(const Duration(milliseconds: 350));
+      }
       await frames(tester);
+      expect(find.text('已确认新照片'), findsOneWidget);
       expect(
         core.calls.where((c) => c.operation == 'camera.remote.capture').length,
         1,
@@ -396,7 +734,7 @@ void main() {
       core.viewingChange!.complete(core.remote());
       await frames(tester);
       expect(find.byType(CameraRemotePage), findsOneWidget);
-      expect(find.text('遥控拍照'), findsOneWidget);
+      expect(find.text('Nikon fixture'), findsOneWidget);
       expect(
         core.calls
             .where((c) => c.operation == 'camera.remote.view')
@@ -416,7 +754,13 @@ void main() {
       await tester.tap(find.byTooltip('查看机身参数'));
       await tester.pumpAndSettle();
       expect(find.text('机身当前参数'), findsOneWidget);
-      expect(find.text('Nikon fixture'), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(BottomSheet),
+          matching: find.text('Nikon fixture'),
+        ),
+        findsOneWidget,
+      );
       state.session = {
         'user': {'id': 'other'},
       };

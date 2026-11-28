@@ -8,9 +8,19 @@ import java.nio.charset.StandardCharsets;
 /** Portable form of PhotoPresetRenderer.modelVersion; verified against it on Android. */
 public final class SharedExportModel {
     private SharedExportModel(){}
-    public static String of(PresetPreviewProfile profile,PhotoExportSpec.Resolved spec){
+    public static String specification(String spec, String locationSourceSha) {
+        if (locationSourceSha == null || locationSourceSha.isEmpty()) return spec;
+        if (!locationSourceSha.matches("[a-f0-9]{64}")) throw new IllegalArgumentException("位置来源校验无效。");
+        return spec.replace(PhotoExportSpec.METADATA_POLICY, "capture-gps-v2-" + locationSourceSha);
+    }
+
+    public static String of(PresetPreviewProfile profile, PhotoExportSpec.Resolved spec) {
+        return of(profile, spec, spec.identity());
+    }
+
+    public static String of(PresetPreviewProfile profile,PhotoExportSpec.Resolved spec,String identity){
         if(profile==null||spec==null)throw new IllegalArgumentException("导出模型信息无效。");
         String full=profile.modelVersion()+":full-jpeg95-srgb-v1";
-        return spec.isFullJpeg95()?full:"export-jpeg-v1:"+PhotoEditStore.hash((full+"\n"+spec.identity()).getBytes(StandardCharsets.UTF_8));
+        return spec.isFullJpeg95()?full:"export-jpeg-v1:"+PhotoEditStore.hash((full+"\n"+identity).getBytes(StandardCharsets.UTF_8));
     }
 }

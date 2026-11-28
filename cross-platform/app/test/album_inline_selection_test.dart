@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/album_batch.dart';
+import 'package:huevia/album_export_action.dart';
 import 'package:huevia/album_operations.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/photo_grid.dart';
@@ -84,22 +85,22 @@ void main() {
         );
         final offset = scrollable.position.pixels;
         expect(offset, greaterThan(0));
-        await tester.tap(find.text('选择'));
+        await tester.tap(find.text(phone ? '批量修图' : '选择'));
         await tester.pumpAndSettle();
         expect(tester.element(find.byType(PhotoMasonry)), same(element));
         expect(scrollable.position.pixels, closeTo(offset, .1));
         expect(find.byType(AlbumSelectionPage), findsNothing);
-        expect(find.text(phone ? '已选 0 张 · 手机相册' : '已选 0 张'), findsOneWidget);
-        expect(find.text(phone ? '批量编辑' : '编辑'), findsOneWidget);
-        expect(find.text('导出'), phone ? findsNothing : findsOneWidget);
-        expect(find.text('删除'), phone ? findsNothing : findsOneWidget);
+        expect(find.text('已选 0 张'), findsOneWidget);
+        expect(find.byType(AlbumExportAction), findsOneWidget);
+        expect(find.text('导出'), findsOneWidget);
+        expect(find.text('套用预设'), findsOneWidget);
         await tester.tap(find.text('全选'));
         await tester.pump();
-        expect(find.text(phone ? '已选 18 张 · 手机相册' : '已选 18 张'), findsOneWidget);
+        expect(find.text('已选 18 张'), findsOneWidget);
         await tester.binding.handlePopRoute();
         await tester.pumpAndSettle();
         expect(find.byType(PhotosPage), findsOneWidget);
-        expect(find.byType(AlbumSelectionDock), findsNothing);
+        expect(find.byType(AlbumExportAction), findsNothing);
         expect(tester.element(find.byType(PhotoMasonry)), same(element));
         expect(scrollable.position.pixels, closeTo(offset, .1));
         expect(notifications, [true, true, false]);
@@ -133,7 +134,9 @@ void main() {
       await tester.pump();
       await tester.tap(find.text('全选'));
       await tester.pump();
-      await tester.tap(find.text('删除'));
+      await tester.tap(find.byTooltip('所选照片更多操作'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('删除所选照片'));
       await tester.pumpAndSettle();
       expect(find.byType(AlbumDeletePage), findsOneWidget);
       expect(core.calls.where((c) => c.contains('delete')), isEmpty);
@@ -145,7 +148,7 @@ void main() {
         'user': {'id': 'bob'},
       });
       await tester.pumpAndSettle();
-      expect(find.byType(AlbumSelectionDock), findsNothing);
+      expect(find.byType(AlbumExportAction), findsNothing);
       expect(find.text('选择'), findsOneWidget);
       expect(core.calls.where((c) => c.contains('delete')), isEmpty);
       await tester.pumpWidget(const SizedBox());

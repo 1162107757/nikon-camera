@@ -33,10 +33,10 @@ public final class LegacyArchive {
         try(ZipOutputStream zip=new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(output)))){
             LegacyArchive exporter=new LegacyArchive(zip,cancel);List<Object> presets=new ArrayList<>();
             File[] files=directory.listFiles();if(files==null||files.length>20000)throw new IOException("旧版预设目录无法读取或文件过多。");
-            for(File file:files){check(cancel);String ext=extension(file.getName());if(!ext.equals("ncp")&&!ext.equals("np3"))continue;
+            for(File file:files){check(cancel);String ext=extension(file.getName());if(!ext.equals("ncp")&&!ext.equals("np2")&&!ext.equals("np3"))continue;
                 owned(directory,file);if(file.length()<1||file.length()>1024*1024)throw new IOException("旧版预设文件大小无效。");byte[] bytes=Files.readAllBytes(file.toPath());PresetFile.validate(bytes);
                 Map<String,Object> row=exporter.payload(file,ext);row.put("name",file.getName());row.put("displayName",file.getName());row.put("category","");row.put("description","");presets.add(row);}
-            if(presets.isEmpty())throw new IOException("所选文件夹中没有 NCP 或 NP3 预设。");
+            if(presets.isEmpty())throw new IOException("所选文件夹中没有 NCP、NP2 或 NP3 预设。");
             exporter.manifest("ios-original",new LinkedHashMap<>(),presets,List.of(),List.of(),List.of());
         }
     }
@@ -116,7 +116,7 @@ public final class LegacyArchive {
             ZipEntry entry;byte[] block=new byte[65536];
             while((entry=input.getNextEntry())!=null){
                 check(cancel);String name=entry.getName();
-                if(++entries>MAX_ENTRIES||entry.isDirectory()||!seen.add(name)||!(name.equals("huevia-migration.json")||name.matches("payload/[0-9a-f]{64}\\.(ncp|np3|draft|jpg|jpeg|png|nef|nrw|dng|arw|cr2|cr3|raf|rw2|orf|pef|srw)")))throw new IOException("迁入包包含未知或重复路径。");
+                if(++entries>MAX_ENTRIES||entry.isDirectory()||!seen.add(name)||!(name.equals("huevia-migration.json")||name.matches("payload/[0-9a-f]{64}\\.(ncp|np2|np3|draft|jpg|jpeg|png|nef|nrw|dng|arw|cr2|cr3|raf|rw2|orf|pef|srw)")))throw new IOException("迁入包包含未知或重复路径。");
                 File target=new File(directory,name);if(!target.getCanonicalFile().toPath().startsWith(directory.getCanonicalFile().toPath()))throw new IOException("迁入路径越界。");
                 File parent=target.getParentFile();if(!parent.isDirectory()&&!parent.mkdirs())throw new IOException("无法准备迁入文件。");long bytes=0,limit=name.equals("huevia-migration.json")?16L*1024*1024:MAX_FILE;
                 try(FileOutputStream output=new FileOutputStream(target)){int count;while((count=input.read(block))!=-1){check(cancel);bytes+=count;total+=count;if(bytes>limit||total>MAX_BYTES)throw new IOException("迁入包展开后超过限制。");output.write(block,0,count);}output.getFD().sync();}input.closeEntry();

@@ -10,7 +10,7 @@ class CameraConnectionRequest extends ChangeNotifier {
   CameraConnectionRequest(this.core);
   final HueviaCore core;
   bool busy = false;
-  bool _disposed = false, _wired = false, _permissionWaiting = false;
+  bool _disposed = false, _wired = false, _fujifilm = false, _permissionWaiting = false;
   int elapsedSeconds = 0;
   String jobId = '', operation = '', phase = '';
   Completer<Json>? _pending;
@@ -29,6 +29,7 @@ class CameraConnectionRequest extends ChangeNotifier {
     this.operation = operation;
     this.jobId = jobId;
     _wired = payload['transport'] == 'usb' || operation == 'camera.usb.devices';
+    _fujifilm = payload['protocol'] == 'fujifilm';
     _permissionWaiting = false;
     elapsedSeconds = 0;
     busy = true;
@@ -87,12 +88,20 @@ class CameraConnectionRequest extends ChangeNotifier {
       _permissionWaiting = false;
       phase = value < .04
           ? '等待确认本地网络连接提示'
+          : (value - .065).abs() < .0001
+          ? '等待系统连接相机 Wi-Fi'
           : value < .15
           ? (_wired ? '等待外接相机访问授权' : '连接相机 Wi-Fi 通道')
           : value < .3
           ? '等待机身确认连接，请查看相机屏幕'
           : value < .55
-          ? (_wired ? '打开外接相机会话并准备目录' : '建立事件通道并打开相机会话')
+          ? (_wired
+              ? '打开外接相机会话并准备目录'
+              : _fujifilm
+              ? '建立富士传图会话'
+              : '建立事件通道并打开相机会话')
+          : _fujifilm && value < .6
+          ? '准备读取相机照片'
           : value < .7
           ? '检查相机信息与读取能力'
           : value < 1

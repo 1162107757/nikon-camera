@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -8,8 +9,18 @@ import 'package:flutter/material.dart';
 import 'domain.dart';
 import 'editor_histogram.dart';
 
-/// Display coordinates, including camera-reported rotation and letterboxing.
-Rect remoteFrameRect(Size viewport, Json frame) {
+enum RemoteGrid {
+  thirds(3, '九宫格'),
+  quarters(4, '16 宫格'),
+  off(0, '关闭网格');
+
+  const RemoteGrid(this.divisions, this.label);
+  final int divisions;
+  final String label;
+}
+
+/// Display coordinates of the entire frame, including any cropped area.
+Rect remoteFrameRect(Size viewport, Json frame, {BoxFit fit = BoxFit.contain}) {
   final width = frame['width'], height = frame['height'];
   if (width is! num ||
       height is! num ||
@@ -22,14 +33,29 @@ Rect remoteFrameRect(Size viewport, Json frame) {
   final source = rotated
       ? Size(height.toDouble(), width.toDouble())
       : Size(width.toDouble(), height.toDouble());
-  final size = applyBoxFit(BoxFit.contain, source, viewport).destination;
-  return Alignment.center.inscribe(size, Offset.zero & viewport);
+  final fitted = applyBoxFit(fit, source, viewport);
+  final scale = fitted.destination.width / fitted.source.width;
+  return Alignment.center.inscribe(source * scale, Offset.zero & viewport);
 }
 
 bool remoteFrameIsFresh(DateTime? receivedAt, DateTime now) =>
     receivedAt != null &&
     !receivedAt.isAfter(now) &&
     now.difference(receivedAt) <= const Duration(seconds: 3);
+
+bool _sameFrameGeometry(Json first, Json second) {
+  final width = first['width'], height = first['height'];
+  final nextWidth = second['width'], nextHeight = second['height'];
+  if (width is! num ||
+      height is! num ||
+      nextWidth is! num ||
+      nextHeight is! num) {
+    return false;
+  }
+  final a = width * nextHeight, b = nextWidth * height;
+  return (first['rotation'] ?? 0) == (second['rotation'] ?? 0) &&
+      (a - b).abs() <= math.max(a, b) * .01;
+}
 
 class CameraRemotePreview extends StatefulWidget {
   const CameraRemotePreview({
@@ -45,10 +71,19 @@ class CameraRemotePreview extends StatefulWidget {
     required this.onResume,
     this.foreground = true,
     this.fresh = true,
+    this.fit = BoxFit.contain,
+    this.frameInsets = EdgeInsets.zero,
+    this.histogramRgb = false,
+    this.histogramInsets = const EdgeInsets.all(12),
   });
   final bool available;
   final Json frame;
-  final bool viewing, busy, grid, histogram, foreground, fresh;
+  final bool viewing, busy, histogram, foreground, fresh;
+  final RemoteGrid grid;
+  final BoxFit fit;
+  final EdgeInsets frameInsets;
+  final bool histogramRgb;
+  final EdgeInsets histogramInsets;
   final void Function(double x, double y)? onFocus;
   final void Function(EditorHistogramData? data) onHistogram;
   final VoidCallback? onResume;
@@ -58,60 +93,141 @@ class CameraRemotePreview extends StatefulWidget {
 
 class _CameraRemotePreviewState extends State<CameraRemotePreview> {
   EditorHistogramData? data;
+  ui.Image? displayImage;
+  Json displayGeometry = const {}, displayedFrame = const {};
+  Json acceptedGeometry = const {};
+  Json? pendingGeometry, queuedFrame;
   Offset? focus;
-  Offset chartPosition = const Offset(.03, 1);
-  bool rgb = false;
-  int generation = 0;
+  Offset chartPosition = Offset.zero;
+  int streamEpoch = 0;
+  bool decoding = false;
 
   @override
   void initState() {
     super.initState();
-    unawaited(measure());
+    enqueue(widget.frame);
   }
 
   @override
   void didUpdateWidget(CameraRemotePreview oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (!widget.histogram) data = null;
     if (oldWidget.frame['path'] != widget.frame['path'] ||
-        oldWidget.frame['sequence'] != widget.frame['sequence']) {
-      unawaited(measure());
+        oldWidget.frame['sequence'] != widget.frame['sequence'] ||
+        (!oldWidget.histogram && widget.histogram)) {
+      enqueue(widget.frame);
     }
   }
 
-  Future<void> measure() async {
-    final current = ++generation, path = widget.frame['path'];
-    if (path is! String) {
+  void enqueue(Json frame) {
+    if (frame['path'] is! String) {
+      streamEpoch++;
+      queuedFrame = pendingGeometry = null;
+      displayGeometry = displayedFrame = acceptedGeometry = const {};
+      retireDisplayImage();
       data = null;
+      focus = null;
       return;
     }
-    ui.Codec? codec;
-    ui.Image? image;
+    // Require a second matching frame before switching orientation or crop.
+    // One inconsistent frame must not zoom the preview or move the grid.
+    if (acceptedGeometry.isEmpty) {
+      acceptedGeometry = frame;
+    } else if (!_sameFrameGeometry(acceptedGeometry, frame)) {
+      final candidate = pendingGeometry;
+      pendingGeometry = frame;
+      if (candidate == null ||
+          candidate['sequence'] == frame['sequence'] ||
+          !_sameFrameGeometry(candidate, frame)) {
+        return;
+      }
+      acceptedGeometry = frame;
+    }
+    pendingGeometry = null;
+    queuedFrame = frame;
+    if (!decoding) unawaited(decodeFrames());
+  }
+
+  void retireDisplayImage() {
+    if (displayImage case final image?) {
+      displayImage = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) => image.dispose());
+    }
+  }
+
+  Future<void> decodeFrames() async {
+    decoding = true;
     try {
-      codec = await ui.instantiateImageCodec(
-        await File(path).readAsBytes(),
-        targetWidth: 192,
-        allowUpscaling: false,
-      );
-      image = (await codec.getNextFrame()).image;
+      while (mounted && queuedFrame != null) {
+        final next = queuedFrame!;
+        queuedFrame = null;
+        final epoch = streamEpoch;
+        ui.Image? image;
+        try {
+          // The camera alternates filenames. Decode this snapshot without the
+          // file-path image cache and keep the previous frame until it is ready.
+          final jpeg = await File(next['path'] as String).readAsBytes();
+          image = await decode(jpeg, 1280);
+          if (!mounted || streamEpoch != epoch) continue;
+          final decoded = image;
+          setState(() {
+            retireDisplayImage();
+            displayImage = decoded;
+            displayedFrame = next;
+            if (!_sameFrameGeometry(displayGeometry, next)) {
+              displayGeometry = next;
+              focus = null;
+            }
+          });
+          image = null;
+          if (!widget.histogram) continue;
+          final measured = await measure(jpeg);
+          if (mounted && streamEpoch == epoch && widget.histogram) {
+            setState(() => data = measured);
+          }
+        } catch (_) {
+          // A missed or unreadable frame leaves the last displayed image in place.
+        } finally {
+          image?.dispose();
+        }
+      }
+    } finally {
+      decoding = false;
+    }
+  }
+
+  Future<ui.Image> decode(Uint8List bytes, int width) async {
+    final codec = await ui.instantiateImageCodec(
+      bytes,
+      targetWidth: width,
+      allowUpscaling: false,
+    );
+    try {
+      return (await codec.getNextFrame()).image;
+    } finally {
+      codec.dispose();
+    }
+  }
+
+  Future<EditorHistogramData?> measure(Uint8List jpeg) async {
+    final image = await decode(jpeg, 192);
+    try {
       final bytes = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
-      if (bytes == null || !mounted || generation != current) return;
-      final measured = EditorHistogramData.fromRgba(
+      if (bytes == null) return null;
+      return EditorHistogramData.fromRgba(
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
         image.width,
         image.height,
       );
-      setState(() => data = measured);
-    } catch (_) {
-      if (mounted && generation == current) setState(() => data = null);
     } finally {
-      image?.dispose();
-      codec?.dispose();
+      image.dispose();
     }
   }
 
   @override
   void dispose() {
-    generation++;
+    streamEpoch++;
+    displayImage?.dispose();
     super.dispose();
   }
 
@@ -119,15 +235,43 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       final size = constraints.biggest;
-      final image = remoteFrameRect(size, widget.frame);
-      final path = widget.frame['path'];
-      final ready = path is String && !image.isEmpty;
+      final screen = Offset.zero & size;
+      final viewport = widget.fit == BoxFit.contain
+          ? widget.frameInsets.deflateRect(screen)
+          : screen;
+      final decoded = displayImage;
+      // Use the decoded pixel ratio. The camera's reported dimensions are
+      // useful for AF coordinates but must never stretch a decoded frame.
+      final pixels = decoded == null
+          ? const <String, dynamic>{}
+          : {
+              'width': decoded.width,
+              'height': decoded.height,
+              'rotation': displayGeometry['rotation'],
+            };
+      final image = remoteFrameRect(
+        viewport.size,
+        pixels,
+        fit: widget.fit,
+      ).shift(viewport.topLeft);
+      final visible = image.intersect(viewport);
+      final ready = decoded != null && !image.isEmpty;
       final viewing = widget.viewing && widget.foreground && widget.fresh;
-      final chartWidth = math.min(190.0, math.max(120.0, size.width - 24));
-      const chartHeight = 76.0;
+      final canFocus =
+          ready &&
+          viewing &&
+          !widget.busy &&
+          _sameFrameGeometry(displayGeometry, pixels) &&
+          _sameFrameGeometry(displayGeometry, widget.frame) &&
+          widget.onFocus != null;
+      final insets = widget.histogramInsets;
+      final left = math.min(insets.left, math.max(0.0, size.width - 108));
+      final top = math.min(insets.top, math.max(0.0, size.height - 70));
+      final chartWidth = math.min(108.0, size.width - left);
+      final chartHeight = math.min(70.0, size.height - top);
       final travel = Offset(
-        math.max(0, size.width - chartWidth - 24),
-        math.max(0, size.height - chartHeight - 24),
+        math.max(0, size.width - chartWidth - left - insets.right),
+        math.max(0, size.height - chartHeight - top - insets.bottom),
       );
       return ClipRect(
         child: ColoredBox(
@@ -138,8 +282,7 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
                 child: GestureDetector(
                   key: const Key('remote-frame-focus'),
                   behavior: HitTestBehavior.opaque,
-                  onTapUp:
-                      !widget.busy && viewing && ready && widget.onFocus != null
+                  onTapUp: canFocus
                       ? (tap) {
                           if (!image.contains(tap.localPosition)) return;
                           final point = Offset(
@@ -157,26 +300,45 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
                           rect: image,
                           child: RotatedBox(
                             quarterTurns:
-                                (widget.frame['rotation'] as num? ?? 0)
+                                (displayGeometry['rotation'] as num? ?? 0)
                                     .toInt() ~/
                                 90,
-                            child: Image.file(
-                              File(path),
+                            child: RawImage(
+                              key: const Key('remote-frame-image'),
+                              image: decoded,
                               fit: BoxFit.contain,
-                              gaplessPlayback: true,
-                              cacheWidth: 1280,
-                              key: ValueKey(widget.frame['sequence']),
-                              errorBuilder: (_, _, _) =>
-                                  const Center(child: Text('取景帧无法显示')),
                             ),
                           ),
                         ),
-                      if (ready && widget.grid)
+                      if (ready && widget.fit == BoxFit.cover)
+                        const Positioned.fill(
+                          child: IgnorePointer(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Color(0x59202d26),
+                                    Color(0x00202d26),
+                                    Color(0x00111a17),
+                                    Color(0x73111a17),
+                                  ],
+                                  stops: [0, .24, .66, 1],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (ready && widget.grid != RemoteGrid.off)
                         Positioned.fill(
                           child: IgnorePointer(
                             child: CustomPaint(
                               key: const Key('remote-grid'),
-                              painter: _RemoteGrid(image),
+                              painter: _RemoteGrid(
+                                visible,
+                                widget.grid.divisions,
+                              ),
                             ),
                           ),
                         ),
@@ -185,19 +347,12 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
                           left: image.left + image.width * focus!.dx - 24,
                           top: image.top + image.height * focus!.dy - 20,
                           child: IgnorePointer(
-                            child: Container(
-                              width: 48,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 2,
-                                  color:
-                                      widget.frame['focusKnown'] == true &&
-                                          widget.frame['focused'] == true
-                                      ? const Color(0xff9ac8ae)
-                                      : const Color(0xfff3b493),
-                                ),
+                            child: CustomPaint(
+                              painter: _RemoteFocusMark(
+                                displayedFrame['focusKnown'] == true &&
+                                    displayedFrame['focused'] == true,
                               ),
+                              size: const Size(48, 40),
                             ),
                           ),
                         ),
@@ -236,10 +391,10 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
                     ),
                   ),
                 ),
-              if (widget.histogram)
+              if (widget.histogram && ready && viewing)
                 Positioned(
-                  left: 12 + travel.dx * chartPosition.dx,
-                  top: 12 + travel.dy * chartPosition.dy,
+                  left: left + travel.dx * chartPosition.dx,
+                  top: top + travel.dy * chartPosition.dy,
                   width: chartWidth,
                   height: chartHeight,
                   child: Semantics(
@@ -262,35 +417,37 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
                       ),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          color: const Color(0xe6191a18),
-                          borderRadius: BorderRadius.circular(9),
+                          color: const Color(0xdc131d18),
+                          border: Border.all(color: const Color(0x45eff7ef)),
+                          borderRadius: BorderRadius.circular(11),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(9),
+                          padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                !ready
-                                    ? '等待取景'
-                                    : viewing
-                                    ? '取景 · 亮度'
-                                    : '上次取景 · 已暂停',
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  color: Color(0xffbeb9b2),
-                                ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      widget.histogramRgb ? 'RGB' : '亮度',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        color: Color(0xffeff4e8),
+                                      ),
+                                    ),
+                                  ),
+                                  const Icon(Icons.open_in_full, size: 12),
+                                ],
                               ),
                               const SizedBox(height: 4),
                               Expanded(
-                                child: Opacity(
-                                  opacity: viewing ? 1 : .4,
-                                  child: CustomPaint(
-                                    size: Size.infinite,
-                                    painter: EditorHistogramPainter(
-                                      data: data,
-                                      rgb: rgb,
-                                    ),
+                                child: CustomPaint(
+                                  size: Size.infinite,
+                                  painter: EditorHistogramPainter(
+                                    data: data,
+                                    rgb: widget.histogramRgb,
                                   ),
                                 ),
                               ),
@@ -309,22 +466,58 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
   );
 }
 
+class _RemoteFocusMark extends CustomPainter {
+  const _RemoteFocusMark(this.locked);
+
+  final bool locked;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = Path()
+      ..moveTo(1, 11)
+      ..lineTo(1, 1)
+      ..lineTo(11, 1)
+      ..moveTo(size.width - 11, 1)
+      ..lineTo(size.width - 1, 1)
+      ..lineTo(size.width - 1, 11)
+      ..moveTo(1, size.height - 11)
+      ..lineTo(1, size.height - 1)
+      ..lineTo(11, size.height - 1)
+      ..moveTo(size.width - 11, size.height - 1)
+      ..lineTo(size.width - 1, size.height - 1)
+      ..lineTo(size.width - 1, size.height - 11);
+    canvas.drawPath(
+      path,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = locked ? const Color(0xffd6ecbb) : const Color(0xfff6f1eb),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_RemoteFocusMark oldDelegate) =>
+      oldDelegate.locked != locked;
+}
+
 class _RemoteGrid extends CustomPainter {
-  const _RemoteGrid(this.image);
+  const _RemoteGrid(this.image, this.divisions);
   final Rect image;
+  final int divisions;
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = const Color(0x88ffffff)
+      ..color = const Color(0x96f2fff0)
       ..strokeWidth = 1;
-    for (var i = 1; i < 3; i++) {
-      final x = image.left + image.width * i / 3;
-      final y = image.top + image.height * i / 3;
+    for (var i = 1; i < divisions; i++) {
+      final x = image.left + image.width * i / divisions;
+      final y = image.top + image.height * i / divisions;
       canvas.drawLine(Offset(x, image.top), Offset(x, image.bottom), paint);
       canvas.drawLine(Offset(image.left, y), Offset(image.right, y), paint);
     }
   }
 
   @override
-  bool shouldRepaint(_RemoteGrid oldDelegate) => oldDelegate.image != image;
+  bool shouldRepaint(_RemoteGrid oldDelegate) =>
+      oldDelegate.image != image || oldDelegate.divisions != divisions;
 }

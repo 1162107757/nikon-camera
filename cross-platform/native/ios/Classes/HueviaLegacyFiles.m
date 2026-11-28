@@ -42,7 +42,7 @@
           NSArray<NSURL *> *files=[NSFileManager.defaultManager contentsOfDirectoryAtURL:url includingPropertiesForKeys:@[NSURLFileSizeKey,NSURLIsSymbolicLinkKey] options:NSDirectoryEnumerationSkipsHiddenFiles error:&failure];
           if(files.count>20000){failure=[NSError errorWithDomain:@"HueviaLegacy" code:2 userInfo:nil];return;}
           for(NSURL *file in files){
-            if(![@[@"ncp",@"np3"] containsObject:file.pathExtension.lowercaseString])continue;
+            if(![@[@"ncp",@"np2",@"np3"] containsObject:file.pathExtension.lowercaseString])continue;
             NSNumber *size=nil,*symbolic=nil;[file getResourceValue:&size forKey:NSURLFileSizeKey error:&failure];[file getResourceValue:&symbolic forKey:NSURLIsSymbolicLinkKey error:&failure];
             if(failure||symbolic.boolValue||size.unsignedLongLongValue<1||size.unsignedLongLongValue>1024*1024){failure=[NSError errorWithDomain:@"HueviaLegacy" code:3 userInfo:nil];break;}
             if(![NSFileManager.defaultManager copyItemAtURL:file toURL:[target URLByAppendingPathComponent:file.lastPathComponent] error:&failure])break;

@@ -43,8 +43,10 @@ public final class Np3PresetDetailsTest {
         eq("+50", row(details, "saturation").values.get(0));
         eq(Arrays.asList("-12", "-11", "-10"), row(details, "color-0").values);
         eq(Arrays.asList("+9", "+10", "+11"), row(details, "color-7").values);
-        eq(Arrays.asList("60°", "0", "0"), row(details, "zone-0").values);
-        eq(Arrays.asList("300°", "+14", "-18"), row(details, "zone-2").values);
+        eq("高光", row(details, "zone-0").label);
+        eq("阴影", row(details, "zone-2").label);
+        eq(Arrays.asList("300°", "+14", "-18"), row(details, "zone-0").values);
+        eq(Arrays.asList("60°", "0", "0"), row(details, "zone-2").values);
         eq("71", row(details, "blending").values.get(0)); eq("-37", row(details, "balance").values.get(0));
         yes(Arrays.equals(before, source), "inspection never rewrites the preset");
         eq("", details.previewReason);

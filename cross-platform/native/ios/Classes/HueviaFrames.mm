@@ -91,7 +91,8 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
     CGFloat m=b->margin_/100.0;
     if(b->template__==3){
       CGContextSetRGBFillColor(context,1,1,1,1);CGContextFillRect(context,CGRectMake(0,0,output.pixelWidth,output.pixelHeight));draw(context,image,CGRectMake(0,0,w,h));
-      CGFloat fh=output.pixelHeight-h,first=h+fh*.43,second=h+fh*.76;
+      CGFloat fh=output.pixelHeight-h,first=h+fh*(b->showLens_?.30:.43),second=h+fh*(b->showLens_?.55:.76);
+      if(b->showLens_)text([info lensWithCcHueviaNcpPhotoBorder:b],w*.04,h+fh*.83,w*.018,w*.51,[UIColor colorWithWhite:.467 alpha:1],NO);
       text([info companyWithCcHueviaNcpPhotoBorder:b],w*.04,first,w*.024,w*.51,UIColor.blackColor,YES);
       if([b showsWithInt:0])text([info modelWithCcHueviaNcpPhotoBorder:b],w*.04,second,w*.018,w*.51,[UIColor colorWithWhite:.467 alpha:1],NO);
       CGFloat logoHeight=fh*.40;NSString *maker=[info brandWithCcHueviaNcpPhotoBorder:b];if([maker isEqualToString:@"NIKON"]&&(b->logo_==2||b->logo_==3))logoHeight=w*.042/3.612;
@@ -115,6 +116,7 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
         NSString *line=[info parametersWithCcHueviaNcpPhotoBorder:b];CGFloat lineWidth=std::min(w*.82,[line sizeWithAttributes:@{NSFontAttributeName:referenceFont(w*.018*m,NO)}].width);text(line,(output.pixelWidth-lineWidth)/2,baseline+w*.028*m,w*.018*m,w*.82,UIColor.whiteColor,NO);
       }else{
         brand(context,b,info,w*.085*m,y+h*.16,w*.049*m,YES,x-w*.125*m);
+        text([info lensWithCcHueviaNcpPhotoBorder:b],w*.085*m,y+h*.30,w*.019*m,x-w*.125*m,UIColor.whiteColor,NO);
         NSString *names[3]={@"F",@"ISO",@"S"};int fields[3]={1,3,2};
         for(int row=0;row<3;row++){
           int field=fields[row];NSString *value=[info fieldWithCcHueviaNcpPhotoBorder:b withInt:field];if(![b showsWithInt:field+1]||!value.length)continue;

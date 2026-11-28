@@ -4,12 +4,14 @@ import android.app.Instrumentation;
 import android.app.Activity;
 import android.graphics.*;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import cc.huevia.account.AccountRepository;
 import cc.huevia.album.PhotoEditStore;
 import cc.huevia.album.PhotoExportSpec;
 import cc.huevia.album.PhotoPresetRenderer;
 import cc.huevia.album.PhotoComposition;
+import cc.huevia.album.SharedGalleryCopies;
 import cc.huevia.ncp.PhotoGeometry;
 import cc.huevia.album.RawDeveloper;
 import cc.huevia.library.SharedJson;
@@ -60,6 +62,7 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             Map<String,Object> repeated=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
             yes(output.getPath().equals(repeated.get("path"))&&Boolean.TRUE.equals(repeated.get("reused")),"same encoded effect reuses a verified saved version");
             yes(neutral.get("sha256").equals(PhotoEditStore.hashFile(output)),"saved version records actual JPEG digest");
+            if(android.os.Build.VERSION.SDK_INT>=29)locationAndGalleryChecks(workspace,media,output);
             Map<String,Object> opened=SharedJson.object(runtime.request("version.open",SharedJson.encode(SharedRuntime.map("owner","","id",neutral.get("id")))));
             yes(opened.get("sha256").equals(neutral.get("sha256")),"saved version survives independent lookup");
             yes(((Number)neutral.get("width")).intValue()==256&&((Number)neutral.get("height")).intValue()==192,"full export dimensions");
@@ -177,6 +180,63 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
         }catch(Throwable failure){result.putString("stream","FAIL after "+checks+" checks: "+failure+"\n");finish(Activity.RESULT_CANCELED,result);}
         finally{if(workspace!=null)try{remove(workspace,workspace.getCanonicalFile());}catch(IOException ignored){}}
     }
+    private void locationAndGalleryChecks(File workspace,NativeMedia media,File jpeg)throws Exception {
+        File source=new File(workspace,"with-gps.jpg");
+        Files.copy(jpeg.toPath(),source.toPath());
+        ExifInterface location=new ExifInterface(source.getPath());
+        location.setAttribute(ExifInterface.TAG_GPS_LATITUDE,"23/1,15/1,0/1");
+        location.setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF,"S");
+        location.setAttribute(ExifInterface.TAG_GPS_LONGITUDE,"114/1,30/1,0/1");
+        location.setAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF,"E");
+        location.setAttribute(ExifInterface.TAG_GPS_ALTITUDE,"75/1");
+        location.setAttribute(ExifInterface.TAG_GPS_ALTITUDE_REF,"0");
+        location.saveAttributes();
+        String sourceSha=PhotoEditStore.hashFile(source);
+        Map<String,Object> request=SharedRuntime.map("path",source.getPath(),"owner","","size","full","recipe",SharedRuntime.map("schema",1),"preserveLocation",false);
+        Map<String,Object> stripped=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
+        yes(!new ExifInterface((String)stripped.get("path")).getLatLong(new float[2]),"an explicit metadata opt-out excludes location");
+        request.remove("preserveLocation");
+        Map<String,Object> exported=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
+        yes(!exported.get("id").equals(stripped.get("id"))&&((String)exported.get("exportSpec")).endsWith("capture-gps-v2-"+sourceSha),"GPS export has its own version identity");
+        File saved=new File((String)exported.get("path"));
+        float[] gps=new float[2];
+        ExifInterface result=new ExifInterface(saved.getPath());
+        yes(result.getLatLong(gps)&&gps[0]==-23.25f&&gps[1]==114.5f&&result.getAltitude(-1)==75,"export keeps the original GPS and altitude");
+        String name="DSC_HUEVIA_TEST_"+System.nanoTime();
+        var context=getTargetContext();
+        var resolver=context.getContentResolver();
+        List<String> assets=new ArrayList<>();
+        try {
+            String operation=UUID.randomUUID().toString().replace("-","");
+            SharedGalleryCopies.Copy first=SharedGalleryCopies.publish(context,saved,"",(String)exported.get("id"),operation,name+".jpg",(String)exported.get("sha256"),saved.length(),true,"Pictures/Huevia Test/",()->false);
+            assets.add(first.uri);
+            yes(first.filename.equals(name+"_001.jpg"),"named export gets the first sequence number");
+            yes(Boolean.TRUE.equals(NativeExportLocation.hasLocation(resolver,Uri.parse(first.uri))),
+                    "saved result can read location from the published photo");
+            yes(Boolean.FALSE.equals(NativeExportLocation.hasLocation(new File((String)stripped.get("path")))),
+                    "stripped result reports no location");
+            try(InputStream data=resolver.openInputStream(Uri.parse(first.uri))){
+                yes(data!=null&&new ExifInterface(data).getLatLong(gps)&&gps[0]==-23.25f&&gps[1]==114.5f,"phone album publication keeps GPS");
+            }
+            SharedGalleryCopies.Copy retried=SharedGalleryCopies.publish(context,saved,"",(String)exported.get("id"),operation,name+".jpg",(String)exported.get("sha256"),saved.length(),true,"Pictures/Huevia Test/",()->false);
+            yes(first.uri.equals(retried.uri)&&first.filename.equals(retried.filename),"retry reuses the same published photo");
+            SharedGalleryCopies.Copy second=SharedGalleryCopies.publish(context,saved,"",(String)exported.get("id"),UUID.randomUUID().toString().replace("-",""),name+".jpg",(String)exported.get("sha256"),saved.length(),true,"Pictures/Huevia Test/",()->false);
+            assets.add(second.uri);
+            yes(second.filename.equals(name+"_002.jpg"),"the next named export preserves the stem and avoids overwrite");
+            SharedGalleryCopies.Copy original=SharedGalleryCopies.publishOriginal(context,source,"",sourceSha,UUID.randomUUID().toString().replace("-",""),name+".JPG",sourceSha,source.length(),false,()->false);
+            assets.add(original.uri);
+            yes(original.filename.equals(name+"_001.jpg"),"exact originals use a numbered display name in the default album");
+            SharedGalleryCopies.Copy selected=SharedGalleryCopies.publishOriginal(context,source,"",sourceSha,UUID.randomUUID().toString().replace("-",""),name+".JPG",sourceSha,source.length(),false,"Pictures/Huevia Test/",()->false);
+            assets.add(selected.uri);
+            yes(selected.filename.equals(name+"_003.jpg"),"an exact original uses the selected album and its next number");
+            try(InputStream data=resolver.openInputStream(Uri.parse(selected.uri))){
+                yes(data!=null&&new ExifInterface(data).getLatLong(gps)&&gps[0]==-23.25f&&gps[1]==114.5f,"direct original and later gallery export retain the same GPS");
+            }
+        } finally {
+            for(String uri:assets)resolver.delete(Uri.parse(uri),null,null);
+        }
+    }
+
     private void pickerCancellationChecks()throws Exception{
         List<Integer> requestCodes=new ArrayList<>();List<Object> first=new ArrayList<>(),second=new ArrayList<>();
         NativeImportPicker[] pickerHolder=new NativeImportPicker[1];
