@@ -14,6 +14,7 @@ import 'legacy_preset_details.dart';
 import 'submission_editor.dart';
 import 'personal_sync.dart';
 import 'preset_context_menu.dart';
+import 'preset_display_name.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key, required this.state});
@@ -47,6 +48,7 @@ class _LibraryPageState extends State<LibraryPage> {
   Future<void> showFilters(List<String> choices) async {
     FocusManager.instance.primaryFocus?.unfocus();
     var nextCategory = category, nextFormat = format, nextDownload = download;
+    var showCameraNames = widget.state.showPresetCameraNames;
     final ordered = <String>[
       for (final value in ['人像', '风景', '胶片', '黑白', '日常', '夜景'])
         if (choices.contains(value)) value,
@@ -99,6 +101,12 @@ class _LibraryPageState extends State<LibraryPage> {
               selected: nextFormat,
               onSelected: (value) => refresh(() => nextFormat = value),
             ),
+            SwitchListTile.adaptive(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('显示预设原名'),
+              value: showCameraNames,
+              onChanged: (enabled) => refresh(() => showCameraNames = enabled),
+            ),
           ],
         ),
       ),
@@ -109,7 +117,7 @@ class _LibraryPageState extends State<LibraryPage> {
         format = nextFormat;
         download = nextDownload;
       });
-      unawaited(rememberFilters());
+      unawaited(rememberFilters(showCameraNames: showCameraNames));
       if (tab == 1) await load();
     }
   }
@@ -156,7 +164,7 @@ class _LibraryPageState extends State<LibraryPage> {
     }
   }
 
-  Future<void> rememberFilters() async {
+  Future<void> rememberFilters({bool? showCameraNames}) async {
     filters[tab] = (category: category, format: format, download: download);
     Json row(int index) {
       final value =
@@ -173,6 +181,9 @@ class _LibraryPageState extends State<LibraryPage> {
         'presetSource': tab == 1 ? 'online' : 'local',
         'presetLocal': row(0),
         'presetOnline': row(1),
+        if (showCameraNames != null &&
+            showCameraNames != widget.state.showPresetCameraNames)
+          'showPresetCameraNames': showCameraNames,
       });
     } catch (failure) {
       if (mounted) report(context, '筛选已应用，暂时无法记住筛选条件。');
@@ -498,6 +509,8 @@ class _LibraryPageState extends State<LibraryPage> {
       context: context,
       presetName: preset.name,
       pinned: pinned,
+      state: widget.state,
+      preset: preset,
     );
     if (!current() || action == null) return;
     if (action == PresetContextAction.remove) {
@@ -557,10 +570,20 @@ class _LibraryPageState extends State<LibraryPage> {
       context: context,
       builder: (dialog) => AlertDialog(
         title: const Text('移除预设？'),
-        content: Text(
-          owner.isEmpty
-              ? preset.name
-              : '${preset.name}\n\n从本机和当前账号的云端预设中移除，云端变更会在下次同步时提交。',
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PresetDisplayName(
+              state: widget.state,
+              preset: preset,
+              maxLines: null,
+            ),
+            if (owner.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              const Text('从本机和当前账号的云端预设中移除，云端变更会在下次同步时提交。'),
+            ],
+          ],
         ),
         actions: [
           TextButton(
@@ -630,6 +653,23 @@ class _LibraryPageState extends State<LibraryPage> {
         : rows.length;
     final palette = HuePalette.of(context);
     final compact = MediaQuery.sizeOf(context).height < 480;
+    final sectionTitle = Text(
+      tab == 0 ? '我的色彩' : '发现色彩',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        fontSize: 13,
+        height: 1.2,
+        fontWeight: FontWeight.w700,
+        color: palette.ink,
+      ),
+    );
+    final sectionCount = Text(
+      '$displayedCount 份',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(fontSize: 12, height: 1.2, color: palette.secondary),
+    );
     return Scaffold(
       appBar: HueHeader(
         title: '预设',
@@ -686,37 +726,6 @@ class _LibraryPageState extends State<LibraryPage> {
                     onSelected: (value) => selectSource(1 - value),
                   ),
                 ),
-                if (tab == 0)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: SizedBox(
-                      height: 44,
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: InkWell(
-                          onTap: () => widget.state.session['user'] == null
-                              ? context.push('/account')
-                              : hueRootPage<void>(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        PersonalSyncPage(state: widget.state),
-                                  ),
-                                ),
-                          child: Text(
-                            widget.state.session['user'] == null
-                                ? '仅保存在本机 · 登录后可同步云端 ›'
-                                : '个人预设 · 管理云端同步 ›',
-                            style: TextStyle(
-                              fontSize: 12,
-                              height: 1.2,
-                              color: palette.secondary,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 const SizedBox(height: 10),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -776,25 +785,23 @@ class _LibraryPageState extends State<LibraryPage> {
                   padding: const EdgeInsets.fromLTRB(20, 2, 20, 10),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: Text(
-                          tab == 0 ? '我的色彩' : '发现色彩',
-                          style: TextStyle(
-                            fontSize: 13,
-                            height: 1.2,
-                            fontWeight: FontWeight.w700,
-                            color: palette.ink,
+                      if (tab == 0) ...[
+                        Expanded(
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            spacing: 6,
+                            children: [sectionTitle, sectionCount],
                           ),
                         ),
-                      ),
-                      Text(
-                        '$displayedCount 份',
-                        style: TextStyle(
-                          fontSize: 12,
-                          height: 1.2,
-                          color: palette.secondary,
+                        const SizedBox(width: 6),
+                        PersonalPresetSyncButton(
+                          key: ValueKey((widget.state, currentSessionIdentity)),
+                          state: widget.state,
                         ),
-                      ),
+                      ] else ...[
+                        Expanded(child: sectionTitle),
+                        sectionCount,
+                      ],
                       HueIconButton(
                         kind: HueIconKind.adjust,
                         label:
@@ -962,7 +969,7 @@ class _LibraryPageState extends State<LibraryPage> {
                 )
               : LegacyPresetGrid(
                   rows: rows,
-                  core: widget.state.core,
+                  state: widget.state,
                   owner: widget.state.session['user']?['id'] as String? ?? '',
                   onOpen: detail,
                   onRemove: presetActions,

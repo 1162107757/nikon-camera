@@ -200,6 +200,7 @@ class _LegacyFilterDockState extends State<_LegacyFilterDock> {
     final base = editor.recipe.clone().data
       ..['presetId'] = ''
       ..['presetName'] = ''
+      ..remove('presetCameraName')
       ..['strength'] = 0;
     final canAdjust = editor.toolsEnabled && (selected as String).isNotEmpty;
     return Column(
@@ -673,11 +674,18 @@ class _LegacyFilterCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final id = preset == null ? '' : editor.filters.identity(preset!);
     final selected = editor.recipe.data['presetId'] == id;
-    final captionHeight = large
-        ? 26.0
-        : (compact
-              ? 20.0
-              : 21 * MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 2.0));
+    final includeName =
+        preset != null && editor.widget.state.showPresetCameraNames;
+    final captionHeight =
+        (large
+            ? 26.0
+            : (compact
+                  ? 20.0
+                  : 21 *
+                        MediaQuery.textScalerOf(context)
+                            .scale(1)
+                            .clamp(1.0, 2.0))) +
+        (includeName ? MediaQuery.textScalerOf(context).scale(12) + 3 : 0);
     return Semantics(
       button: true,
       selected: selected,
@@ -756,10 +764,15 @@ class _LegacyFilterCard extends StatelessWidget {
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Text(
-                  preset?.name ?? '原图',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                child: PresetDisplayName(
+                  state: editor.widget.state,
+                  preset: preset,
+                  title: preset?.name ?? '原图',
+                  textAlign: TextAlign.center,
+                  cameraStyle: TextStyle(
+                    fontSize: 11,
+                    color: large ? Colors.white70 : const Color(0xff4f5653),
+                  ),
                   style: TextStyle(
                     fontSize: large ? 12 : 10.5,
                     color: large ? _editorWhite : const Color(0xff1f2b29),
@@ -883,6 +896,7 @@ class _LegacyFilterPickerState extends State<_LegacyFilterPicker> {
       target.change(() {
         target.recipe.data['presetId'] = id;
         target.recipe.data['presetName'] = preset?.name ?? '无滤镜';
+        target.recipe.data.remove('presetCameraName');
         target.recipe.data['strength'] = preset == null ? 0 : 100;
       });
     } catch (error) {
@@ -933,6 +947,7 @@ class _LegacyFilterPickerState extends State<_LegacyFilterPicker> {
     final base = editor.recipe.clone().data
       ..['presetId'] = ''
       ..['presetName'] = ''
+      ..remove('presetCameraName')
       ..['strength'] = 0;
     final enabled = current && editor.toolsEnabled && pendingId == null;
     final status =

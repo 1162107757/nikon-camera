@@ -1,8 +1,124 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'domain.dart';
+import 'theme.dart';
+import 'widgets.dart';
+
+class PersonalPresetSyncButton extends StatefulWidget {
+  const PersonalPresetSyncButton({super.key, required this.state});
+
+  final AppState state;
+
+  @override
+  State<PersonalPresetSyncButton> createState() =>
+      _PersonalPresetSyncButtonState();
+}
+
+class _PersonalPresetSyncButtonState extends State<PersonalPresetSyncButton> {
+  late Future<int>? conflicts = readConflicts();
+
+  String get owner => widget.state.session['user']?['id'] as String? ?? '';
+  bool get leaving => widget.state.session['logoutPending'] == true;
+
+  Future<int>? readConflicts() {
+    if (owner.isEmpty || leaving) return null;
+    return widget.state.core
+        .call('personal.status', {'owner': owner})
+        .then((status) => status['conflicts'] as int? ?? 0);
+  }
+
+  Future<void> open() async {
+    if (owner.isEmpty) {
+      context.push('/account');
+      return;
+    }
+    await hueRootPage<void>(
+      context,
+      MaterialPageRoute(builder: (_) => PersonalSyncPage(state: widget.state)),
+    );
+    if (!mounted) return;
+    final updated = readConflicts();
+    setState(() {
+      conflicts = updated;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = HuePalette.of(context);
+    final colors = Theme.of(context).colorScheme;
+    final label = owner.isEmpty ? '登录同步' : '预设同步';
+    return FutureBuilder<int>(
+      future: conflicts,
+      builder: (context, snapshot) {
+        final count = snapshot.data ?? 0;
+        return Tooltip(
+          message: owner.isEmpty ? '登录后可同步云端预设' : '打开个人预设同步',
+          child: TextButton(
+            onPressed: leaving ? null : open,
+            style: TextButton.styleFrom(
+              minimumSize: const Size(48, 48),
+              padding: EdgeInsets.zero,
+              foregroundColor: palette.ink,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Container(
+              key: const ValueKey('preset-sync-capsule'),
+              constraints: const BoxConstraints(minHeight: 27),
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+              decoration: ShapeDecoration(
+                color: palette.card,
+                shape: StadiumBorder(side: BorderSide(color: palette.outline)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.cloud_sync_outlined, size: 14),
+                  const SizedBox(width: 4),
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  if (count > 0) ...[
+                    const SizedBox(width: 4),
+                    DecoratedBox(
+                      decoration: ShapeDecoration(
+                        color: colors.errorContainer,
+                        shape: const StadiumBorder(),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 2,
+                        ),
+                        child: Text(
+                          count > 99 ? '99+' : '$count',
+                          semanticsLabel: '$count 项同步差异待处理',
+                          style: TextStyle(
+                            color: colors.onErrorContainer,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w700,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
 
 class PersonalSyncPage extends StatefulWidget {
   const PersonalSyncPage({super.key, required this.state});

@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'preset_display_name.dart';
 import 'photo_format.dart';
 import 'curve_control.dart';
 import 'legacy_color_controls.dart';
@@ -165,6 +166,15 @@ class _EditorPageState extends State<EditorPage> {
     for (final preset in [...filters.online, ...widget.state.presets])
       filters.identity(preset): preset,
   }.values.toList();
+  Preset? get selectedFilter {
+    final id = recipe.data['presetId'];
+    if (id == null || id == '') return null;
+    for (final preset in allFilters) {
+      if (filters.identity(preset) == id) return preset;
+    }
+    return null;
+  }
+
   void filtersChanged() {
     if (!mounted) return;
     setState(() {});
@@ -180,6 +190,7 @@ class _EditorPageState extends State<EditorPage> {
       change(() {
         recipe.data['presetId'] = id;
         recipe.data['presetName'] = preset?.name ?? '无滤镜';
+        recipe.data.remove('presetCameraName');
         recipe.data['strength'] = preset == null ? 0 : 100;
       });
     } catch (failure) {
@@ -706,7 +717,7 @@ class _EditorPageState extends State<EditorPage> {
                   core: widget.state.core,
                   owner: owner,
                   path: widget.photo.path,
-                   originalName: widget.photo.name,
+                  originalName: widget.photo.name,
                   state: widget.state,
                   isCurrent: current,
                   expectedSourceSha: source['sourceSha'] as String?,
@@ -931,35 +942,39 @@ class _EditorPageState extends State<EditorPage> {
       case 7:
         return legacyColorControls(7);
       case 0:
+        final selected = recipe.data['presetId'] as String;
+        final options = <DropdownMenuItem<String>>[
+          const DropdownMenuItem(value: '', child: Text('无滤镜')),
+          if (selected.isNotEmpty &&
+              !allFilters.any((preset) => filters.identity(preset) == selected))
+            DropdownMenuItem(
+              value: selected,
+              child: PresetDisplayName(
+                state: widget.state,
+                title: '${recipe.data['presetName'] ?? '已保存滤镜'} · 草稿',
+                presetId: selected,
+                cameraName: recipe.data['presetCameraName'] as String? ?? '',
+              ),
+            ),
+          for (final preset in allFilters)
+            DropdownMenuItem(
+              value: filters.identity(preset),
+              child: PresetDisplayName(state: widget.state, preset: preset),
+            ),
+        ];
         return Column(
           children: [
             DropdownButtonFormField<String>(
-              key: ValueKey('preset-${recipe.data['presetId']}'),
-              initialValue: recipe.data['presetId'] as String,
+              key: ValueKey('preset-$selected'),
+              initialValue: selected,
               isExpanded: true,
+              itemHeight: widget.state.showPresetCameraNames
+                  ? null
+                  : kMinInteractiveDimension,
               decoration: const InputDecoration(labelText: '滤镜预设'),
-              items: [
-                const DropdownMenuItem(value: '', child: Text('无滤镜')),
-                if ((recipe.data['presetId'] as String).isNotEmpty &&
-                    !allFilters.any(
-                      (preset) =>
-                          filters.identity(preset) == recipe.data['presetId'],
-                    ))
-                  DropdownMenuItem(
-                    value: recipe.data['presetId'] as String,
-                    child: Text('${recipe.data['presetName'] ?? '已保存滤镜'} · 草稿'),
-                  ),
-                ...allFilters.map(
-                  (preset) => DropdownMenuItem(
-                    value: filters.identity(preset),
-                    child: Text(
-                      preset.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ],
+              items: options,
+              selectedItemBuilder: (_) =>
+                  selectedPresetDropdownItems(options, selected),
               onChanged: !toolsEnabled
                   ? null
                   : (value) {

@@ -102,9 +102,10 @@ void writeExportFile(int descriptor,NSString *source,unsigned long long expected
 @property(nonatomic,strong) CcHueviaSharedSharedRuntime *runtime;
 @property(nonatomic,copy) FlutterResult pickerReply;
 @property(nonatomic,copy) NSString *pickerOwner;
+@property(nonatomic) BOOL savingPreset;
 @property(nonatomic,strong) NSMutableDictionary<NSString *,HueviaTask *> *tasks;
 @property(nonatomic,strong) dispatch_queue_t worker;
-- (void)presentFolderPicker;
+- (void)presentPickerForPreset:(NSURL *)preset;
 - (void)failPicker:(NSString *)message;
 - (NSURL *)authorizedFolder:(NSString *)target owner:(NSString *)owner;
 @end
@@ -115,10 +116,27 @@ void writeExportFile(int descriptor,NSString *source,unsigned long long expected
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
   @try{
     NSDictionary *p=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
+    if([call.method isEqual:@"savePreset"]){
+      if(self.pickerReply)filesFail(@"请先完成当前文件选择。");
+      NSString *owner=p[@"owner"],*path=p[@"path"];
+      if(![owner isKindOfClass:NSString.class]||owner.length>64||![path isKindOfClass:NSString.class])filesFail(@"转换副本无效。");
+      self.pickerReply=result;self.pickerOwner=owner;self.savingPreset=YES;
+      dispatch_async(self.worker,^{
+        @try{
+          NSString *file=[[self.runtime validatedPresetExportWithNSString:path withNSString:owner] getPath];
+          dispatch_async(dispatch_get_main_queue(),^{
+            @try{[self presentPickerForPreset:[NSURL fileURLWithPath:file]];}
+            @catch(JavaLangThrowable *failure){[self failPicker:[failure getMessage]];}
+            @catch(NSException *failure){[self failPicker:@"当前无法打开 Files 保存窗口。"];}
+          });
+        }@catch(JavaLangThrowable *failure){dispatch_async(dispatch_get_main_queue(),^{[self failPicker:[failure getMessage]];});}
+      });
+      return;
+    }
     if([call.method isEqual:@"chooseTarget"]){
       if(self.pickerReply)filesFail(@"请先完成当前文件夹选择。");NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)filesFail(@"文件夹授权账号无效。");
       self.pickerReply=result;self.pickerOwner=owner;
-      dispatch_async(self.worker,^{@try{[self.runtime guardOwnerWithNSString:owner];dispatch_async(dispatch_get_main_queue(),^{@try{[self presentFolderPicker];}@catch(JavaLangThrowable *failure){[self failPicker:[failure getMessage]];}@catch(NSException *failure){[self failPicker:@"当前无法打开文件夹选择器。"];}});}@catch(JavaLangThrowable *failure){dispatch_async(dispatch_get_main_queue(),^{[self failPicker:[failure getMessage]];});}});return;
+      dispatch_async(self.worker,^{@try{[self.runtime guardOwnerWithNSString:owner];dispatch_async(dispatch_get_main_queue(),^{@try{[self presentPickerForPreset:nil];}@catch(JavaLangThrowable *failure){[self failPicker:[failure getMessage]];}@catch(NSException *failure){[self failPicker:@"当前无法打开文件夹选择器。"];}});}@catch(JavaLangThrowable *failure){dispatch_async(dispatch_get_main_queue(),^{[self failPicker:[failure getMessage]];});}});return;
     }
     if([call.method isEqual:@"cancel"]){if(filesHex(p[@"operationId"],32)){@synchronized(self.tasks){[self.tasks[p[@"operationId"]] cancelIfActive];}}result(nil);return;}
     if(![call.method isEqual:@"publishOriginal"]){result(FlutterMethodNotImplemented);return;}
@@ -127,15 +145,19 @@ void writeExportFile(int descriptor,NSString *source,unsigned long long expected
     dispatch_async(self.worker,^{@try{NSDictionary *value=[self publish:p task:task];[task finish];dispatch_async(dispatch_get_main_queue(),^{result(filesJson(value));});}@catch(JavaLangThrowable *failure){NSString *message=[failure getMessage]?:@"文件保存未完成。";[task finish];dispatch_async(dispatch_get_main_queue(),^{result([FlutterError errorWithCode:@"FILES_PUBLICATION" message:message details:nil]);});}@catch(NSException *failure){[task finish];dispatch_async(dispatch_get_main_queue(),^{result([FlutterError errorWithCode:@"FILES_PUBLICATION" message:@"文件保存未完成，请先核对 Files。" details:nil]);});}@finally{[task finish];@synchronized(self.tasks){if(self.tasks[operation]==task)[self.tasks removeObjectForKey:operation];}}});
   }@catch(JavaLangThrowable *failure){result([FlutterError errorWithCode:@"FILES_PUBLICATION" message:[failure getMessage] details:nil]);}@catch(NSException *failure){result([FlutterError errorWithCode:@"FILES_PUBLICATION" message:@"无法处理文件保存请求。" details:nil]);}
 }
-- (void)presentFolderPicker {
+- (void)presentPickerForPreset:(NSURL *)preset {
   if(!self.pickerReply)return;UIViewController *presenter=nil;for(UIScene *scene in UIApplication.sharedApplication.connectedScenes)if([scene isKindOfClass:UIWindowScene.class]&&scene.activationState==UISceneActivationStateForegroundActive){for(UIWindow *window in ((UIWindowScene *)scene).windows)if(window.isKeyWindow){presenter=window.rootViewController;break;}if(presenter)break;}
   while(presenter.presentedViewController)presenter=presenter.presentedViewController;if(!presenter)filesFail(@"当前无法打开文件夹选择器。");
-  UIDocumentPickerViewController *picker=[[UIDocumentPickerViewController alloc] initForOpeningContentTypes:@[UTTypeFolder] asCopy:NO];picker.allowsMultipleSelection=NO;picker.delegate=self;[presenter presentViewController:picker animated:YES completion:nil];
+  UIDocumentPickerViewController *picker=preset
+    ? [[UIDocumentPickerViewController alloc] initForExportingURLs:@[preset] asCopy:YES]
+    : [[UIDocumentPickerViewController alloc] initForOpeningContentTypes:@[UTTypeFolder] asCopy:NO];
+  picker.allowsMultipleSelection=NO;picker.delegate=self;[presenter presentViewController:picker animated:YES completion:nil];
 }
-- (void)failPicker:(NSString *)message {FlutterResult reply=self.pickerReply;self.pickerReply=nil;self.pickerOwner=nil;if(reply)reply([FlutterError errorWithCode:@"FILES_TARGET" message:message?:@"文件夹授权未完成。" details:nil]);}
-- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {FlutterResult reply=self.pickerReply;self.pickerReply=nil;self.pickerOwner=nil;if(reply)reply(nil);}
+- (void)failPicker:(NSString *)message {FlutterResult reply=self.pickerReply;BOOL preset=self.savingPreset;self.pickerReply=nil;self.pickerOwner=nil;self.savingPreset=NO;if(reply)reply([FlutterError errorWithCode:preset?@"PRESET_SAVE":@"FILES_TARGET" message:message?:@"文件选择未完成。" details:nil]);}
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {FlutterResult reply=self.pickerReply;BOOL preset=self.savingPreset;self.pickerReply=nil;self.pickerOwner=nil;self.savingPreset=NO;if(reply)reply(preset?@NO:nil);}
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
   FlutterResult reply=self.pickerReply;NSString *owner=self.pickerOwner;self.pickerReply=nil;self.pickerOwner=nil;if(!reply)return;
+  if(self.savingPreset){self.savingPreset=NO;reply(@(urls.count>0));return;}
   NSURL *folder=urls.firstObject;dispatch_async(self.worker,^{BOOL scoped=[folder startAccessingSecurityScopedResource];@try{
     [self.runtime guardOwnerWithNSString:owner];NSNumber *directory=nil;if(!folder||![folder getResourceValue:&directory forKey:NSURLIsDirectoryKey error:nil]||!directory.boolValue)filesFail(@"请选择 Files 中的文件夹。");
     NSData *bookmark=[folder bookmarkDataWithOptions:NSURLBookmarkCreationMinimalBookmark includingResourceValuesForKeys:nil relativeToURL:nil error:nil];if(!bookmark.length)filesFail(@"此文件夹不支持持久授权，请重新选择。");

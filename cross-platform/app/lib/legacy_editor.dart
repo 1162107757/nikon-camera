@@ -856,12 +856,19 @@ extension _LegacyWorkspace on _EditorPageState {
           ),
           Expanded(
             child: Center(
-              child: Text(
-                recipe.data['presetId'] == ''
+              child: PresetDisplayName(
+                state: widget.state,
+                title: recipe.data['presetId'] == ''
                     ? '原图'
                     : '${recipe.data['presetName']}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                preset: selectedFilter,
+                presetId: recipe.data['presetId'] as String? ?? '',
+                cameraName: recipe.data['presetCameraName'] as String? ?? '',
+                textAlign: TextAlign.center,
+                cameraStyle: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 11,
+                ),
                 style: const TextStyle(color: _editorWhite, fontSize: 11),
               ),
             ),

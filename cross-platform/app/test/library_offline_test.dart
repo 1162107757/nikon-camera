@@ -33,7 +33,7 @@ class _OfflineCore extends HueviaCore {
   Json reply = _page([]);
   Completer<Json>? held;
   bool fail = false;
-  int active = 0, maximumActive = 0;
+  int active = 0, maximumActive = 0, syncConflicts = 0;
   int get onlineCalls => calls
       .where((call) => call.$1 == 'online.page' || call.$1 == 'online.search')
       .length;
@@ -47,6 +47,9 @@ class _OfflineCore extends HueviaCore {
   Future<Json> call(String op, [Json payload = const {}, String? jobId]) async {
     calls.add((op, Map.of(payload)));
     if (op == 'ui.preferences.set') return Map.of(payload);
+    if (op == 'personal.status') {
+      return {'owner': payload['owner'], 'conflicts': syncConflicts};
+    }
     if (op != 'online.page' && op != 'online.search') {
       throw const AppFailure('No thumbnail in offline fixture');
     }
@@ -136,6 +139,63 @@ void _noRawError() {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  testWidgets('Signed-in users can find and open personal preset sync', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(320, 720);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
+    final core = _OfflineCore()..syncConflicts = 2;
+    final state = await _open(tester, core);
+    final syncButton = find.widgetWithText(TextButton, '预设同步');
+    final capsule = find.byKey(const ValueKey('preset-sync-capsule'));
+
+    state.switchOwner('owner');
+    await _frames(tester);
+    expect(syncButton, findsNothing);
+    await tester.tap(find.widgetWithText(TextButton, '我的预设'));
+    await _frames(tester);
+    expect(syncButton, findsOneWidget);
+    expect(tester.getSize(syncButton).height, greaterThanOrEqualTo(48));
+    expect(tester.getSize(capsule).height, lessThan(32));
+    expect(
+      find.descendant(of: capsule, matching: find.text('2')),
+      findsOneWidget,
+    );
+    final filter = find.byTooltip('筛选预设');
+    expect(filter, findsOneWidget);
+    expect(tester.getCenter(syncButton).dy, tester.getCenter(filter).dy);
+    expect(
+      tester.getTopRight(syncButton).dx,
+      lessThanOrEqualTo(tester.getTopLeft(filter).dx),
+    );
+
+    await tester.tap(syncButton);
+    await tester.pumpAndSettle();
+    expect(find.text('个人预设同步'), findsOneWidget);
+    expect(find.text('立即同步'), findsOneWidget);
+    expect(
+      core.calls
+          .where((call) => call.$1 == 'personal.status')
+          .map((call) => call.$2),
+      [
+        {'owner': 'owner'},
+        {'owner': 'owner'},
+      ],
+    );
+
+    core.syncConflicts = 0;
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(syncButton, findsOneWidget);
+    expect(
+      find.descendant(of: capsule, matching: find.text('2')),
+      findsNothing,
+    );
+    expect(core.calls.any((call) => call.$1 == 'personal.sync'), isFalse);
+  });
 
   testWidgets(
     'Offline first load has one clear recovery message, no raw URL, and a working local-preset entry',

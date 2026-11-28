@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'album_preset_preview.dart';
 import 'batch_export.dart';
 import 'domain.dart';
+import 'preset_display_name.dart';
 import 'legacy_glass_sheet.dart';
 import 'photo_grid.dart';
 import 'theme.dart';
@@ -357,7 +358,10 @@ class _AlbumBatchPresetsState extends State<AlbumBatchPresets> {
           ),
         if (presets.isNotEmpty)
           SizedBox(
-            height: 80 + MediaQuery.textScalerOf(context).scale(11) * 3.2,
+            height:
+                80 +
+                MediaQuery.textScalerOf(context).scale(11) *
+                    (widget.state.showPresetCameraNames ? 4.5 : 3.2),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: presets.length,
@@ -396,10 +400,10 @@ class _AlbumBatchPresetsState extends State<AlbumBatchPresets> {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(
-                          item.name,
+                        PresetDisplayName(
+                          state: widget.state,
+                          preset: item,
                           maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 11,

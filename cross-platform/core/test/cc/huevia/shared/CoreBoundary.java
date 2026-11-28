@@ -115,6 +115,7 @@ public final class CoreBoundary {
             checks+=CameraControlsBoundaryTest.run(temporary);
             checks+=cc.huevia.ncp.CameraPresetProjectionTest.run();
             checks+=cc.huevia.ncp.Np2SupportTest.run();
+            checks+=cc.huevia.ncp.PresetFormatConversionTest.run(temporary);
             RichTonePortraitBoundaryTest.run(runtime, root);
             checks+=CameraMaintenanceBoundaryTest.run(temporary.resolve("camera-maintenance"));
             checks+=SlotParametersBoundaryTest.run(temporary.resolve("slot-parameters"));

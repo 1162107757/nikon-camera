@@ -9,6 +9,7 @@ import cc.huevia.album.PhotoSaveTarget;
 import cc.huevia.album.PhotoFormat;
 import cc.huevia.album.SharedProjectPhoto;
 import cc.huevia.library.PresetLibrary;
+import cc.huevia.library.PresetFile;
 import cc.huevia.library.SharedJson;
 import java.io.File;
 import java.io.IOException;
@@ -65,6 +66,15 @@ public final class SharedProjects {
         }
         if(operation.equals("project.create"))return summary(projects.create(SharedRuntime.text(payload,"name",240)),store);
         String id=SharedRuntime.text(payload,"projectId",36);PhotoLiveProject project=projects.get(id);
+        if(operation.equals("project.presetCameraName")){
+            String preset=SharedRuntime.text(payload,"id",64);
+            boolean used=preset.equals(store.config(id).presetId);
+            if(!used)for(PhotoProjectPresetStore.Task task:store.tasks(id)){
+                if(preset.equals(task.presetId)){used=true;break;}
+            }
+            if(!used||preset.isEmpty())throw new IOException("项目预设已变化。");
+            return SharedRuntime.map("cameraName",PresetFile.validate(defaultBytes(owner,preset)).registrationName);
+        }
         if(operation.startsWith("project.live."))return live(owner,id,operation,payload,cancel);
         if(operation.equals("project.rename"))return summary(projects.rename(id,SharedRuntime.text(payload,"name",240)),store);
         if(operation.equals("project.open"))return open(project,store);

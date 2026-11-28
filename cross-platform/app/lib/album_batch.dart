@@ -12,6 +12,7 @@ import 'saved_photo_result.dart';
 import 'export_save.dart';
 import 'original_files.dart';
 import 'photo_grid.dart';
+import 'preset_display_name.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -453,6 +454,31 @@ class _BatchExportPageState extends State<BatchExportPage> {
     }
   }
 
+  Widget _presetPicker() {
+    final options = <DropdownMenuItem<String>>[
+      const DropdownMenuItem(value: '__keep__', child: Text('保留各自编辑')),
+      const DropdownMenuItem(value: '', child: Text('无滤镜 · 保留其他调节')),
+      for (final item in widget.state.presets)
+        DropdownMenuItem(
+          value: item.id,
+          child: PresetDisplayName(state: widget.state, preset: item),
+        ),
+    ];
+    return DropdownButtonFormField<String>(
+      initialValue: preset,
+      isExpanded: true,
+      itemHeight: widget.state.showPresetCameraNames
+          ? null
+          : kMinInteractiveDimension,
+      decoration: const InputDecoration(labelText: '统一预设'),
+      items: options,
+      selectedItemBuilder: (_) => selectedPresetDropdownItems(options, preset),
+      onChanged: batch.locked
+          ? null
+          : (value) => setState(() => preset = value!),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: batch,
@@ -487,30 +513,7 @@ class _BatchExportPageState extends State<BatchExportPage> {
                 child: Text('RAW 使用上次显影设置；首次使用相机白平衡和高光保护，生成 JPEG 工作副本。'),
               ),
             const SizedBox(height: 20),
-            if (!widget.currentEffects)
-              DropdownButtonFormField<String>(
-                initialValue: preset,
-                isExpanded: true,
-                decoration: const InputDecoration(labelText: '统一预设'),
-                items: [
-                  const DropdownMenuItem(
-                    value: '__keep__',
-                    child: Text('保留各自编辑'),
-                  ),
-                  const DropdownMenuItem(
-                    value: '',
-                    child: Text('无滤镜 · 保留其他调节'),
-                  ),
-                  for (final item in widget.state.presets)
-                    DropdownMenuItem(
-                      value: item.id,
-                      child: Text(item.name, overflow: TextOverflow.ellipsis),
-                    ),
-                ],
-                onChanged: batch.locked
-                    ? null
-                    : (value) => setState(() => preset = value!),
-              ),
+            if (!widget.currentEffects) _presetPicker(),
             if (!widget.currentEffects &&
                 preset != '__keep__' &&
                 preset.isNotEmpty) ...[
@@ -636,7 +639,10 @@ class _BatchExportPageState extends State<BatchExportPage> {
                         receipt: item.receipt!,
                         destination: batch.targetId != null
                             ? batch.targetName ?? '所选文件夹'
-                            : systemAlbumLabel(widget.state.core, batch.albumPath),
+                            : systemAlbumLabel(
+                                widget.state.core,
+                                batch.albumPath,
+                              ),
                       ),
                 onTap: batch.locked || editing
                     ? null

@@ -11,14 +11,15 @@ final class UiStateBoundaryTest {
         if(store.read().size()!=1)throw new AssertionError("New UI state is not empty");checks++;
         Map<String,Object> local=SharedRuntime.map("category","人像","format","NP3","download","all");
         store.update(SharedRuntime.map("presetLocal",local,"presetSource","local"));
-        store.update(SharedRuntime.map("presetOnline",SharedRuntime.map("category","","format","NCP","download","saved")));
+        store.update(SharedRuntime.map("presetOnline",SharedRuntime.map("category","","format","NCP","download","saved"),"showPresetCameraNames",true));
         Map<String,Object> saved=new SharedUiState(root.toFile()).read();
         if(!local.equals(saved.get("presetLocal")))throw new AssertionError("Separate source preference overwritten");checks++;
         if(!"saved".equals(SharedRuntime.object(saved.get("presetOnline")).get("download")))throw new AssertionError("Online preference not restored");checks++;
+        if(!Boolean.TRUE.equals(saved.get("showPresetCameraNames")))throw new AssertionError("Camera name preference not restored");checks++;
         store.update(SharedRuntime.map("album",SharedRuntime.map("source","phone","filter","raw","added",true,"oldest",false)));
         if(!Boolean.TRUE.equals(SharedRuntime.object(new SharedUiState(root.toFile()).read().get("album")).get("added")))throw new AssertionError("Album preference not restored");checks++;
         byte[] before=Files.readAllBytes(root.resolve("shared-ui-state-v1.json"));
-        for(Map<String,Object> invalid:Arrays.asList(SharedRuntime.map("unknown","x"),SharedRuntime.map("presetSource","unexpected"),SharedRuntime.map("presetLocal",SharedRuntime.map("category","x","format","CR3","download","all")),SharedRuntime.map("album",SharedRuntime.map("source","phone","filter","raw","added","true","oldest",false)))){
+        for(Map<String,Object> invalid:Arrays.asList(SharedRuntime.map("unknown","x"),SharedRuntime.map("presetSource","unexpected"),SharedRuntime.map("showPresetCameraNames","true"),SharedRuntime.map("presetLocal",SharedRuntime.map("category","x","format","CR3","download","all")),SharedRuntime.map("album",SharedRuntime.map("source","phone","filter","raw","added","true","oldest",false)))){
             try{store.update(invalid);throw new AssertionError("Invalid UI state accepted");}catch(IOException expected){checks++;}
             if(!Arrays.equals(before,Files.readAllBytes(root.resolve("shared-ui-state-v1.json"))))throw new AssertionError("Rejected UI state changed file");checks++;
         }

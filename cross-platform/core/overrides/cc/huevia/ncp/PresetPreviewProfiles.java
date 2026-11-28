@@ -10,7 +10,7 @@ public final class PresetPreviewProfiles {
     public static final String MODEL_VERSION = NcpPreviewProfile.MODEL_VERSION + ":" + Np3PreviewProfile.MODEL_VERSION
             + ":" + Np3MonochromePreviewProfile.MODEL_VERSION + ":" + Np3MonochromePreviewProfile.STANDARD_MODEL_VERSION
             + ":" + NcpMonochromePreviewProfile.MODEL_VERSION + ":" + Np2PreviewProfile.MODEL_VERSION
-            + ":" + Np3RichTonePortraitProfile.MODEL_VERSION;
+            + ":" + Np3RichTonePortraitProfile.MODEL_VERSION + ":format-conversion-preview-v1";
 
     public static PresetPreviewProfile fromPreset(byte[] bytes) throws IOException {
         if (Np2File.isNp2(bytes)) return Np2PreviewProfile.fromNp2(bytes);
@@ -21,9 +21,16 @@ public final class PresetPreviewProfiles {
             // active control; unsupported/malformed data never falls through.
             int base = np3Base(bytes);
             if (base == Np3RichTonePortraitProfile.BASE_CODE) return Np3RichTonePortraitProfile.fromNp3(bytes);
-            if (base == 0x064d || base == 0x0655) return Np3MonochromePreviewProfile.fromNp3(bytes);
+            if (base == 0x064d) {
+                try { return Np3MonochromePreviewProfile.fromNp3(bytes); }
+                catch (IOException unsupported) { return Np2PreviewProfile.fromClassicNp3(bytes); }
+            }
+            if (base == 0x0655) return Np3MonochromePreviewProfile.fromNp3(bytes);
+            if (base == 1 || base == 0x03c2 || base == 0x00c3 || base == 0x0486 || base == 0x04c7)
+                return Np2PreviewProfile.fromClassicNp3(bytes);
             return Np3PreviewProfile.fromNp3(bytes);
         }
+        if (PresetFormatConversion.isManualNcp(bytes)) return Np2PreviewProfile.fromManualNcp(bytes);
         if(legacyMonochrome(bytes))return NcpMonochromePreviewProfile.fromNcp(bytes);
         return NcpPreviewProfile.fromNcp(bytes);
     }

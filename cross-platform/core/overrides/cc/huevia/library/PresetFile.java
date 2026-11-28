@@ -2,6 +2,7 @@ package cc.huevia.library;
 
 import cc.huevia.ncp.NcpFile;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,8 +37,32 @@ public final class PresetFile {
             throw new IOException("文件不是已支持的 NCP、NP2 或 NP3 预设（签名不符）。");
         // NP2/NP3 share the magic; the bounded version record determines the actual format.
         if (uint32be(data, 4) == 0x100) return validateTaggedPreset(data);
-        try { return new PresetFile(NCP, NcpFile.validate(data), ""); }
+        try {
+            String version = NcpFile.validate(data);
+            return new PresetFile(NCP, version, ncpRegistrationName(data));
+        }
         catch (IllegalArgumentException error) { throw new IOException(error.getMessage(), error); }
+    }
+
+    /** Read the camera's name field from the validated 0100 profile record. */
+    private static String ncpRegistrationName(byte[] data) {
+        int offset = 4;
+        while (uint32be(data, offset) != 0) {
+            long id = uint32be(data, offset);
+            int size = (int) uint32be(data, offset + 4);
+            offset += 8;
+            if (id == 1) {
+                int from = offset + 4;
+                int end = from;
+                while (end < from + 20 && data[end] != 0) {
+                    if (data[end] < 32 || data[end] > 126) return "";
+                    end++;
+                }
+                return new String(data, from, end - from, StandardCharsets.US_ASCII).trim();
+            }
+            offset += size;
+        }
+        return "";
     }
 
     private static PresetFile validateTaggedPreset(byte[] data) throws IOException {

@@ -36,6 +36,7 @@ final class SharedUiState {
     }
     private static Object validate(String key,Object raw)throws IOException{
         if(key.equals("presetSource"))return choice(raw,"local","online");
+        if(key.equals("showPresetCameraNames")&&raw instanceof Boolean)return raw;
         if(key.equals("presetLocal")||key.equals("presetOnline")){
             Map<String,Object> input=SharedRuntime.object(raw);keys(input,"category","format","download");
             String category=SharedRuntime.text(input,"category",96);

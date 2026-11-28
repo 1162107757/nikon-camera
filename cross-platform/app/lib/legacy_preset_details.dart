@@ -3,6 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'domain.dart';
+import 'preset_display_name.dart';
+import 'preset_format_conversion.dart';
+import 'preset_showcase_compare.dart';
 import 'theme.dart';
 import 'widgets.dart';
 import 'camera.dart';
@@ -29,7 +32,7 @@ class LegacyPresetDetails extends StatefulWidget {
 }
 
 class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
-  bool original = false, pinning = false, importing = false;
+  bool pinning = false, importing = false;
   late bool pinned = widget.preset.pinned;
   Future<void> togglePin() async {
     if (pinning) return;
@@ -102,66 +105,22 @@ class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
                       aspectRatio: 1.25,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(26),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            PresetImage(
-                              preset: preset,
-                              original: original,
-                              detail: true,
-                              core: widget.state.core,
-                              owner:
-                                  widget.state.session['user']?['id']
-                                      as String? ??
-                                  '',
-                            ),
-                            Positioned(
-                              top: 8,
-                              right: 8,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xaa000000),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  original ? '原图' : '预设效果',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            if (!preset.online)
-                              Positioned(
-                                right: 14,
-                                bottom: 12,
-                                child: FilledButton(
-                                  style: FilledButton.styleFrom(
-                                    backgroundColor: const Color(0xe62c3037),
-                                    foregroundColor: Colors.white,
-                                    minimumSize: const Size(66, 55),
-                                  ),
-                                  onPressed: () =>
-                                      setState(() => original = !original),
-                                  child: Text(
-                                    original ? '效果' : '原图',
-                                    style: const TextStyle(fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                          ],
+                        child: PresetShowcaseCompare(
+                          preset: preset,
+                          core: widget.state.core,
+                          owner:
+                              widget.state.session['user']?['id'] as String? ??
+                              '',
                         ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 4),
-                      child: Text(
-                        preset.name,
+                      child: PresetDisplayName(
+                        state: widget.state,
+                        preset: preset,
+                        maxLines: null,
+                        copyCameraName: true,
                         style: TextStyle(
                           fontSize: 24,
                           height: 1.17,
@@ -176,6 +135,43 @@ class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
                         child: Text(
                           preset.description,
                           style: const TextStyle(fontSize: 15, height: 1.4),
+                        ),
+                      ),
+                    if (presetConversionFormats.contains(preset.format))
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6, bottom: 6),
+                        child: Material(
+                          color: palette.primaryContainer,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(color: palette.outline),
+                          ),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.swap_horiz_rounded,
+                              color: palette.onPrimaryContainer,
+                            ),
+                            title: const Text(
+                              '转换格式',
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            subtitle: Text(
+                              '可转为 ${presetConversionFormats.where((format) => format != preset.format).join(' 或 ')}',
+                            ),
+                            trailing: const Icon(Icons.chevron_right),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            onTap: () => hueRootPage<void>(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (_) => PresetFormatConversionPage(
+                                  state: widget.state,
+                                  preset: preset,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     Align(

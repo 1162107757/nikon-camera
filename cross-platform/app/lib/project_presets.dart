@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'domain.dart';
+import 'preset_display_name.dart';
 import 'project_presets_model.dart';
 import 'camera_live_card.dart';
 import 'theme.dart';
@@ -165,6 +166,25 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
   Widget controls() {
     final project = model.project, p = HuePalette.of(context);
     final presetId = project?['presetId'] as String? ?? '';
+    final options = <DropdownMenuItem<String>>[
+      const DropdownMenuItem(value: '', child: Text('不使用默认预设')),
+      if (presetId.isNotEmpty &&
+          !widget.state.presets.any((preset) => preset.id == presetId))
+        DropdownMenuItem(
+          value: presetId,
+          child: PresetDisplayName(
+            state: widget.state,
+            title: '${project?['presetName']} · 项目快照',
+            presetId: presetId,
+            projectId: model.selected,
+          ),
+        ),
+      for (final preset in widget.state.presets)
+        DropdownMenuItem(
+          value: preset.id,
+          child: PresetDisplayName(state: widget.state, preset: preset),
+        ),
+    ];
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
       child: Column(
@@ -244,31 +264,13 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
               key: ValueKey('default-${model.selected}-$presetId'),
               initialValue: presetId,
               isExpanded: true,
+              itemHeight: widget.state.showPresetCameraNames
+                  ? null
+                  : kMinInteractiveDimension,
               decoration: const InputDecoration(labelText: '项目默认预设'),
-              items: [
-                DropdownMenuItem(value: '', child: const Text('不使用默认预设')),
-                if (presetId.isNotEmpty &&
-                    !widget.state.presets.any(
-                      (preset) => preset.id == presetId,
-                    ))
-                  DropdownMenuItem(
-                    value: presetId,
-                    child: Text(
-                      '${project?['presetName']} · 项目快照',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                for (final preset in widget.state.presets)
-                  DropdownMenuItem(
-                    value: preset.id,
-                    child: Text(
-                      preset.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-              ],
+              items: options,
+              selectedItemBuilder: (_) =>
+                  selectedPresetDropdownItems(options, presetId),
               onChanged: model.busy
                   ? null
                   : (id) {
@@ -307,7 +309,13 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
           ],
           if (model.phase.isNotEmpty) ...[
             const SizedBox(height: 12),
-            Text(model.phase),
+            PresetDisplayName(
+              state: model.state,
+              title: model.phase,
+              presetId: model.activePresetId,
+              projectId: model.selected,
+              maxLines: null,
+            ),
             const SizedBox(height: 8),
             LinearProgressIndicator(value: model.progress),
           ],
@@ -512,8 +520,13 @@ class _ProjectTasksPage extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              subtitle: Text(
-                '${task['presetName']} · $label${status == 'error' ? '\n${task['error']}' : ''}',
+              subtitle: PresetDisplayName(
+                state: model.state,
+                title:
+                    '${task['presetName']} · $label${status == 'error' ? '\n${task['error']}' : ''}',
+                presetId: task['presetId'] as String? ?? '',
+                projectId: model.selected,
+                maxLines: null,
               ),
               trailing: status == 'saved'
                   ? const Icon(Icons.chevron_right)

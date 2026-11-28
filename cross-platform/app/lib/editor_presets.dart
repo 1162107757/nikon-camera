@@ -90,6 +90,7 @@ class EditorPresets extends ChangeNotifier {
     final frozen = object(jsonDecode(jsonEncode(recipe)));
     frozen['presetId'] = preset == null ? '' : identity(preset);
     frozen['presetName'] = preset?.name ?? '无滤镜';
+    frozen.remove('presetCameraName');
     frozen['strength'] = preset == null ? 0 : 100;
     final key = jsonEncode(frozen);
     return _images.putIfAbsent(key, () {

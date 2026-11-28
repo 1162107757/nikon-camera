@@ -27,6 +27,8 @@ class SplitCompare extends StatefulWidget {
     this.viewportState,
     this.viewportPlane,
     this.fitPreview = false,
+    this.photoFit = BoxFit.contain,
+    this.effectLabel = '效果',
   });
   final String effect;
   final String? original;
@@ -43,6 +45,8 @@ class SplitCompare extends StatefulWidget {
   final EditingViewportState? viewportState;
   final EditingViewportPlane? viewportPlane;
   final bool fitPreview;
+  final BoxFit photoFit;
+  final String effectLabel;
   @override
   State<SplitCompare> createState() => _SplitCompareState();
 }
@@ -149,7 +153,7 @@ class _SplitCompareState extends State<SplitCompare> {
         File(path),
         width: double.infinity,
         height: double.infinity,
-        fit: BoxFit.contain,
+        fit: widget.photoFit,
         gaplessPlayback: true,
         excludeFromSemantics: true,
         errorBuilder: (_, _, _) => Center(
@@ -174,7 +178,7 @@ class _SplitCompareState extends State<SplitCompare> {
       imageRect = pixels == null || pixels.isEmpty || viewport.isEmpty
           ? Rect.zero
           : Alignment.center.inscribe(
-              applyBoxFit(BoxFit.contain, pixels, viewport).destination,
+              applyBoxFit(widget.photoFit, pixels, viewport).destination,
               Offset.zero & viewport,
             );
       viewportBinding.layout(
@@ -373,7 +377,11 @@ class _SplitCompareState extends State<SplitCompare> {
               ),
             ),
             const Positioned(left: 12, top: 12, child: _CompareLabel('原图')),
-            const Positioned(right: 12, bottom: 12, child: _CompareLabel('效果')),
+            Positioned(
+              right: 12,
+              bottom: 12,
+              child: _CompareLabel(widget.effectLabel),
+            ),
           ],
         ],
       );

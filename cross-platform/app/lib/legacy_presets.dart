@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'domain.dart';
+import 'preset_display_name.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -8,7 +9,7 @@ class LegacyPresetGrid extends StatelessWidget {
   const LegacyPresetGrid({
     super.key,
     required this.rows,
-    required this.core,
+    required this.state,
     required this.owner,
     required this.onOpen,
     required this.onRemove,
@@ -18,7 +19,7 @@ class LegacyPresetGrid extends StatelessWidget {
     this.onLocal,
   });
   final List<Preset> rows;
-  final HueviaCore core;
+  final AppState state;
   final String owner;
   final ValueChanged<Preset> onOpen, onRemove;
   final VoidCallback? onMore;
@@ -32,11 +33,12 @@ class LegacyPresetGrid extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Semantics(
         container: true,
-        excludeSemantics: true,
+        excludeSemantics: !state.showPresetCameraNames,
         onTap: () => onOpen(preset),
         onLongPress: preset.online ? null : () => onRemove(preset),
-        label:
-            '${preset.name}，${preset.pinned ? '已置顶，' : ''}${preset.category.isEmpty ? '未分类' : preset.category}，查看预设',
+        label: state.showPresetCameraNames
+            ? '查看预设'
+            : '${preset.name}，${preset.pinned ? '已置顶，' : ''}${preset.category.isEmpty ? '未分类' : preset.category}，查看预设',
         button: true,
         child: InkWell(
           onTap: () => onOpen(preset),
@@ -53,7 +55,7 @@ class LegacyPresetGrid extends StatelessWidget {
                     children: [
                       PresetImage(
                         preset: preset,
-                        core: core,
+                        core: state.core,
                         owner: owner,
                         showBadge: true,
                       ),
@@ -88,10 +90,9 @@ class LegacyPresetGrid extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      preset.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    PresetDisplayName(
+                      state: state,
+                      preset: preset,
                       style: TextStyle(
                         fontSize: 13,
                         height: 1.17,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'domain.dart';
+import 'preset_display_name.dart';
 import 'theme.dart';
 
 enum PresetContextAction { pin, remove }
@@ -9,6 +11,8 @@ Future<PresetContextAction?> showPresetContextMenu({
   required BuildContext context,
   required String presetName,
   required bool pinned,
+  AppState? state,
+  Preset? preset,
 }) {
   final theme = Theme.of(context);
   final p = HuePalette.of(context);
@@ -52,6 +56,8 @@ Future<PresetContextAction?> showPresetContextMenu({
                   ),
                   child: _PresetContextMenu(
                     presetName: presetName,
+                    state: state,
+                    preset: preset,
                     pinned: pinned,
                     onAction: finish,
                     onClose: () => finish(null),
@@ -89,9 +95,13 @@ class _PresetContextMenu extends StatelessWidget {
     required this.pinned,
     required this.onAction,
     required this.onClose,
+    this.state,
+    this.preset,
   });
 
   final String presetName;
+  final AppState? state;
+  final Preset? preset;
   final bool pinned;
   final ValueChanged<PresetContextAction> onAction;
   final VoidCallback onClose;
@@ -100,6 +110,12 @@ class _PresetContextMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = HuePalette.of(context);
     final deleteColor = Theme.of(context).colorScheme.error;
+    final nameStyle = TextStyle(
+      fontSize: 13,
+      height: 1.3,
+      fontWeight: FontWeight.w600,
+      color: p.secondary,
+    );
     return Material(
       key: const ValueKey('preset-context-menu'),
       color: p.card,
@@ -118,17 +134,19 @@ class _PresetContextMenu extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      presetName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 13,
-                        height: 1.3,
-                        fontWeight: FontWeight.w600,
-                        color: p.secondary,
-                      ),
-                    ),
+                    child: state != null
+                        ? PresetDisplayName(
+                            state: state!,
+                            preset: preset,
+                            title: presetName,
+                            style: nameStyle,
+                          )
+                        : Text(
+                            presetName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: nameStyle,
+                          ),
                   ),
                   HueIconButton(
                     kind: HueIconKind.close,

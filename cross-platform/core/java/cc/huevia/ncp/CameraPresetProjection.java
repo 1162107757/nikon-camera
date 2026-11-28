@@ -30,6 +30,21 @@ public final class CameraPresetProjection {
     public static Plan plan(byte[] original, Integer middle, Integer clarity) throws IOException {
         if (Np2File.isNp2(original)) return Np2CameraProjection.plan(original, middle, clarity);
         if (!Np3Container.isNp3(original)) {
+            if (PresetFormatConversion.isManualNcp(original)) {
+                PresetFormatConversion.Plan files = PresetFormatConversion.plan(original, "NP2");
+                Plan adapted = Np2CameraProjection.plan(files.bytes(), middle, clarity);
+                List<String> kept = new ArrayList<>(), omitted = new ArrayList<>(), approx = new ArrayList<>();
+                for (PresetFormatConversion.Row row : files.rows) {
+                    if (row.status.equals("retained")) kept.add(row.label);
+                    else if (row.status.equals("omitted")) omitted.add(row.label + "：" + row.note);
+                    else approx.add(row.label + "：" + row.note);
+                }
+                String message = "NCP 手动参数已适配。"
+                        + (approx.isEmpty() ? "" : "\n近似转换：" + String.join("；", approx))
+                        + (omitted.isEmpty() ? "" : "\n不导入：" + String.join("；", omitted));
+                return new Plan(original, NcpPictureControlConverter.adaptedParameters(original,
+                        adapted.conversion.dataBytes(), message), kept, omitted, approx);
+            }
             CameraPresetAdapter.Plan old = CameraPresetAdapter.plan(original, middle == null ? 4 : middle,
                     clarity == null ? 0 : clarity);
             return new Plan(original, old.approved(true), Collections.singletonList("原 NCP 的兼容参数"),
@@ -78,15 +93,7 @@ public final class CameraPresetProjection {
                     active |= basic[i] != 0;
                 }
                 if (active) {
-                    for (int i = 0; i <= 256; i++) {
-                        double x = i / 256.0, upper = x * x * (3 - 2 * x), y = 1 - x;
-                        double lower = y * y * (3 - 2 * y);
-                        double tone = x + basic[1] / 250.0 * upper * (1 - x)
-                                + basic[2] / 250.0 * lower * x + basic[3] / 500.0 * x * x
-                                + basic[4] / 500.0 * (1 - x) * (1 - x)
-                                - .0008 * basic[0] * Math.sin(2 * Math.PI * x);
-                        sample(curve, i, tone);
-                    }
+                    curve = flexibleToneCurve(basic);
                     approx.add("灵活色彩的对比度、高光、阴影、白色、黑色合成为近似明暗曲线");
                 } else kept.add("中性明暗曲线");
             } else kept.add("中性明暗曲线");
@@ -186,6 +193,19 @@ public final class CameraPresetProjection {
         c[6] = 1; c[8] = 2;
         for (int i = 0; i <= 256; i++) sample(c, i, i / 256.0);
         return c;
+    }
+    static byte[] flexibleToneCurve(int[] basic) {
+        byte[] curve = identityCurve();
+        for (int i = 0; i <= 256; i++) {
+            double x = i / 256.0, upper = x * x * (3 - 2 * x), y = 1 - x;
+            double lower = y * y * (3 - 2 * y);
+            double tone = x + basic[1] / 250.0 * upper * (1 - x)
+                    + basic[2] / 250.0 * lower * x + basic[3] / 500.0 * x * x
+                    + basic[4] / 500.0 * (1 - x) * (1 - x)
+                    - .0008 * basic[0] * Math.sin(2 * Math.PI * x);
+            sample(curve, i, tone);
+        }
+        return curve;
     }
     private static void sample(byte[] c, int i, double tone) {
         int value = (int) Math.round(Math.max(0, Math.min(1, tone)) * 32767);

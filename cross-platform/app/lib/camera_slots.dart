@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
 import 'domain.dart';
+import 'preset_display_name.dart';
 import 'theme.dart';
 import 'widgets.dart';
 import 'legacy_glass_sheet.dart';
@@ -772,8 +773,12 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  presetName,
+                PresetDisplayName(
+                  state: widget.state,
+                  title: presetName,
+                  preset: widget.initialPreset,
+                  sourcePath: sourcePath ?? '',
+                  maxLines: null,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,

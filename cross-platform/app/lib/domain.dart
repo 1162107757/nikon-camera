@@ -462,6 +462,71 @@ class AppState extends ChangeNotifier {
   int _sessionRevision = 0, _sessionRefresh = 0, _libraryRefresh = 0;
   Json uiPreferences = {};
   String? uiPreferencesWarning;
+  bool get showPresetCameraNames =>
+      uiPreferences['showPresetCameraNames'] == true;
+  final _presetCameraNames = <(String, String, String), Future<String>>{};
+  Future<void> _onlineCameraNames = Future.value();
+
+  Future<String> loadPresetCameraName({
+    Preset? preset,
+    String presetId = '',
+    String sourcePath = '',
+    String projectId = '',
+  }) {
+    final online = preset?.online == true;
+    final id = preset?.id ?? presetId;
+    if (id.isEmpty && sourcePath.isEmpty) return SynchronousFuture('');
+    final owner = session['user']?['id'] as String? ?? '';
+    final operation = online
+        ? 'online.cameraName'
+        : projectId.isNotEmpty
+        ? 'project.presetCameraName'
+        : 'library.cameraName';
+    final identity = online
+        ? (preset!.data['sha256'] as String? ?? id)
+        : sourcePath.isNotEmpty
+        ? sourcePath
+        : projectId.isNotEmpty
+        ? '$projectId/$id'
+        : id;
+    final key = (online ? '' : owner, operation, identity);
+    final existing = _presetCameraNames.remove(key);
+    if (existing != null) {
+      _presetCameraNames[key] = existing;
+      return existing;
+    }
+    Future<String> read() async {
+      if (!showPresetCameraNames) throw const AppFailure('机内名称显示已关闭。');
+      final result = await core.call(
+        operation,
+        online
+            ? {'preset': preset!.data}
+            : {
+                'owner': owner,
+                'id': id,
+                if (projectId.isNotEmpty) 'projectId': projectId,
+                if (sourcePath.isNotEmpty) 'path': sourcePath,
+              },
+      );
+      return result['cameraName'] as String? ?? '';
+    }
+
+    final task = online ? _onlineCameraNames.then((_) => read()) : read();
+    late final Future<String> handled;
+    handled = task.onError((Object _, StackTrace _) {
+      if (identical(_presetCameraNames[key], handled)) {
+        _presetCameraNames.remove(key);
+      }
+      return '';
+    });
+    if (online) _onlineCameraNames = handled.then<void>((_) {});
+    _presetCameraNames[key] = handled;
+    if (_presetCameraNames.length > 512) {
+      _presetCameraNames.remove(_presetCameraNames.keys.first);
+    }
+    return handled;
+  }
+
   Future<void> _uiCommit = Future.value();
   Future<void> saveUiPreferences(Json patch) {
     // View state is optional for a standalone/test view with no private root.

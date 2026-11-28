@@ -60,7 +60,10 @@ public final class CameraPresetProjectionTest {
         checks = 0;
         byte[] b = np3(0x20, 7, true, true);
         yes(PresetFile.validate(b).fileFormat.equals("NP3"));
+        yes(PresetFile.validate(b).registrationName.equals("NP3 TEST"));
+        yes(PresetFile.validate(Np2Fixtures.std()).registrationName.equals("HV240_NP2_STD"));
         CameraPresetProjection.Plan p = valid(b);
+        yes(PresetFile.validate(p.ncpBytes()).registrationName.equals("NP3 TEST"));
         byte[] wire = p.conversion.dataBytes();
         yes(wire[0] == 2 && wire[25] == 8 && wire[26] == 5 && wire[27] == -3);
         yes(Arrays.equals(Arrays.copyOfRange(wire, 36, 614), NcpCompatibilityFixtures.curve()));

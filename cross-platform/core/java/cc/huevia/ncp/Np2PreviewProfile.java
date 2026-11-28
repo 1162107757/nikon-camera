@@ -18,16 +18,43 @@ public final class Np2PreviewProfile implements PresetPreviewProfile {
     private final PresetPreviewProfile monochrome;
     private final SpatialPreviewFilter.Settings spatial;
 
-    private Np2PreviewProfile(Np2File file, int sharp, int clear, int sat, int hue,
+    private Np2PreviewProfile(Np2File file, int sharp, int mid, int clear, int sat, int hue,
             int contrast, int brightness, byte[] curve, PresetPreviewProfile mono) {
         name = file.container.registrationName;
         saturation = sat / 4.0; this.hue = hue / 4.0;
         this.contrast = contrast / 4.0; this.brightness = brightness / 4.0;
         this.curve = curve; monochrome = mono;
-        spatial = new SpatialPreviewFilter.Settings(sharp < 0 ? sharp / 12.0 : sharp / 36.0, 0, clear / 20.0);
+        spatial = new SpatialPreviewFilter.Settings(sharp < 0 ? sharp / 12.0 : sharp / 36.0, mid / 20.0, clear / 20.0);
     }
 
     public static Np2PreviewProfile fromNp2(byte[] source) throws IOException {
+        return fromNp2(source, 0);
+    }
+
+    static Np2PreviewProfile fromManualNcp(byte[] source) throws IOException {
+        return fromNp2(exactParameters(source, false), 0);
+    }
+
+    static Np2PreviewProfile fromClassicNp3(byte[] source) throws IOException {
+        Np3Container file = Np3Container.read(source);
+        if (!file.canonical0310) throw unsupported("尚未核验此 NP3 布局。");
+        byte[] field = file.field(22);
+        int mid = (field[0] & 255) == 255 ? 0 : (field[0] & 255) - 128;
+        if (field[1] != 4 || mid < -20 || mid > 20) throw unsupported("中范围锐化超出已核验范围。");
+        return fromNp2(exactParameters(source, true), mid);
+    }
+
+    private static byte[] exactParameters(byte[] source, boolean allowMid) throws IOException {
+        PresetFormatConversion.Plan plan = PresetFormatConversion.plan(source, "NP2");
+        for (PresetFormatConversion.Row row : plan.rows) {
+            if (row.status.equals("retained")) continue;
+            if (allowMid && row.label.equals("中范围锐化") && row.note.equals("NP2 文件不支持此参数")) continue;
+            throw unsupported(row.label + "超出已核验的手机预览范围。");
+        }
+        return plan.bytes();
+    }
+
+    private static Np2PreviewProfile fromNp2(byte[] source, int mid) throws IOException {
         Np2File file = new Np2File(source);
         if (!file.known) throw unsupported("尚未核验此版本的参数布局。");
         if (file.base() == 0) throw unsupported("此基础优化校准尚未核验；原文件可保留并转换兼容部分导入相机。");
@@ -59,7 +86,7 @@ public final class Np2PreviewProfile implements PresetPreviewProfile {
         }
         file.extraControls(errors);
         if (!errors.isEmpty()) throw unsupported(String.join("；", errors) + "。原文件已保留，可继续转换导入相机。");
-        return new Np2PreviewProfile(file, sharp, clear, sat, hue, contrast, brightness, curve, mono);
+        return new Np2PreviewProfile(file, sharp, mid, clear, sat, hue, contrast, brightness, curve, mono);
     }
 
     public String registrationName() { return name; }

@@ -91,10 +91,12 @@ class SettingsPage extends StatelessWidget {
       String note = '',
       String value = '',
       int unread = 0,
+      Widget? trailing,
     }) => Material(
       color: p.card,
       child: InkWell(
         onTap: onTap,
+        excludeFromSemantics: trailing != null,
         child: Container(
           constraints: const BoxConstraints(minHeight: 56),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -166,13 +168,23 @@ class SettingsPage extends StatelessWidget {
                     color: p.secondary,
                   ),
                 ),
-              if (value.isEmpty)
+              if (trailing != null)
+                trailing
+              else if (value.isEmpty)
                 HueIcon(HueIconKind.chevron, size: 14, color: p.secondary),
             ],
           ),
         ),
       ),
     );
+    Future<void> setPresetOriginalName(bool enabled) async {
+      try {
+        await state.saveUiPreferences({'showPresetCameraNames': enabled});
+      } catch (_) {
+        if (context.mounted) report(context, '预设原名设置暂未保存。');
+      }
+    }
+
     Widget group(List<Widget> children) => ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: ColoredBox(
@@ -340,6 +352,21 @@ class SettingsPage extends StatelessWidget {
                     ThemeMode.dark => '深色',
                   },
                 ),
+                MergeSemantics(
+                  child: row(
+                    HueIconKind.presets,
+                    '显示预设原名',
+                    () => setPresetOriginalName(!state.showPresetCameraNames),
+                    trailing: ListenableBuilder(
+                      listenable: state,
+                      builder: (_, _) => Switch.adaptive(
+                        value: state.showPresetCameraNames,
+                        onChanged: setPresetOriginalName,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    ),
+                  ),
+                ),
                 row(
                   HueIconKind.album,
                   '预览模板',
@@ -364,9 +391,7 @@ class SettingsPage extends StatelessWidget {
                   '检查更新',
                   () => hueRootPage<void>(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => const UpdatesPage(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const UpdatesPage()),
                   ),
                 ),
                 row(

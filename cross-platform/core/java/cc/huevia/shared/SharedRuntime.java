@@ -12,6 +12,8 @@ import cc.huevia.ncp.PhotoGeometry;
 import cc.huevia.ncp.PhotoBodyShape;
 import cc.huevia.ncp.PhotoLocalEdits;
 import cc.huevia.ncp.AdjustmentRegion;
+import cc.huevia.ncp.NcpFile;
+import cc.huevia.ncp.PresetFormatConversion;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -69,6 +71,7 @@ public final class SharedRuntime {
     }
     public static boolean publicNetworkOperation(String operation) {
         return "online.page".equals(operation)||"online.search".equals(operation)||"online.preview".equals(operation)
+                ||"online.cameraName".equals(operation)||"online.convertPlan".equals(operation)
                 ||"editor.catalog".equals(operation)||"community.get".equals(operation);
     }
     public String requestPublic(String operation,String json,BooleanSupplier cancel)throws IOException {
@@ -107,6 +110,19 @@ public final class SharedRuntime {
                 guardOwner(owner);
                 if(generation!=accounts.sessionGeneration())throw new AccountException("SESSION_CHANGED",0,"登录状态已变化，请重新载入样片。");
                 return map("path",file.getPath());
+            }
+            case "online.cameraName":{
+                OnlinePreset selected=OnlinePreset.fromMap(object(p.get("preset")));
+                return map("cameraName",PresetFile.validate(editorCatalog.read(selected)).registrationName);
+            }
+            case "online.convertPlan":{
+                String owner=text(p,"owner",64);guardOwner(owner);
+                long generation=accounts.sessionGeneration();
+                OnlinePreset selected=OnlinePreset.fromMap(object(p.get("preset")));
+                Map<String,Object> converted=conversion(editorCatalog.read(selected),text(p,"targetFormat",3));
+                guardOwner(owner);
+                if(generation!=accounts.sessionGeneration())throw new IOException("登录状态已变化，请重新打开预设。");
+                return converted;
             }
             case "editor.catalog":{
                 OnlinePresetRepository.CatalogResult catalog=editorCatalog.load();
@@ -251,7 +267,24 @@ public final class SharedRuntime {
                 result=map("path",output.getPath(),"name",name);break;
             }
             case "library.inspect":result=SharedJson.object(CoreEngine.inspectPreset(preset(text(p,"id",64))));break;
-            case "online.page":case "online.search":case "online.preview":result=publicRequest(operation,p);break;
+            case "library.convertPlan":{
+                String owner=text(p,"owner",64);guardOwner(owner);
+                result=conversion(preset(text(p,"id",64)),text(p,"targetFormat",3));
+                guardOwner(owner);break;
+            }
+            case "library.cameraName":{
+                guardOwner(text(p,"owner",64));
+                byte[] bytes;
+                if(p.containsKey("path")){
+                    File file=privateFile(text(p,"path",4096));
+                    if(!file.isFile()||file.length()<1||file.length()>NcpFile.MAX_BYTES)
+                        throw new IOException("预设文件大小无效。");
+                    bytes=Files.readAllBytes(file.toPath());
+                }else bytes=preset(text(p,"id",64));
+                result=map("cameraName",PresetFile.validate(bytes).registrationName);break;
+            }
+            case "online.page":case "online.search":case "online.preview":case "online.cameraName":case "online.convertPlan":
+                result=publicRequest(operation,p);break;
             case "online.download":{
                 guardOwner(text(p,"owner",64));
                 OnlinePreset selected=OnlinePreset.fromMap(object(p.get("preset")));
@@ -415,6 +448,26 @@ public final class SharedRuntime {
         guardOwner(owner);
         return SharedJson.encode(prepared);
     }
+    private static Map<String,Object> conversion(byte[] source,String target)throws IOException {
+        PresetFormatConversion.Plan plan=PresetFormatConversion.plan(source,target);
+        List<Object> rows=new ArrayList<>();
+        for(PresetFormatConversion.Row row:plan.rows)rows.add(map("label",row.label,"status",row.status,"note",row.note));
+        return map("sourceFormat",plan.sourceFormat,"targetFormat",plan.targetFormat,"cameraName",plan.cameraName,
+                "rows",rows,"bytes",Base64.getEncoder().encodeToString(plan.bytes()));
+    }
+
+    public File validatedPresetExport(String path,String owner)throws IOException {
+        guardOwner(owner);
+        File file=privateFile(path);
+        Path folder=new File(root,"preset-conversions").toPath();
+        if(Files.isSymbolicLink(folder)||!file.toPath().startsWith(folder)||file.length()<1||file.length()>NcpFile.MAX_BYTES)
+            throw new IOException("转换副本无效，请重新转换。");
+        PresetFile preset=PresetFile.validate(Files.readAllBytes(file.toPath()));
+        if(!file.getName().toLowerCase(Locale.ROOT).endsWith(PresetFile.extension(preset.fileFormat)))
+            throw new IOException("转换副本的文件名与格式不符。");
+        return file;
+    }
+
     public File privateFile(String path)throws IOException {
         File original=new File(path),file=original.getCanonicalFile();
         Path candidate=original.toPath(),canonical=file.toPath(),base=root.toPath();

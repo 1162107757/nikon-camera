@@ -23,15 +23,38 @@ import java.util.function.BooleanSupplier;
 /** Persistent SAF folder grants and byte-exact, idempotent file publication. */
 final class NativeOriginalFiles implements MethodChannel.MethodCallHandler {
     static final int PICK_FOLDER=0x6f30;
+    private static final int SAVE_PRESET=0x6f31;
     private final Activity activity;
     private final SharedRuntime runtime;
     private final ExecutorService worker=Executors.newSingleThreadExecutor();
     private final Set<String> cancelled=ConcurrentHashMap.newKeySet();
     private MethodChannel.Result picker;
     private String pickerOwner;
+    private File presetToSave;
     NativeOriginalFiles(Activity activity,SharedRuntime runtime){this.activity=activity;this.runtime=runtime;}
     @Override public void onMethodCall(MethodCall call,MethodChannel.Result result){
         try{
+            if(call.method.equals("savePreset")){
+                if(picker!=null)throw new IOException("请先完成当前文件选择。");
+                String owner=call.argument("owner"),path=call.argument("path");
+                if(owner==null||path==null)throw new IOException("转换副本无效。");
+                picker=result;pickerOwner=owner;
+                worker.execute(()->{
+                    try{
+                        File file=runtime.validatedPresetExport(path,owner);
+                        activity.runOnUiThread(()->{
+                            if(picker!=result)return;
+                            try{
+                                presetToSave=file;
+                                Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                                        .setType("application/octet-stream").putExtra(Intent.EXTRA_TITLE,file.getName());
+                                activity.startActivityForResult(intent,SAVE_PRESET);
+                            }catch(RuntimeException failure){failPresetPicker(result,failure);}
+                        });
+                    }catch(Exception failure){activity.runOnUiThread(()->failPresetPicker(result,failure));}
+                });
+                return;
+            }
             if(call.method.equals("chooseTarget")){
                 if(picker!=null)throw new IOException("请先完成当前文件夹选择。");
                 String owner=call.argument("owner");if(owner==null)owner="";
@@ -47,6 +70,28 @@ final class NativeOriginalFiles implements MethodChannel.MethodCallHandler {
         }catch(Exception failure){result.error("FILES_PUBLICATION",failure.getMessage(),null);}
     }
     boolean onActivityResult(int request,int code,Intent data){
+        if(request==SAVE_PRESET){
+            MethodChannel.Result reply=picker;String owner=pickerOwner;File file=presetToSave;
+            picker=null;pickerOwner=null;presetToSave=null;
+            if(reply==null)return true;
+            Uri uri=data==null?null:data.getData();
+            if(code!=Activity.RESULT_OK||uri==null){reply.success(false);return true;}
+            worker.execute(()->{
+                try{
+                    File source=runtime.validatedPresetExport(file.getPath(),owner);
+                    if(!"content".equals(uri.getScheme()))throw new IOException("请选择系统文件提供者。");
+                    try(OutputStream output=activity.getContentResolver().openOutputStream(uri,"wt")){
+                        if(output==null)throw new IOException("无法写入所选文件。");
+                        Files.copy(source.toPath(),output);
+                    }catch(IOException failure){
+                        try{DocumentsContract.deleteDocument(activity.getContentResolver(),uri);}catch(Exception ignored){}
+                        throw failure;
+                    }
+                    activity.runOnUiThread(()->reply.success(true));
+                }catch(Exception failure){activity.runOnUiThread(()->reply.error("PRESET_SAVE",failure.getMessage(),null));}
+            });
+            return true;
+        }
         if(request!=PICK_FOLDER)return false;MethodChannel.Result reply=picker;String owner=pickerOwner;picker=null;pickerOwner=null;if(reply==null)return true;
         if(code!=Activity.RESULT_OK||data==null||data.getData()==null){reply.success(null);return true;}
         worker.execute(()->{try{
@@ -58,6 +103,12 @@ final class NativeOriginalFiles implements MethodChannel.MethodCallHandler {
             write(record(owner,"file-targets",id),SharedRuntime.map("schema",1,"owner",owner,"id",id,"name",name,"tree",tree.toString()));
             String value=SharedJson.encode(SharedRuntime.map("id",id,"name",name));activity.runOnUiThread(()->reply.success(value));
         }catch(Exception failure){activity.runOnUiThread(()->reply.error("FILES_TARGET",failure.getMessage(),null));}});return true;
+    }
+
+    private void failPresetPicker(MethodChannel.Result result,Exception failure){
+        if(picker!=result)return;
+        picker=null;pickerOwner=null;presetToSave=null;
+        result.error("PRESET_SAVE",failure.getMessage(),null);
     }
     /** Also callable on the host's existing serial request worker for files.publishOriginal. */
     synchronized String publish(String json,BooleanSupplier cancel)throws IOException {

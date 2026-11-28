@@ -85,6 +85,10 @@ public final class SharedEdits {
     public void markExported(String owner,PhotoEditStore.Draft frozen)throws IOException{new PhotoEditStore(root,owner).markExported(frozen);}
     public static Map<String,Object> recipe(PhotoEditStore.Draft d)throws IOException{
         Map<String,Object> value=SharedRuntime.map("schema",1,"presetId",d.presetSha,"presetName",d.name,"strength",d.strength,"values",ints(d.adjustments.values()),"hsl",ints(d.adjustments.hsl.values()));
+        if(!d.presetSha.isEmpty()){
+            try{value.put("presetCameraName",PresetFile.validate(d.presetBytes()).registrationName);}
+            catch(IOException unavailable){/* Optional metadata cannot prevent opening an existing draft. */}
+        }
         List<Object> curves=new ArrayList<>();for(int channel=0;channel<4;channel++)curves.add(ints(d.adjustments.curves.points(channel)));value.put("curves",curves);
         PhotoColorPalette palette=d.adjustments.palette;value.put("palette",SharedRuntime.map("color",palette.color,"tone",palette.tone,"amount",palette.amount));
         PhotoGeometry g=d.geometry;value.put("geometry",SharedRuntime.map("turns",g.turns,"angle",g.angle,"left",g.left,"top",g.top,"right",g.right,"bottom",g.bottom,"horizontalPerspective",g.horizontalPerspective,"verticalPerspective",g.verticalPerspective,"mirrored",g.mirrored));

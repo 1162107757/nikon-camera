@@ -15,6 +15,7 @@ class ProjectPresetsModel extends ChangeNotifier {
   List<Json> projects = [];
   Json? project;
   String selected = '', phase = '';
+  String activePresetId = '';
   String? error, job;
   bool busy = false, stopped = false, invalid = false, _alive = true;
   double? progress;
@@ -95,6 +96,7 @@ class ProjectPresetsModel extends ChangeNotifier {
       busy = false;
       progress = null;
       phase = '';
+      activePresetId = '';
       changed();
     }
   }
@@ -164,6 +166,7 @@ class ProjectPresetsModel extends ChangeNotifier {
         String? lease;
         try {
           phase = '准备 ${task['name']}';
+          activePresetId = '';
           progress = null;
           changed();
           final frozen = await call('project.begin', {
@@ -173,6 +176,7 @@ class ProjectPresetsModel extends ChangeNotifier {
           if (frozen['done'] == true) continue;
           lease = frozen['lease'] as String;
           phase = '套用 ${task['presetName']} · ${task['name']}';
+          activePresetId = task['presetId'] as String? ?? '';
           progress = 0;
           changed();
           final saved = await call('media.export', {
@@ -183,6 +187,7 @@ class ProjectPresetsModel extends ChangeNotifier {
             'expectedSourceSha': frozen['sourceSha'],
           });
           phase = '保存项目处理记录';
+          activePresetId = '';
           progress = null;
           changed();
           await call('project.finish', {
