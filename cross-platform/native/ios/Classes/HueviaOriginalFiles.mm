@@ -2,6 +2,7 @@
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <CommonCrypto/CommonDigest.h>
 #import <ImageIO/ImageIO.h>
+#import "java/io/File.h"
 #import "java/io/IOException.h"
 #import "java/lang/Throwable.h"
 #include <errno.h>
