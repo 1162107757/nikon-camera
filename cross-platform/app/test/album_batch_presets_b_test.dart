@@ -71,46 +71,63 @@ Future<void> _until(WidgetTester tester, bool Function() ready) async {
 }
 
 void main() {
-  testWidgets(
-    'B toolbar keeps two independent visible actions and touch targets at large text',
-    (tester) async {
-      tester.view.devicePixelRatio = 1;
-      tester.view.physicalSize = const Size(320, 640);
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-      var presets = 0, exports = 0;
-      for (final theme in [Brightness.light, Brightness.dark]) {
-        await tester.pumpWidget(
-          MaterialApp(
-            theme: hueviaTheme(theme),
-            builder: (context, child) => MediaQuery(
-              data: MediaQuery.of(context)
-                  .copyWith(textScaler: TextScaler.linear(1.8)),
-              child: child!,
-            ),
-            home: Scaffold(
-              body: Center(
-                child: AlbumSelectionActions(
-                  count: 3,
-                  onPreset: () => presets++,
-                  onExport: () => exports++,
-                ),
+  testWidgets('B keeps both actions inside one shared capsule at large text', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(320, 640);
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    var presets = 0, exports = 0;
+    for (final theme in [Brightness.light, Brightness.dark]) {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(theme),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: TextScaler.linear(1.8)),
+            child: child!,
+          ),
+          home: Scaffold(
+            body: Center(
+              child: AlbumSelectionActions(
+                count: 3,
+                onPreset: () => presets++,
+                onExport: () => exports++,
               ),
             ),
           ),
-        );
-        await tester.tap(find.text('套用预设'));
-        await tester.tap(find.byKey(const ValueKey('album-export-circle')));
-        expect(
-          tester.getSize(find.byKey(const Key('album-apply-presets'))).height,
-          greaterThanOrEqualTo(48),
-        );
-        expect(tester.takeException(), isNull);
-      }
-      expect(presets, 2);
-      expect(exports, 2);
-    },
-  );
+        ),
+      );
+      await tester.tap(find.text('套用预设'));
+      await tester.tap(find.byKey(const ValueKey('album-export-circle')));
+      final bar = find.byKey(const Key('album-selection-action-bar'));
+      expect(bar, findsOneWidget);
+      expect(
+        find.descendant(of: bar, matching: find.text('套用预设')),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: bar,
+          matching: find.byKey(const ValueKey('album-export-circle')),
+        ),
+        findsOneWidget,
+      );
+      expect(tester.widget<Material>(bar).shape, isA<StadiumBorder>());
+      expect(
+        tester.getBottomLeft(find.text('套用预设')).dy,
+        closeTo(tester.getBottomLeft(find.text('导出')).dy, 1),
+      );
+      expect(
+        tester.getSize(find.byKey(const Key('album-apply-presets'))).height,
+        greaterThanOrEqualTo(48),
+      );
+      expect(tester.takeException(), isNull);
+    }
+    expect(presets, 2);
+    expect(exports, 2);
+  });
 
   for (final phone in [false, true]) {
     testWidgets(

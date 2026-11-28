@@ -1128,7 +1128,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                 Positioned(
                   left: 16,
                   right: 16,
-                  bottom: 16 + hueNavigationInset(context),
+                  bottom: 20 + hueNavigationInset(context),
                   child: Center(
                     child: ConstrainedBox(
                       constraints: BoxConstraints(

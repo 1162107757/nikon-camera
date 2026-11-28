@@ -130,7 +130,8 @@ class AlbumExportAction extends StatelessWidget {
                         shadowColor: const Color(0x30000000),
                         shape: CircleBorder(
                           side: BorderSide(
-                            color: Theme.of(context).brightness == Brightness.dark
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
                                 ? const Color(0xff777771)
                                 : Colors.transparent,
                           ),
@@ -178,7 +179,10 @@ class AlbumExportAction extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 6),
-              Text('导出', style: TextStyle(fontSize: 12, color: p.ink)),
+              Text(
+                '导出',
+                style: TextStyle(fontSize: 12, height: 1.2, color: p.ink),
+              ),
             ],
           ),
         ),
